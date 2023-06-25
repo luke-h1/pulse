@@ -8,7 +8,8 @@
     "format": "prettier --write \"apps/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
     "format:check": "prettier --list-different \"apps/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
     "clean": "pnpm -r --parallel exec rm -rf node_modules && rm -rf node_modules",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
+    "tsc": "pnpm -r --no-bail tsc",
     "check:node": "check-node-version --node 18 --pnpm 8",
     "preinstall": "pnpm run check:node",
     "prepare": "husky install"

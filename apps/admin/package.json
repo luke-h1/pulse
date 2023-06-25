@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "tsc": "tsc --noEmit",
     "gen-env": "gen-env-types .env -o src/types/env.d.ts -e ."
   },
   "dependencies": {

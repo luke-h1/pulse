@@ -4,7 +4,7 @@ import path from 'path';
 
 import builder from './builder';
 
-import './resolvers/index';
+import './graphql/index';
 
 export const schema = builder.toSchema();
 

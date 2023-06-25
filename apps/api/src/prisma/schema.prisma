@@ -22,28 +22,6 @@ enum AccountStatus {
   ACTIVE
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([provider, providerAccountId])
-  @@index([userId])
-}
-
 model Session {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
@@ -58,7 +36,9 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id              String    @id @default(cuid())
+  providerId      Int       @unique
+  provider        String
   firstName     String
   lastName      String
   email         String?   @unique
@@ -66,7 +46,6 @@ model User {
   username      String?   @unique
 
   image         String?
-  accounts      Account[]
   sessions      Session[]
   role          Role          @default(USER)
   github        String?

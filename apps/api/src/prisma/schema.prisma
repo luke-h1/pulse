@@ -1,121 +1,121 @@
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 generator pothos {
-    provider = "prisma-pothos-types"
+  provider = "prisma-pothos-types"
 }
 
 enum Role {
-    USER
-    ADMIN
+  USER
+  ADMIN
 }
 
 enum AccountStatus {
-    BANNED
-    ON_HOLD
-    ACTIVE
+  BANNED
+  ON_HOLD
+  ACTIVE
 }
 
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    @@unique([provider, providerAccountId])
-    @@index([userId])
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([userId])
+  @@index([userId])
 }
 
 model User {
-    id            String    @id @default(cuid())
-    firstName     String
-    lastName      String
-    email         String?   @unique
-    emailVerified DateTime?
-    username      String?   @unique
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String?   @unique
+  emailVerified DateTime?
+  username      String?   @unique
 
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    role          Role          @default(USER)
-    github        String?
-    website       String?
-    twitter       String?
-    bio           String?
-    location      String?
-    accountStatus AccountStatus @default(ACTIVE)
-    projects      Project[]
-    posts         Post[]
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  role          Role          @default(USER)
+  github        String?
+  website       String?
+  twitter       String?
+  bio           String?
+  location      String?
+  accountStatus AccountStatus @default(ACTIVE)
+  projects      Project[]
+  posts         Post[]
 
-    followers       User[]  @relation(name: "userFollower")
-    following       User[]  @relation(name: "userFollowing")
-    userFollower    User?   @relation("userFollower", fields: [userFollowerId], references: [id])
-    userFollowing   User?   @relation("userFollowing", fields: [userFollowingId], references: [id])
-    userFollowerId  String?
-    userFollowingId String?
+  followers       User[]  @relation(name: "userFollower")
+  following       User[]  @relation(name: "userFollowing")
+  userFollower    User?   @relation("userFollower", fields: [userFollowerId], references: [id])
+  userFollowing   User?   @relation("userFollowing", fields: [userFollowingId], references: [id])
+  userFollowerId  String?
+  userFollowingId String?
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Project {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-    title        String
-    intro        String
-    content      Json
-    githubUrl    String?
-    siteUrl      String?
-    appStoreUrl  String?
-    playStoreUrl String?
-    tags         String[]
-    author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    authorId     String
+  title        String
+  intro        String
+  content      Json
+  githubUrl    String?
+  siteUrl      String?
+  appStoreUrl  String?
+  playStoreUrl String?
+  tags         String[]
+  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     String
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Post {
-    id        String   @id @default(cuid())
-    title     String 
-    intro     String 
-    image     String?
-    content   Json
-    author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    authorId     String
-    
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  id       String  @id @default(cuid())
+  title    String
+  intro    String
+  image    String?
+  content  Json
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

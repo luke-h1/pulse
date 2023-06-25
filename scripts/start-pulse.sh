@@ -8,14 +8,14 @@ tell application "iTerm"
   set newWindow to (create window with default profile)
   tell current session of newWindow
     set name to "db"
-    write text "pushd $root_path && cd src && docker-compose up db"
+    write text "pushd $root_path && cd apps/api && docker-compose up db"
   end tell
 
   tell newWindow
     set newTab to (create tab with default profile)
     tell current session of newTab
         set name to "redis"
-        write text "pushd $root_path && cd src && docker-compose up redis"
+        write text "pushd $root_path && cd apps/api && docker-compose up redis"
     end tell
   end tell
 

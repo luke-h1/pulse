@@ -36,9 +36,9 @@ model Session {
 }
 
 model User {
-  id              String    @id @default(cuid())
-  providerId      Int       @unique
-  provider        String
+  id            String    @id @default(cuid())
+  providerId    Int       @unique
+  provider      String
   firstName     String
   lastName      String
   email         String?   @unique

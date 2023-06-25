@@ -1,6 +1,19 @@
 import SchemaBuilder from '@pothos/core';
+import PrismaPlugin from '@pothos/plugin-prisma';
+import type PrismaTypes from '@pothos/plugin-prisma/generated';
+import db from './db';
 
-const builder = new SchemaBuilder({
-  plugins: [],
+interface ISchemaBuilder {
+  PrismaTypes: PrismaTypes;
+  Context: {
+    accessToken: string;
+  };
+}
+
+const builder = new SchemaBuilder<ISchemaBuilder>({
+  plugins: [PrismaPlugin],
+  prisma: {
+    client: db,
+  },
 });
 export default builder;

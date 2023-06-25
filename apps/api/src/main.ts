@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
-import builder from './builder';
+import { schema } from './schema';
 
 const DEV_ORIGINS = [
   'http://localhost:3000',
@@ -11,12 +11,13 @@ const DEV_ORIGINS = [
 const PROD_ORIGINS = [''];
 
 const apolloServer = new ApolloServer({
-  schema: builder.toSchema(),
+  schema,
   context: async ({ req }) => {
     return {
       accessToken: req?.headers?.authorization,
     };
   },
+  plugins: [],
 });
 
 const app = express();
@@ -29,6 +30,8 @@ apolloServer.start().then(() => {
         process.env.NODE_ENV === 'production' ? PROD_ORIGINS : DEV_ORIGINS,
       credentials: true,
     },
+    path: '/api/graphql',
+    __internal_healthCheckPath: '/api/health',
   });
 });
 
@@ -37,5 +40,7 @@ app.use(express.json({ type: 'application/json', limit: '50mb' }));
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`API started on http://localhost:${process.env.PORT}/graphql`);
+  console.log(
+    `API started on http://localhost:${process.env.PORT}/api/graphql`,
+  );
 });

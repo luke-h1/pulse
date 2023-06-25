@@ -84,6 +84,9 @@ importers:
       '@types/react-dom':
         specifier: 18.2.6
         version: 18.2.6
+      common:
+        specifier: workspace:*
+        version: link:../common
       eslint:
         specifier: 8.43.0
         version: 8.43.0
@@ -211,6 +214,9 @@ importers:
       '@types/react-dom':
         specifier: 18.2.6
         version: 18.2.6
+      common:
+        specifier: workspace:*
+        version: link:../common
       eslint:
         specifier: 8.43.0
         version: 8.43.0

@@ -13,9 +13,6 @@
     "preinstall": "pnpm run check:node",
     "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "check-node-version": "^4.2.1"
   },

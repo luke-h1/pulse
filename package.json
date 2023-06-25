@@ -45,6 +45,9 @@
     ],
     "*.{js,jsx,ts,tsx,css,scss,html}": [
       "prettier --write"
+    ],
+    "*.prisma": [
+      "pnpm prisma:format"
     ]
   }
 }

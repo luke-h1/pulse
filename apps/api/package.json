@@ -17,9 +17,10 @@
     "format:check": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,html}\"",
     "generate": "pnpm prisma generate",
     "migrate:dev": "pnpm prisma migrate dev",
-    "studio": "pnpm prisma studio" 
-   },
-   "dependencies": {
+    "studio": "pnpm prisma studio",
+    "postinstall": "pnpm prisma generate"
+  },
+  "dependencies": {
     "@pothos/core": "^3.29.0",
     "@pothos/plugin-prisma": "^3.47.2",
     "@prisma/client": "4.12.0",
@@ -33,8 +34,8 @@
     "graphql-scalars": "^1.18.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0"
-   },
-   "devDependencies": {
+  },
+  "devDependencies": {
     "prettier": "^2.8.8",
     "gen-env-types": "^1.3.4",
     "@types/body-parser": "^1.19.0",
@@ -51,5 +52,8 @@
     "prisma": "4.12.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.3"
-   }
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  }
 }

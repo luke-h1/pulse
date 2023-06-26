@@ -118,6 +118,12 @@ importers:
       '@pothos/core':
         specifier: ^3.29.0
         version: 3.29.0(graphql@16.6.0)
+      '@pothos/plugin-directives':
+        specifier: ^3.10.2
+        version: 3.10.2(graphql@16.6.0)
+      '@pothos/plugin-mocks':
+        specifier: ^3.7.8
+        version: 3.7.8(@pothos/core@3.29.0)(graphql@16.6.0)
       '@pothos/plugin-prisma':
         specifier: ^3.47.2
         version: 3.47.2(@pothos/core@3.29.0)(@prisma/client@4.12.0)(graphql@16.6.0)(typescript@4.9.3)
@@ -1783,6 +1789,24 @@ packages:
     peerDependencies:
       graphql: '>=15.1.0'
     dependencies:
+      graphql: 16.6.0
+    dev: false
+
+  /@pothos/plugin-directives@3.10.2(graphql@16.6.0):
+    resolution: {integrity: sha512-UubulUkureiLLMevedgVl5KAJ0TSJFs2R7XZ2hq3Gir7FU3V8XP9gyf3dQ/qv0OLUkqcQszMB0Ygs3zm1o6/6w==}
+    peerDependencies:
+      graphql: '>=15.1.0'
+    dependencies:
+      graphql: 16.6.0
+    dev: false
+
+  /@pothos/plugin-mocks@3.7.8(@pothos/core@3.29.0)(graphql@16.6.0):
+    resolution: {integrity: sha512-hwmMxwP2zBxCYbtZhw8PJubdteUHMfX9NsVa4dMxCIVvBUQkIsksxZUa2+PrdFHgs8RCQA4J5iveQ3Pg9ws8qA==}
+    peerDependencies:
+      '@pothos/core': '*'
+      graphql: '>=15.1.0'
+    dependencies:
+      '@pothos/core': 3.29.0(graphql@16.6.0)
       graphql: 16.6.0
     dev: false
 

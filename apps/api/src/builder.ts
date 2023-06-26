@@ -1,4 +1,6 @@
 import SchemaBuilder from '@pothos/core';
+import DirectivePlugin from '@pothos/plugin-directives';
+import MocksPlugin from '@pothos/plugin-mocks';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import TracingPlugin, { wrapResolver } from '@pothos/plugin-tracing';
@@ -52,7 +54,7 @@ interface ISchemaBuilder {
 }
 
 const builder = new SchemaBuilder<ISchemaBuilder>({
-  plugins: [PrismaPlugin, TracingPlugin],
+  plugins: [PrismaPlugin, TracingPlugin, DirectivePlugin, MocksPlugin],
   prisma: {
     client: db,
   },

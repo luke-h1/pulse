@@ -31,3 +31,22 @@ export const getUserPaginationArgs = (
           },
   };
 };
+
+export const getProjectPaginationArgs = (
+  args: SearchArgs,
+  isFirst: boolean,
+  filter?: Prisma.ProjectScalarWhereInput,
+) => {
+  return {
+    take: 10,
+    skip: isFirst ? 0 : 1,
+    cursor: isFirst ? undefined : { id: args.input.cursor },
+    where: filter,
+    include: {
+      author: true,
+    },
+    orderBy: {
+      [args?.input?.orderBy || 'createdAt']: args?.input.order,
+    },
+  };
+};

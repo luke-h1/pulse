@@ -10,6 +10,8 @@ export const Post = builder.prismaObject('Post', {
     image: t.exposeString('image', {
       nullable: true,
     }),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     content: t.expose('content', {
       type: 'JSON',
     }),

@@ -1,8 +1,10 @@
 import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
+import TracingPlugin, { wrapResolver } from '@pothos/plugin-tracing';
 import { Prisma } from '@prisma/client';
 import db from './db';
+import logger from './lib/logger';
 
 interface Objects {
   // user queries
@@ -24,6 +26,12 @@ interface Objects {
     totalCount: number;
     results: PrismaTypes['Project']['Shape'][];
   };
+  PostsResponse: {
+    nextCursor: string;
+    prevCursor: string;
+    totalCount: number;
+    results: PrismaTypes['Post']['Shape'][];
+  };
 }
 
 interface ISchemaBuilder {
@@ -38,16 +46,29 @@ interface ISchemaBuilder {
       Output: Date;
     };
     JSON: {
-      Input: Prisma.JsonValue;
-      Output: Prisma.JsonValue;
+      Input: Prisma.InputJsonValue;
+      Output: Prisma.InputJsonValue;
     };
   };
 }
 
 const builder = new SchemaBuilder<ISchemaBuilder>({
-  plugins: [PrismaPlugin],
+  plugins: [PrismaPlugin, TracingPlugin],
   prisma: {
     client: db,
+  },
+  tracing: {
+    default: true,
+    wrap: (resolver, _options, config) =>
+      wrapResolver(resolver, (error, duration) => {
+        logger.info(
+          `Executed resolver ${config.parentType}.${config.name} in ${duration}ms`,
+        );
+
+        if (error) {
+          logger.error(error);
+        }
+      }),
   },
 });
 

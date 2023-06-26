@@ -6,6 +6,12 @@ import { Prisma } from '@prisma/client';
 import db from './db';
 import logger from './lib/logger';
 
+interface Paging {
+  totalCount: number;
+  prevCursor: string;
+  nextCursor: string;
+}
+
 interface Objects {
   // user queries
   UserResponse: {
@@ -15,23 +21,16 @@ interface Objects {
     onHoldUsersCount: number;
   };
   UsersResponse: {
-    nextCursor: string;
-    prevCursor: string;
-    totalCount: number;
     results: PrismaTypes['User']['Shape'][];
-  };
+  } & Paging;
+  // project queries
   ProjectsResponse: {
-    nextCursor: string;
-    prevCursor: string;
-    totalCount: number;
     results: PrismaTypes['Project']['Shape'][];
-  };
+  } & Paging;
+  // post queries
   PostsResponse: {
-    nextCursor: string;
-    prevCursor: string;
-    totalCount: number;
     results: PrismaTypes['Post']['Shape'][];
-  };
+  } & Paging;
 }
 
 interface ISchemaBuilder {

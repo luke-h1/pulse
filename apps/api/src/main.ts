@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
+import logger from './lib/logger';
 import { schema } from './schema';
 
 const DEV_ORIGINS = [
@@ -40,7 +41,7 @@ app.use(express.json({ type: 'application/json', limit: '50mb' }));
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(
+  logger.info(
     `API started on http://localhost:${process.env.PORT}/api/graphql`,
   );
 });

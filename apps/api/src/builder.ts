@@ -1,7 +1,7 @@
 import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
-import { DateResolver } from 'graphql-scalars';
+import { Prisma } from '@prisma/client';
 import db from './db';
 
 interface Objects {
@@ -18,6 +18,12 @@ interface Objects {
     totalCount: number;
     results: PrismaTypes['User']['Shape'][];
   };
+  ProjectsResponse: {
+    nextCursor: string;
+    prevCursor: string;
+    totalCount: number;
+    results: PrismaTypes['Project']['Shape'][];
+  };
 }
 
 interface ISchemaBuilder {
@@ -25,14 +31,17 @@ interface ISchemaBuilder {
   Context: {
     accessToken: string;
   };
+  Objects: Objects;
   Scalars: {
-    Date: { Input: Date; Output: Date };
+    Date: {
+      Input: Date;
+      Output: Date;
+    };
     JSON: {
-      Input: JSON;
-      Output: JSON;
+      Input: Prisma.JsonValue;
+      Output: Prisma.JsonValue;
     };
   };
-  Objects: Objects;
 }
 
 const builder = new SchemaBuilder<ISchemaBuilder>({
@@ -40,10 +49,6 @@ const builder = new SchemaBuilder<ISchemaBuilder>({
   prisma: {
     client: db,
   },
-});
-
-builder.addScalarType('Date', DateResolver, {
-  description: 'Date custom scalar type',
 });
 
 export default builder;

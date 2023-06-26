@@ -1,11 +1,10 @@
-import { AccountStatus } from '@prisma/client';
 import { GraphQLError } from 'graphql';
 import jwt from 'jsonwebtoken';
 import builder from '../../builder';
 import db from '../../db';
 import decodeAccessToken from '../../lib/jwt/decodeAccessToken';
 import githubService from '../../services/githubService';
-import { Role } from './queries';
+import { AccountStatus, Role } from './queries';
 
 const UpdateUserInput = builder.inputType('UpdateUserInput', {
   description: 'Update user info',
@@ -20,10 +19,6 @@ const UpdateUserInput = builder.inputType('UpdateUserInput', {
     website: t.string({ required: true }),
     twitter: t.string({ required: true }),
     github: t.string({ required: true }),
-    banned: t.field({
-      type: AccountStatus,
-      required: false,
-    }),
   }),
 });
 
@@ -217,6 +212,8 @@ builder.mutationType({
             id: args.userId.toString(),
           },
           data: {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             accountStatus: args.accountStatus,
           },
         });

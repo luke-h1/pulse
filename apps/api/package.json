@@ -22,7 +22,6 @@
     "postinstall": "pnpm prisma generate"
   },
   "dependencies": {
-    "@apollo/server": "^4.7.4",
     "@apollo/server-plugin-landing-page-graphql-playground": "^4.0.0",
     "@pothos/core": "^3.29.0",
     "@pothos/plugin-prisma": "^3.47.2",

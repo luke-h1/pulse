@@ -8,6 +8,8 @@ API:
   * user CRUD ✅
   * slugs instead of querying by IDs ✅
   * Roles ✅
+  * Add endpoint to get slugs for posts and projects
+  * Add endpoint to get username of user/users
   * views for project and posts
   * Review naming conventions i.e. should getPost be post, getPosts be posts etc.  
   * upload images via cloudinary - need to think how to do this with cloudinary

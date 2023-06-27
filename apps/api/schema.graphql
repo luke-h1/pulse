@@ -131,12 +131,14 @@ type Query {
   Get the currently authenticated user. Only available if the user has an ADMIN role
   """
   getCurrentUserAsAdmin: User!
+  getMyPosts(input: PostSearchInput): PostsResponse!
 
   """Get currently logged in users's projects"""
   getMyProjects(input: SearchInput): ProjectsResponse!
 
   """Get post by id"""
   getPost(id: ID!): Post!
+  getPosts(input: PostSearchInput): PostsResponse!
 
   """Get project by ID"""
   getProject(id: String!): Project!

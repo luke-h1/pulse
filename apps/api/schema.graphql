@@ -5,6 +5,14 @@ enum AccountStatus {
   ON_HOLD
 }
 
+"""Create new post"""
+input CreatePostInput {
+  content: JSON!
+  image: String
+  intro: String!
+  title: String!
+}
+
 """Create new project"""
 input CreateProjectInput {
   appStoreUrl: String
@@ -34,8 +42,14 @@ The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](
 scalar JSON
 
 type Mutation {
+  """Create new post"""
+  createPost(input: CreatePostInput!): Post!
+
   """Create new project"""
   createProject(input: CreateProjectInput!): Project!
+
+  """Delete post"""
+  deletePost(id: String!): Post!
 
   """Delete project"""
   deleteProject(projectId: String!): Project!
@@ -54,6 +68,9 @@ type Mutation {
 
   """Update a user's ban status"""
   updateAccountStatus(accountStatus: AccountStatus!, userId: String!): User!
+
+  """Update post"""
+  updatePost(id: String!, input: CreatePostInput!): Post!
 
   """Update project"""
   updateProject(input: CreateProjectInput!, projectId: String!): Project!

@@ -27,7 +27,7 @@ export const getUserPaginationArgs = (
             },
           }
         : {
-            [args.input.orderBy || 'createdAt']: args?.input?.order,
+            [args.input.orderBy || 'createdAt']: args.input?.order,
           },
   };
 };
@@ -47,7 +47,7 @@ export const getProjectPaginationArgs = (
       author: true,
     },
     orderBy: {
-      [args?.input?.orderBy || 'createdAt']: args?.input?.order,
+      [args?.input?.orderBy || 'createdAt']: args.input?.order,
     },
   };
 };
@@ -67,7 +67,7 @@ export const getPostPaginationArgs = (
       author: true,
     },
     orderBy: {
-      [args?.input?.orderBy || 'createdAt']: args?.input?.order,
+      [args?.input?.orderBy || 'createdAt']: args.input?.order,
     },
   };
 };

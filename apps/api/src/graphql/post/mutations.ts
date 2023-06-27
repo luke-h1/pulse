@@ -60,6 +60,7 @@ builder.mutationFields(t => ({
       }
 
       const post = await db.post.findUnique({
+        ...query,
         where: {
           id: args.id,
         },

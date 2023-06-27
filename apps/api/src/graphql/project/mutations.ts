@@ -1,4 +1,5 @@
 import { GraphQLError } from 'graphql';
+import slugify from 'slugify';
 import builder from '../../builder';
 import db from '../../db';
 import decodeAccessToken from '../../lib/jwt/decodeAccessToken';
@@ -34,11 +35,15 @@ builder.mutationFields(t => ({
         throw new Error('Unauthorized');
       }
 
-      const { tags, ...rest } = args.input;
+      const { tags, title, ...rest } = args.input;
+
+      const slug = slugify(title);
 
       return db.project.create({
         ...query,
         data: {
+          title,
+          slug,
           ...rest,
           tags: {
             set: tags,
@@ -80,7 +85,9 @@ builder.mutationFields(t => ({
         throw new GraphQLError('Unauthorized');
       }
 
-      const { tags, ...rest } = args.input;
+      const { tags, title, ...rest } = args.input;
+
+      const slug = slugify(title); // TODO LH: maybe think about redirecting old slugs to new ones
 
       return db.project.update({
         ...query,
@@ -88,6 +95,8 @@ builder.mutationFields(t => ({
           id: args.projectId,
         },
         data: {
+          title,
+          slug,
           ...rest,
           tags: {
             set: tags,

@@ -1,4 +1,5 @@
 import { GraphQLError } from 'graphql';
+import slugify from 'slugify';
 import builder from '../../builder';
 import db from '../../db';
 import decodeAccessToken from '../../lib/jwt/decodeAccessToken';
@@ -30,10 +31,15 @@ builder.mutationFields(t => ({
         throw new GraphQLError('Unauthorized');
       }
 
+      const { title, ...rest } = args.input;
+      const slug = slugify(title);
+
       return db.post.create({
         ...query,
         data: {
-          ...args.input,
+          title,
+          slug,
+          ...rest,
           authorId: userId.toString(),
         },
       });
@@ -63,10 +69,16 @@ builder.mutationFields(t => ({
         throw new GraphQLError('Unauthorized');
       }
 
+      const { title, ...rest } = args.input;
+
+      const slug = slugify(title);
+
       return db.post.update({
         ...query,
         data: {
-          ...args.input,
+          title,
+          slug,
+          ...rest,
         },
         where: {
           id: args.id,

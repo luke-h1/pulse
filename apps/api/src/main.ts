@@ -41,7 +41,6 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json({ type: 'application/json', limit: '50mb' }));
 
 app.listen(process.env.PORT, () => {
-  // eslint-disable-next-line no-console
   logger.info(
     `API started on http://localhost:${process.env.PORT}/api/graphql`,
   );

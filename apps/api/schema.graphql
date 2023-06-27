@@ -77,6 +77,22 @@ type Post {
   updatedAt: Date!
 }
 
+"""Search posts input"""
+input PostSearchInput {
+  cursor: String
+  order: SearchOrder
+  orderBy: String
+  search: String
+}
+
+"""PostsResponse"""
+type PostsResponse {
+  nextCursor: String
+  prevCursor: String
+  results: [Post!]!
+  totalCount: Int!
+}
+
 """Project"""
 type Project {
   appStoreUrl: String
@@ -115,9 +131,14 @@ type Query {
   Get the currently authenticated user. Only available if the user has an ADMIN role
   """
   getCurrentUserAsAdmin: User!
+  getMyPosts(input: PostSearchInput): PostsResponse!
 
   """Get currently logged in users's projects"""
   getMyProjects(input: SearchInput): ProjectsResponse!
+
+  """Get post by id"""
+  getPost(id: ID!): Post!
+  getPosts(input: PostSearchInput): PostsResponse!
 
   """Get project by ID"""
   getProject(id: String!): Project!

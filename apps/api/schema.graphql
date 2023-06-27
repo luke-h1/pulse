@@ -157,8 +157,8 @@ type Query {
   getPost(id: ID!): Post!
   getPosts(input: PostSearchInput): PostsResponse!
 
-  """Get project by ID"""
-  getProject(id: String!): Project!
+  """Get project by slug"""
+  getProject(slug: String!): Project!
 
   """Get a user by id"""
   getUser(id: String!): User!

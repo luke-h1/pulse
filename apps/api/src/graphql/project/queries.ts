@@ -74,15 +74,15 @@ export const SearchInput = builder.inputType('SearchInput', {
 builder.queryFields(t => ({
   getProject: t.prismaField({
     type: Project,
-    description: 'Get project by ID', // TODO LH - potentially get by slug instead
+    description: 'Get project by slug',
     args: {
-      id: t.arg.string({ required: true }),
+      slug: t.arg.string({ required: true }),
     },
     resolve: async (query, _, args) => {
       const project = await db.project.findUnique({
         ...query,
         where: {
-          id: args.id,
+          slug: args.slug,
         },
       });
 

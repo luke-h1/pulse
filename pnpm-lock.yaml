@@ -125,8 +125,8 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8(@pothos/core@3.29.0)(graphql@16.6.0)
       '@pothos/plugin-prisma':
-        specifier: ^3.47.2
-        version: 3.47.2(@pothos/core@3.29.0)(@prisma/client@4.16.1)(graphql@16.6.0)(typescript@5.1.3)
+        specifier: ^3.52.0
+        version: 3.52.0(@pothos/core@3.29.0)(@prisma/client@4.16.1)(graphql@16.6.0)(typescript@5.1.3)
       '@pothos/plugin-tracing':
         specifier: ^0.5.8
         version: 0.5.8(@pothos/core@3.29.0)(graphql@16.6.0)
@@ -1813,8 +1813,8 @@ packages:
       graphql: 16.6.0
     dev: false
 
-  /@pothos/plugin-prisma@3.47.2(@pothos/core@3.29.0)(@prisma/client@4.16.1)(graphql@16.6.0)(typescript@5.1.3):
-    resolution: {integrity: sha512-S38uYCETz1310HK9iKg8V87qkUqPW8pfDGDqbbhURBt5nqFHu8iCTzjY28DPWa8E68rME3KZEtXBzc1mwZH4eg==}
+  /@pothos/plugin-prisma@3.52.0(@pothos/core@3.29.0)(@prisma/client@4.16.1)(graphql@16.6.0)(typescript@5.1.3):
+    resolution: {integrity: sha512-VTh5rj4ddj8XCnoA5OQWyrxFECYir1afDj71raZFdB7usnoHvCntluODPD/z8nSs1lQ4p3AAiJZ1NsS0gBNdjA==}
     hasBin: true
     peerDependencies:
       '@pothos/core': '*'

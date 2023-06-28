@@ -33,7 +33,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.0",
     "jest": "^29.5.0",
-    "lint-staged": "^13.2.2",
+    "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
     "scramjet": "^4.36.9",
     "cross-spawn": "^7.0.3",

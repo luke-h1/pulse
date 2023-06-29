@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@apollo/server-plugin-landing-page-graphql-playground": "^4.0.0",
-    "@pothos/core": "^3.29.0",
+    "@pothos/core": "^3.30.0",
     "@pothos/plugin-directives": "^3.10.2",
     "@pothos/plugin-mocks": "^3.7.8",
     "@pothos/plugin-prisma": "^3.52.0",

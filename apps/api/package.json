@@ -41,7 +41,7 @@
     "graphql-scalars": "^1.18.0",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
-    "pino": "8.4.1",
+    "pino": "8.14.1",
     "pino-pretty": "^10.0.0",
     "slugify": "^1.6.6"
   },

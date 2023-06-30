@@ -37,7 +37,7 @@
     "prettier": "^2.8.8",
     "scramjet": "^4.36.9",
     "cross-spawn": "^7.0.3",
-    "chalk": "^4.1.2"
+    "chalk": "^5.3.0"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [

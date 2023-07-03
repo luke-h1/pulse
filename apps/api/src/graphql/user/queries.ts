@@ -175,7 +175,7 @@ const UsersResponse = builder.objectType('UsersResponse', {
 
 builder.queryType({
   fields: t => ({
-    getUser: t.prismaField({
+    user: t.prismaField({
       type: 'User',
       description: 'Get a user by id',
       args: { id: t.arg.string({ required: true }) },
@@ -193,7 +193,7 @@ builder.queryType({
         return user;
       },
     }),
-    getCurrentUser: t.prismaField({
+    currentUser: t.prismaField({
       type: 'User',
       description: 'Get the currently authenticated user',
       resolve: async (query, _, __, ctx) => {
@@ -215,7 +215,7 @@ builder.queryType({
         return user;
       },
     }),
-    getCurrentUserAsAdmin: t.prismaField({
+    currentUserAsAdmin: t.prismaField({
       type: 'User',
       description:
         'Get the currently authenticated user. Only available if the user has an ADMIN role',
@@ -243,7 +243,7 @@ builder.queryType({
         return user;
       },
     }),
-    getAllUsers: t.field({
+    users: t.field({
       type: UserResponse,
       description: 'Get all users',
       resolve: async () => {
@@ -269,7 +269,7 @@ builder.queryType({
         };
       },
     }),
-    getAllUsersAdmin: t.field({
+    usersAdmin: t.field({
       type: UsersResponse,
       description:
         'Get all users. Only available if the user has an ADMIN role',

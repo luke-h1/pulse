@@ -135,33 +135,33 @@ type ProjectsResponse {
 }
 
 type Query {
-  """Get all users"""
-  getAllUsers: UserResponse!
-
-  """Get all users. Only available if the user has an ADMIN role"""
-  getAllUsersAdmin(input: SearchUsersInput): UsersResponse!
-
   """Get the currently authenticated user"""
-  getCurrentUser: User!
+  currentUser: User!
 
   """
   Get the currently authenticated user. Only available if the user has an ADMIN role
   """
-  getCurrentUserAsAdmin: User!
-  getMyPosts(input: PostSearchInput): PostsResponse!
+  currentUserAsAdmin: User!
+  myPosts(input: PostSearchInput): PostsResponse!
 
   """Get currently logged in users's projects"""
-  getMyProjects(input: SearchInput): ProjectsResponse!
+  myProjects(input: SearchInput): ProjectsResponse!
 
   """Get post by id"""
-  getPost(id: ID!): Post!
-  getPosts(input: PostSearchInput): PostsResponse!
+  post(id: ID!): Post!
+  posts(input: PostSearchInput): PostsResponse!
 
   """Get project by slug"""
-  getProject(slug: String!): Project!
+  project(slug: String!): Project!
 
   """Get a user by id"""
-  getUser(id: String!): User!
+  user(id: String!): User!
+
+  """Get all users"""
+  users: UserResponse!
+
+  """Get all users. Only available if the user has an ADMIN role"""
+  usersAdmin(input: SearchUsersInput): UsersResponse!
 }
 
 """The role of the user"""

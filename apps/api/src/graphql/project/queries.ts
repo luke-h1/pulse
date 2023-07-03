@@ -72,7 +72,7 @@ export const SearchInput = builder.inputType('SearchInput', {
 });
 
 builder.queryFields(t => ({
-  getProject: t.prismaField({
+  project: t.prismaField({
     type: Project,
     description: 'Get project by slug',
     args: {
@@ -93,7 +93,7 @@ builder.queryFields(t => ({
       return project;
     },
   }),
-  getMyProjects: t.field({
+  myProjects: t.field({
     description: "Get currently logged in users's projects",
     type: ProjectsResponse,
     args: {

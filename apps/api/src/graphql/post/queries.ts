@@ -61,7 +61,7 @@ const PostSearchInput = builder.inputType('PostSearchInput', {
 });
 
 builder.queryFields(t => ({
-  getPost: t.prismaField({
+  post: t.prismaField({
     type: Post,
     description: 'Get post by id', // TODO lh - get by slug instead
     args: {
@@ -82,7 +82,7 @@ builder.queryFields(t => ({
       return post;
     },
   }),
-  getPosts: t.field({
+  posts: t.field({
     type: PostsResponse,
     args: {
       input: t.arg({ type: PostSearchInput }),
@@ -130,7 +130,7 @@ builder.queryFields(t => ({
       };
     },
   }),
-  getMyPosts: t.field({
+  myPosts: t.field({
     type: PostsResponse,
     args: {
       input: t.arg({ type: PostSearchInput }),

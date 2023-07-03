@@ -25,9 +25,10 @@
   },
   "exclude": ["node_modules"],
   "paths": {
-    "@api/*": ["./src/api/*"],
-    "@admin/*": ["./src/admin/*"],
-    "@frontend/*": ["./src/frontend/*"],
-    "@common/*": ["./src/common/*"]
+    "@api/*": ["./apps/api/src/*"],
+    "@admin/*": ["./apps/admin/src/*"],
+    "@frontend/*": ["./apps/frontend/src/*"],
+    "@common/*": ["./apps/common/src/*"], // todo lh: sort import aliases for all packages except API
+    "@ui/*": ["./packages/ui/src/*"]
   }
 }

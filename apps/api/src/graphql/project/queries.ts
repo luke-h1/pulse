@@ -35,6 +35,7 @@ export const Project = builder.prismaObject('Project', {
       nullable: true,
     }),
     tags: t.exposeStringList('tags'),
+    slug: t.exposeString('slug'),
     author: t.relation('author'),
     createdAt: t.expose('createdAt', {
       type: 'Date',

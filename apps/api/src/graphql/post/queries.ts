@@ -25,6 +25,7 @@ export const Post = builder.prismaObject('Post', {
       type: 'JSON',
     }),
     author: t.relation('author'),
+    slug: t.exposeString('slug'),
     createdAt: t.expose('createdAt', {
       type: 'Date',
     }),
@@ -49,7 +50,6 @@ export const PostsResponse = builder.objectType('PostsResponse', {
     }),
   }),
 });
-
 const PostSearchInput = builder.inputType('PostSearchInput', {
   description: 'Search posts input',
   fields: t => ({
@@ -63,15 +63,15 @@ const PostSearchInput = builder.inputType('PostSearchInput', {
 builder.queryFields(t => ({
   post: t.prismaField({
     type: Post,
-    description: 'Get post by id', // TODO lh - get by slug instead
+    description: 'Get post by slug',
     args: {
-      id: t.arg.id({ required: true }),
+      slug: t.arg.string({ required: true }),
     },
     resolve: async (query, _, args) => {
       const post = await db.post.findUnique({
         ...query,
         where: {
-          id: args.id.toString(),
+          slug: args.slug,
         },
       });
 

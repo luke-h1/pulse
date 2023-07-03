@@ -8,6 +8,7 @@ API:
   * user CRUD ✅
   * slugs instead of querying by IDs ✅
   * Roles ✅
+  * Sort GQL verbage ✅
   * Add endpoint to get slugs for posts and projects
   * Add endpoint to get username of user/users
   * views for project and posts
@@ -27,4 +28,4 @@ Frontend:
   * WYSWIG editor with @editorjs
 
 Admin:
-  * Admin utils 
+  * Admin utils

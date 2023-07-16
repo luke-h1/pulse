@@ -9,18 +9,18 @@ API:
   * slugs instead of querying by IDs ✅
   * Roles ✅
   * Sort GQL verbage ✅
-  * Add endpoint to get slugs for posts and projects
-  * Add endpoint to get username of user/users
+  * create queries (FE) to get slugs for posts and projects
+  * create queries (FE) to get username of user/users
   * views for project and posts
-  * Review naming conventions i.e. should getPost be post, getPosts be posts etc.  
+  * Review naming conventions i.e. should getPost be post, getPosts be posts etc. ✅
   * upload images via cloudinary - need to think how to do this with cloudinary
 
 
 Other:
-  * Custom package for GQL type generation
-  * Create Github OAUTH app for auth
+  * Custom package for GQL type generation ✅
+  * Create Github OAUTH app for auth locally ✅
   * Migrate away from express-apollo to @apollo/server
-  * styling UI package to be shared across frontend and admin
+  * styling UI package to be shared across frontend and admin ✅
 
 Frontend:
   * Auth - Github for now (maybe google down the line)

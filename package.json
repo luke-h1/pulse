@@ -8,7 +8,7 @@
     "lint:style": "stylelint --fix apps/**/*.{scss,css}",
     "format": "prettier --write \"apps/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
     "format:check": "prettier --list-different \"apps/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
-    "test": "pnpm -r --no-bail test",
+    "test": "pnpm -r --no-bail test -- --passWithNoTests",
     "test:snapshot": "pnpm -r --no-bail test:snapshot",
     "test:ci": "pnpm -r --no-bail --aggregate-output --reporter=append-only test:ci",
     "test:coverage": "pnpm -r --no-bail test:coverage",

@@ -1,5 +1,3 @@
-'use client';
-
 import { usePathname } from 'next/navigation';
 import { Twitter, Link } from 'react-feather';
 import { toast } from '../Toast';

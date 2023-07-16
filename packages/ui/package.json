@@ -1,14 +1,8 @@
 {
   "name": "ui",
-  "version": "1.0.0",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "version": "0.1.0",
   "sideEffects": false,
   "private": true,
-  "license": "MIT",
-  "files": [
-    "dist/**"
-  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

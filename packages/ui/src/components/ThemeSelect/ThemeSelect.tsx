@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-'use client';
-
-import { useMounted } from 'common/src/hooks';
+import { useMounted } from '@common/hooks';
 import { useTheme } from 'next-themes';
 import { Sun, Moon, Monitor, Code } from 'react-feather';
 import { VisuallyHidden } from '../VisuallyHidden/VisuallyHidden';

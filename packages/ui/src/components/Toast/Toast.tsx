@@ -1,6 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable no-shadow */
-
-'use client';
 
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';

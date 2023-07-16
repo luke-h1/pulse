@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import isServer from '../src/utils/isServer';
 
 const useMediaQuery = (query: string): boolean => {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const getMatches = (query: string): boolean => {
     if (!isServer) {
       return window.matchMedia(query).matches;

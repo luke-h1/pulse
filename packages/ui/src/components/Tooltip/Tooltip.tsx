@@ -1,5 +1,3 @@
-'use client';
-
 import { TooltipProps } from '@radix-ui/react-tooltip';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { ReactNode } from 'react';

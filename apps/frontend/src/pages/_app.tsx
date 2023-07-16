@@ -4,9 +4,18 @@ import NProgress from 'nprogress';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import { useEffect } from 'react';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
+import { ApolloProvider } from '@apollo/client';
 
-const App = ({ Component, pageProps, router }: AppProps) => {
+const App = ({
+  Component,
+  pageProps: { session, ...pageProps },
+  router,
+}: AppProps<{ session: Session }>) => {
   const canonicalUrl = `${process.env.NEXT_PUBLIC_URL}${router.asPath}`;
+
+  const client = useApollo(pageProps);
 
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();
@@ -44,15 +53,19 @@ const App = ({ Component, pageProps, router }: AppProps) => {
           ],
         }}
       />
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
-        />
-        <main id="main">
-          <Component {...pageProps} />
-        </main>
-      </Head>
+      <SessionProvider session={session}>
+        <ApolloProvider client={client}>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
+            />
+            <main id="main">
+              <Component {...pageProps} />
+            </main>
+          </Head>
+        </ApolloProvider>
+      </SessionProvider>
     </>
   );
 };

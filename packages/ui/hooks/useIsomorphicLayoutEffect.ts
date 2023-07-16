@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react';
-import isServer from '../src/utils/isServer';
+import isServer from '@common/hooks';
 
 const useIsomorphicLayoutEffect = !isServer ? useLayoutEffect : useEffect;
 

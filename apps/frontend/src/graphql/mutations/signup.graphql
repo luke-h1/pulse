@@ -1,0 +1,3 @@
+mutation Signup($token: String!) {
+  signup(token: $token)
+}

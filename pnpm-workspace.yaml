@@ -1,3 +1,7 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
+  - 'apps/admin'
+  - 'apps/api'
+  - 'apps/common'
+  - 'apps/frontend'
+  - 'packages/ui'
+  - 'packages/apollo-hooks'

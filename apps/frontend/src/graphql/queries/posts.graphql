@@ -1,0 +1,19 @@
+query Posts {
+  posts {
+    nextCursor
+    prevCursor
+    results {
+      author {
+        firstName
+      }
+      image
+      intro
+      slug
+      title
+      createdAt
+      id
+      content
+      updatedAt
+    }
+  }
+}

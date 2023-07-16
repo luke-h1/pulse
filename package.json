@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "clean": "pnpm -r --parallel exec rm -rf node_modules && rm -rf node_modules",
-    "lint": "eslint \"./apps/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
+    "lint": "eslint \"./{apps,packages}/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "lint:style": "stylelint --fix apps/**/*.{scss,css}",
-    "format": "prettier --write \"apps/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
-    "format:check": "prettier --list-different \"apps/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
+    "format": "prettier --write \"{apps,packages}/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
+    "format:check": "prettier --list-different \"{apps, packages}/**/*.{js,jsx,ts,tsx,css,scss,html}\"",
     "test": "pnpm -r --no-bail test -- --passWithNoTests",
     "test:snapshot": "pnpm -r --no-bail test:snapshot",
     "test:ci": "pnpm -r --no-bail --aggregate-output --reporter=append-only test:ci",

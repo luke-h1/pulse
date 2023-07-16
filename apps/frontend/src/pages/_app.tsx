@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { ApolloProvider } from '@apollo/client';
+import useApollo from '@frontend/hooks/useApollo';
 
 const App = ({
   Component,

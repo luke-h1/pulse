@@ -14,7 +14,7 @@
     "build": "tsup index.tsx --format esm,cjs --dts --external react",
     "dev": "tsup index.tsx --format esm,cjs --watch --dts --external react",
     "lint": "tsc --noEmit",
-    "gen": "graphql-codegen --config codegen.yml",
+    "gen": "graphql-codegen --config codegen.ts",
     "gen:check": "pnpm gen --check"
   },
   "devDependencies": {

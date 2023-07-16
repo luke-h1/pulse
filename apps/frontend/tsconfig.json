@@ -23,7 +23,8 @@
     ],
     "paths": {
       "@frontend/*": ["./src/*"],
-      "@common/*": ["../common/src/*"]
+      "@common/*": ["../common/src/*"],
+      "@apollo-hooks/*": ["../../packages/apollo-hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

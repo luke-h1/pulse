@@ -1,5 +1,6 @@
 #!/bin/bash
-root_path="/Users/lukehive/srv/dev/pulse"
+
+root_path="/Users/${USER}/srv/dev/pulse"
 
 # script to open a new terminal window and start pulse
 
@@ -23,7 +24,7 @@ tell application "iTerm"
     set newTab to (create tab with default profile)
     tell current session of newTab
         set name to "api"
-        write text "pushd $root_path && cd useful-scripts && ./run.js api"
+        write text "pushd $root_path && cd scripts && ./run.js api"
     end tell
   end tell
 
@@ -31,7 +32,7 @@ tell application "iTerm"
     set newTab to (create tab with default profile)
     tell current session of newTab
         set name to "admin"
-        write text "pushd $root_path && cd useful-scripts && ./run.js admin"
+        write text "pushd $root_path && cd scripts && ./run.js admin"
     end tell
   end tell
 
@@ -39,7 +40,7 @@ tell application "iTerm"
     set newTab to (create tab with default profile)
     tell current session of newTab
         set name to "frontend"
-        write text "pushd $root_path && cd useful-scripts && ./run.js frontend"
+        write text "pushd $root_path && cd scripts && ./run.js frontend"
     end tell
   end tell
 

@@ -23,7 +23,7 @@
     "common": "workspace:*",
     "deepmerge": "^4.2.2",
     "eslint": "8.44.0",
-    "eslint-config-next": "13.4.7",
+    "eslint-config-next": "13.4.10",
     "lodash": "^4.17.21",
     "next": "13.4.7",
     "next-auth": "^4.20.1",

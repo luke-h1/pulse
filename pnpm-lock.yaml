@@ -158,8 +158,8 @@ importers:
         specifier: ^29.5.2
         version: 29.5.2
       '@types/lodash':
-        specifier: ^4.14.188
-        version: 4.14.188
+        specifier: ^4.14.195
+        version: 4.14.195
       '@types/nprogress':
         specifier: ^0.2.0
         version: 0.2.0
@@ -349,8 +349,8 @@ importers:
         specifier: ^29.5.2
         version: 29.5.2
       '@types/lodash':
-        specifier: ^4.14.188
-        version: 4.14.188
+        specifier: ^4.14.195
+        version: 4.14.195
       '@types/node':
         specifier: 18.6.3
         version: 18.6.3
@@ -509,8 +509,8 @@ importers:
         specifier: ^29.5.2
         version: 29.5.2
       '@types/lodash':
-        specifier: ^4.14.188
-        version: 4.14.188
+        specifier: ^4.14.195
+        version: 4.14.195
       '@types/nprogress':
         specifier: ^0.2.0
         version: 0.2.0
@@ -693,8 +693,8 @@ importers:
         specifier: ^29.5.2
         version: 29.5.2
       '@types/lodash':
-        specifier: ^4.14.188
-        version: 4.14.188
+        specifier: ^4.14.195
+        version: 4.14.195
       '@types/node':
         specifier: 18.6.3
         version: 18.6.3
@@ -4635,8 +4635,8 @@ packages:
       '@types/node': 20.3.3
     dev: true
 
-  /@types/lodash@4.14.188:
-    resolution: {integrity: sha512-zmEmF5OIM3rb7SbLCFYoQhO4dGt2FRM9AMkxvA3LaADOF1n8in/zGJlWji9fmafLoNyz+FoL6FE0SLtGIArD7w==}
+  /@types/lodash@4.14.195:
+    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
     dev: true
 
   /@types/long@4.0.2:

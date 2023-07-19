@@ -21,7 +21,7 @@
     "@vanilla-extract/next-plugin": "^2.0.2",
     "@vanilla-extract/sprinkles": "^1.4.1",
     "apollo-hooks": "workspace:*",
-    "clsx": "^1.2.1",
+    "clsx": "^2.0.0",
     "common": "workspace:*",
     "csstype": "^3.1.2",
     "framer-motion": "^10.12.18",

@@ -12,7 +12,7 @@
     "gen-env": "gen-env-types .env -o src/types/env.d.ts -e ."
   },
   "dependencies": {
-    "@apollo/client": "^3.6.6",
+    "@apollo/client": "^3.7.17",
     "@hookform/resolvers": "^2.8.5",
     "@types/node": "20.3.3",
     "@types/react": "18.2.14",

@@ -18,7 +18,7 @@
     "gen:check": "pnpm gen --check"
   },
   "devDependencies": {
-    "@apollo/client": "^3.7.16",
+    "@apollo/client": "^3.7.17",
     "@graphql-codegen/add": "^5.0.0",
     "@graphql-codegen/cli": "^2.14.1",
     "@graphql-codegen/typescript-operations": "^2.4.3",

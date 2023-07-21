@@ -659,8 +659,8 @@ importers:
         specifier: ^2.0.10
         version: 2.0.10(react@18.2.0)
       react-wrap-balancer:
-        specifier: ^0.3.0
-        version: 0.3.0(react@18.2.0)
+        specifier: ^1.0.0
+        version: 1.0.0(react@18.2.0)
       use-roving-index:
         specifier: ^2.0.0
         version: 2.0.0(react@18.2.0)
@@ -11435,10 +11435,10 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /react-wrap-balancer@0.3.0(react@18.2.0):
-    resolution: {integrity: sha512-UlnQvCvSRW0jh8uILic2LJs4tV0KjOO+P70ookE5qRpfZvsKmY8KLcV8s7TBPB6cuVYkoH7+fbqankFrFata8w==}
+  /react-wrap-balancer@1.0.0(react@18.2.0):
+    resolution: {integrity: sha512-yjDH+I8WGyDfh95gKhX/6ckfSBAltwQkxiYxtLPlyIRQNUVSjvz1uHR6Hpy+zHyOkJQw6GEC5RPglA41QXvzyw==}
     peerDependencies:
-      react: ^18.0.0
+      react: '>=16.8.0 || ^17.0.0 || ^18'
     dependencies:
       react: 18.2.0
     dev: false

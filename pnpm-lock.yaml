@@ -638,8 +638,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       framer-motion:
-        specifier: ^10.12.18
-        version: 10.12.18(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^10.13.1
+        version: 10.13.1(react-dom@18.2.0)(react@18.2.0)
       nanoid:
         specifier: ^4.0.2
         version: 4.0.2
@@ -8517,8 +8517,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /framer-motion@10.12.18(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-cfhiUpPbj+0eEWKjuD+5cz5cMqH71xOtMxGiS/cSGfHn2OlHIEAqFnFyzEMENw5PxWR9bMVhatzzpD6lexmHZQ==}
+  /framer-motion@10.13.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-uiKsaLEoySeln3eOPy8wUB3FkNtRRiVga5xJOkgs7C0sHVyvpJajXJFSoabt+emBojgnMQY0epnjl0ppoYPxkQ==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0

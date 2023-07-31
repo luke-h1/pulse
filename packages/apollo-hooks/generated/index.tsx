@@ -470,7 +470,7 @@ export type UserSlugsQuery = {
   __typename?: 'Query';
   users: {
     __typename?: 'UserResponse';
-    results: Array<{ __typename?: 'User'; id: string }>;
+    results: Array<{ __typename?: 'User'; username?: string | null }>;
   };
 };
 
@@ -864,7 +864,7 @@ export const UserSlugsDocument = gql`
   query UserSlugs {
     users {
       results {
-        id
+        username
       }
     }
   }

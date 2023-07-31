@@ -8,14 +8,20 @@ import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { ApolloProvider } from '@apollo/client';
 import useApollo from '@frontend/hooks/useApollo';
+import { AuthContextProvider } from '@frontend/context/AuthContext';
+
+type CustomAppProps = AppProps<{ session: Session }> & {
+  Component: {
+    auth?: boolean;
+  };
+};
 
 const App = ({
   Component,
   pageProps: { session, ...pageProps },
   router,
-}: AppProps<{ session: Session }>) => {
+}: CustomAppProps) => {
   const canonicalUrl = `${process.env.NEXT_PUBLIC_URL}${router.asPath}`;
-
   const client = useApollo(pageProps);
 
   useEffect(() => {
@@ -62,7 +68,13 @@ const App = ({
               content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
             />
             <main id="main">
-              <Component {...pageProps} />
+              {Component.auth ? (
+                <AuthContextProvider>
+                  <Component {...pageProps} />
+                </AuthContextProvider>
+              ) : (
+                <Component {...pageProps} />
+              )}
             </main>
           </Head>
         </ApolloProvider>

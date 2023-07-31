@@ -15,19 +15,27 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
-
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  Date: any;
+  Date: { input: any; output: any };
   /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: any;
+  JSON: { input: any; output: any };
 };
 
 /** The status of the user account */
@@ -39,28 +47,28 @@ export enum AccountStatus {
 
 /** Create new post */
 export type CreatePostInput = {
-  content: Scalars['JSON'];
-  image?: InputMaybe<Scalars['String']>;
-  intro: Scalars['String'];
-  title: Scalars['String'];
+  content: Scalars['JSON']['input'];
+  image?: InputMaybe<Scalars['String']['input']>;
+  intro: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 /** Create new project */
 export type CreateProjectInput = {
-  appStoreUrl?: InputMaybe<Scalars['String']>;
-  content: Scalars['JSON'];
-  githubUrl?: InputMaybe<Scalars['String']>;
-  intro: Scalars['String'];
-  playStoreUrl?: InputMaybe<Scalars['String']>;
-  siteUrl?: InputMaybe<Scalars['String']>;
-  tags: Array<Scalars['String']>;
-  title: Scalars['String'];
+  appStoreUrl?: InputMaybe<Scalars['String']['input']>;
+  content: Scalars['JSON']['input'];
+  githubUrl?: InputMaybe<Scalars['String']['input']>;
+  intro: Scalars['String']['input'];
+  playStoreUrl?: InputMaybe<Scalars['String']['input']>;
+  siteUrl?: InputMaybe<Scalars['String']['input']>;
+  tags: Array<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
 };
 
 /** Follow user input */
 export type FollowUserInput = {
   action?: InputMaybe<UserFollowActions>;
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type Mutation = {
@@ -78,9 +86,9 @@ export type Mutation = {
   /** Follow a user or unfollow a user */
   followerUser: User;
   /** Login a user */
-  login: Scalars['String'];
+  login: Scalars['String']['output'];
   /** Signup a user */
-  signup: Scalars['String'];
+  signup: Scalars['String']['output'];
   /** Update a user's ban status */
   updateAccountStatus: User;
   /** Update post */
@@ -102,15 +110,15 @@ export type MutationCreateProjectArgs = {
 };
 
 export type MutationDeletePostArgs = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeleteProjectArgs = {
-  projectId: Scalars['String'];
+  projectId: Scalars['String']['input'];
 };
 
 export type MutationDeleteUserArgs = {
-  userId: Scalars['String'];
+  userId: Scalars['String']['input'];
 };
 
 export type MutationFollowerUserArgs = {
@@ -118,26 +126,26 @@ export type MutationFollowerUserArgs = {
 };
 
 export type MutationLoginArgs = {
-  token: Scalars['String'];
+  token: Scalars['String']['input'];
 };
 
 export type MutationSignupArgs = {
-  token: Scalars['String'];
+  token: Scalars['String']['input'];
 };
 
 export type MutationUpdateAccountStatusArgs = {
   accountStatus: AccountStatus;
-  userId: Scalars['String'];
+  userId: Scalars['String']['input'];
 };
 
 export type MutationUpdatePostArgs = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
   input: CreatePostInput;
 };
 
 export type MutationUpdateProjectArgs = {
   input: CreateProjectInput;
-  projectId: Scalars['String'];
+  projectId: Scalars['String']['input'];
 };
 
 export type MutationUpdateUserArgs = {
@@ -146,65 +154,65 @@ export type MutationUpdateUserArgs = {
 
 export type MutationUpdateUserRoleArgs = {
   role: Role;
-  userId: Scalars['String'];
+  userId: Scalars['String']['input'];
 };
 
 /** Post */
 export type Post = {
   __typename?: 'Post';
   author: User;
-  content: Scalars['JSON'];
-  createdAt: Scalars['Date'];
-  id: Scalars['ID'];
-  image?: Maybe<Scalars['String']>;
-  intro: Scalars['String'];
-  slug: Scalars['String'];
-  title: Scalars['String'];
-  updatedAt: Scalars['Date'];
+  content: Scalars['JSON']['output'];
+  createdAt: Scalars['Date']['output'];
+  id: Scalars['ID']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  intro: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
 };
 
 /** Search posts input */
 export type PostSearchInput = {
-  cursor?: InputMaybe<Scalars['String']>;
+  cursor?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<SearchOrder>;
-  orderBy?: InputMaybe<Scalars['String']>;
-  search?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** PostsResponse */
 export type PostsResponse = {
   __typename?: 'PostsResponse';
-  nextCursor?: Maybe<Scalars['String']>;
-  prevCursor?: Maybe<Scalars['String']>;
+  nextCursor?: Maybe<Scalars['String']['output']>;
+  prevCursor?: Maybe<Scalars['String']['output']>;
   results: Array<Post>;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 };
 
 /** Project */
 export type Project = {
   __typename?: 'Project';
-  appStoreUrl?: Maybe<Scalars['String']>;
+  appStoreUrl?: Maybe<Scalars['String']['output']>;
   author: User;
-  content: Scalars['JSON'];
-  createdAt: Scalars['Date'];
-  githubUrl?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  intro: Scalars['String'];
-  playStoreUrl?: Maybe<Scalars['String']>;
-  siteUrl?: Maybe<Scalars['String']>;
-  slug: Scalars['String'];
-  tags: Array<Scalars['String']>;
-  title: Scalars['String'];
-  updatedAt: Scalars['Date'];
+  content: Scalars['JSON']['output'];
+  createdAt: Scalars['Date']['output'];
+  githubUrl?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  intro: Scalars['String']['output'];
+  playStoreUrl?: Maybe<Scalars['String']['output']>;
+  siteUrl?: Maybe<Scalars['String']['output']>;
+  slug: Scalars['String']['output'];
+  tags: Array<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
 };
 
 /** ProjectsResponse */
 export type ProjectsResponse = {
   __typename?: 'ProjectsResponse';
-  nextCursor?: Maybe<Scalars['String']>;
-  prevCursor?: Maybe<Scalars['String']>;
+  nextCursor?: Maybe<Scalars['String']['output']>;
+  prevCursor?: Maybe<Scalars['String']['output']>;
   results: Array<Project>;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 };
 
 export type Query = {
@@ -238,7 +246,7 @@ export type QueryMyProjectsArgs = {
 };
 
 export type QueryPostArgs = {
-  slug: Scalars['String'];
+  slug: Scalars['String']['input'];
 };
 
 export type QueryPostsArgs = {
@@ -246,11 +254,11 @@ export type QueryPostsArgs = {
 };
 
 export type QueryProjectArgs = {
-  slug: Scalars['String'];
+  slug: Scalars['String']['input'];
 };
 
 export type QueryUserArgs = {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 };
 
 export type QueryUsersAdminArgs = {
@@ -265,10 +273,10 @@ export enum Role {
 
 /** Search projects input */
 export type SearchInput = {
-  cursor?: InputMaybe<Scalars['String']>;
+  cursor?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<SearchOrder>;
-  orderBy?: InputMaybe<Scalars['String']>;
-  search?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Search order */
@@ -279,54 +287,54 @@ export enum SearchOrder {
 
 /** Search user input */
 export type SearchUsersInput = {
-  cursor?: InputMaybe<Scalars['String']>;
+  cursor?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<SearchOrder>;
-  orderBy?: InputMaybe<Scalars['String']>;
-  search?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Scalars['String']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Update user info */
 export type UpdateUserInput = {
-  bio: Scalars['String'];
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  github: Scalars['String'];
-  image: Scalars['String'];
-  lastName: Scalars['String'];
-  location: Scalars['String'];
-  twitter: Scalars['String'];
-  username: Scalars['String'];
-  website: Scalars['String'];
+  bio: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  github: Scalars['String']['input'];
+  image: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  location: Scalars['String']['input'];
+  twitter: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+  website: Scalars['String']['input'];
 };
 
 /** A user */
 export type User = {
   __typename?: 'User';
   accountStatus: AccountStatus;
-  bio?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Date'];
+  bio?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['Date']['output'];
   /** The email of the user */
-  email?: Maybe<Scalars['String']>;
-  firstName: Scalars['String'];
+  email?: Maybe<Scalars['String']['output']>;
+  firstName: Scalars['String']['output'];
   followers?: Maybe<Array<User>>;
-  followersCount: Scalars['Int'];
+  followersCount: Scalars['Int']['output'];
   following?: Maybe<Array<User>>;
-  followingCount: Scalars['Int'];
-  github?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  image?: Maybe<Scalars['String']>;
-  isBanned: Scalars['Boolean'];
-  isFollowing: Scalars['Boolean'];
-  isOnHold: Scalars['Boolean'];
-  lastName: Scalars['String'];
-  location?: Maybe<Scalars['String']>;
+  followingCount: Scalars['Int']['output'];
+  github?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  image?: Maybe<Scalars['String']['output']>;
+  isBanned: Scalars['Boolean']['output'];
+  isFollowing: Scalars['Boolean']['output'];
+  isOnHold: Scalars['Boolean']['output'];
+  lastName: Scalars['String']['output'];
+  location?: Maybe<Scalars['String']['output']>;
   posts?: Maybe<Array<Post>>;
   projects?: Maybe<Array<Project>>;
   role: Role;
-  twitter?: Maybe<Scalars['String']>;
-  updatedAt: Scalars['Date'];
-  username?: Maybe<Scalars['String']>;
-  website?: Maybe<Scalars['String']>;
+  twitter?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['Date']['output'];
+  username?: Maybe<Scalars['String']['output']>;
+  website?: Maybe<Scalars['String']['output']>;
 };
 
 /** User follow actions enum */
@@ -338,19 +346,19 @@ export enum UserFollowActions {
 /** User response */
 export type UserResponse = {
   __typename?: 'UserResponse';
-  bannedUsersCount: Scalars['Int'];
-  onHoldUsersCount: Scalars['Int'];
+  bannedUsersCount: Scalars['Int']['output'];
+  onHoldUsersCount: Scalars['Int']['output'];
   results: Array<User>;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 };
 
 /** Users response */
 export type UsersResponse = {
   __typename?: 'UsersResponse';
-  nextCursor?: Maybe<Scalars['String']>;
-  prevCursor?: Maybe<Scalars['String']>;
+  nextCursor?: Maybe<Scalars['String']['output']>;
+  prevCursor?: Maybe<Scalars['String']['output']>;
   results: Array<User>;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 };
 
 export type CreatePostMutationVariables = Exact<{
@@ -363,13 +371,32 @@ export type CreatePostMutation = {
 };
 
 export type SignupMutationVariables = Exact<{
-  token: Scalars['String'];
+  token: Scalars['String']['input'];
 }>;
 
 export type SignupMutation = { __typename?: 'Mutation'; signup: string };
 
+export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
+
+export type CurrentUserQuery = {
+  __typename?: 'Query';
+  currentUser: {
+    __typename?: 'User';
+    id: string;
+    firstName: string;
+    lastName: string;
+    email?: string | null;
+    github?: string | null;
+    image?: string | null;
+    bio?: string | null;
+    location?: string | null;
+    website?: string | null;
+    twitter?: string | null;
+  };
+};
+
 export type PostQueryVariables = Exact<{
-  slug: Scalars['String'];
+  slug: Scalars['String']['input'];
 }>;
 
 export type PostQuery = {
@@ -505,6 +532,70 @@ export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<
   SignupMutation,
   SignupMutationVariables
+>;
+export const CurrentUserDocument = gql`
+  query CurrentUser {
+    currentUser {
+      id
+      firstName
+      lastName
+      email
+      github
+      image
+      bio
+      location
+      website
+      twitter
+    }
+  }
+`;
+
+/**
+ * __useCurrentUserQuery__
+ *
+ * To run a query within a React component, call `useCurrentUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCurrentUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCurrentUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCurrentUserQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CurrentUserQuery,
+    CurrentUserQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CurrentUserQuery, CurrentUserQueryVariables>(
+    CurrentUserDocument,
+    options,
+  );
+}
+export function useCurrentUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CurrentUserQuery,
+    CurrentUserQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<CurrentUserQuery, CurrentUserQueryVariables>(
+    CurrentUserDocument,
+    options,
+  );
+}
+export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
+export type CurrentUserLazyQueryHookResult = ReturnType<
+  typeof useCurrentUserLazyQuery
+>;
+export type CurrentUserQueryResult = Apollo.QueryResult<
+  CurrentUserQuery,
+  CurrentUserQueryVariables
 >;
 export const PostDocument = gql`
   query Post($slug: String!) {

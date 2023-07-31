@@ -620,8 +620,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       '@vanilla-extract/next-plugin':
-        specifier: ^2.0.2
-        version: 2.0.2(@types/node@20.4.4)(next@13.4.10)(webpack@5.88.1)
+        specifier: ^2.2.1
+        version: 2.2.1(@types/node@20.4.4)(next@13.4.10)(webpack@5.88.1)
       '@vanilla-extract/sprinkles':
         specifier: ^1.6.1
         version: 1.6.1(@vanilla-extract/css@1.7.2)
@@ -5242,7 +5242,7 @@ packages:
   /@vanilla-extract/integration@5.0.1:
     resolution: {integrity: sha512-HRV/HvC/lihb9wT3x5s7pf5qLjqxSd9nBePJ10juOuMB5cl2ZClEcts076m9BuRKM3wRK2h7KuwkNsaUtjujxQ==}
     dependencies:
-      '@vanilla-extract/css': 1.7.2
+      '@vanilla-extract/css': 1.12.0
       esbuild: 0.11.23
       eval: 0.1.6
       find-up: 5.0.0
@@ -5277,10 +5277,10 @@ packages:
       - terser
     dev: false
 
-  /@vanilla-extract/next-plugin@2.0.2(@types/node@20.4.4)(next@13.4.10)(webpack@5.88.1):
-    resolution: {integrity: sha512-91xtYoE/TVQcL9vkjN1sP8SDoDJVVuHOhwjeR3W1jgLFrKydrODRxmu9qzuRKcBVM2R7ayGdBQOKmm3HL2xpug==}
+  /@vanilla-extract/next-plugin@2.2.1(@types/node@20.4.4)(next@13.4.10)(webpack@5.88.1):
+    resolution: {integrity: sha512-43wkBf17IbGJfZpDODcp5HA8ZFdzpu+3ts3F6fenFzxuOUShRknAiMDkB2StXjX/QvFbJoNHALZidEnkZxsNQw==}
     peerDependencies:
-      next: '>=12.0.5'
+      next: '>=12.1.7'
     dependencies:
       '@vanilla-extract/webpack-plugin': 2.2.0(@types/node@20.4.4)(webpack@5.88.1)
       browserslist: 4.21.9

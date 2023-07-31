@@ -94,6 +94,56 @@ builder.queryFields(t => ({
       return project;
     },
   }),
+  projects: t.field({
+    description: 'Get all projects',
+    type: ProjectsResponse,
+    args: {
+      input: t.arg({ type: SearchInput }),
+    },
+    resolve: async (_, args) => {
+      const incomingCursor = args.input?.cursor;
+      let results;
+
+      const filter: Prisma.ProjectWhereInput | undefined = {
+        OR: [
+          {
+            title: {
+              contains: args.input?.search ?? undefined,
+              mode: 'insensitive',
+            },
+          },
+          {
+            intro: {
+              contains: args.input?.search ?? undefined,
+              mode: 'insensitive',
+            },
+          },
+        ],
+      };
+
+      const totalCount = await db.project.count();
+
+      if (incomingCursor) {
+        results = await db.project.findMany(
+          getProjectPaginationArgs(args as SearchArgs, false, filter),
+        );
+      }
+
+      results = await db.project.findMany(
+        getProjectPaginationArgs(args as SearchArgs, true, filter),
+      );
+
+      // first 10 results
+      const cursor = results[9]?.id;
+
+      return {
+        prevCursor: args.input?.cursor ?? '',
+        nextCursor: cursor ?? '',
+        results,
+        totalCount,
+      };
+    },
+  }),
   myProjects: t.field({
     description: "Get currently logged in users's projects",
     type: ProjectsResponse,

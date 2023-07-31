@@ -9,6 +9,11 @@ import { Session } from 'next-auth';
 import { ApolloProvider } from '@apollo/client';
 import useApollo from '@frontend/hooks/useApollo';
 import { AuthContextProvider } from '@frontend/context/AuthContext';
+import '@ui/styles/app.css';
+import { ThemeProvider } from 'next-themes';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
+import { ToastProvider } from '@radix-ui/react-toast';
+import { MotionConfig } from 'framer-motion';
 
 type CustomAppProps = AppProps<{ session: Session }> & {
   Component: {
@@ -60,25 +65,39 @@ const App = ({
           ],
         }}
       />
-      <SessionProvider session={session}>
-        <ApolloProvider client={client}>
-          <Head>
-            <meta
-              name="viewport"
-              content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
-            />
-            <main id="main">
-              {Component.auth ? (
-                <AuthContextProvider>
-                  <Component {...pageProps} />
-                </AuthContextProvider>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </main>
-          </Head>
-        </ApolloProvider>
-      </SessionProvider>
+      <MotionConfig
+        reducedMotion="user"
+        transition={{
+          ease: [0.32, 0.72, 0, 1],
+          duration: 0.7,
+        }}
+      >
+        <ThemeProvider defaultTheme="system" disableTransitionOnChange>
+          <TooltipProvider>
+            <ToastProvider>
+              <SessionProvider session={session}>
+                <ApolloProvider client={client}>
+                  <Head>
+                    <meta
+                      name="viewport"
+                      content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
+                    />
+                    <main id="main">
+                      {Component.auth ? (
+                        <AuthContextProvider>
+                          <Component {...pageProps} />
+                        </AuthContextProvider>
+                      ) : (
+                        <Component {...pageProps} />
+                      )}
+                    </main>
+                  </Head>
+                </ApolloProvider>
+              </SessionProvider>
+            </ToastProvider>
+          </TooltipProvider>
+        </ThemeProvider>
+      </MotionConfig>
     </>
   );
 };

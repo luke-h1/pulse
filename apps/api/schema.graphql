@@ -156,6 +156,9 @@ type Query {
   """Get project by slug"""
   project(slug: String!): Project!
 
+  """Get all projects"""
+  projects(input: SearchInput): ProjectsResponse!
+
   """Get a user by id"""
   user(id: String!): User!
 

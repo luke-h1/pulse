@@ -24,6 +24,7 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
     };
+
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -229,6 +230,8 @@ export type Query = {
   posts: PostsResponse;
   /** Get project by slug */
   project: Project;
+  /** Get all projects */
+  projects: ProjectsResponse;
   /** Get a user by id */
   user: User;
   /** Get all users */
@@ -255,6 +258,10 @@ export type QueryPostsArgs = {
 
 export type QueryProjectArgs = {
   slug: Scalars['String']['input'];
+};
+
+export type QueryProjectsArgs = {
+  input?: InputMaybe<SearchInput>;
 };
 
 export type QueryUserArgs = {
@@ -414,6 +421,16 @@ export type PostQuery = {
   };
 };
 
+export type PostSlugsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type PostSlugsQuery = {
+  __typename?: 'Query';
+  posts: {
+    __typename?: 'PostsResponse';
+    results: Array<{ __typename?: 'Post'; slug: string }>;
+  };
+};
+
 export type PostsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PostsQuery = {
@@ -434,6 +451,26 @@ export type PostsQuery = {
       updatedAt: any;
       author: { __typename?: 'User'; firstName: string };
     }>;
+  };
+};
+
+export type ProjectSlugsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ProjectSlugsQuery = {
+  __typename?: 'Query';
+  projects: {
+    __typename?: 'ProjectsResponse';
+    results: Array<{ __typename?: 'Project'; slug: string }>;
+  };
+};
+
+export type UserSlugsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UserSlugsQuery = {
+  __typename?: 'Query';
+  users: {
+    __typename?: 'UserResponse';
+    results: Array<{ __typename?: 'User'; id: string }>;
   };
 };
 
@@ -646,6 +683,63 @@ export function usePostLazyQuery(
 export type PostQueryHookResult = ReturnType<typeof usePostQuery>;
 export type PostLazyQueryHookResult = ReturnType<typeof usePostLazyQuery>;
 export type PostQueryResult = Apollo.QueryResult<PostQuery, PostQueryVariables>;
+export const PostSlugsDocument = gql`
+  query PostSlugs {
+    posts {
+      results {
+        slug
+      }
+    }
+  }
+`;
+
+/**
+ * __usePostSlugsQuery__
+ *
+ * To run a query within a React component, call `usePostSlugsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostSlugsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostSlugsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostSlugsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    PostSlugsQuery,
+    PostSlugsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<PostSlugsQuery, PostSlugsQueryVariables>(
+    PostSlugsDocument,
+    options,
+  );
+}
+export function usePostSlugsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PostSlugsQuery,
+    PostSlugsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<PostSlugsQuery, PostSlugsQueryVariables>(
+    PostSlugsDocument,
+    options,
+  );
+}
+export type PostSlugsQueryHookResult = ReturnType<typeof usePostSlugsQuery>;
+export type PostSlugsLazyQueryHookResult = ReturnType<
+  typeof usePostSlugsLazyQuery
+>;
+export type PostSlugsQueryResult = Apollo.QueryResult<
+  PostSlugsQuery,
+  PostSlugsQueryVariables
+>;
 export const PostsDocument = gql`
   query Posts {
     posts {
@@ -706,4 +800,120 @@ export type PostsLazyQueryHookResult = ReturnType<typeof usePostsLazyQuery>;
 export type PostsQueryResult = Apollo.QueryResult<
   PostsQuery,
   PostsQueryVariables
+>;
+export const ProjectSlugsDocument = gql`
+  query ProjectSlugs {
+    projects {
+      results {
+        slug
+      }
+    }
+  }
+`;
+
+/**
+ * __useProjectSlugsQuery__
+ *
+ * To run a query within a React component, call `useProjectSlugsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectSlugsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectSlugsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useProjectSlugsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ProjectSlugsQuery,
+    ProjectSlugsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProjectSlugsQuery, ProjectSlugsQueryVariables>(
+    ProjectSlugsDocument,
+    options,
+  );
+}
+export function useProjectSlugsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ProjectSlugsQuery,
+    ProjectSlugsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProjectSlugsQuery, ProjectSlugsQueryVariables>(
+    ProjectSlugsDocument,
+    options,
+  );
+}
+export type ProjectSlugsQueryHookResult = ReturnType<
+  typeof useProjectSlugsQuery
+>;
+export type ProjectSlugsLazyQueryHookResult = ReturnType<
+  typeof useProjectSlugsLazyQuery
+>;
+export type ProjectSlugsQueryResult = Apollo.QueryResult<
+  ProjectSlugsQuery,
+  ProjectSlugsQueryVariables
+>;
+export const UserSlugsDocument = gql`
+  query UserSlugs {
+    users {
+      results {
+        id
+      }
+    }
+  }
+`;
+
+/**
+ * __useUserSlugsQuery__
+ *
+ * To run a query within a React component, call `useUserSlugsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserSlugsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserSlugsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserSlugsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    UserSlugsQuery,
+    UserSlugsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserSlugsQuery, UserSlugsQueryVariables>(
+    UserSlugsDocument,
+    options,
+  );
+}
+export function useUserSlugsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserSlugsQuery,
+    UserSlugsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserSlugsQuery, UserSlugsQueryVariables>(
+    UserSlugsDocument,
+    options,
+  );
+}
+export type UserSlugsQueryHookResult = ReturnType<typeof useUserSlugsQuery>;
+export type UserSlugsLazyQueryHookResult = ReturnType<
+  typeof useUserSlugsLazyQuery
+>;
+export type UserSlugsQueryResult = Apollo.QueryResult<
+  UserSlugsQuery,
+  UserSlugsQueryVariables
 >;

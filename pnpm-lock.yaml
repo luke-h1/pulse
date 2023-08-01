@@ -209,8 +209,8 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8(@pothos/core@3.32.1)(graphql@16.7.1)
       '@pothos/plugin-prisma':
-        specifier: ^3.52.0
-        version: 3.52.0(@pothos/core@3.32.1)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6)
+        specifier: ^3.53.0
+        version: 3.53.0(@pothos/core@3.32.1)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6)
       '@pothos/plugin-tracing':
         specifier: ^0.5.8
         version: 0.5.8(@pothos/core@3.32.1)(graphql@16.7.1)
@@ -3793,8 +3793,8 @@ packages:
       graphql: 16.7.1
     dev: false
 
-  /@pothos/plugin-prisma@3.52.0(@pothos/core@3.32.1)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6):
-    resolution: {integrity: sha512-VTh5rj4ddj8XCnoA5OQWyrxFECYir1afDj71raZFdB7usnoHvCntluODPD/z8nSs1lQ4p3AAiJZ1NsS0gBNdjA==}
+  /@pothos/plugin-prisma@3.53.0(@pothos/core@3.32.1)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6):
+    resolution: {integrity: sha512-ANUcQ4l5EFNK70D0YbYi8wadCi3ktX+z07xBf5RDhfm295Sshm4+gxOlJ9LRXobbT2XoWusoWAAbxK2g0J5xIQ==}
     hasBin: true
     peerDependencies:
       '@pothos/core': '*'
@@ -3804,7 +3804,7 @@ packages:
     dependencies:
       '@pothos/core': 3.32.1(graphql@16.7.1)
       '@prisma/client': 5.0.0(prisma@5.0.0)
-      '@prisma/generator-helper': 4.16.1
+      '@prisma/generator-helper': 5.1.0
       graphql: 16.7.1
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -3835,8 +3835,8 @@ packages:
       prisma: 5.0.0
     dev: false
 
-  /@prisma/debug@4.16.1:
-    resolution: {integrity: sha512-ovjUrDq9DKNT0BbLBDEcIxQTcymzLChae4jmQiqVvaD3qJW5Ma90n8Kv6O/BIscpcGiNW910DazcZjlSGk5Zog==}
+  /@prisma/debug@5.1.0:
+    resolution: {integrity: sha512-8jmiICy2uW+fHuoRDQGEB94XBkUmJu1wCaHWW/1ycbTNyaJqiTUL8EE7InzPcZRuebYKDU3QSUOlkUMH453A2Q==}
     dependencies:
       '@types/debug': 4.1.8
       debug: 4.3.4
@@ -3853,10 +3853,10 @@ packages:
     resolution: {integrity: sha512-kyT/8fd0OpWmhAU5YnY7eP31brW1q1YrTGoblWrhQJDiN/1K+Z8S1kylcmtjqx5wsUGcP1HBWutayA/jtyt+sg==}
     requiresBuild: true
 
-  /@prisma/generator-helper@4.16.1:
-    resolution: {integrity: sha512-vMfNTD7hU0sQv/G5i8PVazAfUIaYh/xsbbnVk4Af0jSW6w6gZH95V5sbK0GSZry+D+pqXN3EiTqRFzreuzzCqg==}
+  /@prisma/generator-helper@5.1.0:
+    resolution: {integrity: sha512-N/6nE76YFByywR5tTScevPJGfbftdRbANPlTsL5KvpJWnnLPBvNZCtGpto2Ax4Ot15zLA0/olql5609X2zzXcg==}
     dependencies:
-      '@prisma/debug': 4.16.1
+      '@prisma/debug': 5.1.0
       '@types/cross-spawn': 6.0.2
       cross-spawn: 7.0.3
       kleur: 4.1.5
@@ -7511,29 +7511,6 @@ packages:
       - eslint-import-resolver-webpack
       - supports-color
 
-  /eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.60.1)(eslint-plugin-import@2.28.0)(eslint@8.44.0):
-    resolution: {integrity: sha512-TdJqPHs2lW5J9Zpe17DZNQuDnox4xo2o+0tE7Pggain9Rbc19ik8kFtXdxZ250FVx2kF4vlt2RSf4qlUpG7bhw==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    peerDependencies:
-      eslint: '*'
-      eslint-plugin-import: '*'
-    dependencies:
-      debug: 4.3.4
-      enhanced-resolve: 5.15.0
-      eslint: 8.44.0
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.60.1)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.44.0)
-      eslint-plugin-import: 2.28.0(@typescript-eslint/parser@5.60.1)(eslint-import-resolver-typescript@3.5.5)(eslint@8.44.0)
-      get-tsconfig: 4.6.0
-      globby: 13.2.0
-      is-core-module: 2.12.1
-      is-glob: 4.0.3
-      synckit: 0.8.5
-    transitivePeerDependencies:
-      - '@typescript-eslint/parser'
-      - eslint-import-resolver-node
-      - eslint-import-resolver-webpack
-      - supports-color
-
   /eslint-module-utils@2.8.0(@typescript-eslint/parser@5.60.1)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.44.0):
     resolution: {integrity: sha512-aWajIYfsqCKRDgUfjEXNN/JlrzauMuSEy5sbd7WXbtW3EH6A6MpwEh42c7qD+MqQo9QMJ6fWLAeIJynx0g6OAw==}
     engines: {node: '>=4'}
@@ -7559,7 +7536,7 @@ packages:
       debug: 3.2.7(supports-color@5.5.0)
       eslint: 8.44.0
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.60.1)(eslint-plugin-import@2.28.0)(eslint@8.44.0)
+      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.60.1)(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.28.0)(eslint@8.44.0)
     transitivePeerDependencies:
       - supports-color
 

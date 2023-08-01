@@ -200,20 +200,20 @@ importers:
         specifier: ^4.0.0
         version: 4.0.1(@apollo/server@4.7.4)
       '@pothos/core':
-        specifier: ^3.30.0
-        version: 3.30.0(graphql@16.7.1)
+        specifier: ^3.32.1
+        version: 3.32.1(graphql@16.7.1)
       '@pothos/plugin-directives':
         specifier: ^3.10.2
         version: 3.10.2(graphql@16.7.1)
       '@pothos/plugin-mocks':
         specifier: ^3.7.8
-        version: 3.7.8(@pothos/core@3.30.0)(graphql@16.7.1)
+        version: 3.7.8(@pothos/core@3.32.1)(graphql@16.7.1)
       '@pothos/plugin-prisma':
         specifier: ^3.52.0
-        version: 3.52.0(@pothos/core@3.30.0)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6)
+        version: 3.52.0(@pothos/core@3.32.1)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6)
       '@pothos/plugin-tracing':
         specifier: ^0.5.8
-        version: 0.5.8(@pothos/core@3.30.0)(graphql@16.7.1)
+        version: 0.5.8(@pothos/core@3.32.1)(graphql@16.7.1)
       '@prisma/client':
         specifier: ^5.0.0
         version: 5.0.0(prisma@5.0.0)
@@ -3767,8 +3767,8 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: false
 
-  /@pothos/core@3.30.0(graphql@16.7.1):
-    resolution: {integrity: sha512-ZUL2YTv3ODeKBkhkVcEO03lcERdqQaG2zfylNpkrY9ryAIhOuN9Pbo+VnfqhqEQx7jM/56Rro7i9AuhzF0Q3tA==}
+  /@pothos/core@3.32.1(graphql@16.7.1):
+    resolution: {integrity: sha512-7BbtaFxHYonJZTxTX2wueZn9NF+ip+kjkmImHAh8nE1Ek13WUkiEiz8mWz1T2BVV0YKTJUDxl+TDn7E83JhlzQ==}
     peerDependencies:
       graphql: '>=15.1.0'
     dependencies:
@@ -3783,17 +3783,17 @@ packages:
       graphql: 16.7.1
     dev: false
 
-  /@pothos/plugin-mocks@3.7.8(@pothos/core@3.30.0)(graphql@16.7.1):
+  /@pothos/plugin-mocks@3.7.8(@pothos/core@3.32.1)(graphql@16.7.1):
     resolution: {integrity: sha512-hwmMxwP2zBxCYbtZhw8PJubdteUHMfX9NsVa4dMxCIVvBUQkIsksxZUa2+PrdFHgs8RCQA4J5iveQ3Pg9ws8qA==}
     peerDependencies:
       '@pothos/core': '*'
       graphql: '>=15.1.0'
     dependencies:
-      '@pothos/core': 3.30.0(graphql@16.7.1)
+      '@pothos/core': 3.32.1(graphql@16.7.1)
       graphql: 16.7.1
     dev: false
 
-  /@pothos/plugin-prisma@3.52.0(@pothos/core@3.30.0)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6):
+  /@pothos/plugin-prisma@3.52.0(@pothos/core@3.32.1)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6):
     resolution: {integrity: sha512-VTh5rj4ddj8XCnoA5OQWyrxFECYir1afDj71raZFdB7usnoHvCntluODPD/z8nSs1lQ4p3AAiJZ1NsS0gBNdjA==}
     hasBin: true
     peerDependencies:
@@ -3802,7 +3802,7 @@ packages:
       graphql: '>=15.1.0'
       typescript: '>=4.7.2'
     dependencies:
-      '@pothos/core': 3.30.0(graphql@16.7.1)
+      '@pothos/core': 3.32.1(graphql@16.7.1)
       '@prisma/client': 5.0.0(prisma@5.0.0)
       '@prisma/generator-helper': 4.16.1
       graphql: 16.7.1
@@ -3811,13 +3811,13 @@ packages:
       - supports-color
     dev: false
 
-  /@pothos/plugin-tracing@0.5.8(@pothos/core@3.30.0)(graphql@16.7.1):
+  /@pothos/plugin-tracing@0.5.8(@pothos/core@3.32.1)(graphql@16.7.1):
     resolution: {integrity: sha512-18Gv8z9AS76ylGPDTSlRA7vx0ar1gwRUJwyjuI0wCeSkPegKV2TO1nRtlzk57SaRsnPWbFpSxxWyW/F4ECv4XQ==}
     peerDependencies:
       '@pothos/core': '*'
       graphql: '>=15.1.0'
     dependencies:
-      '@pothos/core': 3.30.0(graphql@16.7.1)
+      '@pothos/core': 3.32.1(graphql@16.7.1)
       graphql: 16.7.1
     dev: false
 

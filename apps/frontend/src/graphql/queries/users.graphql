@@ -1,0 +1,20 @@
+query Users {
+  users {
+    totalCount
+    results {
+      bio
+      firstName
+      email
+      createdAt
+      github
+      id
+      image
+      lastName
+      location
+      twitter
+      username
+      website
+      updatedAt
+    }
+  }
+}

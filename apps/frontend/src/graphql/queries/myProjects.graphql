@@ -1,0 +1,20 @@
+query MyProjects($input: SearchInput) {
+  myProjects(input: $input) {
+    nextCursor
+    prevCursor
+    totalCount
+    results {
+      appStoreUrl
+      createdAt
+      githubUrl
+      id
+      intro
+      playStoreUrl
+      siteUrl
+      slug
+      tags
+      title
+      updatedAt
+    }
+  }
+}

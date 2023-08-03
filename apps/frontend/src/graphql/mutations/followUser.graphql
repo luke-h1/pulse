@@ -1,0 +1,5 @@
+mutation FollowerUser($input: FollowUserInput!) {
+  followerUser(input: $input) {
+    id
+  }
+}

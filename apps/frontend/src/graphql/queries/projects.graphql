@@ -1,0 +1,27 @@
+query Projects {
+  projects {
+    nextCursor
+    prevCursor
+    results {
+      appStoreUrl
+      
+      author {
+        id
+        image
+        firstName
+        lastName
+      }
+      content
+      createdAt
+      githubUrl
+      id
+      intro
+      playStoreUrl
+      siteUrl
+      slug
+      tags
+      title
+      updatedAt
+    }
+  }
+}

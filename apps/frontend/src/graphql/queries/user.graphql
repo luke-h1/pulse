@@ -1,0 +1,17 @@
+query User($userId: String!) {
+  user(id: $userId) {
+    bio
+    createdAt
+    email
+    firstName
+    github
+    id
+    image
+    lastName
+    location
+    twitter
+    updatedAt
+    username
+    website
+  }
+}

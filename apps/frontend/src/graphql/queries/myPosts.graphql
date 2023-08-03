@@ -1,0 +1,14 @@
+query MyPosts {
+  myPosts {
+    nextCursor
+    prevCursor
+    totalCount
+    results {
+      title
+      slug
+      intro
+      updatedAt
+      createdAt
+    }
+  }
+}

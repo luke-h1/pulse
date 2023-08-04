@@ -4,7 +4,6 @@ query Projects {
     prevCursor
     results {
       appStoreUrl
-      
       author {
         id
         image

@@ -1,21 +1,20 @@
-import { useCurrentUserQuery } from '@apollo-hooks/generated';
+import { useCurrentUserQuery } from '@graphql-hooks/generated';
 import { signOut, useSession } from 'next-auth/react';
 
 const useCurrentUser = () => {
   const session = useSession();
 
-  const { data, loading, client } = useCurrentUserQuery({
-    skip: session.status === 'unauthenticated' || session.status === 'loading',
+  const [{ data, fetching }] = useCurrentUserQuery({
+    pause: session.status === 'unauthenticated' || session.status === 'loading',
   });
 
   const logout = async () => {
-    await client.resetStore();
     await signOut();
   };
 
   return {
     isAuth: !!data?.currentUser.id,
-    loading,
+    fetching,
     logout,
     currentUser: data?.currentUser,
   };

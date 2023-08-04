@@ -24,8 +24,8 @@
     "paths": {
       "@frontend/*": ["./src/*"],
       "@common/*": ["../common/src/*"],
-      "@apollo-hooks/*": ["../../packages/apollo-hooks/*"],
-      "@ui/*": ["../../packages/ui/src/*"]
+      "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
+      // "@ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -1,19 +1,12 @@
 import { AppProps } from 'next/app';
 import 'nprogress/nprogress.css';
-import NProgress from 'nprogress';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
-import { useEffect } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
-import { ApolloProvider } from '@apollo/client';
-import useApollo from '@frontend/hooks/useApollo';
 import { AuthContextProvider } from '@frontend/context/AuthContext';
-import '@ui/styles/app.css';
-import { ThemeProvider } from 'next-themes';
-import { TooltipProvider } from '@radix-ui/react-tooltip';
-import { ToastProvider } from '@radix-ui/react-toast';
-import { MotionConfig } from 'framer-motion';
+import useNProgress from '@frontend/hooks/useNProgress';
+import { ChakraProvider } from '@chakra-ui/react';
 
 type CustomAppProps = AppProps<{ session: Session }> & {
   Component: {
@@ -27,22 +20,7 @@ const App = ({
   router,
 }: CustomAppProps) => {
   const canonicalUrl = `${process.env.NEXT_PUBLIC_URL}${router.asPath}`;
-  const client = useApollo(pageProps);
-
-  useEffect(() => {
-    const handleRouteStart = () => NProgress.start();
-    const handleRouteDone = () => NProgress.done();
-
-    router.events.on('routeChangeStart', handleRouteStart);
-    router.events.on('routeChangeComplete', handleRouteDone);
-    router.events.on('routeChangeError', handleRouteDone);
-
-    return () => {
-      router.events.off('routeChangeStart', handleRouteStart);
-      router.events.off('routeChangeComplete', handleRouteDone);
-      router.events.off('routeChangeError', handleRouteDone);
-    };
-  }, [router.events]);
+  useNProgress();
 
   return (
     <>
@@ -65,39 +43,25 @@ const App = ({
           ],
         }}
       />
-      <MotionConfig
-        reducedMotion="user"
-        transition={{
-          ease: [0.32, 0.72, 0, 1],
-          duration: 0.7,
-        }}
-      >
-        <ThemeProvider defaultTheme="system" disableTransitionOnChange>
-          <TooltipProvider>
-            <ToastProvider>
-              <SessionProvider session={session}>
-                <ApolloProvider client={client}>
-                  <Head>
-                    <meta
-                      name="viewport"
-                      content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
-                    />
-                    <main id="main">
-                      {Component.auth ? (
-                        <AuthContextProvider>
-                          <Component {...pageProps} />
-                        </AuthContextProvider>
-                      ) : (
-                        <Component {...pageProps} />
-                      )}
-                    </main>
-                  </Head>
-                </ApolloProvider>
-              </SessionProvider>
-            </ToastProvider>
-          </TooltipProvider>
-        </ThemeProvider>
-      </MotionConfig>
+      <SessionProvider session={session}>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
+          />
+        </Head>
+        <ChakraProvider>
+          <main id="main">
+            {Component.auth ? (
+              <AuthContextProvider>
+                <Component {...pageProps} />
+              </AuthContextProvider>
+            ) : (
+              <Component {...pageProps} />
+            )}
+          </main>
+        </ChakraProvider>
+      </SessionProvider>
     </>
   );
 };

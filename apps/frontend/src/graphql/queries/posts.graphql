@@ -3,6 +3,7 @@ query Posts {
     nextCursor
     prevCursor
     results {
+      id
       author {
         firstName
       }

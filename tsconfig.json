@@ -22,8 +22,8 @@
       "@admin/*": ["./apps/admin/src/*"],
       "@frontend/*": ["./apps/frontend/src/*"],
       "@common/*": ["./apps/common/src/*"],
-      "@ui/*": ["./packages/ui/src/*"],
-      "@apollo-hooks/*": ["./packages/apollo-hooks/src/*"]
+      // "@ui/*": ["./packages/ui/src/*"],
+      "@graphql-hooks/*": ["./packages/graphql-hooks/src/*"]
     }
   },
   "exclude": ["node_modules"]

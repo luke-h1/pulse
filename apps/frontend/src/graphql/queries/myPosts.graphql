@@ -4,6 +4,7 @@ query MyPosts {
     prevCursor
     totalCount
     results {
+      id
       title
       slug
       intro

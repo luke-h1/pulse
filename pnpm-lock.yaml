@@ -209,8 +209,8 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8(@pothos/core@3.30.0)(graphql@16.7.1)
       '@pothos/plugin-prisma':
-        specifier: ^3.52.0
-        version: 3.52.0(@pothos/core@3.30.0)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6)
+        specifier: ^3.54.0
+        version: 3.54.0(@pothos/core@3.30.0)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6)
       '@pothos/plugin-tracing':
         specifier: ^0.5.8
         version: 0.5.8(@pothos/core@3.30.0)(graphql@16.7.1)
@@ -3804,8 +3804,8 @@ packages:
       graphql: 16.7.1
     dev: false
 
-  /@pothos/plugin-prisma@3.52.0(@pothos/core@3.30.0)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6):
-    resolution: {integrity: sha512-VTh5rj4ddj8XCnoA5OQWyrxFECYir1afDj71raZFdB7usnoHvCntluODPD/z8nSs1lQ4p3AAiJZ1NsS0gBNdjA==}
+  /@pothos/plugin-prisma@3.54.0(@pothos/core@3.30.0)(@prisma/client@5.0.0)(graphql@16.7.1)(typescript@5.1.6):
+    resolution: {integrity: sha512-E2JtJJkYpwgj7glmvsDlon8hhWFOk6xF2RBVjdMetqoWCozx3JO8PD847G3f6AbKIm1rV2Zw6MvGbm2oAckTcw==}
     hasBin: true
     peerDependencies:
       '@pothos/core': '*'
@@ -3815,7 +3815,7 @@ packages:
     dependencies:
       '@pothos/core': 3.30.0(graphql@16.7.1)
       '@prisma/client': 5.0.0(prisma@5.0.0)
-      '@prisma/generator-helper': 4.16.1
+      '@prisma/generator-helper': 5.1.1
       graphql: 16.7.1
       typescript: 5.1.6
     transitivePeerDependencies:
@@ -3846,8 +3846,8 @@ packages:
       prisma: 5.0.0
     dev: false
 
-  /@prisma/debug@4.16.1:
-    resolution: {integrity: sha512-ovjUrDq9DKNT0BbLBDEcIxQTcymzLChae4jmQiqVvaD3qJW5Ma90n8Kv6O/BIscpcGiNW910DazcZjlSGk5Zog==}
+  /@prisma/debug@5.1.1:
+    resolution: {integrity: sha512-R9e2Tn8f+ujVjwn6ne1YkXY35BXzUmxJbGsmD1c8RAZ/NXgbYktEFAwIkOZn5H5zRfY2VDSBvGI6TFpnOu50cg==}
     dependencies:
       '@types/debug': 4.1.8
       debug: 4.3.4
@@ -3864,10 +3864,10 @@ packages:
     resolution: {integrity: sha512-kyT/8fd0OpWmhAU5YnY7eP31brW1q1YrTGoblWrhQJDiN/1K+Z8S1kylcmtjqx5wsUGcP1HBWutayA/jtyt+sg==}
     requiresBuild: true
 
-  /@prisma/generator-helper@4.16.1:
-    resolution: {integrity: sha512-vMfNTD7hU0sQv/G5i8PVazAfUIaYh/xsbbnVk4Af0jSW6w6gZH95V5sbK0GSZry+D+pqXN3EiTqRFzreuzzCqg==}
+  /@prisma/generator-helper@5.1.1:
+    resolution: {integrity: sha512-Qk9iiVk4JZQYZrYsc1Wx9fXFFnS1AH4T7WyLxCIFnX/end0K5tOK75Qxv6mjZAHE0XUGrzoTlZUkbSDVYz/CvQ==}
     dependencies:
-      '@prisma/debug': 4.16.1
+      '@prisma/debug': 5.1.1
       '@types/cross-spawn': 6.0.2
       cross-spawn: 7.0.3
       kleur: 4.1.5

@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface Props {
-  project: ProjectsQuery['projects']['results'][number];
+  project: ProjectsQuery['projects']
 }
 
 const ProjectCard = ({ project }: Props) => {

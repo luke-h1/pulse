@@ -17,8 +17,8 @@ const ProjectsSection = ({ projects }: Props) => {
         columns={{ base: 1, md: 2 }}
         spacing={6}
       >
-        {projects?.results && projects.results.length > 0 ? (
-          projects?.results.map(project => (
+        {projects?.length && projects.length > 0 ? (
+          projects?.map(project => (
             <GridItem key={project.id} as="article">
               <ProjectCard project={project} />
             </GridItem>

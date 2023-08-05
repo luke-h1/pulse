@@ -1,10 +1,10 @@
-import { useCurrentUserQuery } from '@graphql-hooks/generated';
+import { useMeQuery } from '@graphql-hooks/generated';
 import { signOut, useSession } from 'next-auth/react';
 
 const useCurrentUser = () => {
   const session = useSession();
 
-  const [{ data, fetching }] = useCurrentUserQuery({
+  const [{ data, fetching }] = useMeQuery({
     pause: session.status === 'unauthenticated' || session.status === 'loading',
   });
 
@@ -13,10 +13,10 @@ const useCurrentUser = () => {
   };
 
   return {
-    isAuth: !!data?.currentUser.id,
+    isAuth: !!data?.me?.id,
     fetching,
     logout,
-    currentUser: data?.currentUser,
+    currentUser: data?.me,
   };
 };
 export default useCurrentUser;

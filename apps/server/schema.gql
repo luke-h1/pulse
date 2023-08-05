@@ -317,9 +317,6 @@ type Query {
 
   """Returns all posts"""
   posts: [Post!]
-
-  """Returns all post slugs"""
-  postSlugs: SlugsResponse!
   project(slug: String!): Project
 
   """Returns all projects"""

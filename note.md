@@ -20,6 +20,9 @@ API:
   * states for publishing - draft/published
   * fix https://github.com/microsoft/TypeScript/issues/10866
     * Build and start server project in different way
+  * use s3 for images
+  * potentially look into boilerplate-graphql impl and decide if refactor code that way
+  * decide on testing strategy
 
 FE:
   * Custom package for GQL type generation ✅
@@ -37,6 +40,7 @@ FE:
     * /user/[slug] - user profile
     * /user/me - my profile with edit toggles
     * Footer 
+    * Look into boilerplate-graphql for styling
   
   * Auth - Github for now (maybe google down the line)
   * Styling - via vanilla extract

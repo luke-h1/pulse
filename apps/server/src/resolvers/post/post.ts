@@ -183,7 +183,7 @@ export class PostResolver {
     return true;
   }
 
-  @Mutation(() => SlugsResponse, {
+  @Query(() => SlugsResponse, {
     description: 'Returns all post slugs',
     nullable: true,
   })

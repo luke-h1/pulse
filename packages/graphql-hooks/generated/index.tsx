@@ -123,8 +123,6 @@ export type Mutation = {
   deleteUser: Scalars['Boolean']['output'];
   login: UserResponse;
   logout: Scalars['Boolean']['output'];
-  /** Returns all post slugs */
-  postSlugs?: Maybe<SlugsResponse>;
   register: UserResponse;
   /** Updates a post */
   updatePost: PostResponse;
@@ -404,7 +402,7 @@ export type Query = {
   me?: Maybe<User>;
   post?: Maybe<Post>;
   /** Returns all post slugs */
-  postSlugs: SlugsResponse;
+  postSlugs?: Maybe<SlugsResponse>;
   /** Returns all posts */
   posts?: Maybe<Array<Post>>;
   project?: Maybe<Project>;
@@ -742,6 +740,7 @@ export type MeQuery = {
   __typename?: 'Query';
   me?: {
     __typename?: 'User';
+    id: string;
     firstName: string;
     lastName: string;
     image?: string | null;
@@ -776,7 +775,10 @@ export type PostSlugsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PostSlugsQuery = {
   __typename?: 'Query';
-  postSlugs: { __typename?: 'SlugsResponse'; slugs?: Array<string> | null };
+  postSlugs?: {
+    __typename?: 'SlugsResponse';
+    slugs?: Array<string> | null;
+  } | null;
 };
 
 export type PostsQueryVariables = Exact<{ [key: string]: never }>;
@@ -1055,6 +1057,7 @@ export function useUpdateProjectMutation() {
 export const MeDocument = gql`
   query Me {
     me {
+      id
       firstName
       lastName
       image

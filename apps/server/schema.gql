@@ -96,9 +96,6 @@ type Mutation {
   deleteUser(id: String!): Boolean!
   login(options: UserLoginInput!): UserResponse!
   logout: Boolean!
-
-  """Returns all post slugs"""
-  postSlugs: SlugsResponse
   register(options: UserRegisterInput!): UserResponse!
 
   """Updates a post"""
@@ -317,6 +314,9 @@ type Query {
 
   """Returns all posts"""
   posts: [Post!]
+
+  """Returns all post slugs"""
+  postSlugs: SlugsResponse
   project(slug: String!): Project
 
   """Returns all projects"""

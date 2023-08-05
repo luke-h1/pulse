@@ -6,12 +6,25 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Post, PostsQuery } from '@graphql-hooks/generated';
 import Link from 'next/link';
 import FormattedDate from '@common/components/FormattedDate';
 
 interface Props {
-  post: PostsQuery['posts']['results'][number];
+  post: {
+    __typename?: 'Post' | undefined;
+    id: string;
+    title: string;
+    intro: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    content: any;
+    slug: string;
+    tags: string[];
+    image?: string | null | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    updatedAt: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    createdAt: any;
+  };
 }
 
 const PostCard = ({ post }: Props) => {

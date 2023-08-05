@@ -1,5 +1,5 @@
 import { Heading, List, ListItem, Text, VStack } from '@chakra-ui/react';
-import { Post, PostsQuery } from '@graphql-hooks/generated';
+import { PostsQuery } from '@graphql-hooks/generated';
 import PostCard from './PostCard';
 
 interface Props {
@@ -11,8 +11,8 @@ const PostsSection = ({ posts }: Props) => {
     <VStack as="section" alignItems="flex-start" w="full" spacing={4}>
       <Heading size="md">Recent Posts</Heading>
       <List w="full" spacing={{ base: 8, md: 2 }}>
-        {posts && posts.results.length > 0 ? (
-          posts.results.map(post => (
+        {posts && posts.length > 0 ? (
+          posts.map(post => (
             <ListItem key={post.id}>
               <PostCard post={post} />
             </ListItem>

@@ -17,6 +17,7 @@ API:
   * create queries (FE) to get username of user/users ✅
   * Review naming conventions i.e. should getPost be post, getPosts be posts etc. ✅
   * upload images via cloudinary ✅
+  * states for publishing - draft/published
 
 FE:
   * Custom package for GQL type generation ✅

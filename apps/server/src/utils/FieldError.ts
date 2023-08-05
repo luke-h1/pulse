@@ -7,4 +7,7 @@ export class FieldError {
 
   @Field()
   message: string;
+
+  @Field()
+  code?: string;
 }

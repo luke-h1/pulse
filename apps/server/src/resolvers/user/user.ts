@@ -11,7 +11,11 @@ import {
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 import { FieldError } from '../../utils/FieldError';
-import { User } from '../../prisma/src/generated/type-graphql';
+import {
+  AccountStatus,
+  Role,
+  User,
+} from '../../prisma/src/generated/type-graphql';
 import { Context } from '../../types/Context';
 import isAuth from '../../middleware/isAuth';
 import { db } from '../../db/prisma';
@@ -20,6 +24,8 @@ import { UserRegisterInput } from './inputs/UserRegisterInput';
 import isErrorLike from '../../utils/isErrorLike';
 import { UserLoginInput } from './inputs/UserLoginInput';
 import config from '../../utils/config';
+import { UserUpdateInput } from './inputs/UserUpdateInput';
+import { SlugsResponse } from '../post/post';
 
 @ObjectType()
 class UserResponse {
@@ -130,6 +136,17 @@ export class UserResolver {
       };
     }
 
+    if (user.accountStatus === 'BANNED' || user.accountStatus === 'ON_HOLD') {
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'Your account has been suspended.',
+          },
+        ],
+      };
+    }
+
     const valid = await bcrypt.compare(options.password, user.password);
 
     if (!valid) {
@@ -205,5 +222,78 @@ export class UserResolver {
     });
 
     return true;
+  }
+
+  @Mutation(() => UserResponse)
+  @Authorized(isAuth)
+  async updateUserDetails(
+    @Ctx() { req }: Context,
+    @Arg('options') options: UserUpdateInput,
+  ): Promise<UserResponse> {
+    const user = await db.user.update({
+      where: {
+        id: req.session.userId,
+      },
+      data: {
+        ...options,
+      },
+    });
+
+    return {
+      user,
+    };
+  }
+
+  @Mutation(() => UserResponse)
+  @Authorized(isAdmin)
+  async updateUserRole(
+    @Arg('id', () => String) id: string,
+    @Arg('role', () => Role) role: Role,
+  ): Promise<UserResponse> {
+    const user = await db.user.update({
+      where: {
+        id,
+      },
+      data: {
+        role,
+      },
+    });
+
+    return {
+      user,
+    };
+  }
+
+  @Mutation(() => UserResponse)
+  @Authorized(isAdmin)
+  async updateUserStatus(
+    @Arg('id', () => String) id: string,
+    @Arg('status', () => AccountStatus) status: AccountStatus,
+  ): Promise<UserResponse> {
+    const user = await db.user.update({
+      where: {
+        id,
+      },
+      data: {
+        accountStatus: status,
+      },
+    });
+
+    return {
+      user,
+    };
+  }
+
+  @Mutation(() => SlugsResponse)
+  async userSlugs(): Promise<SlugsResponse> {
+    const slugs = await db.user.findMany({
+      select: {
+        id: true,
+      },
+    });
+
+    return {
+      slugs: slugs.map(({ id }) => id),
+    };
   }
 }

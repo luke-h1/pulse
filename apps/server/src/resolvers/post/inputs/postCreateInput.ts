@@ -1,5 +1,5 @@
-import { Tag } from 'apps/server/src/prisma/src/generated/type-graphql';
 import { Field, InputType } from 'type-graphql';
+import { Tag } from '../../../prisma/generated/type-graphql';
 
 @InputType()
 export class PostCreateInput {

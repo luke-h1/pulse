@@ -11,11 +11,7 @@ import {
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
 import { FieldError } from '../../utils/FieldError';
-import {
-  AccountStatus,
-  Role,
-  User,
-} from '../../prisma/src/generated/type-graphql';
+import { AccountStatus, Role, User } from '../../prisma/generated/type-graphql';
 import { Context } from '../../types/Context';
 import isAuth from '../../middleware/isAuth';
 import { db } from '../../db/prisma';

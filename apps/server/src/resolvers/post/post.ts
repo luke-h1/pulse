@@ -10,7 +10,7 @@ import {
 } from 'type-graphql';
 import slugify from 'slugify';
 import { FieldError } from '../../utils/FieldError';
-import { Post } from '../../prisma/src/generated/type-graphql';
+import { Post } from '../../prisma/generated/type-graphql';
 import { db } from '../../db/prisma';
 import isAuth from '../../middleware/isAuth';
 import { PostCreateInput } from './inputs/postCreateInput';

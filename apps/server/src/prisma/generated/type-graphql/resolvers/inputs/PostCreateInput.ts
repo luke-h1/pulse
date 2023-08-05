@@ -2,7 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { TagCreateNestedManyWithoutPostInput } from "../inputs/TagCreateNestedManyWithoutPostInput";
+import { PostCreatetagsInput } from "../inputs/PostCreatetagsInput";
 import { UserCreateNestedOneWithoutPostsInput } from "../inputs/UserCreateNestedOneWithoutPostsInput";
 
 @TypeGraphQL.InputType("PostCreateInput", {})
@@ -32,6 +32,11 @@ export class PostCreateInput {
   })
   image?: string | undefined;
 
+  @TypeGraphQL.Field(_type => PostCreatetagsInput, {
+    nullable: true
+  })
+  tags?: PostCreatetagsInput | undefined;
+
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
     nullable: false
   })
@@ -46,11 +51,6 @@ export class PostCreateInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
-
-  @TypeGraphQL.Field(_type => TagCreateNestedManyWithoutPostInput, {
-    nullable: true
-  })
-  tags?: TagCreateNestedManyWithoutPostInput | undefined;
 
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutPostsInput, {
     nullable: false

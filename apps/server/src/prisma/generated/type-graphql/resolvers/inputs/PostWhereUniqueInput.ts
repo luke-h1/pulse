@@ -7,7 +7,7 @@ import { JsonFilter } from "../inputs/JsonFilter";
 import { PostWhereInput } from "../inputs/PostWhereInput";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
-import { TagListRelationFilter } from "../inputs/TagListRelationFilter";
+import { StringNullableListFilter } from "../inputs/StringNullableListFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
 @TypeGraphQL.InputType("PostWhereUniqueInput", {})
@@ -52,6 +52,11 @@ export class PostWhereUniqueInput {
   })
   image?: StringNullableFilter | undefined;
 
+  @TypeGraphQL.Field(_type => StringNullableListFilter, {
+    nullable: true
+  })
+  tags?: StringNullableListFilter | undefined;
+
   @TypeGraphQL.Field(_type => JsonFilter, {
     nullable: true
   })
@@ -71,11 +76,6 @@ export class PostWhereUniqueInput {
     nullable: true
   })
   updatedAt?: DateTimeFilter | undefined;
-
-  @TypeGraphQL.Field(_type => TagListRelationFilter, {
-    nullable: true
-  })
-  tags?: TagListRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true

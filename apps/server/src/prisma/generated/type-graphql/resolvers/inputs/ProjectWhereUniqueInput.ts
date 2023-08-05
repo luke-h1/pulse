@@ -7,7 +7,7 @@ import { JsonFilter } from "../inputs/JsonFilter";
 import { ProjectWhereInput } from "../inputs/ProjectWhereInput";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
-import { TagListRelationFilter } from "../inputs/TagListRelationFilter";
+import { StringNullableListFilter } from "../inputs/StringNullableListFilter";
 import { UserRelationFilter } from "../inputs/UserRelationFilter";
 
 @TypeGraphQL.InputType("ProjectWhereUniqueInput", {})
@@ -77,6 +77,11 @@ export class ProjectWhereUniqueInput {
   })
   playStoreUrl?: StringNullableFilter | undefined;
 
+  @TypeGraphQL.Field(_type => StringNullableListFilter, {
+    nullable: true
+  })
+  tags?: StringNullableListFilter | undefined;
+
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
@@ -91,11 +96,6 @@ export class ProjectWhereUniqueInput {
     nullable: true
   })
   updatedAt?: DateTimeFilter | undefined;
-
-  @TypeGraphQL.Field(_type => TagListRelationFilter, {
-    nullable: true
-  })
-  tags?: TagListRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true

@@ -1,13 +1,13 @@
 import { buildSchema } from 'type-graphql';
-import { HealthResolver } from '../resolvers/health';
 import isAuth from '../middleware/isAuth';
 import { UserResolver } from '../resolvers/user/user';
+import { PostResolver } from '../resolvers/post/post';
+import { ProjectResolver } from '../resolvers/project/project';
 
 const createSchema = async () => {
   return buildSchema({
-    resolvers: [HealthResolver, UserResolver],
+    resolvers: [UserResolver, PostResolver, ProjectResolver],
     validate: false,
-    container: ({ context }) => context.container,
     emitSchemaFile: true,
     authChecker: isAuth,
   });

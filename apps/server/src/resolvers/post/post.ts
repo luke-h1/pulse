@@ -43,13 +43,19 @@ export class SlugsResponse {
 
 @Resolver(Post)
 export class PostResolver {
-  @Query(() => CountResponse)
+  @Query(() => CountResponse, {
+    description: 'Returns the total number of posts',
+    nullable: true,
+  })
   async countPosts() {
     const count = await db.post.count();
     return { count };
   }
 
-  @Query(() => [Post])
+  @Query(() => [Post], {
+    description: 'Returns all posts',
+    nullable: true,
+  })
   async posts(): Promise<Post[]> {
     // will need to add pagination args in the future here
     return db.post.findMany({
@@ -57,7 +63,10 @@ export class PostResolver {
     });
   }
 
-  @Query(() => [Post])
+  @Query(() => [Post], {
+    description: 'Returns the 5 most recent posts',
+    nullable: true,
+  })
   async recentPosts(): Promise<Post[]> {
     return db.post.findMany({
       take: 5,
@@ -102,16 +111,15 @@ export class PostResolver {
         ...options,
         authorId: req.session.userId,
         slug,
-        tags: {
-          create: options.tags,
-        },
       },
     });
 
     return { post };
   }
 
-  @Mutation(() => PostResponse)
+  @Mutation(() => PostResponse, {
+    description: 'Updates a post',
+  })
   @Authorized(isAuth)
   async updatePost(
     @Ctx() { req }: Context,
@@ -142,23 +150,15 @@ export class PostResolver {
       data: {
         ...options,
         slug: slugify(options.title),
-        tags: {
-          updateMany: {
-            where: {
-              postId: post.id,
-            },
-            data: {
-              ...options.tags,
-            },
-          },
-        },
       },
     });
 
     return { post: updatedPost };
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, {
+    description: 'Deletes a post',
+  })
   @Authorized(isAuth)
   async deletePost(
     @Arg('slug', () => String) slug: string,
@@ -183,7 +183,10 @@ export class PostResolver {
     return true;
   }
 
-  @Mutation(() => SlugsResponse)
+  @Mutation(() => SlugsResponse, {
+    description: 'Returns all post slugs',
+    nullable: true,
+  })
   async postSlugs(): Promise<SlugsResponse> {
     const slugs = await db.post.findMany({
       select: {

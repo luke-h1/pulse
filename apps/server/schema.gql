@@ -3,6 +3,468 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+enum AccountStatus {
+  ACTIVE
+  BANNED
+  ON_HOLD
+}
+
+type CountResponse {
+  count: Float
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+input EnumAccountStatusFilter {
+  equals: AccountStatus
+  in: [AccountStatus!]
+  not: NestedEnumAccountStatusFilter
+  notIn: [AccountStatus!]
+}
+
+input EnumRoleFilter {
+  equals: Role
+  in: [Role!]
+  not: NestedEnumRoleFilter
+  notIn: [Role!]
+}
+
+type FieldError {
+  code: String!
+  field: String!
+  message: String!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+input JsonFilter {
+  array_contains: JSON
+  array_ends_with: JSON
+  array_starts_with: JSON
+  equals: JSON
+  gt: JSON
+  gte: JSON
+  lt: JSON
+  lte: JSON
+  not: JSON
+  path: [String!]
+  string_contains: String
+  string_ends_with: String
+  string_starts_with: String
+}
+
+type Mutation {
+  createPost(options: PostCreateInput!): PostResponse!
+  createProject(options: ProjectCreateInput!): ProjectResponse!
+  deleteAccount: Boolean!
+  deleteAllPosts: Boolean!
+  deleteAllProjects: Boolean!
+
+  """Deletes a post"""
+  deletePost(slug: String!): Boolean!
+  deletePostAsAdmin(slug: String!): Boolean!
+  deleteProject(slug: String!): Boolean!
+  deleteProjectAdmin(slug: String!): Boolean!
+  deleteUser(id: String!): Boolean!
+  login(options: UserLoginInput!): UserResponse!
+  logout: Boolean!
+
+  """Returns all post slugs"""
+  postSlugs: SlugsResponse
+  register(options: UserRegisterInput!): UserResponse!
+
+  """Updates a post"""
+  updatePost(options: PostUpdateInput!, slug: String!): PostResponse!
+  updateProject(options: ProjectUpdateInput!, slug: String!): ProjectResponse!
+  updateUserDetails(options: UserUpdateInput!): UserResponse!
+  updateUserRole(id: String!, role: Role!): UserResponse!
+  updateUserStatus(id: String!, status: AccountStatus!): UserResponse!
+
+  """Returns all user slugs"""
+  userSlugs: SlugsResponse
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+input NestedEnumAccountStatusFilter {
+  equals: AccountStatus
+  in: [AccountStatus!]
+  not: NestedEnumAccountStatusFilter
+  notIn: [AccountStatus!]
+}
+
+input NestedEnumRoleFilter {
+  equals: Role
+  in: [Role!]
+  not: NestedEnumRoleFilter
+  notIn: [Role!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Post {
+  authorId: String!
+  content: JSON!
+  createdAt: DateTime!
+  id: String!
+  image: String
+  intro: String!
+  slug: String!
+  tags: [String!]!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input PostCreateInput {
+  content: String!
+  image: String
+  intro: String!
+  tags: [String!]!
+  title: String!
+}
+
+input PostListRelationFilter {
+  every: PostWhereInput
+  none: PostWhereInput
+  some: PostWhereInput
+}
+
+type PostResponse {
+  errors: [FieldError!]
+  post: Post
+}
+
+"""Post update input data"""
+input PostUpdateInput {
+  content: String!
+  image: String
+  intro: String!
+  tags: [String!]!
+  title: String!
+}
+
+input PostWhereInput {
+  AND: [PostWhereInput!]
+  author: UserRelationFilter
+  authorId: StringFilter
+  content: JsonFilter
+  createdAt: DateTimeFilter
+  id: StringFilter
+  image: StringNullableFilter
+  intro: StringFilter
+  NOT: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  slug: StringFilter
+  tags: StringNullableListFilter
+  title: StringFilter
+  updatedAt: DateTimeFilter
+}
+
+type Project {
+  appStoreUrl: String
+  authorId: String!
+  content: JSON!
+  createdAt: DateTime!
+  githubUrl: String
+  id: String!
+  image: String
+  intro: String!
+  playStoreUrl: String
+  siteUrl: String
+  slug: String!
+  tags: [String!]!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input ProjectCreateInput {
+  appStoreUrl: String
+  content: String!
+  githubUrl: String
+  image: String
+  intro: String!
+  playStoreUrl: String
+  siteUrl: String
+  tags: [String!]!
+  title: String!
+}
+
+input ProjectListRelationFilter {
+  every: ProjectWhereInput
+  none: ProjectWhereInput
+  some: ProjectWhereInput
+}
+
+type ProjectResponse {
+  errors: [FieldError!]
+  project: Project
+}
+
+"""Project update input data"""
+input ProjectUpdateInput {
+  appStoreUrl: String
+  content: String!
+  githubUrl: String
+  image: String
+  intro: String!
+  playStoreUrl: String
+  siteUrl: String
+  tags: [String!]!
+  title: String!
+}
+
+input ProjectWhereInput {
+  AND: [ProjectWhereInput!]
+  appStoreUrl: StringNullableFilter
+  author: UserRelationFilter
+  authorId: StringFilter
+  content: JsonFilter
+  createdAt: DateTimeFilter
+  githubUrl: StringNullableFilter
+  id: StringFilter
+  image: StringNullableFilter
+  intro: StringFilter
+  NOT: [ProjectWhereInput!]
+  OR: [ProjectWhereInput!]
+  playStoreUrl: StringNullableFilter
+  siteUrl: StringNullableFilter
+  slug: StringFilter
+  tags: StringNullableListFilter
+  title: StringFilter
+  updatedAt: DateTimeFilter
+}
+
 type Query {
-  hello: String!
+  """Returns the total number of posts"""
+  countPosts: CountResponse
+  countProjects: CountResponse!
+  me: User
+  post(slug: String!): Post
+
+  """Returns all posts"""
+  posts: [Post!]
+  project(slug: String!): Project
+
+  """Returns all projects"""
+  projects: [Project!]
+
+  """Returns all project slugs"""
+  projectSlugs: SlugsResponse
+
+  """Returns the 5 most recent posts"""
+  recentPosts: [Post!]
+
+  """Returns the 5 most recent projects"""
+  recentProjects: [Project!]
+  user(id: String!): User
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+type SlugsResponse {
+  slugs: [String!]
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
+}
+
+type User {
+  _count: UserCount
+  accountStatus: AccountStatus!
+  bio: String
+  createdAt: DateTime!
+  email: String
+  emailVerified: DateTime
+  firstName: String!
+  github: String
+  id: String!
+  image: String
+  lastName: String!
+  location: String
+  password: String!
+  provider: String!
+  role: Role!
+  twitter: String
+  updatedAt: DateTime!
+  username: String!
+  website: String
+}
+
+type UserCount {
+  posts(where: PostWhereInput): Int!
+  projects(where: ProjectWhereInput): Int!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+}
+
+input UserRegisterInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  username: String!
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+type UserResponse {
+  errors: [FieldError!]
+  user: User
+}
+
+input UserUpdateInput {
+  github: String
+  image: String
+  location: String
+  twitter: String
+  website: String
+}
+
+input UserWhereInput {
+  accountStatus: EnumAccountStatusFilter
+  AND: [UserWhereInput!]
+  bio: StringNullableFilter
+  createdAt: DateTimeFilter
+  email: StringNullableFilter
+  emailVerified: DateTimeNullableFilter
+  firstName: StringFilter
+  github: StringNullableFilter
+  id: StringFilter
+  image: StringNullableFilter
+  lastName: StringFilter
+  location: StringNullableFilter
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  password: StringFilter
+  posts: PostListRelationFilter
+  projects: ProjectListRelationFilter
+  provider: StringFilter
+  role: EnumRoleFilter
+  twitter: StringNullableFilter
+  updatedAt: DateTimeFilter
+  username: StringFilter
+  website: StringNullableFilter
 }

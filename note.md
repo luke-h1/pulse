@@ -18,6 +18,8 @@ API:
   * Review naming conventions i.e. should getPost be post, getPosts be posts etc. ✅
   * upload images via cloudinary ✅
   * states for publishing - draft/published
+  * fix https://github.com/microsoft/TypeScript/issues/10866
+    * Build and start server project in different way
 
 FE:
   * Custom package for GQL type generation ✅

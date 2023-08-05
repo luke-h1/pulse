@@ -2,9 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
-import { Tag } from "../models/Tag";
 import { User } from "../models/User";
-import { ProjectCount } from "../resolvers/outputs/ProjectCount";
 
 @TypeGraphQL.ObjectType("Project", {})
 export class Project {
@@ -58,7 +56,10 @@ export class Project {
   })
   playStoreUrl?: string | null;
 
-  tags?: Tag[];
+  @TypeGraphQL.Field(_type => [String], {
+    nullable: false
+  })
+  tags!: string[];
 
   author?: User;
 
@@ -76,9 +77,4 @@ export class Project {
     nullable: false
   })
   updatedAt!: Date;
-
-  @TypeGraphQL.Field(_type => ProjectCount, {
-    nullable: true
-  })
-  _count?: ProjectCount | null;
 }

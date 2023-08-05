@@ -2,9 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
-import { Tag } from "../models/Tag";
 import { User } from "../models/User";
-import { PostCount } from "../resolvers/outputs/PostCount";
 
 @TypeGraphQL.ObjectType("Post", {})
 export class Post {
@@ -33,7 +31,10 @@ export class Post {
   })
   image?: string | null;
 
-  tags?: Tag[];
+  @TypeGraphQL.Field(_type => [String], {
+    nullable: false
+  })
+  tags!: string[];
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
     nullable: false
@@ -56,9 +57,4 @@ export class Post {
     nullable: false
   })
   updatedAt!: Date;
-
-  @TypeGraphQL.Field(_type => PostCount, {
-    nullable: true
-  })
-  _count?: PostCount | null;
 }

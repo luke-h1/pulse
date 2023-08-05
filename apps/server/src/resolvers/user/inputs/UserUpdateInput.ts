@@ -2,27 +2,27 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class UserUpdateInput {
-  @Field({
+  @Field(() => String, {
     nullable: true,
   })
   image: string;
 
-  @Field({
+  @Field(() => String, {
     nullable: true,
   })
   github: string;
 
-  @Field({
+  @Field(() => String, {
     nullable: true,
   })
   website: string;
 
-  @Field({
+  @Field(() => String, {
     nullable: true,
   })
   twitter: string;
 
-  @Field({
+  @Field(() => String, {
     nullable: true,
   })
   location: string;

@@ -4,8 +4,8 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
+import { ProjectUpdatetagsInput } from "../inputs/ProjectUpdatetagsInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
-import { TagUpdateManyWithoutProjectNestedInput } from "../inputs/TagUpdateManyWithoutProjectNestedInput";
 
 @TypeGraphQL.InputType("ProjectUpdateWithoutAuthorInput", {})
 export class ProjectUpdateWithoutAuthorInput {
@@ -59,6 +59,11 @@ export class ProjectUpdateWithoutAuthorInput {
   })
   playStoreUrl?: NullableStringFieldUpdateOperationsInput | undefined;
 
+  @TypeGraphQL.Field(_type => ProjectUpdatetagsInput, {
+    nullable: true
+  })
+  tags?: ProjectUpdatetagsInput | undefined;
+
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
     nullable: true
   })
@@ -68,9 +73,4 @@ export class ProjectUpdateWithoutAuthorInput {
     nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
-
-  @TypeGraphQL.Field(_type => TagUpdateManyWithoutProjectNestedInput, {
-    nullable: true
-  })
-  tags?: TagUpdateManyWithoutProjectNestedInput | undefined;
 }

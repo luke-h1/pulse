@@ -1,15 +1,14 @@
 import { Field, InputType } from 'type-graphql';
-import { Tag } from '../../../prisma/generated/type-graphql';
 
 @InputType()
 export class ProjectCreateInput {
-  @Field()
+  @Field(() => String)
   title: string;
 
-  @Field()
+  @Field(() => String)
   intro: string;
 
-  @Field({
+  @Field(() => String, {
     nullable: true,
   })
   image?: string;
@@ -37,6 +36,6 @@ export class ProjectCreateInput {
   })
   siteUrl?: string;
 
-  @Field(() => [Tag])
-  tags: Tag[];
+  @Field(() => [String])
+  tags: string[];
 }

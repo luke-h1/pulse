@@ -3,12 +3,12 @@ import { UserLoginInput } from './UserLoginInput';
 
 @InputType()
 export class UserRegisterInput extends UserLoginInput {
-  @Field()
+  @Field(() => String)
   firstName: string;
 
-  @Field()
+  @Field(() => String)
   lastName: string;
 
-  @Field()
+  @Field(() => String)
   username: string;
 }

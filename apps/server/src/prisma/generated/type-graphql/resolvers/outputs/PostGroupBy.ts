@@ -33,6 +33,11 @@ export class PostGroupBy {
   })
   image!: string | null;
 
+  @TypeGraphQL.Field(_type => [String], {
+    nullable: true
+  })
+  tags!: string[] | null;
+
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
     nullable: false
   })

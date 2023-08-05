@@ -58,7 +58,7 @@ model Project {
   siteUrl      String?
   appStoreUrl  String?
   playStoreUrl String?
-  tags         Tag[]
+  tags         String[]
   author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId     String
 
@@ -72,24 +72,10 @@ model Post {
   slug     String  @unique @db.VarChar(50)
   intro    String
   image    String?
-  tags     Tag[]
+  tags     String[]
   content  Json
   author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Tag {
-  id    String @id @default(cuid())
-  title String @db.VarChar(50)
-  slug  String @unique @db.VarChar(50)
-
-  post      Post?    @relation(fields: [postId], references: [id])
-  project   Project? @relation(fields: [projectId], references: [id])
-  projectId String?
-  postId    String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

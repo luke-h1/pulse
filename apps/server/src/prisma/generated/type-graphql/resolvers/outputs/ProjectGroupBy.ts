@@ -58,6 +58,11 @@ export class ProjectGroupBy {
   })
   playStoreUrl!: string | null;
 
+  @TypeGraphQL.Field(_type => [String], {
+    nullable: true
+  })
+  tags!: string[] | null;
+
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })

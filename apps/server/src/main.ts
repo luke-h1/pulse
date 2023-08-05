@@ -6,8 +6,6 @@ import { ApolloServer } from 'apollo-server-express';
 import compression from 'compression';
 import connectRedis from 'connect-redis';
 import cors from 'cors';
-import { makeExecutableSchema } from 'graphql-tools';
-import { buildTypeDefsAndResolvers } from 'type-graphql';
 import redis from './db/redis';
 import buildCookieOptions from './utils/buildCookieOptions';
 import { isProd } from './utils/isProd';

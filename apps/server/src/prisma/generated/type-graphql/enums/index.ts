@@ -7,6 +7,5 @@ export { ProjectScalarFieldEnum } from "./ProjectScalarFieldEnum";
 export { QueryMode } from "./QueryMode";
 export { Role } from "./Role";
 export { SortOrder } from "./SortOrder";
-export { TagScalarFieldEnum } from "./TagScalarFieldEnum";
 export { TransactionIsolationLevel } from "./TransactionIsolationLevel";
 export { UserScalarFieldEnum } from "./UserScalarFieldEnum";

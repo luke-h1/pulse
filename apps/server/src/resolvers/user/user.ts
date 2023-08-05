@@ -224,7 +224,7 @@ export class UserResolver {
   @Authorized(isAuth)
   async updateUserDetails(
     @Ctx() { req }: Context,
-    @Arg('options') options: UserUpdateInput,
+    @Arg('options', () => UserUpdateInput) options: UserUpdateInput,
   ): Promise<UserResponse> {
     const user = await db.user.update({
       where: {
@@ -280,7 +280,10 @@ export class UserResolver {
     };
   }
 
-  @Mutation(() => SlugsResponse)
+  @Mutation(() => SlugsResponse, {
+    description: 'Returns all user slugs',
+    nullable: true,
+  })
   async userSlugs(): Promise<SlugsResponse> {
     const slugs = await db.user.findMany({
       select: {
@@ -289,7 +292,7 @@ export class UserResolver {
     });
 
     return {
-      slugs: slugs.map(({ id }) => id),
+      slugs: slugs && slugs.map(({ id }) => id),
     };
   }
 }

@@ -6,6 +6,7 @@ import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { JsonFilter } from "../inputs/JsonFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
+import { StringNullableListFilter } from "../inputs/StringNullableListFilter";
 
 @TypeGraphQL.InputType("ProjectScalarWhereInput", {})
 export class ProjectScalarWhereInput {
@@ -73,6 +74,11 @@ export class ProjectScalarWhereInput {
     nullable: true
   })
   playStoreUrl?: StringNullableFilter | undefined;
+
+  @TypeGraphQL.Field(_type => StringNullableListFilter, {
+    nullable: true
+  })
+  tags?: StringNullableListFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true

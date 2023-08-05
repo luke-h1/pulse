@@ -36,7 +36,10 @@ export class ProjectResolver {
     return { count };
   }
 
-  @Query(() => [Project])
+  @Query(() => [Project], {
+    description: 'Returns all projects',
+    nullable: true,
+  })
   async projects(): Promise<Project[]> {
     // will need to add pagination args in the future here
     return db.project.findMany({
@@ -44,7 +47,10 @@ export class ProjectResolver {
     });
   }
 
-  @Query(() => [Project])
+  @Query(() => [Project], {
+    description: 'Returns the 5 most recent projects',
+    nullable: true,
+  })
   async recentProjects(): Promise<Project[]> {
     return db.project.findMany({
       take: 5,
@@ -54,7 +60,10 @@ export class ProjectResolver {
     });
   }
 
-  @Query(() => SlugsResponse)
+  @Query(() => SlugsResponse, {
+    description: 'Returns all project slugs',
+    nullable: true,
+  })
   async projectSlugs(): Promise<SlugsResponse> {
     const slugs = await db.project.findMany({
       select: {
@@ -103,9 +112,6 @@ export class ProjectResolver {
         ...options,
         slug,
         authorId: req.session.userId,
-        tags: {
-          create: options.tags,
-        },
       },
     });
 
@@ -156,9 +162,6 @@ export class ProjectResolver {
       },
       data: {
         ...options,
-        tags: {
-          create: options.tags,
-        },
       },
     });
 

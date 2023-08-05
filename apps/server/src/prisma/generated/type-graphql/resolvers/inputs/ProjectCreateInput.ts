@@ -2,7 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { TagCreateNestedManyWithoutProjectInput } from "../inputs/TagCreateNestedManyWithoutProjectInput";
+import { ProjectCreatetagsInput } from "../inputs/ProjectCreatetagsInput";
 import { UserCreateNestedOneWithoutProjectsInput } from "../inputs/UserCreateNestedOneWithoutProjectsInput";
 
 @TypeGraphQL.InputType("ProjectCreateInput", {})
@@ -57,6 +57,11 @@ export class ProjectCreateInput {
   })
   playStoreUrl?: string | undefined;
 
+  @TypeGraphQL.Field(_type => ProjectCreatetagsInput, {
+    nullable: true
+  })
+  tags?: ProjectCreatetagsInput | undefined;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })
@@ -66,11 +71,6 @@ export class ProjectCreateInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
-
-  @TypeGraphQL.Field(_type => TagCreateNestedManyWithoutProjectInput, {
-    nullable: true
-  })
-  tags?: TagCreateNestedManyWithoutProjectInput | undefined;
 
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutProjectsInput, {
     nullable: false

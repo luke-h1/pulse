@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { ProjectCreatetagsInput } from "../inputs/ProjectCreatetagsInput";
 
 @TypeGraphQL.InputType("ProjectCreateManyAuthorInput", {})
 export class ProjectCreateManyAuthorInput {
@@ -54,6 +55,11 @@ export class ProjectCreateManyAuthorInput {
     nullable: true
   })
   playStoreUrl?: string | undefined;
+
+  @TypeGraphQL.Field(_type => ProjectCreatetagsInput, {
+    nullable: true
+  })
+  tags?: ProjectCreatetagsInput | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: true

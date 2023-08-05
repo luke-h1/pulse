@@ -10,6 +10,11 @@ const args = process.argv.slice(2);
 const projectRoot = path.resolve(__dirname, '..');
 
 const projects = {
+  apiWatch: {
+    path: path.join(projectRoot, 'apps/api'),
+    command: 'pnpm watch',
+    colour: chalk.green,
+  },
   api: {
     path: path.join(projectRoot, 'apps/api'),
     command: 'pnpm dev',

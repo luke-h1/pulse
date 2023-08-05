@@ -8,23 +8,11 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import FormattedDate from '@common/components/FormattedDate';
+import { PostsQuery } from '@graphql-hooks/generated';
+import { ArrayElementType } from '@frontend/types/util';
 
 interface Props {
-  post: {
-    __typename?: 'Post' | undefined;
-    id: string;
-    title: string;
-    intro: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    content: any;
-    slug: string;
-    tags: string[];
-    image?: string | null | undefined;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    updatedAt: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    createdAt: any;
-  };
+  post: ArrayElementType<PostsQuery['posts']>;
 }
 
 const PostCard = ({ post }: Props) => {

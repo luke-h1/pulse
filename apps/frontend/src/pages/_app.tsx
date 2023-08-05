@@ -60,7 +60,7 @@ const App = ({
             ) : (
               <Component {...pageProps} />
             )}
-            </CmdPalleteContextProvider>
+          </CmdPalleteContextProvider>
         </ChakraProvider>
       </SessionProvider>
     </>

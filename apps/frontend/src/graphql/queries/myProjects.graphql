@@ -14,6 +14,7 @@ query MyProjects($input: SearchInput) {
       slug
       tags
       title
+      image
       updatedAt
     }
   }

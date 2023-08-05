@@ -31,3 +31,5 @@ sitemap-0.xml
 test-results
 .vscode
 .idea
+dist
+apps/server/src/prisma/src/generated

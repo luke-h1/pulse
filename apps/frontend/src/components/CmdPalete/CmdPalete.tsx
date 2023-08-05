@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import {
   Flex,
@@ -18,10 +18,12 @@ import { createDescendantContext } from '@chakra-ui/descendant';
 import { CgArrowRight } from 'react-icons/cg';
 import { useKeyPressEvent } from 'react-use';
 import {
+  ActionItem,
   PageItem,
   ThemeItem,
   useCmdPalleteContext,
 } from '@frontend/context/CmdPalleteContext';
+import useCurrentUser from '@frontend/hooks/UseCurrentUser';
 import CommandItem from './CommandItem';
 
 export const [
@@ -141,6 +143,8 @@ const CmdPallete = () => {
     }
   });
 
+  const { currentUser, fetching: currentUserFetching } = useCurrentUser();
+
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -197,7 +201,7 @@ const CmdPallete = () => {
                 <MenuDescendantsProvider value={descendants}>
                   {Object.keys(commands).map(section => (
                     <>
-                      {/* @ts-ignore */}
+                      {/* @ts-expect-error testing */}
                       {commands[section].length > 0 && (
                         <ListItem key={section}>
                           <Text
@@ -210,7 +214,7 @@ const CmdPallete = () => {
                           </Text>
                         </ListItem>
                       )}
-                      {/* @ts-ignore */}
+                      {/* @ts-expect-error testing */}
                       {commands[section].map(
                         (command: PageItem | ThemeItem) => {
                           switch (section) {
@@ -225,6 +229,43 @@ const CmdPallete = () => {
                                 />
                               );
                             }
+
+                            case 'unauthenticated': {
+                              if (!currentUserFetching && currentUser) {
+                                return null;
+                              }
+
+                              const { title, href } = command as PageItem;
+
+                              return (
+                                <CommandItem
+                                  key={title}
+                                  title={title}
+                                  href={href}
+                                  icon={CgArrowRight}
+                                />
+                              );
+                            }
+
+                            case 'authenticated': {
+                              if (!currentUserFetching && !currentUser) {
+                                return null;
+                              }
+
+                              const { title, href, action } =
+                                command as ActionItem;
+
+                              return (
+                                <CommandItem
+                                  key={title}
+                                  title={title}
+                                  onClick={action}
+                                  href={href}
+                                  icon={CgArrowRight}
+                                />
+                              );
+                            }
+
                             case 'themes': {
                               const { title, id } = command as ThemeItem;
 
@@ -240,6 +281,9 @@ const CmdPallete = () => {
                                 />
                               );
                             }
+
+                            default:
+                              return null;
                           }
                         },
                       )}

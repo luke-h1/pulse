@@ -1,6 +1,6 @@
 packages:
+  - 'apps/server'
   - 'apps/admin'
-  - 'apps/api'
   - 'apps/common'
   - 'apps/frontend'
   - 'packages/ui'

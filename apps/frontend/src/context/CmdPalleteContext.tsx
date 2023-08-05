@@ -20,10 +20,17 @@ export type ThemeItem = BaseItem & {
   icon: IconType;
 };
 
+export type ActionItem = BaseItem & {
+  href?: string;
+  action?: () => void;
+};
+
 export type SearchItemType = {
   pages: PageItem[];
   social: SocialItem[];
   themes: ThemeItem[];
+  unauthenticated: PageItem[];
+  authenticated: ActionItem[];
 };
 
 export const searchItems: SearchItemType = {
@@ -61,6 +68,26 @@ export const searchItems: SearchItemType = {
       icon: IoMoon,
     },
   ],
+  unauthenticated: [
+    {
+      title: 'Login',
+      href: '/auth/login',
+    },
+    {
+      title: 'Register',
+      href: '/auth/register',
+    },
+  ],
+  authenticated: [
+    {
+      title: 'Logout',
+      action: () => {},
+    },
+    {
+      title: 'Profile',
+      href: '/users/me',
+    },
+  ],
 };
 
 interface CmdPalleteContextState {
@@ -83,6 +110,8 @@ export const CmdPalleteContext = createContext<CmdPalleteContextState>({
     pages: [],
     social: [],
     themes: [],
+    authenticated: [],
+    unauthenticated: [],
   },
   filterCommands: () => {},
 });
@@ -115,6 +144,12 @@ export const CmdPalleteContextProvider = ({ children }: Props) => {
         return item.title.toLowerCase().includes(query.toLowerCase());
       }),
       themes: searchItems.themes.filter(item => {
+        return item.title.toLowerCase().includes(query.toLowerCase());
+      }),
+      authenticated: searchItems.authenticated.filter(item => {
+        return item.title.toLowerCase().includes(query.toLowerCase());
+      }),
+      unauthenticated: searchItems.unauthenticated.filter(item => {
         return item.title.toLowerCase().includes(query.toLowerCase());
       }),
     });

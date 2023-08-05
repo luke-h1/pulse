@@ -73,6 +73,7 @@ model Project {
   title        String   @db.VarChar(50)
   slug         String   @unique @db.VarChar(50)
   intro        String
+  image        String?
   content      Json
   githubUrl    String?
   siteUrl      String?

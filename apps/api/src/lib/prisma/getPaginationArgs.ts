@@ -52,7 +52,7 @@ export const getProjectPaginationArgs = (
   };
 };
 
-// TODO: constrain type of object here to prisma fields
+// TODO: constrain type of object here to prisma fields and make generic
 export const getPostPaginationArgs = (
   args: SearchArgs,
   isFirst: boolean,

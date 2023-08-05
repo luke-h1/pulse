@@ -1,0 +1,97 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "./src/generated/client"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output = "./src/generated/type-graphql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum AccountStatus {
+  BANNED
+  ON_HOLD
+  ACTIVE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  provider      String
+  firstName     String
+  lastName      String
+  email         String?   @unique
+  emailVerified DateTime?
+  username      String    @unique
+  password      String
+  image         String?
+  role          Role          @default(USER)
+  github        String?
+  website       String?
+  twitter       String?
+  bio           String?
+  location      String?
+  accountStatus AccountStatus @default(ACTIVE)
+  projects      Project[]
+  posts         Post[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  title        String   @db.VarChar(50)
+  slug         String   @unique @db.VarChar(50)
+  intro        String
+  image        String?
+  content      Json
+  githubUrl    String?
+  siteUrl      String?
+  appStoreUrl  String?
+  playStoreUrl String?
+  tags         Tag[]
+  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id       String  @id @default(cuid())
+  title    String  @db.VarChar(50)
+  slug     String  @unique @db.VarChar(50)
+  intro    String
+  image    String?
+  tags     Tag[]
+  content  Json
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  title String @db.VarChar(50)
+  slug  String @unique @db.VarChar(50)
+
+  post      Post?    @relation(fields: [postId], references: [id])
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
+  postId    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

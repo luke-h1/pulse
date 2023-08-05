@@ -119,6 +119,7 @@ type Project {
   createdAt: Date!
   githubUrl: String
   id: ID!
+  image: String
   intro: String!
   playStoreUrl: String
   siteUrl: String

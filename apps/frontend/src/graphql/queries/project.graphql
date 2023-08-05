@@ -12,6 +12,7 @@ query Project($slug: String!) {
     title
     tags
     updatedAt
+    image
     author {
       firstName
       lastName

@@ -20,6 +20,7 @@ query Projects {
       slug
       tags
       title
+      image
       updatedAt
     }
   }

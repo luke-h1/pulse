@@ -1,8 +1,0 @@
-query UserSlugs {
-  users {
-    results {
-      id
-      username
-    }
-  }
-}

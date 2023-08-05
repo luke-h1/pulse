@@ -1,8 +1,5 @@
 query PostSlugs {
-  posts {
-    results {
-      id
-      slug
-    }
+  postSlugs {
+    slugs
   }
 }

@@ -1,5 +1,25 @@
-mutation CreateProject($input: CreateProjectInput!) {
-  createProject(input: $input) {
-    slug
+mutation CreateProject($options: ProjectCreateInput!) {
+  createProject(options: $options) {
+    errors {
+      message
+      field
+      code
+    }
+    project {
+      intro
+      playStoreUrl
+      siteUrl
+      slug
+      tags
+      title
+      updatedAt
+      id
+      image
+      githubUrl
+      createdAt
+      content
+      authorId
+      appStoreUrl
+    }
   }
 }

@@ -52,6 +52,19 @@ export class PostResolver {
     return { count };
   }
 
+  @Query(() => SlugsResponse, {
+    description: 'Returns all post slugs',
+  })
+  async postSlugs(): Promise<SlugsResponse> {
+    const slugs = await db.post.findMany({
+      select: {
+        slug: true,
+      },
+    });
+
+    return { slugs: slugs.map(slug => slug.slug) };
+  }
+
   @Query(() => [Post], {
     description: 'Returns all posts',
     nullable: true,

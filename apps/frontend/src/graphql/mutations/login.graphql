@@ -1,3 +1,12 @@
-mutation Login($token: String!) {
-  login(token: $token)
+mutation Login($options: UserLoginInput!) {
+  login(options: $options) {
+    errors {
+      message
+      field
+      code
+    }
+    user {
+      id
+    }
+  }
 }

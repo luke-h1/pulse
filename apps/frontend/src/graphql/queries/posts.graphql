@@ -1,20 +1,13 @@
 query Posts {
   posts {
-    nextCursor
-    prevCursor
-    results {
-      id
-      author {
-        firstName
-      }
-      image
-      intro
-      slug
-      title
-      createdAt
-      id
-      content
-      updatedAt
-    }
+    id
+    title
+    intro
+    content
+    slug
+    tags
+    image
+    updatedAt
+    createdAt
   }
 }

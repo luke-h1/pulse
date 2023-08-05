@@ -1,16 +1,25 @@
-mutation UpdateProject($input: CreateProjectInput!, $projectId: String!) {
-  updateProject(input: $input, projectId: $projectId) {
-    updatedAt
-    title
-    tags
-    slug
-    siteUrl
-    playStoreUrl
-    intro
-    id
-    githubUrl
-    createdAt
-    content
-    appStoreUrl
+mutation UpdateProject($options: ProjectUpdateInput!, $slug: String!) {
+  updateProject(options: $options, slug: $slug) {
+    errors {
+      field
+      message
+      code
+    }
+    project {
+      appStoreUrl
+      authorId
+      content
+      createdAt
+      githubUrl
+      id
+      image
+      intro
+      playStoreUrl
+      siteUrl
+      slug
+      tags
+      title
+      updatedAt
+    }
   }
 }

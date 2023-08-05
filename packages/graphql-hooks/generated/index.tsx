@@ -34,171 +34,300 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  Date: { input: any; output: any };
-  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  DateTime: { input: any; output: any };
   JSON: { input: any; output: any };
 };
 
-/** The status of the user account */
 export enum AccountStatus {
   Active = 'ACTIVE',
   Banned = 'BANNED',
   OnHold = 'ON_HOLD',
 }
 
-/** Create new post */
-export type CreatePostInput = {
-  content: Scalars['JSON']['input'];
-  image?: InputMaybe<Scalars['String']['input']>;
-  intro: Scalars['String']['input'];
-  title: Scalars['String']['input'];
+export type CountResponse = {
+  __typename?: 'CountResponse';
+  count?: Maybe<Scalars['Float']['output']>;
 };
 
-/** Create new project */
-export type CreateProjectInput = {
-  appStoreUrl?: InputMaybe<Scalars['String']['input']>;
-  content: Scalars['JSON']['input'];
-  githubUrl?: InputMaybe<Scalars['String']['input']>;
-  intro: Scalars['String']['input'];
-  playStoreUrl?: InputMaybe<Scalars['String']['input']>;
-  siteUrl?: InputMaybe<Scalars['String']['input']>;
-  tags: Array<Scalars['String']['input']>;
-  title: Scalars['String']['input'];
+export type DateTimeFilter = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  not?: InputMaybe<NestedDateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
-/** Follow user input */
-export type FollowUserInput = {
-  action?: InputMaybe<UserFollowActions>;
-  userId?: InputMaybe<Scalars['ID']['input']>;
+export type DateTimeNullableFilter = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  not?: InputMaybe<NestedDateTimeNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+};
+
+export type EnumAccountStatusFilter = {
+  equals?: InputMaybe<AccountStatus>;
+  in?: InputMaybe<Array<AccountStatus>>;
+  not?: InputMaybe<NestedEnumAccountStatusFilter>;
+  notIn?: InputMaybe<Array<AccountStatus>>;
+};
+
+export type EnumRoleFilter = {
+  equals?: InputMaybe<Role>;
+  in?: InputMaybe<Array<Role>>;
+  not?: InputMaybe<NestedEnumRoleFilter>;
+  notIn?: InputMaybe<Array<Role>>;
+};
+
+export type FieldError = {
+  __typename?: 'FieldError';
+  code: Scalars['String']['output'];
+  field: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+};
+
+export type JsonFilter = {
+  array_contains?: InputMaybe<Scalars['JSON']['input']>;
+  array_ends_with?: InputMaybe<Scalars['JSON']['input']>;
+  array_starts_with?: InputMaybe<Scalars['JSON']['input']>;
+  equals?: InputMaybe<Scalars['JSON']['input']>;
+  gt?: InputMaybe<Scalars['JSON']['input']>;
+  gte?: InputMaybe<Scalars['JSON']['input']>;
+  lt?: InputMaybe<Scalars['JSON']['input']>;
+  lte?: InputMaybe<Scalars['JSON']['input']>;
+  not?: InputMaybe<Scalars['JSON']['input']>;
+  path?: InputMaybe<Array<Scalars['String']['input']>>;
+  string_contains?: InputMaybe<Scalars['String']['input']>;
+  string_ends_with?: InputMaybe<Scalars['String']['input']>;
+  string_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Create new post */
-  createPost: Post;
-  /** Create new project */
-  createProject: Project;
-  /** Delete post */
-  deletePost: Post;
-  /** Delete project */
-  deleteProject: Project;
-  /** Delete a user */
-  deleteUser: User;
-  /** Follow a user or unfollow a user */
-  followerUser: User;
-  /** Login a user */
-  login: Scalars['String']['output'];
-  /** Signup a user */
-  signup: Scalars['String']['output'];
-  /** Update a user's ban status */
-  updateAccountStatus: User;
-  /** Update post */
-  updatePost: Post;
-  /** Update project */
-  updateProject: Project;
-  /** Update a user's information */
-  updateUser: User;
-  /** Update a user's role */
-  updateUserRole: User;
+  createPost: PostResponse;
+  createProject: ProjectResponse;
+  deleteAccount: Scalars['Boolean']['output'];
+  deleteAllPosts: Scalars['Boolean']['output'];
+  deleteAllProjects: Scalars['Boolean']['output'];
+  /** Deletes a post */
+  deletePost: Scalars['Boolean']['output'];
+  deletePostAsAdmin: Scalars['Boolean']['output'];
+  deleteProject: Scalars['Boolean']['output'];
+  deleteProjectAdmin: Scalars['Boolean']['output'];
+  deleteUser: Scalars['Boolean']['output'];
+  login: UserResponse;
+  logout: Scalars['Boolean']['output'];
+  /** Returns all post slugs */
+  postSlugs?: Maybe<SlugsResponse>;
+  register: UserResponse;
+  /** Updates a post */
+  updatePost: PostResponse;
+  updateProject: ProjectResponse;
+  updateUserDetails: UserResponse;
+  updateUserRole: UserResponse;
+  updateUserStatus: UserResponse;
+  /** Returns all user slugs */
+  userSlugs?: Maybe<SlugsResponse>;
 };
 
 export type MutationCreatePostArgs = {
-  input: CreatePostInput;
+  options: PostCreateInput;
 };
 
 export type MutationCreateProjectArgs = {
-  input: CreateProjectInput;
+  options: ProjectCreateInput;
 };
 
 export type MutationDeletePostArgs = {
-  id: Scalars['String']['input'];
+  slug: Scalars['String']['input'];
+};
+
+export type MutationDeletePostAsAdminArgs = {
+  slug: Scalars['String']['input'];
 };
 
 export type MutationDeleteProjectArgs = {
-  projectId: Scalars['String']['input'];
+  slug: Scalars['String']['input'];
+};
+
+export type MutationDeleteProjectAdminArgs = {
+  slug: Scalars['String']['input'];
 };
 
 export type MutationDeleteUserArgs = {
-  userId: Scalars['String']['input'];
-};
-
-export type MutationFollowerUserArgs = {
-  input: FollowUserInput;
+  id: Scalars['String']['input'];
 };
 
 export type MutationLoginArgs = {
-  token: Scalars['String']['input'];
+  options: UserLoginInput;
 };
 
-export type MutationSignupArgs = {
-  token: Scalars['String']['input'];
-};
-
-export type MutationUpdateAccountStatusArgs = {
-  accountStatus: AccountStatus;
-  userId: Scalars['String']['input'];
+export type MutationRegisterArgs = {
+  options: UserRegisterInput;
 };
 
 export type MutationUpdatePostArgs = {
-  id: Scalars['String']['input'];
-  input: CreatePostInput;
+  options: PostUpdateInput;
+  slug: Scalars['String']['input'];
 };
 
 export type MutationUpdateProjectArgs = {
-  input: CreateProjectInput;
-  projectId: Scalars['String']['input'];
+  options: ProjectUpdateInput;
+  slug: Scalars['String']['input'];
 };
 
-export type MutationUpdateUserArgs = {
-  input: UpdateUserInput;
+export type MutationUpdateUserDetailsArgs = {
+  options: UserUpdateInput;
 };
 
 export type MutationUpdateUserRoleArgs = {
+  id: Scalars['String']['input'];
   role: Role;
-  userId: Scalars['String']['input'];
 };
 
-/** Post */
+export type MutationUpdateUserStatusArgs = {
+  id: Scalars['String']['input'];
+  status: AccountStatus;
+};
+
+export type NestedDateTimeFilter = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  not?: InputMaybe<NestedDateTimeFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+};
+
+export type NestedDateTimeNullableFilter = {
+  equals?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  not?: InputMaybe<NestedDateTimeNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+};
+
+export type NestedEnumAccountStatusFilter = {
+  equals?: InputMaybe<AccountStatus>;
+  in?: InputMaybe<Array<AccountStatus>>;
+  not?: InputMaybe<NestedEnumAccountStatusFilter>;
+  notIn?: InputMaybe<Array<AccountStatus>>;
+};
+
+export type NestedEnumRoleFilter = {
+  equals?: InputMaybe<Role>;
+  in?: InputMaybe<Array<Role>>;
+  not?: InputMaybe<NestedEnumRoleFilter>;
+  notIn?: InputMaybe<Array<Role>>;
+};
+
+export type NestedStringFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type NestedStringNullableFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Post = {
   __typename?: 'Post';
-  author: User;
+  authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
-  createdAt: Scalars['Date']['output'];
-  id: Scalars['ID']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
   slug: Scalars['String']['output'];
+  tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
-  updatedAt: Scalars['Date']['output'];
+  updatedAt: Scalars['DateTime']['output'];
 };
 
-/** Search posts input */
-export type PostSearchInput = {
-  cursor?: InputMaybe<Scalars['String']['input']>;
-  order?: InputMaybe<SearchOrder>;
-  orderBy?: InputMaybe<Scalars['String']['input']>;
-  search?: InputMaybe<Scalars['String']['input']>;
+export type PostCreateInput = {
+  content: Scalars['String']['input'];
+  image?: InputMaybe<Scalars['String']['input']>;
+  intro: Scalars['String']['input'];
+  tags: Array<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
 };
 
-/** PostsResponse */
-export type PostsResponse = {
-  __typename?: 'PostsResponse';
-  nextCursor?: Maybe<Scalars['String']['output']>;
-  prevCursor?: Maybe<Scalars['String']['output']>;
-  results: Array<Post>;
-  totalCount: Scalars['Int']['output'];
+export type PostListRelationFilter = {
+  every?: InputMaybe<PostWhereInput>;
+  none?: InputMaybe<PostWhereInput>;
+  some?: InputMaybe<PostWhereInput>;
 };
 
-/** Project */
+export type PostResponse = {
+  __typename?: 'PostResponse';
+  errors?: Maybe<Array<FieldError>>;
+  post?: Maybe<Post>;
+};
+
+/** Post update input data */
+export type PostUpdateInput = {
+  content: Scalars['String']['input'];
+  image?: InputMaybe<Scalars['String']['input']>;
+  intro: Scalars['String']['input'];
+  tags: Array<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
+export type PostWhereInput = {
+  AND?: InputMaybe<Array<PostWhereInput>>;
+  NOT?: InputMaybe<Array<PostWhereInput>>;
+  OR?: InputMaybe<Array<PostWhereInput>>;
+  author?: InputMaybe<UserRelationFilter>;
+  authorId?: InputMaybe<StringFilter>;
+  content?: InputMaybe<JsonFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringNullableFilter>;
+  intro?: InputMaybe<StringFilter>;
+  slug?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<StringNullableListFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+};
+
 export type Project = {
   __typename?: 'Project';
   appStoreUrl?: Maybe<Scalars['String']['output']>;
-  author: User;
+  authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
-  createdAt: Scalars['Date']['output'];
+  createdAt: Scalars['DateTime']['output'];
   githubUrl?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
   playStoreUrl?: Maybe<Scalars['String']['output']>;
@@ -206,338 +335,421 @@ export type Project = {
   slug: Scalars['String']['output'];
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
-  updatedAt: Scalars['Date']['output'];
+  updatedAt: Scalars['DateTime']['output'];
 };
 
-/** ProjectsResponse */
-export type ProjectsResponse = {
-  __typename?: 'ProjectsResponse';
-  nextCursor?: Maybe<Scalars['String']['output']>;
-  prevCursor?: Maybe<Scalars['String']['output']>;
-  results: Array<Project>;
-  totalCount: Scalars['Int']['output'];
+export type ProjectCreateInput = {
+  appStoreUrl?: InputMaybe<Scalars['String']['input']>;
+  content: Scalars['String']['input'];
+  githubUrl?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  intro: Scalars['String']['input'];
+  playStoreUrl?: InputMaybe<Scalars['String']['input']>;
+  siteUrl?: InputMaybe<Scalars['String']['input']>;
+  tags: Array<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
+export type ProjectListRelationFilter = {
+  every?: InputMaybe<ProjectWhereInput>;
+  none?: InputMaybe<ProjectWhereInput>;
+  some?: InputMaybe<ProjectWhereInput>;
+};
+
+export type ProjectResponse = {
+  __typename?: 'ProjectResponse';
+  errors?: Maybe<Array<FieldError>>;
+  project?: Maybe<Project>;
+};
+
+/** Project update input data */
+export type ProjectUpdateInput = {
+  appStoreUrl?: InputMaybe<Scalars['String']['input']>;
+  content: Scalars['String']['input'];
+  githubUrl?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  intro: Scalars['String']['input'];
+  playStoreUrl?: InputMaybe<Scalars['String']['input']>;
+  siteUrl?: InputMaybe<Scalars['String']['input']>;
+  tags: Array<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+};
+
+export type ProjectWhereInput = {
+  AND?: InputMaybe<Array<ProjectWhereInput>>;
+  NOT?: InputMaybe<Array<ProjectWhereInput>>;
+  OR?: InputMaybe<Array<ProjectWhereInput>>;
+  appStoreUrl?: InputMaybe<StringNullableFilter>;
+  author?: InputMaybe<UserRelationFilter>;
+  authorId?: InputMaybe<StringFilter>;
+  content?: InputMaybe<JsonFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  githubUrl?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringNullableFilter>;
+  intro?: InputMaybe<StringFilter>;
+  playStoreUrl?: InputMaybe<StringNullableFilter>;
+  siteUrl?: InputMaybe<StringNullableFilter>;
+  slug?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<StringNullableListFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  /** Get the currently authenticated user */
-  currentUser: User;
-  /** Get the currently authenticated user. Only available if the user has an ADMIN role */
-  currentUserAsAdmin: User;
-  myPosts: PostsResponse;
-  /** Get currently logged in users's projects */
-  myProjects: ProjectsResponse;
-  /** Get post by slug */
-  post: Post;
-  posts: PostsResponse;
-  /** Get project by slug */
-  project: Project;
-  /** Get all projects */
-  projects: ProjectsResponse;
-  /** Get a user by id */
-  user: User;
-  /** Get all users */
-  users: UserResponse;
-  /** Get all users. Only available if the user has an ADMIN role */
-  usersAdmin: UsersResponse;
-};
-
-export type QueryMyPostsArgs = {
-  input?: InputMaybe<PostSearchInput>;
-};
-
-export type QueryMyProjectsArgs = {
-  input?: InputMaybe<SearchInput>;
+  /** Returns the total number of posts */
+  countPosts?: Maybe<CountResponse>;
+  countProjects: CountResponse;
+  me?: Maybe<User>;
+  post?: Maybe<Post>;
+  /** Returns all post slugs */
+  postSlugs: SlugsResponse;
+  /** Returns all posts */
+  posts?: Maybe<Array<Post>>;
+  project?: Maybe<Project>;
+  /** Returns all project slugs */
+  projectSlugs?: Maybe<SlugsResponse>;
+  /** Returns all projects */
+  projects?: Maybe<Array<Project>>;
+  /** Returns the 5 most recent posts */
+  recentPosts?: Maybe<Array<Post>>;
+  /** Returns the 5 most recent projects */
+  recentProjects?: Maybe<Array<Project>>;
+  user?: Maybe<User>;
 };
 
 export type QueryPostArgs = {
   slug: Scalars['String']['input'];
 };
 
-export type QueryPostsArgs = {
-  input?: InputMaybe<PostSearchInput>;
-};
-
 export type QueryProjectArgs = {
   slug: Scalars['String']['input'];
-};
-
-export type QueryProjectsArgs = {
-  input?: InputMaybe<SearchInput>;
 };
 
 export type QueryUserArgs = {
   id: Scalars['String']['input'];
 };
 
-export type QueryUsersAdminArgs = {
-  input?: InputMaybe<SearchUsersInput>;
-};
+export enum QueryMode {
+  Default = 'default',
+  Insensitive = 'insensitive',
+}
 
-/** The role of the user */
 export enum Role {
   Admin = 'ADMIN',
   User = 'USER',
 }
 
-/** Search projects input */
-export type SearchInput = {
-  cursor?: InputMaybe<Scalars['String']['input']>;
-  order?: InputMaybe<SearchOrder>;
-  orderBy?: InputMaybe<Scalars['String']['input']>;
-  search?: InputMaybe<Scalars['String']['input']>;
+export type SlugsResponse = {
+  __typename?: 'SlugsResponse';
+  slugs?: Maybe<Array<Scalars['String']['output']>>;
 };
 
-/** Search order */
-export enum SearchOrder {
-  Asc = 'asc',
-  Desc = 'desc',
-}
-
-/** Search user input */
-export type SearchUsersInput = {
-  cursor?: InputMaybe<Scalars['String']['input']>;
-  order?: InputMaybe<SearchOrder>;
-  orderBy?: InputMaybe<Scalars['String']['input']>;
-  search?: InputMaybe<Scalars['String']['input']>;
+export type StringFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Update user info */
-export type UpdateUserInput = {
-  bio: Scalars['String']['input'];
-  email: Scalars['String']['input'];
-  firstName: Scalars['String']['input'];
-  github: Scalars['String']['input'];
-  image: Scalars['String']['input'];
-  lastName: Scalars['String']['input'];
-  location: Scalars['String']['input'];
-  twitter: Scalars['String']['input'];
-  username: Scalars['String']['input'];
-  website: Scalars['String']['input'];
+export type StringNullableFilter = {
+  contains?: InputMaybe<Scalars['String']['input']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
+  equals?: InputMaybe<Scalars['String']['input']>;
+  gt?: InputMaybe<Scalars['String']['input']>;
+  gte?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  lt?: InputMaybe<Scalars['String']['input']>;
+  lte?: InputMaybe<Scalars['String']['input']>;
+  mode?: InputMaybe<QueryMode>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** A user */
+export type StringNullableListFilter = {
+  equals?: InputMaybe<Array<Scalars['String']['input']>>;
+  has?: InputMaybe<Scalars['String']['input']>;
+  hasEvery?: InputMaybe<Array<Scalars['String']['input']>>;
+  hasSome?: InputMaybe<Array<Scalars['String']['input']>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type User = {
   __typename?: 'User';
+  _count?: Maybe<UserCount>;
   accountStatus: AccountStatus;
   bio?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['Date']['output'];
-  /** The email of the user */
+  createdAt: Scalars['DateTime']['output'];
   email?: Maybe<Scalars['String']['output']>;
+  emailVerified?: Maybe<Scalars['DateTime']['output']>;
   firstName: Scalars['String']['output'];
-  followers?: Maybe<Array<User>>;
-  followersCount: Scalars['Int']['output'];
-  following?: Maybe<Array<User>>;
-  followingCount: Scalars['Int']['output'];
   github?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
-  isBanned: Scalars['Boolean']['output'];
-  isFollowing: Scalars['Boolean']['output'];
-  isOnHold: Scalars['Boolean']['output'];
   lastName: Scalars['String']['output'];
   location?: Maybe<Scalars['String']['output']>;
-  posts?: Maybe<Array<Post>>;
-  projects?: Maybe<Array<Project>>;
+  password: Scalars['String']['output'];
+  provider: Scalars['String']['output'];
   role: Role;
   twitter?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['Date']['output'];
-  username?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+  username: Scalars['String']['output'];
   website?: Maybe<Scalars['String']['output']>;
 };
 
-/** User follow actions enum */
-export enum UserFollowActions {
-  Follow = 'FOLLOW',
-  Unfollow = 'UNFOLLOW',
-}
-
-/** User response */
-export type UserResponse = {
-  __typename?: 'UserResponse';
-  bannedUsersCount: Scalars['Int']['output'];
-  onHoldUsersCount: Scalars['Int']['output'];
-  results: Array<User>;
-  totalCount: Scalars['Int']['output'];
+export type UserCount = {
+  __typename?: 'UserCount';
+  posts: Scalars['Int']['output'];
+  projects: Scalars['Int']['output'];
 };
 
-/** Users response */
-export type UsersResponse = {
-  __typename?: 'UsersResponse';
-  nextCursor?: Maybe<Scalars['String']['output']>;
-  prevCursor?: Maybe<Scalars['String']['output']>;
-  results: Array<User>;
-  totalCount: Scalars['Int']['output'];
+export type UserCountPostsArgs = {
+  where?: InputMaybe<PostWhereInput>;
+};
+
+export type UserCountProjectsArgs = {
+  where?: InputMaybe<ProjectWhereInput>;
+};
+
+export type UserLoginInput = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type UserRegisterInput = {
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
+};
+
+export type UserRelationFilter = {
+  is?: InputMaybe<UserWhereInput>;
+  isNot?: InputMaybe<UserWhereInput>;
+};
+
+export type UserResponse = {
+  __typename?: 'UserResponse';
+  errors?: Maybe<Array<FieldError>>;
+  user?: Maybe<User>;
+};
+
+export type UserUpdateInput = {
+  github?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  twitter?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UserWhereInput = {
+  AND?: InputMaybe<Array<UserWhereInput>>;
+  NOT?: InputMaybe<Array<UserWhereInput>>;
+  OR?: InputMaybe<Array<UserWhereInput>>;
+  accountStatus?: InputMaybe<EnumAccountStatusFilter>;
+  bio?: InputMaybe<StringNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  email?: InputMaybe<StringNullableFilter>;
+  emailVerified?: InputMaybe<DateTimeNullableFilter>;
+  firstName?: InputMaybe<StringFilter>;
+  github?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringNullableFilter>;
+  lastName?: InputMaybe<StringFilter>;
+  location?: InputMaybe<StringNullableFilter>;
+  password?: InputMaybe<StringFilter>;
+  posts?: InputMaybe<PostListRelationFilter>;
+  projects?: InputMaybe<ProjectListRelationFilter>;
+  provider?: InputMaybe<StringFilter>;
+  role?: InputMaybe<EnumRoleFilter>;
+  twitter?: InputMaybe<StringNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+  username?: InputMaybe<StringFilter>;
+  website?: InputMaybe<StringNullableFilter>;
 };
 
 export type CreatePostMutationVariables = Exact<{
-  input: CreatePostInput;
+  options: PostCreateInput;
 }>;
 
 export type CreatePostMutation = {
   __typename?: 'Mutation';
-  createPost: { __typename?: 'Post'; slug: string };
+  createPost: {
+    __typename?: 'PostResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      code: string;
+      field: string;
+      message: string;
+    }> | null;
+    post?: {
+      __typename?: 'Post';
+      authorId: string;
+      content: any;
+      createdAt: any;
+      id: string;
+      intro: string;
+      image?: string | null;
+      slug: string;
+      tags: Array<string>;
+      title: string;
+      updatedAt: any;
+    } | null;
+  };
 };
 
 export type CreateProjectMutationVariables = Exact<{
-  input: CreateProjectInput;
+  options: ProjectCreateInput;
 }>;
 
 export type CreateProjectMutation = {
   __typename?: 'Mutation';
-  createProject: { __typename?: 'Project'; slug: string };
-};
-
-export type DeletePostMutationVariables = Exact<{
-  deletePostId: Scalars['String']['input'];
-}>;
-
-export type DeletePostMutation = {
-  __typename?: 'Mutation';
-  deletePost: { __typename?: 'Post'; id: string };
-};
-
-export type DeleteProjectMutationVariables = Exact<{
-  projectId: Scalars['String']['input'];
-}>;
-
-export type DeleteProjectMutation = {
-  __typename?: 'Mutation';
-  deleteProject: { __typename?: 'Project'; id: string };
-};
-
-export type FollowerUserMutationVariables = Exact<{
-  input: FollowUserInput;
-}>;
-
-export type FollowerUserMutation = {
-  __typename?: 'Mutation';
-  followerUser: { __typename?: 'User'; id: string };
-};
-
-export type LoginMutationVariables = Exact<{
-  token: Scalars['String']['input'];
-}>;
-
-export type LoginMutation = { __typename?: 'Mutation'; login: string };
-
-export type SignupMutationVariables = Exact<{
-  token: Scalars['String']['input'];
-}>;
-
-export type SignupMutation = { __typename?: 'Mutation'; signup: string };
-
-export type UpdatePostMutationVariables = Exact<{
-  updatePostId: Scalars['String']['input'];
-  input: CreatePostInput;
-}>;
-
-export type UpdatePostMutation = {
-  __typename?: 'Mutation';
-  updatePost: {
-    __typename?: 'Post';
-    id: string;
-    image?: string | null;
-    intro: string;
-    slug: string;
-    title: string;
-    updatedAt: any;
-    content: any;
-    createdAt: any;
-  };
-};
-
-export type UpdateProjectMutationVariables = Exact<{
-  input: CreateProjectInput;
-  projectId: Scalars['String']['input'];
-}>;
-
-export type UpdateProjectMutation = {
-  __typename?: 'Mutation';
-  updateProject: {
-    __typename?: 'Project';
-    updatedAt: any;
-    title: string;
-    tags: Array<string>;
-    slug: string;
-    siteUrl?: string | null;
-    playStoreUrl?: string | null;
-    intro: string;
-    id: string;
-    githubUrl?: string | null;
-    createdAt: any;
-    content: any;
-    appStoreUrl?: string | null;
-  };
-};
-
-export type CurrentUserQueryVariables = Exact<{ [key: string]: never }>;
-
-export type CurrentUserQuery = {
-  __typename?: 'Query';
-  currentUser: {
-    __typename?: 'User';
-    id: string;
-    firstName: string;
-    lastName: string;
-    email?: string | null;
-    github?: string | null;
-    image?: string | null;
-    bio?: string | null;
-    location?: string | null;
-    website?: string | null;
-    twitter?: string | null;
-  };
-};
-
-export type MyPostsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type MyPostsQuery = {
-  __typename?: 'Query';
-  myPosts: {
-    __typename?: 'PostsResponse';
-    nextCursor?: string | null;
-    prevCursor?: string | null;
-    totalCount: number;
-    results: Array<{
-      __typename?: 'Post';
-      id: string;
-      title: string;
-      slug: string;
-      intro: string;
-      updatedAt: any;
-      createdAt: any;
-    }>;
-  };
-};
-
-export type MyProjectsQueryVariables = Exact<{
-  input?: InputMaybe<SearchInput>;
-}>;
-
-export type MyProjectsQuery = {
-  __typename?: 'Query';
-  myProjects: {
-    __typename?: 'ProjectsResponse';
-    nextCursor?: string | null;
-    prevCursor?: string | null;
-    totalCount: number;
-    results: Array<{
+  createProject: {
+    __typename?: 'ProjectResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      message: string;
+      field: string;
+      code: string;
+    }> | null;
+    project?: {
       __typename?: 'Project';
-      appStoreUrl?: string | null;
-      createdAt: any;
-      githubUrl?: string | null;
-      id: string;
       intro: string;
       playStoreUrl?: string | null;
       siteUrl?: string | null;
       slug: string;
       tags: Array<string>;
       title: string;
-      image?: string | null;
       updatedAt: any;
-    }>;
+      id: string;
+      image?: string | null;
+      githubUrl?: string | null;
+      createdAt: any;
+      content: any;
+      authorId: string;
+      appStoreUrl?: string | null;
+    } | null;
   };
+};
+
+export type DeletePostMutationVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+export type DeletePostMutation = {
+  __typename?: 'Mutation';
+  deletePost: boolean;
+};
+
+export type DeleteProjectMutationVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+export type DeleteProjectMutation = {
+  __typename?: 'Mutation';
+  deleteProject: boolean;
+};
+
+export type LoginMutationVariables = Exact<{
+  options: UserLoginInput;
+}>;
+
+export type LoginMutation = {
+  __typename?: 'Mutation';
+  login: {
+    __typename?: 'UserResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      message: string;
+      field: string;
+      code: string;
+    }> | null;
+    user?: { __typename?: 'User'; id: string } | null;
+  };
+};
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+
+export type LogoutMutation = { __typename?: 'Mutation'; logout: boolean };
+
+export type RegisterMutationVariables = Exact<{
+  options: UserRegisterInput;
+}>;
+
+export type RegisterMutation = {
+  __typename?: 'Mutation';
+  register: {
+    __typename?: 'UserResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      message: string;
+      field: string;
+      code: string;
+    }> | null;
+    user?: { __typename?: 'User'; id: string } | null;
+  };
+};
+
+export type UpdateProjectMutationVariables = Exact<{
+  options: ProjectUpdateInput;
+  slug: Scalars['String']['input'];
+}>;
+
+export type UpdateProjectMutation = {
+  __typename?: 'Mutation';
+  updateProject: {
+    __typename?: 'ProjectResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      field: string;
+      message: string;
+      code: string;
+    }> | null;
+    project?: {
+      __typename?: 'Project';
+      appStoreUrl?: string | null;
+      authorId: string;
+      content: any;
+      createdAt: any;
+      githubUrl?: string | null;
+      id: string;
+      image?: string | null;
+      intro: string;
+      playStoreUrl?: string | null;
+      siteUrl?: string | null;
+      slug: string;
+      tags: Array<string>;
+      title: string;
+      updatedAt: any;
+    } | null;
+  };
+};
+
+export type MeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MeQuery = {
+  __typename?: 'Query';
+  me?: {
+    __typename?: 'User';
+    firstName: string;
+    lastName: string;
+    image?: string | null;
+    github?: string | null;
+    twitter?: string | null;
+    website?: string | null;
+    bio?: string | null;
+  } | null;
 };
 
 export type PostQueryVariables = Exact<{
@@ -546,50 +758,43 @@ export type PostQueryVariables = Exact<{
 
 export type PostQuery = {
   __typename?: 'Query';
-  post: {
+  post?: {
     __typename?: 'Post';
     id: string;
-    createdAt: any;
-    content: any;
-    image?: string | null;
-    intro: string;
-    slug: string;
     title: string;
+    intro: string;
+    content: any;
+    slug: string;
+    tags: Array<string>;
+    image?: string | null;
+    createdAt: any;
     updatedAt: any;
-  };
+  } | null;
 };
 
 export type PostSlugsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PostSlugsQuery = {
   __typename?: 'Query';
-  posts: {
-    __typename?: 'PostsResponse';
-    results: Array<{ __typename?: 'Post'; id: string; slug: string }>;
-  };
+  postSlugs: { __typename?: 'SlugsResponse'; slugs?: Array<string> | null };
 };
 
 export type PostsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PostsQuery = {
   __typename?: 'Query';
-  posts: {
-    __typename?: 'PostsResponse';
-    nextCursor?: string | null;
-    prevCursor?: string | null;
-    results: Array<{
-      __typename?: 'Post';
-      id: string;
-      image?: string | null;
-      intro: string;
-      slug: string;
-      title: string;
-      createdAt: any;
-      content: any;
-      updatedAt: any;
-      author: { __typename?: 'User'; firstName: string };
-    }>;
-  };
+  posts?: Array<{
+    __typename?: 'Post';
+    id: string;
+    title: string;
+    intro: string;
+    content: any;
+    slug: string;
+    tags: Array<string>;
+    image?: string | null;
+    updatedAt: any;
+    createdAt: any;
+  }> | null;
 };
 
 export type ProjectQueryVariables = Exact<{
@@ -598,67 +803,56 @@ export type ProjectQueryVariables = Exact<{
 
 export type ProjectQuery = {
   __typename?: 'Query';
-  project: {
+  project?: {
     __typename?: 'Project';
     appStoreUrl?: string | null;
-    content: any;
+    authorId: string;
     createdAt: any;
+    content: any;
     githubUrl?: string | null;
     id: string;
+    image?: string | null;
     intro: string;
     playStoreUrl?: string | null;
     siteUrl?: string | null;
+    tags: Array<string>;
     slug: string;
     title: string;
-    tags: Array<string>;
     updatedAt: any;
-    image?: string | null;
-    author: { __typename?: 'User'; firstName: string; lastName: string };
-  };
+  } | null;
 };
 
 export type ProjectSlugsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectSlugsQuery = {
   __typename?: 'Query';
-  projects: {
-    __typename?: 'ProjectsResponse';
-    results: Array<{ __typename?: 'Project'; id: string; slug: string }>;
-  };
+  projectSlugs?: {
+    __typename?: 'SlugsResponse';
+    slugs?: Array<string> | null;
+  } | null;
 };
 
 export type ProjectsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectsQuery = {
   __typename?: 'Query';
-  projects: {
-    __typename?: 'ProjectsResponse';
-    nextCursor?: string | null;
-    prevCursor?: string | null;
-    results: Array<{
-      __typename?: 'Project';
-      appStoreUrl?: string | null;
-      content: any;
-      createdAt: any;
-      githubUrl?: string | null;
-      id: string;
-      intro: string;
-      playStoreUrl?: string | null;
-      siteUrl?: string | null;
-      slug: string;
-      tags: Array<string>;
-      title: string;
-      image?: string | null;
-      updatedAt: any;
-      author: {
-        __typename?: 'User';
-        id: string;
-        image?: string | null;
-        firstName: string;
-        lastName: string;
-      };
-    }>;
-  };
+  projects?: Array<{
+    __typename?: 'Project';
+    appStoreUrl?: string | null;
+    authorId: string;
+    content: any;
+    createdAt: any;
+    githubUrl?: string | null;
+    id: string;
+    image?: string | null;
+    intro: string;
+    playStoreUrl?: string | null;
+    siteUrl?: string | null;
+    slug: string;
+    tags: Array<string>;
+    title: string;
+    updatedAt: any;
+  }> | null;
 };
 
 export type UserQueryVariables = Exact<{
@@ -667,68 +861,48 @@ export type UserQueryVariables = Exact<{
 
 export type UserQuery = {
   __typename?: 'Query';
-  user: {
+  user?: {
     __typename?: 'User';
+    accountStatus: AccountStatus;
     bio?: string | null;
     createdAt: any;
     email?: string | null;
-    firstName: string;
+    emailVerified?: any | null;
     github?: string | null;
+    firstName: string;
     id: string;
     image?: string | null;
     lastName: string;
     location?: string | null;
+    provider: string;
+    role: Role;
     twitter?: string | null;
     updatedAt: any;
-    username?: string | null;
+    username: string;
     website?: string | null;
-  };
-};
-
-export type UserSlugsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type UserSlugsQuery = {
-  __typename?: 'Query';
-  users: {
-    __typename?: 'UserResponse';
-    results: Array<{
-      __typename?: 'User';
-      id: string;
-      username?: string | null;
-    }>;
-  };
-};
-
-export type UsersQueryVariables = Exact<{ [key: string]: never }>;
-
-export type UsersQuery = {
-  __typename?: 'Query';
-  users: {
-    __typename?: 'UserResponse';
-    totalCount: number;
-    results: Array<{
-      __typename?: 'User';
-      bio?: string | null;
-      firstName: string;
-      email?: string | null;
-      createdAt: any;
-      github?: string | null;
-      id: string;
-      image?: string | null;
-      lastName: string;
-      location?: string | null;
-      twitter?: string | null;
-      username?: string | null;
-      website?: string | null;
-      updatedAt: any;
-    }>;
-  };
+  } | null;
 };
 
 export const CreatePostDocument = gql`
-  mutation CreatePost($input: CreatePostInput!) {
-    createPost(input: $input) {
-      slug
+  mutation CreatePost($options: PostCreateInput!) {
+    createPost(options: $options) {
+      errors {
+        code
+        field
+        message
+      }
+      post {
+        authorId
+        content
+        createdAt
+        id
+        intro
+        image
+        slug
+        tags
+        title
+        updatedAt
+      }
     }
   }
 `;
@@ -739,9 +913,29 @@ export function useCreatePostMutation() {
   );
 }
 export const CreateProjectDocument = gql`
-  mutation CreateProject($input: CreateProjectInput!) {
-    createProject(input: $input) {
-      slug
+  mutation CreateProject($options: ProjectCreateInput!) {
+    createProject(options: $options) {
+      errors {
+        message
+        field
+        code
+      }
+      project {
+        intro
+        playStoreUrl
+        siteUrl
+        slug
+        tags
+        title
+        updatedAt
+        id
+        image
+        githubUrl
+        createdAt
+        content
+        authorId
+        appStoreUrl
+      }
     }
   }
 `;
@@ -753,10 +947,8 @@ export function useCreateProjectMutation() {
   >(CreateProjectDocument);
 }
 export const DeletePostDocument = gql`
-  mutation DeletePost($deletePostId: String!) {
-    deletePost(id: $deletePostId) {
-      id
-    }
+  mutation DeletePost($slug: String!) {
+    deletePost(slug: $slug)
   }
 `;
 
@@ -766,10 +958,8 @@ export function useDeletePostMutation() {
   );
 }
 export const DeleteProjectDocument = gql`
-  mutation DeleteProject($projectId: String!) {
-    deleteProject(projectId: $projectId) {
-      id
-    }
+  mutation DeleteProject($slug: String!) {
+    deleteProject(slug: $slug)
   }
 `;
 
@@ -779,74 +969,79 @@ export function useDeleteProjectMutation() {
     DeleteProjectMutationVariables
   >(DeleteProjectDocument);
 }
-export const FollowerUserDocument = gql`
-  mutation FollowerUser($input: FollowUserInput!) {
-    followerUser(input: $input) {
-      id
-    }
-  }
-`;
-
-export function useFollowerUserMutation() {
-  return Urql.useMutation<FollowerUserMutation, FollowerUserMutationVariables>(
-    FollowerUserDocument,
-  );
-}
 export const LoginDocument = gql`
-  mutation Login($token: String!) {
-    login(token: $token)
+  mutation Login($options: UserLoginInput!) {
+    login(options: $options) {
+      errors {
+        message
+        field
+        code
+      }
+      user {
+        id
+      }
+    }
   }
 `;
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 }
-export const SignupDocument = gql`
-  mutation Signup($token: String!) {
-    signup(token: $token)
+export const LogoutDocument = gql`
+  mutation Logout {
+    logout
   }
 `;
 
-export function useSignupMutation() {
-  return Urql.useMutation<SignupMutation, SignupMutationVariables>(
-    SignupDocument,
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
   );
 }
-export const UpdatePostDocument = gql`
-  mutation UpdatePost($updatePostId: String!, $input: CreatePostInput!) {
-    updatePost(id: $updatePostId, input: $input) {
-      id
-      image
-      intro
-      slug
-      title
-      updatedAt
-      content
-      createdAt
+export const RegisterDocument = gql`
+  mutation Register($options: UserRegisterInput!) {
+    register(options: $options) {
+      errors {
+        message
+        field
+        code
+      }
+      user {
+        id
+      }
     }
   }
 `;
 
-export function useUpdatePostMutation() {
-  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(
-    UpdatePostDocument,
+export function useRegisterMutation() {
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(
+    RegisterDocument,
   );
 }
 export const UpdateProjectDocument = gql`
-  mutation UpdateProject($input: CreateProjectInput!, $projectId: String!) {
-    updateProject(input: $input, projectId: $projectId) {
-      updatedAt
-      title
-      tags
-      slug
-      siteUrl
-      playStoreUrl
-      intro
-      id
-      githubUrl
-      createdAt
-      content
-      appStoreUrl
+  mutation UpdateProject($options: ProjectUpdateInput!, $slug: String!) {
+    updateProject(options: $options, slug: $slug) {
+      errors {
+        field
+        message
+        code
+      }
+      project {
+        appStoreUrl
+        authorId
+        content
+        createdAt
+        githubUrl
+        id
+        image
+        intro
+        playStoreUrl
+        siteUrl
+        slug
+        tags
+        title
+        updatedAt
+      }
     }
   }
 `;
@@ -857,86 +1052,25 @@ export function useUpdateProjectMutation() {
     UpdateProjectMutationVariables
   >(UpdateProjectDocument);
 }
-export const CurrentUserDocument = gql`
-  query CurrentUser {
-    currentUser {
-      id
+export const MeDocument = gql`
+  query Me {
+    me {
       firstName
       lastName
-      email
-      github
       image
-      bio
-      location
-      website
+      github
       twitter
+      website
+      bio
     }
   }
 `;
 
-export function useCurrentUserQuery(
-  options?: Omit<Urql.UseQueryArgs<CurrentUserQueryVariables>, 'query'>,
+export function useMeQuery(
+  options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>,
 ) {
-  return Urql.useQuery<CurrentUserQuery, CurrentUserQueryVariables>({
-    query: CurrentUserDocument,
-    ...options,
-  });
-}
-export const MyPostsDocument = gql`
-  query MyPosts {
-    myPosts {
-      nextCursor
-      prevCursor
-      totalCount
-      results {
-        id
-        title
-        slug
-        intro
-        updatedAt
-        createdAt
-      }
-    }
-  }
-`;
-
-export function useMyPostsQuery(
-  options?: Omit<Urql.UseQueryArgs<MyPostsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<MyPostsQuery, MyPostsQueryVariables>({
-    query: MyPostsDocument,
-    ...options,
-  });
-}
-export const MyProjectsDocument = gql`
-  query MyProjects($input: SearchInput) {
-    myProjects(input: $input) {
-      nextCursor
-      prevCursor
-      totalCount
-      results {
-        appStoreUrl
-        createdAt
-        githubUrl
-        id
-        intro
-        playStoreUrl
-        siteUrl
-        slug
-        tags
-        title
-        image
-        updatedAt
-      }
-    }
-  }
-`;
-
-export function useMyProjectsQuery(
-  options?: Omit<Urql.UseQueryArgs<MyProjectsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<MyProjectsQuery, MyProjectsQueryVariables>({
-    query: MyProjectsDocument,
+  return Urql.useQuery<MeQuery, MeQueryVariables>({
+    query: MeDocument,
     ...options,
   });
 }
@@ -944,12 +1078,13 @@ export const PostDocument = gql`
   query Post($slug: String!) {
     post(slug: $slug) {
       id
-      createdAt
-      content
-      image
-      intro
-      slug
       title
+      intro
+      content
+      slug
+      tags
+      image
+      createdAt
       updatedAt
     }
   }
@@ -965,11 +1100,8 @@ export function usePostQuery(
 }
 export const PostSlugsDocument = gql`
   query PostSlugs {
-    posts {
-      results {
-        id
-        slug
-      }
+    postSlugs {
+      slugs
     }
   }
 `;
@@ -985,22 +1117,15 @@ export function usePostSlugsQuery(
 export const PostsDocument = gql`
   query Posts {
     posts {
-      nextCursor
-      prevCursor
-      results {
-        id
-        author {
-          firstName
-        }
-        image
-        intro
-        slug
-        title
-        createdAt
-        id
-        content
-        updatedAt
-      }
+      id
+      title
+      intro
+      content
+      slug
+      tags
+      image
+      updatedAt
+      createdAt
     }
   }
 `;
@@ -1017,22 +1142,19 @@ export const ProjectDocument = gql`
   query Project($slug: String!) {
     project(slug: $slug) {
       appStoreUrl
-      content
+      authorId
       createdAt
+      content
       githubUrl
       id
+      image
       intro
       playStoreUrl
       siteUrl
+      tags
       slug
       title
-      tags
       updatedAt
-      image
-      author {
-        firstName
-        lastName
-      }
     }
   }
 `;
@@ -1047,11 +1169,8 @@ export function useProjectQuery(
 }
 export const ProjectSlugsDocument = gql`
   query ProjectSlugs {
-    projects {
-      results {
-        id
-        slug
-      }
+    projectSlugs {
+      slugs
     }
   }
 `;
@@ -1067,29 +1186,20 @@ export function useProjectSlugsQuery(
 export const ProjectsDocument = gql`
   query Projects {
     projects {
-      nextCursor
-      prevCursor
-      results {
-        appStoreUrl
-        author {
-          id
-          image
-          firstName
-          lastName
-        }
-        content
-        createdAt
-        githubUrl
-        id
-        intro
-        playStoreUrl
-        siteUrl
-        slug
-        tags
-        title
-        image
-        updatedAt
-      }
+      appStoreUrl
+      authorId
+      content
+      createdAt
+      githubUrl
+      id
+      image
+      intro
+      playStoreUrl
+      siteUrl
+      slug
+      tags
+      title
+      updatedAt
     }
   }
 `;
@@ -1105,15 +1215,19 @@ export function useProjectsQuery(
 export const UserDocument = gql`
   query User($userId: String!) {
     user(id: $userId) {
+      accountStatus
       bio
       createdAt
       email
-      firstName
+      emailVerified
       github
+      firstName
       id
       image
       lastName
       location
+      provider
+      role
       twitter
       updatedAt
       username
@@ -1127,56 +1241,6 @@ export function useUserQuery(
 ) {
   return Urql.useQuery<UserQuery, UserQueryVariables>({
     query: UserDocument,
-    ...options,
-  });
-}
-export const UserSlugsDocument = gql`
-  query UserSlugs {
-    users {
-      results {
-        id
-        username
-      }
-    }
-  }
-`;
-
-export function useUserSlugsQuery(
-  options?: Omit<Urql.UseQueryArgs<UserSlugsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<UserSlugsQuery, UserSlugsQueryVariables>({
-    query: UserSlugsDocument,
-    ...options,
-  });
-}
-export const UsersDocument = gql`
-  query Users {
-    users {
-      totalCount
-      results {
-        bio
-        firstName
-        email
-        createdAt
-        github
-        id
-        image
-        lastName
-        location
-        twitter
-        username
-        website
-        updatedAt
-      }
-    }
-  }
-`;
-
-export function useUsersQuery(
-  options?: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<UsersQuery, UsersQueryVariables>({
-    query: UsersDocument,
     ...options,
   });
 }

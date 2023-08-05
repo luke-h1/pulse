@@ -1,27 +1,18 @@
 query Projects {
   projects {
-    nextCursor
-    prevCursor
-    results {
-      appStoreUrl
-      author {
-        id
-        image
-        firstName
-        lastName
-      }
-      content
-      createdAt
-      githubUrl
-      id
-      intro
-      playStoreUrl
-      siteUrl
-      slug
-      tags
-      title
-      image
-      updatedAt
-    }
+    appStoreUrl
+    authorId
+    content
+    createdAt
+    githubUrl
+    id
+    image
+    intro
+    playStoreUrl
+    siteUrl
+    slug
+    tags
+    title
+    updatedAt
   }
 }

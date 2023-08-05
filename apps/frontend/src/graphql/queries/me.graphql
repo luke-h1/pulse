@@ -1,0 +1,11 @@
+query Me {
+  me {
+    firstName
+    lastName
+    image
+    github
+    twitter
+    website
+    bio
+  }
+}

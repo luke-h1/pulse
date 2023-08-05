@@ -1,5 +1,21 @@
-mutation CreatePost($input: CreatePostInput!) {
-  createPost(input: $input) {
-    slug
+mutation CreatePost($options: PostCreateInput!) {
+  createPost(options: $options) {
+    errors {
+      code
+      field
+      message
+    }
+    post {
+      authorId
+      content
+      createdAt
+      id
+      intro
+      image
+      slug
+      tags
+      title
+      updatedAt
+    }
   }
 }

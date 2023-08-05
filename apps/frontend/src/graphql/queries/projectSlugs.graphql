@@ -1,8 +1,5 @@
 query ProjectSlugs {
-  projects {
-    results {
-      id
-      slug
-    }
+  projectSlugs {
+    slugs
   }
 }

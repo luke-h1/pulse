@@ -12,6 +12,7 @@
     "gen-env": "gen-env-types .env -o src/types/env.d.ts -e ."
   },
   "dependencies": {
+    "@chakra-ui/descendant": "^3.1.0",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
@@ -43,6 +44,8 @@
     "react-dropzone": "^14.2.3",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.45.2",
+    "react-icons": "^4.10.1",
+    "react-use": "^17.4.0",
     "react-waypoint": "^10.3.0",
     "rss": "^1.2.2",
     "sharp": "^0.32.3",
@@ -54,6 +57,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.4.1",
     "@swc/core": "^1.3.72",
     "@swc/jest": "^0.2.26",
     "@testing-library/dom": "^9.3.1",

@@ -7,6 +7,7 @@ import { Session } from 'next-auth';
 import { AuthContextProvider } from '@frontend/context/AuthContext';
 import useNProgress from '@frontend/hooks/useNProgress';
 import { ChakraProvider } from '@chakra-ui/react';
+import { CmdPalleteContextProvider } from '@frontend/context/CmdPalleteContext';
 
 type CustomAppProps = AppProps<{ session: Session }> & {
   Component: {
@@ -51,7 +52,7 @@ const App = ({
           />
         </Head>
         <ChakraProvider>
-          <main id="main">
+          <CmdPalleteContextProvider>
             {Component.auth ? (
               <AuthContextProvider>
                 <Component {...pageProps} />
@@ -59,7 +60,7 @@ const App = ({
             ) : (
               <Component {...pageProps} />
             )}
-          </main>
+          </CmdPalleteContextProvider>
         </ChakraProvider>
       </SessionProvider>
     </>

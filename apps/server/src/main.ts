@@ -55,7 +55,7 @@ const main = async () => {
     debug: !!isProd,
     allowBatchedHttpRequests: true,
     schema: await createSchema(),
-    context: ({ req, res }) => ({ req, res, redis }),
+    context: ({ req, res, redis }) => ({ req, res, redis }),
   });
 
   await apolloServer.start();

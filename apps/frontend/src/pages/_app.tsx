@@ -2,24 +2,11 @@ import { AppProps } from 'next/app';
 import 'nprogress/nprogress.css';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
-import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth';
-import { AuthContextProvider } from '@frontend/context/AuthContext';
 import useNProgress from '@frontend/hooks/useNProgress';
 import { ChakraProvider } from '@chakra-ui/react';
 import { CmdPalleteContextProvider } from '@frontend/context/CmdPalleteContext';
 
-type CustomAppProps = AppProps<{ session: Session }> & {
-  Component: {
-    auth?: boolean;
-  };
-};
-
-const App = ({
-  Component,
-  pageProps: { session, ...pageProps },
-  router,
-}: CustomAppProps) => {
+const App = ({ Component, pageProps, router }: AppProps) => {
   const canonicalUrl = `${process.env.NEXT_PUBLIC_URL}${router.asPath}`;
   useNProgress();
 
@@ -44,25 +31,17 @@ const App = ({
           ],
         }}
       />
-      <SessionProvider session={session}>
-        <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
-          />
-        </Head>
-        <ChakraProvider>
-          <CmdPalleteContextProvider>
-            {Component.auth ? (
-              <AuthContextProvider>
-                <Component {...pageProps} />
-              </AuthContextProvider>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </CmdPalleteContextProvider>
-        </ChakraProvider>
-      </SessionProvider>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
+        />
+      </Head>
+      <ChakraProvider>
+        <CmdPalleteContextProvider>
+          <Component {...pageProps} />
+        </CmdPalleteContextProvider>
+      </ChakraProvider>
     </>
   );
 };

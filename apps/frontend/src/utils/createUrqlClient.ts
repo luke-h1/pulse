@@ -1,4 +1,3 @@
-import { getAuthToken } from '@frontend/lib/getAuthToken';
 import { cacheExchange, Cache } from '@urql/exchange-graphcache';
 import { NextPageContext } from 'next';
 import Router from 'next/router';

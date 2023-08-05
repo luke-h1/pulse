@@ -5,6 +5,7 @@ import Router from 'next/router';
 import { Exchange, ClientOptions, SSRExchange, dedupExchange } from 'urql';
 import { pipe, tap } from 'wonka';
 import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
+import { isServer } from '@common/hooks';
 
 const errorExchange: Exchange =
   ({ forward }) =>
@@ -34,15 +35,17 @@ export const createUrqlClient = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ctx?: NextPageContext,
 ): ClientOptions => {
-  const authToken = getAuthToken();
+  let cookie: string | undefined = '';
+
+  if (isServer) {
+    cookie = ctx?.req?.headers?.cookie;
+  }
 
   return {
     url: process.env.NEXT_PUBLIC_PULSE_API_URL,
     fetchOptions: {
       credentials: 'include',
-      headers: {
-        authorization: authToken ? `Bearer ${authToken}` : '',
-      },
+      headers: cookie ? { cookie } : undefined,
     },
     requestPolicy: 'cache-and-network',
     exchanges: [

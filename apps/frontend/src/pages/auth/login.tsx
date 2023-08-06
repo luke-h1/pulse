@@ -3,7 +3,6 @@ import Page from '@frontend/components/Page';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { useLoginMutation } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
-import { signIn } from 'next-auth/react';
 import { withUrqlClient } from 'next-urql';
 import { useForm } from 'react-hook-form';
 
@@ -18,7 +17,7 @@ const LoginPage: NextPage = () => {
 
   const onSubmit = async () => {
     try {
-      await signIn('github');
+      // await login()
     } catch (e) {
       console.log(e);
     }

@@ -3,19 +3,22 @@ import Page from '@frontend/components/Page';
 import PostsSection from '@frontend/components/PostsSection';
 import ProjectsSection from '@frontend/components/ProjectsSection';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
-import { usePostsQuery, useProjectsQuery } from '@graphql-hooks/generated';
+import {
+  useRecentPostsQuery,
+  useRecentProjectsQuery,
+} from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 
 const Home: NextPage = () => {
-  const [{ data }] = usePostsQuery();
-  const [{ data: projectsData }] = useProjectsQuery();
+  const [{ data }] = useRecentPostsQuery();
+  const [{ data: projectsData }] = useRecentProjectsQuery();
 
   return (
     <Page>
       <Hero />
-      <PostsSection posts={data?.posts} />
-      <ProjectsSection projects={projectsData?.projects} />
+      <PostsSection posts={data?.recentPosts} />
+      <ProjectsSection projects={projectsData?.recentProjects} />
     </Page>
   );
 };

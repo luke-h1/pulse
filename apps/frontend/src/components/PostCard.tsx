@@ -8,11 +8,11 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import FormattedDate from '@common/components/FormattedDate';
-import { PostsQuery } from '@graphql-hooks/generated';
+import { RecentPostsQuery } from '@graphql-hooks/generated';
 import { ArrayElementType } from '@frontend/types/util';
 
 interface Props {
-  post: ArrayElementType<PostsQuery['posts']>;
+  post: ArrayElementType<RecentPostsQuery['recentPosts']>;
 }
 
 const PostCard = ({ post }: Props) => {

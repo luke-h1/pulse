@@ -1,9 +1,9 @@
 import { Heading, List, ListItem, Text, VStack } from '@chakra-ui/react';
-import { PostsQuery } from '@graphql-hooks/generated';
+import { RecentPostsQuery } from '@graphql-hooks/generated';
 import PostCard from './PostCard';
 
 interface Props {
-  posts?: PostsQuery['posts'];
+  posts?: RecentPostsQuery['recentPosts'];
 }
 
 const PostsSection = ({ posts }: Props) => {

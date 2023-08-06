@@ -935,6 +935,48 @@ export type ProjectsQuery = {
   }> | null;
 };
 
+export type RecentPostsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type RecentPostsQuery = {
+  __typename?: 'Query';
+  recentPosts?: Array<{
+    __typename?: 'Post';
+    id: string;
+    title: string;
+    intro: string;
+    content: any;
+    slug: string;
+    tags: Array<string>;
+    image?: string | null;
+    status: Status;
+    createdAt: any;
+    updatedAt: any;
+  }> | null;
+};
+
+export type RecentProjectsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type RecentProjectsQuery = {
+  __typename?: 'Query';
+  recentProjects?: Array<{
+    __typename?: 'Project';
+    id: string;
+    title: string;
+    intro: string;
+    image?: string | null;
+    tags: Array<string>;
+    status: Status;
+    slug: string;
+    siteUrl?: string | null;
+    playStoreUrl?: string | null;
+    githubUrl?: string | null;
+    appStoreUrl?: string | null;
+    content: any;
+    createdAt: any;
+    updatedAt: any;
+  }> | null;
+};
+
 export type UserQueryVariables = Exact<{
   userId: Scalars['String']['input'];
 }>;
@@ -1257,6 +1299,40 @@ export function useProjectsQuery(
 ) {
   return Urql.useQuery<ProjectsQuery, ProjectsQueryVariables>({
     query: ProjectsDocument,
+    ...options,
+  });
+}
+export const RecentPostsDocument = gql`
+  query RecentPosts {
+    recentPosts {
+      ...PostFragment
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+
+export function useRecentPostsQuery(
+  options?: Omit<Urql.UseQueryArgs<RecentPostsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<RecentPostsQuery, RecentPostsQueryVariables>({
+    query: RecentPostsDocument,
+    ...options,
+  });
+}
+export const RecentProjectsDocument = gql`
+  query RecentProjects {
+    recentProjects {
+      ...ProjectFragment
+    }
+  }
+  ${ProjectFragmentFragmentDoc}
+`;
+
+export function useRecentProjectsQuery(
+  options?: Omit<Urql.UseQueryArgs<RecentProjectsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<RecentProjectsQuery, RecentProjectsQueryVariables>({
+    query: RecentProjectsDocument,
     ...options,
   });
 }

@@ -6,20 +6,7 @@ mutation CreateProject($options: ProjectCreateInput!) {
       code
     }
     project {
-      intro
-      playStoreUrl
-      siteUrl
-      slug
-      tags
-      title
-      updatedAt
-      id
-      image
-      githubUrl
-      createdAt
-      content
-      authorId
-      appStoreUrl
+      ...ProjectFragment
     }
   }
 }

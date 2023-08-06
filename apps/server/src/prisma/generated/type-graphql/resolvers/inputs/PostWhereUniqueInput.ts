@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
+import { EnumStatusFilter } from "../inputs/EnumStatusFilter";
 import { JsonFilter } from "../inputs/JsonFilter";
 import { PostWhereInput } from "../inputs/PostWhereInput";
 import { StringFilter } from "../inputs/StringFilter";
@@ -61,6 +62,11 @@ export class PostWhereUniqueInput {
     nullable: true
   })
   content?: JsonFilter | undefined;
+
+  @TypeGraphQL.Field(_type => EnumStatusFilter, {
+    nullable: true
+  })
+  status?: EnumStatusFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true

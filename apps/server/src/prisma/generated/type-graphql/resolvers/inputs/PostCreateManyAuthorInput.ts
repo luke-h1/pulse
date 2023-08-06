@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { PostCreatetagsInput } from "../inputs/PostCreatetagsInput";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.InputType("PostCreateManyAuthorInput", {})
 export class PostCreateManyAuthorInput {
@@ -40,6 +41,11 @@ export class PostCreateManyAuthorInput {
     nullable: false
   })
   content!: Prisma.InputJsonValue;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: true
+  })
+  status?: "PUBLISHED" | "DRAFT" | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: true

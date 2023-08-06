@@ -8,6 +8,7 @@ export enum PostScalarFieldEnum {
   image = "image",
   tags = "tags",
   content = "content",
+  status = "status",
   authorId = "authorId",
   createdAt = "createdAt",
   updatedAt = "updatedAt"

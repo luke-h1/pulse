@@ -1,21 +1,5 @@
 query User($userId: String!) {
   user(id: $userId) {
-    accountStatus
-    bio
-    createdAt
-    email
-    emailVerified
-    github
-    firstName
-    id
-    image
-    lastName
-    location
-    provider
-    role
-    twitter
-    updatedAt
-    username
-    website
+    ...UserFragment
   }
 }

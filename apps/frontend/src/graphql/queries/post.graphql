@@ -1,13 +1,5 @@
 query Post($slug: String!) {
   post(slug: $slug) {
-    id
-    title
-    intro
-    content
-    slug
-    tags
-    image
-    createdAt
-    updatedAt
+    ...PostFragment
   }
 }

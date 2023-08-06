@@ -1,12 +1,5 @@
 query Me {
   me {
-    id
-    firstName
-    lastName
-    image
-    github
-    twitter
-    website
-    bio
+    ...UserFragment
   }
 }

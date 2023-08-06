@@ -6,16 +6,7 @@ mutation CreatePost($options: PostCreateInput!) {
       message
     }
     post {
-      authorId
-      content
-      createdAt
-      id
-      intro
-      image
-      slug
-      tags
-      title
-      updatedAt
+      ...PostFragment
     }
   }
 }

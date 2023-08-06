@@ -85,6 +85,13 @@ export type EnumRoleFilter = {
   notIn?: InputMaybe<Array<Role>>;
 };
 
+export type EnumStatusFilter = {
+  equals?: InputMaybe<Status>;
+  in?: InputMaybe<Array<Status>>;
+  not?: InputMaybe<NestedEnumStatusFilter>;
+  notIn?: InputMaybe<Array<Status>>;
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   code: Scalars['String']['output'];
@@ -230,6 +237,13 @@ export type NestedEnumRoleFilter = {
   notIn?: InputMaybe<Array<Role>>;
 };
 
+export type NestedEnumStatusFilter = {
+  equals?: InputMaybe<Status>;
+  in?: InputMaybe<Array<Status>>;
+  not?: InputMaybe<NestedEnumStatusFilter>;
+  notIn?: InputMaybe<Array<Status>>;
+};
+
 export type NestedStringFilter = {
   contains?: InputMaybe<Scalars['String']['input']>;
   endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -267,6 +281,7 @@ export type Post = {
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
   slug: Scalars['String']['output'];
+  status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -297,6 +312,7 @@ export type PostUpdateInput = {
   content: Scalars['String']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
   intro: Scalars['String']['input'];
+  status: Status;
   tags: Array<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
@@ -313,6 +329,7 @@ export type PostWhereInput = {
   image?: InputMaybe<StringNullableFilter>;
   intro?: InputMaybe<StringFilter>;
   slug?: InputMaybe<StringFilter>;
+  status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
   title?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
@@ -331,6 +348,7 @@ export type Project = {
   playStoreUrl?: Maybe<Scalars['String']['output']>;
   siteUrl?: Maybe<Scalars['String']['output']>;
   slug: Scalars['String']['output'];
+  status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -369,6 +387,7 @@ export type ProjectUpdateInput = {
   intro: Scalars['String']['input'];
   playStoreUrl?: InputMaybe<Scalars['String']['input']>;
   siteUrl?: InputMaybe<Scalars['String']['input']>;
+  status: Status;
   tags: Array<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
@@ -389,6 +408,7 @@ export type ProjectWhereInput = {
   playStoreUrl?: InputMaybe<StringNullableFilter>;
   siteUrl?: InputMaybe<StringNullableFilter>;
   slug?: InputMaybe<StringFilter>;
+  status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
   title?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
@@ -444,6 +464,11 @@ export type SlugsResponse = {
   slugs?: Maybe<Array<Scalars['String']['output']>>;
 };
 
+export enum Status {
+  Draft = 'DRAFT',
+  Published = 'PUBLISHED',
+}
+
 export type StringFilter = {
   contains?: InputMaybe<Scalars['String']['input']>;
   endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -496,7 +521,6 @@ export type User = {
   image?: Maybe<Scalars['String']['output']>;
   lastName: Scalars['String']['output'];
   location?: Maybe<Scalars['String']['output']>;
-  password: Scalars['String']['output'];
   provider: Scalars['String']['output'];
   role: Role;
   twitter?: Maybe<Scalars['String']['output']>;
@@ -577,6 +601,54 @@ export type UserWhereInput = {
   website?: InputMaybe<StringNullableFilter>;
 };
 
+export type PostFragmentFragment = {
+  __typename?: 'Post';
+  id: string;
+  title: string;
+  intro: string;
+  content: any;
+  slug: string;
+  tags: Array<string>;
+  image?: string | null;
+  status: Status;
+  createdAt: any;
+  updatedAt: any;
+};
+
+export type ProjectFragmentFragment = {
+  __typename?: 'Project';
+  id: string;
+  title: string;
+  intro: string;
+  image?: string | null;
+  tags: Array<string>;
+  status: Status;
+  slug: string;
+  siteUrl?: string | null;
+  playStoreUrl?: string | null;
+  githubUrl?: string | null;
+  appStoreUrl?: string | null;
+  content: any;
+  createdAt: any;
+  updatedAt: any;
+};
+
+export type UserFragmentFragment = {
+  __typename?: 'User';
+  id: string;
+  firstName: string;
+  lastName: string;
+  image?: string | null;
+  github?: string | null;
+  email?: string | null;
+  bio?: string | null;
+  twitter?: string | null;
+  username: string;
+  website?: string | null;
+  createdAt: any;
+  location?: string | null;
+};
+
 export type CreatePostMutationVariables = Exact<{
   options: PostCreateInput;
 }>;
@@ -593,15 +665,15 @@ export type CreatePostMutation = {
     }> | null;
     post?: {
       __typename?: 'Post';
-      authorId: string;
-      content: any;
-      createdAt: any;
       id: string;
+      title: string;
       intro: string;
-      image?: string | null;
+      content: any;
       slug: string;
       tags: Array<string>;
-      title: string;
+      image?: string | null;
+      status: Status;
+      createdAt: any;
       updatedAt: any;
     } | null;
   };
@@ -623,20 +695,20 @@ export type CreateProjectMutation = {
     }> | null;
     project?: {
       __typename?: 'Project';
-      intro: string;
-      playStoreUrl?: string | null;
-      siteUrl?: string | null;
-      slug: string;
-      tags: Array<string>;
-      title: string;
-      updatedAt: any;
       id: string;
+      title: string;
+      intro: string;
       image?: string | null;
+      tags: Array<string>;
+      status: Status;
+      slug: string;
+      siteUrl?: string | null;
+      playStoreUrl?: string | null;
       githubUrl?: string | null;
-      createdAt: any;
-      content: any;
-      authorId: string;
       appStoreUrl?: string | null;
+      content: any;
+      createdAt: any;
+      updatedAt: any;
     } | null;
   };
 };
@@ -716,19 +788,19 @@ export type UpdateProjectMutation = {
     }> | null;
     project?: {
       __typename?: 'Project';
+      id: string;
+      title: string;
+      intro: string;
+      image?: string | null;
+      tags: Array<string>;
+      status: Status;
+      slug: string;
+      siteUrl?: string | null;
+      playStoreUrl?: string | null;
+      githubUrl?: string | null;
       appStoreUrl?: string | null;
-      authorId: string;
       content: any;
       createdAt: any;
-      githubUrl?: string | null;
-      id: string;
-      image?: string | null;
-      intro: string;
-      playStoreUrl?: string | null;
-      siteUrl?: string | null;
-      slug: string;
-      tags: Array<string>;
-      title: string;
       updatedAt: any;
     } | null;
   };
@@ -745,9 +817,13 @@ export type MeQuery = {
     lastName: string;
     image?: string | null;
     github?: string | null;
-    twitter?: string | null;
-    website?: string | null;
+    email?: string | null;
     bio?: string | null;
+    twitter?: string | null;
+    username: string;
+    website?: string | null;
+    createdAt: any;
+    location?: string | null;
   } | null;
 };
 
@@ -766,6 +842,7 @@ export type PostQuery = {
     slug: string;
     tags: Array<string>;
     image?: string | null;
+    status: Status;
     createdAt: any;
     updatedAt: any;
   } | null;
@@ -794,8 +871,9 @@ export type PostsQuery = {
     slug: string;
     tags: Array<string>;
     image?: string | null;
-    updatedAt: any;
+    status: Status;
     createdAt: any;
+    updatedAt: any;
   }> | null;
 };
 
@@ -807,19 +885,19 @@ export type ProjectQuery = {
   __typename?: 'Query';
   project?: {
     __typename?: 'Project';
-    appStoreUrl?: string | null;
-    authorId: string;
-    createdAt: any;
-    content: any;
-    githubUrl?: string | null;
     id: string;
-    image?: string | null;
-    intro: string;
-    playStoreUrl?: string | null;
-    siteUrl?: string | null;
-    tags: Array<string>;
-    slug: string;
     title: string;
+    intro: string;
+    image?: string | null;
+    tags: Array<string>;
+    status: Status;
+    slug: string;
+    siteUrl?: string | null;
+    playStoreUrl?: string | null;
+    githubUrl?: string | null;
+    appStoreUrl?: string | null;
+    content: any;
+    createdAt: any;
     updatedAt: any;
   } | null;
 };
@@ -840,19 +918,19 @@ export type ProjectsQuery = {
   __typename?: 'Query';
   projects?: Array<{
     __typename?: 'Project';
+    id: string;
+    title: string;
+    intro: string;
+    image?: string | null;
+    tags: Array<string>;
+    status: Status;
+    slug: string;
+    siteUrl?: string | null;
+    playStoreUrl?: string | null;
+    githubUrl?: string | null;
     appStoreUrl?: string | null;
-    authorId: string;
     content: any;
     createdAt: any;
-    githubUrl?: string | null;
-    id: string;
-    image?: string | null;
-    intro: string;
-    playStoreUrl?: string | null;
-    siteUrl?: string | null;
-    slug: string;
-    tags: Array<string>;
-    title: string;
     updatedAt: any;
   }> | null;
 };
@@ -865,26 +943,69 @@ export type UserQuery = {
   __typename?: 'Query';
   user?: {
     __typename?: 'User';
-    accountStatus: AccountStatus;
-    bio?: string | null;
-    createdAt: any;
-    email?: string | null;
-    emailVerified?: any | null;
-    github?: string | null;
-    firstName: string;
     id: string;
-    image?: string | null;
+    firstName: string;
     lastName: string;
-    location?: string | null;
-    provider: string;
-    role: Role;
+    image?: string | null;
+    github?: string | null;
+    email?: string | null;
+    bio?: string | null;
     twitter?: string | null;
-    updatedAt: any;
     username: string;
     website?: string | null;
+    createdAt: any;
+    location?: string | null;
   } | null;
 };
 
+export const PostFragmentFragmentDoc = gql`
+  fragment PostFragment on Post {
+    id
+    title
+    intro
+    content
+    slug
+    tags
+    image
+    status
+    createdAt
+    updatedAt
+  }
+`;
+export const ProjectFragmentFragmentDoc = gql`
+  fragment ProjectFragment on Project {
+    id
+    title
+    intro
+    image
+    tags
+    status
+    slug
+    siteUrl
+    playStoreUrl
+    githubUrl
+    appStoreUrl
+    content
+    createdAt
+    updatedAt
+  }
+`;
+export const UserFragmentFragmentDoc = gql`
+  fragment UserFragment on User {
+    id
+    firstName
+    lastName
+    image
+    github
+    email
+    bio
+    twitter
+    username
+    website
+    createdAt
+    location
+  }
+`;
 export const CreatePostDocument = gql`
   mutation CreatePost($options: PostCreateInput!) {
     createPost(options: $options) {
@@ -894,19 +1015,11 @@ export const CreatePostDocument = gql`
         message
       }
       post {
-        authorId
-        content
-        createdAt
-        id
-        intro
-        image
-        slug
-        tags
-        title
-        updatedAt
+        ...PostFragment
       }
     }
   }
+  ${PostFragmentFragmentDoc}
 `;
 
 export function useCreatePostMutation() {
@@ -923,23 +1036,11 @@ export const CreateProjectDocument = gql`
         code
       }
       project {
-        intro
-        playStoreUrl
-        siteUrl
-        slug
-        tags
-        title
-        updatedAt
-        id
-        image
-        githubUrl
-        createdAt
-        content
-        authorId
-        appStoreUrl
+        ...ProjectFragment
       }
     }
   }
+  ${ProjectFragmentFragmentDoc}
 `;
 
 export function useCreateProjectMutation() {
@@ -1029,23 +1130,11 @@ export const UpdateProjectDocument = gql`
         code
       }
       project {
-        appStoreUrl
-        authorId
-        content
-        createdAt
-        githubUrl
-        id
-        image
-        intro
-        playStoreUrl
-        siteUrl
-        slug
-        tags
-        title
-        updatedAt
+        ...ProjectFragment
       }
     }
   }
+  ${ProjectFragmentFragmentDoc}
 `;
 
 export function useUpdateProjectMutation() {
@@ -1057,16 +1146,10 @@ export function useUpdateProjectMutation() {
 export const MeDocument = gql`
   query Me {
     me {
-      id
-      firstName
-      lastName
-      image
-      github
-      twitter
-      website
-      bio
+      ...UserFragment
     }
   }
+  ${UserFragmentFragmentDoc}
 `;
 
 export function useMeQuery(
@@ -1080,17 +1163,10 @@ export function useMeQuery(
 export const PostDocument = gql`
   query Post($slug: String!) {
     post(slug: $slug) {
-      id
-      title
-      intro
-      content
-      slug
-      tags
-      image
-      createdAt
-      updatedAt
+      ...PostFragment
     }
   }
+  ${PostFragmentFragmentDoc}
 `;
 
 export function usePostQuery(
@@ -1120,17 +1196,10 @@ export function usePostSlugsQuery(
 export const PostsDocument = gql`
   query Posts {
     posts {
-      id
-      title
-      intro
-      content
-      slug
-      tags
-      image
-      updatedAt
-      createdAt
+      ...PostFragment
     }
   }
+  ${PostFragmentFragmentDoc}
 `;
 
 export function usePostsQuery(
@@ -1144,22 +1213,10 @@ export function usePostsQuery(
 export const ProjectDocument = gql`
   query Project($slug: String!) {
     project(slug: $slug) {
-      appStoreUrl
-      authorId
-      createdAt
-      content
-      githubUrl
-      id
-      image
-      intro
-      playStoreUrl
-      siteUrl
-      tags
-      slug
-      title
-      updatedAt
+      ...ProjectFragment
     }
   }
+  ${ProjectFragmentFragmentDoc}
 `;
 
 export function useProjectQuery(
@@ -1189,22 +1246,10 @@ export function useProjectSlugsQuery(
 export const ProjectsDocument = gql`
   query Projects {
     projects {
-      appStoreUrl
-      authorId
-      content
-      createdAt
-      githubUrl
-      id
-      image
-      intro
-      playStoreUrl
-      siteUrl
-      slug
-      tags
-      title
-      updatedAt
+      ...ProjectFragment
     }
   }
+  ${ProjectFragmentFragmentDoc}
 `;
 
 export function useProjectsQuery(
@@ -1218,25 +1263,10 @@ export function useProjectsQuery(
 export const UserDocument = gql`
   query User($userId: String!) {
     user(id: $userId) {
-      accountStatus
-      bio
-      createdAt
-      email
-      emailVerified
-      github
-      firstName
-      id
-      image
-      lastName
-      location
-      provider
-      role
-      twitter
-      updatedAt
-      username
-      website
+      ...UserFragment
     }
   }
+  ${UserFragmentFragmentDoc}
 `;
 
 export function useUserQuery(

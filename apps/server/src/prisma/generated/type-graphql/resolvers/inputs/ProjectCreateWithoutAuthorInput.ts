@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { ProjectCreatetagsInput } from "../inputs/ProjectCreatetagsInput";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.InputType("ProjectCreateWithoutAuthorInput", {})
 export class ProjectCreateWithoutAuthorInput {
@@ -60,6 +61,11 @@ export class ProjectCreateWithoutAuthorInput {
     nullable: true
   })
   tags?: ProjectCreatetagsInput | undefined;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: true
+  })
+  status?: "PUBLISHED" | "DRAFT" | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: true

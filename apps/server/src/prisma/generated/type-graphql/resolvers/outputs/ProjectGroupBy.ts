@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { ProjectCountAggregate } from "../outputs/ProjectCountAggregate";
 import { ProjectMaxAggregate } from "../outputs/ProjectMaxAggregate";
 import { ProjectMinAggregate } from "../outputs/ProjectMinAggregate";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.ObjectType("ProjectGroupBy", {})
 export class ProjectGroupBy {
@@ -62,6 +63,11 @@ export class ProjectGroupBy {
     nullable: true
   })
   tags!: string[] | null;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: false
+  })
+  status!: "PUBLISHED" | "DRAFT";
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false

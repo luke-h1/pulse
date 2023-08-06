@@ -1,0 +1,12 @@
+fragment PostFragment on Post {
+    id
+    title
+    intro
+    content
+    slug
+    tags
+    image
+    status
+    createdAt
+    updatedAt
+}

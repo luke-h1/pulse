@@ -5,6 +5,7 @@ import { DecimalJSScalar } from "../../scalars";
 import { PostCountAggregate } from "../outputs/PostCountAggregate";
 import { PostMaxAggregate } from "../outputs/PostMaxAggregate";
 import { PostMinAggregate } from "../outputs/PostMinAggregate";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.ObjectType("PostGroupBy", {})
 export class PostGroupBy {
@@ -42,6 +43,11 @@ export class PostGroupBy {
     nullable: false
   })
   content!: Prisma.JsonValue;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: false
+  })
+  status!: "PUBLISHED" | "DRAFT";
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false

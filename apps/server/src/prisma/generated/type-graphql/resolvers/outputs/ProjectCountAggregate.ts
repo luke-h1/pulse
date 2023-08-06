@@ -63,6 +63,11 @@ export class ProjectCountAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
+  status!: number;
+
+  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
+    nullable: false
+  })
   authorId!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {

@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.ObjectType("ProjectMaxAggregate", {})
 export class ProjectMaxAggregate {
@@ -49,6 +50,11 @@ export class ProjectMaxAggregate {
     nullable: true
   })
   playStoreUrl!: string | null;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: true
+  })
+  status!: "PUBLISHED" | "DRAFT" | null;
 
   @TypeGraphQL.Field(_type => String, {
     nullable: true

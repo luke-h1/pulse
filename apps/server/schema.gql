@@ -54,6 +54,13 @@ input EnumRoleFilter {
   notIn: [Role!]
 }
 
+input EnumStatusFilter {
+  equals: Status
+  in: [Status!]
+  not: NestedEnumStatusFilter
+  notIn: [Status!]
+}
+
 type FieldError {
   code: String!
   field: String!
@@ -145,6 +152,13 @@ input NestedEnumRoleFilter {
   notIn: [Role!]
 }
 
+input NestedEnumStatusFilter {
+  equals: Status
+  in: [Status!]
+  not: NestedEnumStatusFilter
+  notIn: [Status!]
+}
+
 input NestedStringFilter {
   contains: String
   endsWith: String
@@ -181,6 +195,7 @@ type Post {
   image: String
   intro: String!
   slug: String!
+  status: Status!
   tags: [String!]!
   title: String!
   updatedAt: DateTime!
@@ -210,6 +225,7 @@ input PostUpdateInput {
   content: String!
   image: String
   intro: String!
+  status: Status!
   tags: [String!]!
   title: String!
 }
@@ -226,6 +242,7 @@ input PostWhereInput {
   NOT: [PostWhereInput!]
   OR: [PostWhereInput!]
   slug: StringFilter
+  status: EnumStatusFilter
   tags: StringNullableListFilter
   title: StringFilter
   updatedAt: DateTimeFilter
@@ -243,6 +260,7 @@ type Project {
   playStoreUrl: String
   siteUrl: String
   slug: String!
+  status: Status!
   tags: [String!]!
   title: String!
   updatedAt: DateTime!
@@ -280,6 +298,7 @@ input ProjectUpdateInput {
   intro: String!
   playStoreUrl: String
   siteUrl: String
+  status: Status!
   tags: [String!]!
   title: String!
 }
@@ -300,6 +319,7 @@ input ProjectWhereInput {
   playStoreUrl: StringNullableFilter
   siteUrl: StringNullableFilter
   slug: StringFilter
+  status: EnumStatusFilter
   tags: StringNullableListFilter
   title: StringFilter
   updatedAt: DateTimeFilter
@@ -345,6 +365,11 @@ enum Role {
 
 type SlugsResponse {
   slugs: [String!]
+}
+
+enum Status {
+  DRAFT
+  PUBLISHED
 }
 
 input StringFilter {
@@ -398,7 +423,6 @@ type User {
   image: String
   lastName: String!
   location: String
-  password: String!
   provider: String!
   role: Role!
   twitter: String

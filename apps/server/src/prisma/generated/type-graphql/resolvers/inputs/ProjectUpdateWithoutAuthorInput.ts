@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
+import { EnumStatusFieldUpdateOperationsInput } from "../inputs/EnumStatusFieldUpdateOperationsInput";
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
 import { ProjectUpdatetagsInput } from "../inputs/ProjectUpdatetagsInput";
 import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
@@ -63,6 +64,11 @@ export class ProjectUpdateWithoutAuthorInput {
     nullable: true
   })
   tags?: ProjectUpdatetagsInput | undefined;
+
+  @TypeGraphQL.Field(_type => EnumStatusFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  status?: EnumStatusFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
     nullable: true

@@ -35,5 +35,5 @@ export class UserProjectsArgs {
   @TypeGraphQL.Field(_type => [ProjectScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "title" | "slug" | "intro" | "image" | "content" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "authorId" | "createdAt" | "updatedAt"> | undefined;
+  distinct?: Array<"id" | "title" | "slug" | "intro" | "image" | "content" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "status" | "authorId" | "createdAt" | "updatedAt"> | undefined;
 }

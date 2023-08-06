@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.ObjectType("PostMinAggregate", {})
 export class PostMinAggregate {
@@ -29,6 +30,11 @@ export class PostMinAggregate {
     nullable: true
   })
   image!: string | null;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: true
+  })
+  status!: "PUBLISHED" | "DRAFT" | null;
 
   @TypeGraphQL.Field(_type => String, {
     nullable: true

@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { ProjectCreatetagsInput } from "../inputs/ProjectCreatetagsInput";
 import { UserCreateNestedOneWithoutProjectsInput } from "../inputs/UserCreateNestedOneWithoutProjectsInput";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.InputType("ProjectCreateInput", {})
 export class ProjectCreateInput {
@@ -61,6 +62,11 @@ export class ProjectCreateInput {
     nullable: true
   })
   tags?: ProjectCreatetagsInput | undefined;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: true
+  })
+  status?: "PUBLISHED" | "DRAFT" | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: true

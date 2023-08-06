@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { PostCreatetagsInput } from "../inputs/PostCreatetagsInput";
 import { UserCreateNestedOneWithoutPostsInput } from "../inputs/UserCreateNestedOneWithoutPostsInput";
+import { Status } from "../../enums/Status";
 
 @TypeGraphQL.InputType("PostCreateInput", {})
 export class PostCreateInput {
@@ -41,6 +42,11 @@ export class PostCreateInput {
     nullable: false
   })
   content!: Prisma.InputJsonValue;
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: true
+  })
+  status?: "PUBLISHED" | "DRAFT" | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: true

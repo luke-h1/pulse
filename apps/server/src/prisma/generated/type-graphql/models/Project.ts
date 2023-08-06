@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
 import { User } from "../models/User";
+import { Status } from "../enums/Status";
 
 @TypeGraphQL.ObjectType("Project", {})
 export class Project {
@@ -60,6 +61,11 @@ export class Project {
     nullable: false
   })
   tags!: string[];
+
+  @TypeGraphQL.Field(_type => Status, {
+    nullable: false
+  })
+  status!: "PUBLISHED" | "DRAFT";
 
   author?: User;
 

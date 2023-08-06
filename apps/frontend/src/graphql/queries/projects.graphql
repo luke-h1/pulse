@@ -1,18 +1,5 @@
 query Projects {
   projects {
-    appStoreUrl
-    authorId
-    content
-    createdAt
-    githubUrl
-    id
-    image
-    intro
-    playStoreUrl
-    siteUrl
-    slug
-    tags
-    title
-    updatedAt
+    ...ProjectFragment
   }
 }

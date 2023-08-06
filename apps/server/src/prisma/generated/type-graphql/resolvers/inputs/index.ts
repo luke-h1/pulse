@@ -9,6 +9,9 @@ export { EnumAccountStatusWithAggregatesFilter } from "./EnumAccountStatusWithAg
 export { EnumRoleFieldUpdateOperationsInput } from "./EnumRoleFieldUpdateOperationsInput";
 export { EnumRoleFilter } from "./EnumRoleFilter";
 export { EnumRoleWithAggregatesFilter } from "./EnumRoleWithAggregatesFilter";
+export { EnumStatusFieldUpdateOperationsInput } from "./EnumStatusFieldUpdateOperationsInput";
+export { EnumStatusFilter } from "./EnumStatusFilter";
+export { EnumStatusWithAggregatesFilter } from "./EnumStatusWithAggregatesFilter";
 export { JsonFilter } from "./JsonFilter";
 export { JsonWithAggregatesFilter } from "./JsonWithAggregatesFilter";
 export { NestedDateTimeFilter } from "./NestedDateTimeFilter";
@@ -19,6 +22,8 @@ export { NestedEnumAccountStatusFilter } from "./NestedEnumAccountStatusFilter";
 export { NestedEnumAccountStatusWithAggregatesFilter } from "./NestedEnumAccountStatusWithAggregatesFilter";
 export { NestedEnumRoleFilter } from "./NestedEnumRoleFilter";
 export { NestedEnumRoleWithAggregatesFilter } from "./NestedEnumRoleWithAggregatesFilter";
+export { NestedEnumStatusFilter } from "./NestedEnumStatusFilter";
+export { NestedEnumStatusWithAggregatesFilter } from "./NestedEnumStatusWithAggregatesFilter";
 export { NestedIntFilter } from "./NestedIntFilter";
 export { NestedIntNullableFilter } from "./NestedIntNullableFilter";
 export { NestedJsonFilter } from "./NestedJsonFilter";

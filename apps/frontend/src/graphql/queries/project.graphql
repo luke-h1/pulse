@@ -1,18 +1,5 @@
 query Project($slug: String!) {
   project(slug: $slug) {
-    appStoreUrl
-    authorId
-    createdAt
-    content
-    githubUrl
-    id
-    image
-    intro
-    playStoreUrl
-    siteUrl
-    tags
-    slug
-    title
-    updatedAt
+    ...ProjectFragment
   }
 }

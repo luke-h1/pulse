@@ -1,13 +1,5 @@
 query Posts {
   posts {
-    id
-    title
-    intro
-    content
-    slug
-    tags
-    image
-    updatedAt
-    createdAt
+    ...PostFragment
   }
 }

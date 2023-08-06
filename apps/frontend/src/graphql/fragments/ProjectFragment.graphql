@@ -1,0 +1,16 @@
+fragment ProjectFragment on Project {
+  id
+  title
+  intro
+  image
+  tags
+  status
+  slug
+  siteUrl
+  playStoreUrl
+  githubUrl
+  appStoreUrl
+  content
+  createdAt
+  updatedAt
+}

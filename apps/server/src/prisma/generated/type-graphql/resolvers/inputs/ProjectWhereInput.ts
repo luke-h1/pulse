@@ -3,6 +3,7 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
+import { EnumStatusFilter } from "../inputs/EnumStatusFilter";
 import { JsonFilter } from "../inputs/JsonFilter";
 import { StringFilter } from "../inputs/StringFilter";
 import { StringNullableFilter } from "../inputs/StringNullableFilter";
@@ -80,6 +81,11 @@ export class ProjectWhereInput {
     nullable: true
   })
   tags?: StringNullableListFilter | undefined;
+
+  @TypeGraphQL.Field(_type => EnumStatusFilter, {
+    nullable: true
+  })
+  status?: EnumStatusFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true

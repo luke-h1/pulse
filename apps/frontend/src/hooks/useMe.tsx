@@ -1,21 +1,11 @@
 import { useMeQuery } from '@graphql-hooks/generated';
-import { signOut, useSession } from 'next-auth/react';
 
 const useMe = () => {
-  const session = useSession();
-
-  const [{ data, fetching }] = useMeQuery({
-    pause: session.status === 'unauthenticated' || session.status === 'loading',
-  });
-
-  const logout = async () => {
-    await signOut();
-  };
+  const [{ data, fetching }] = useMeQuery();
 
   return {
-    isAuth: !!data?.me?.id,
+    isAuth: !!data?.me,
     fetching,
-    logout,
     me: data?.me,
   };
 };

@@ -19,7 +19,7 @@ API:
   * states for publishing - draft/published ✅
   * fix https://github.com/microsoft/TypeScript/issues/10866
     * Build and start server project in different way
-  * use s3 for images
+  * use s3 for images ???
   * potentially look into boilerplate-graphql impl and decide if refactor code that way
   * decide on testing strategy
   * Migrate away from express-apollo to @apollo/server

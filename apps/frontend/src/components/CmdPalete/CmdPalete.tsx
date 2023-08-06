@@ -23,7 +23,7 @@ import {
   ThemeItem,
   useCmdPalleteContext,
 } from '@frontend/context/CmdPalleteContext';
-import useCurrentUser from '@frontend/hooks/UseCurrentUser';
+import useMe from '@frontend/hooks/useMe';
 import CommandItem from './CommandItem';
 
 export const [
@@ -143,7 +143,7 @@ const CmdPallete = () => {
     }
   });
 
-  const { currentUser, fetching: currentUserFetching } = useCurrentUser();
+  const { me, fetching: meFetching } = useMe();
 
   return (
     <AnimatePresence mode="wait">
@@ -231,7 +231,7 @@ const CmdPallete = () => {
                             }
 
                             case 'unauthenticated': {
-                              if (!currentUserFetching && currentUser) {
+                              if (!meFetching && me) {
                                 return null;
                               }
 
@@ -248,7 +248,7 @@ const CmdPallete = () => {
                             }
 
                             case 'authenticated': {
-                              if (!currentUserFetching && !currentUser) {
+                              if (!meFetching && !me) {
                                 return null;
                               }
 

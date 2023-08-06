@@ -1,7 +1,7 @@
 import { useMeQuery } from '@graphql-hooks/generated';
 import { signOut, useSession } from 'next-auth/react';
 
-const useCurrentUser = () => {
+const useMe = () => {
   const session = useSession();
 
   const [{ data, fetching }] = useMeQuery({
@@ -16,7 +16,7 @@ const useCurrentUser = () => {
     isAuth: !!data?.me?.id,
     fetching,
     logout,
-    currentUser: data?.me,
+    me: data?.me,
   };
 };
-export default useCurrentUser;
+export default useMe;

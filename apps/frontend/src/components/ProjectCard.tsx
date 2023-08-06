@@ -6,12 +6,13 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Project } from '@graphql-hooks/generated';
+import { ArrayElementType } from '@frontend/types/util';
+import { ProjectsQuery } from '@graphql-hooks/generated';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface Props {
-  project: Project;
+  project: ArrayElementType<ProjectsQuery['projects']>;
 }
 
 const ProjectCard = ({ project }: Props) => {

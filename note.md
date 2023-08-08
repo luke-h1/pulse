@@ -28,10 +28,11 @@ FE:
   * Custom package for GQL type generation ✅
   * Create Github OAUTH app for auth locally ✅
   * styling UI package to be shared across frontend and admin ✅
+  * Sort out RHF ✅
   * Build FE pages
-    * auth/register
-    * auth/login
-    * Blank home page for now - will just be an intro of the project if not logged in else summary for user
+    * auth/register ✅
+    * auth/login ✅
+    * Blank home page for now - will just be an intro of the project if not logged in else summary for user ✅
     * /posts/me - my posts
     * /projects/me - my projects
     * /feed - all projects and posts of all users
@@ -39,6 +40,6 @@ FE:
     * /projects - all projects of all users
     * /user/[slug] - user profile
     * /user/me - my profile with edit toggles
-    * Footer 
+    * Footer ✅
     * Look into boilerplate-graphql for styling
-  * WYSWIG editor with @editorjs
+  * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project

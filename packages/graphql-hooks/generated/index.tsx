@@ -282,6 +282,7 @@ export type Post = {
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
+  readingTime: Scalars['String']['output'];
   slug: Scalars['String']['output'];
   status: Status;
   tags: Array<Scalars['String']['output']>;
@@ -330,6 +331,7 @@ export type PostWhereInput = {
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringNullableFilter>;
   intro?: InputMaybe<StringFilter>;
+  readingTime?: InputMaybe<StringFilter>;
   slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
@@ -348,6 +350,7 @@ export type Project = {
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
   playStoreUrl?: Maybe<Scalars['String']['output']>;
+  readingTime: Scalars['String']['output'];
   siteUrl?: Maybe<Scalars['String']['output']>;
   slug: Scalars['String']['output'];
   status: Status;
@@ -408,6 +411,7 @@ export type ProjectWhereInput = {
   image?: InputMaybe<StringNullableFilter>;
   intro?: InputMaybe<StringFilter>;
   playStoreUrl?: InputMaybe<StringNullableFilter>;
+  readingTime?: InputMaybe<StringFilter>;
   siteUrl?: InputMaybe<StringNullableFilter>;
   slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumStatusFilter>;
@@ -859,6 +863,7 @@ export type PostQuery = {
   __typename?: 'Query';
   post?: {
     __typename?: 'Post';
+    readingTime: string;
     id: string;
     title: string;
     intro: string;
@@ -1252,6 +1257,7 @@ export const PostDocument = gql`
   query Post($slug: String!) {
     post(slug: $slug) {
       ...PostFragment
+      readingTime
     }
   }
   ${PostFragmentFragmentDoc}

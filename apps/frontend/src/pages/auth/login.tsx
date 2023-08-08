@@ -1,37 +1,90 @@
-import { Button, FormControl, FormLabel } from '@chakra-ui/react';
+import { ButtonGroup, Heading, Stack } from '@chakra-ui/react';
 import Page from '@frontend/components/Page';
+import FormProvider from '@frontend/components/form/FormProvider';
+import Input from '@frontend/components/form/Input';
+import RHFForm from '@frontend/components/form/RHFForm';
+import SubmitButton from '@frontend/components/form/SubmitButton';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import toErrorMap from '@frontend/utils/toErrorMap';
+import { loginInput, loginSchema } from '@frontend/validation/auth';
 import { useLoginMutation } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { UseFormSetError } from 'react-hook-form';
 
 const LoginPage: NextPage = () => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm();
+  const defaultValues: loginInput = {
+    email: '',
+    password: '',
+  };
 
   const [, login] = useLoginMutation();
+  const router = useRouter();
 
-  const onSubmit = async () => {
-    try {
-      // await login()
-    } catch (e) {
-      console.log(e);
+  const onSubmit = async (
+    data: loginInput,
+    setError: UseFormSetError<loginInput>,
+  ) => {
+    const { email, password } = data;
+
+    const res = await login({
+      options: {
+        email,
+        password,
+      },
+    });
+    const errors = toErrorMap(setError, res.data?.login?.errors);
+
+    if (!errors) {
+      router.push('/');
     }
   };
 
   return (
     <Page>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl>
-          <Button type="submit" isLoading={isSubmitting}>
-            Login
-          </Button>
-        </FormControl>
-      </form>
+      <FormProvider
+        enableReinitialize
+        initialValues={{
+          ...defaultValues,
+        }}
+        validationSchema={loginSchema}
+      >
+        {methods => (
+          <RHFForm<loginInput>
+            onSubmit={async values => {
+              await onSubmit(values, methods.setError);
+            }}
+            id="login-form"
+          >
+            <Heading marginY={5}>Login</Heading>
+            <Stack
+              padding={0}
+              width="100%"
+              spacing={5}
+              direction={{ base: 'column', lg: 'row' }}
+            >
+              <Input
+                name="email"
+                id="email"
+                label="Email"
+                placeholder="email"
+                type="email"
+              />
+              <Input
+                name="password"
+                id="password"
+                label="Password"
+                placeholder="password"
+                type="password"
+              />
+            </Stack>
+            <ButtonGroup>
+              <SubmitButton>Submit</SubmitButton>
+            </ButtonGroup>
+          </RHFForm>
+        )}
+      </FormProvider>
     </Page>
   );
 };

@@ -2,12 +2,13 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { PostOrderByRelevanceInput } from "../inputs/PostOrderByRelevanceInput";
 import { SortOrderInput } from "../inputs/SortOrderInput";
-import { UserOrderByWithRelationInput } from "../inputs/UserOrderByWithRelationInput";
+import { UserOrderByWithRelationAndSearchRelevanceInput } from "../inputs/UserOrderByWithRelationAndSearchRelevanceInput";
 import { SortOrder } from "../../enums/SortOrder";
 
-@TypeGraphQL.InputType("ProjectOrderByWithRelationInput", {})
-export class ProjectOrderByWithRelationInput {
+@TypeGraphQL.InputType("PostOrderByWithRelationAndSearchRelevanceInput", {})
+export class PostOrderByWithRelationAndSearchRelevanceInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
@@ -36,32 +37,12 @@ export class ProjectOrderByWithRelationInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  content?: "asc" | "desc" | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrderInput, {
-    nullable: true
-  })
-  githubUrl?: SortOrderInput | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrderInput, {
-    nullable: true
-  })
-  siteUrl?: SortOrderInput | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrderInput, {
-    nullable: true
-  })
-  appStoreUrl?: SortOrderInput | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrderInput, {
-    nullable: true
-  })
-  playStoreUrl?: SortOrderInput | undefined;
+  tags?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  tags?: "asc" | "desc" | undefined;
+  content?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
@@ -83,8 +64,13 @@ export class ProjectOrderByWithRelationInput {
   })
   updatedAt?: "asc" | "desc" | undefined;
 
-  @TypeGraphQL.Field(_type => UserOrderByWithRelationInput, {
+  @TypeGraphQL.Field(_type => UserOrderByWithRelationAndSearchRelevanceInput, {
     nullable: true
   })
-  author?: UserOrderByWithRelationInput | undefined;
+  author?: UserOrderByWithRelationAndSearchRelevanceInput | undefined;
+
+  @TypeGraphQL.Field(_type => PostOrderByRelevanceInput, {
+    nullable: true
+  })
+  _relevance?: PostOrderByRelevanceInput | undefined;
 }

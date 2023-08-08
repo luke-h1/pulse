@@ -1,7 +1,6 @@
 /** @type {import('jest').Config} */
 const config = {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
-  verbose: true,
   setupFilesAfterEnv: ['<rootDir>/test/setupTests.js'],
   testMatch: [
     '<rootDir>/src/**/*.(spec|test).{js,jsx,ts,tsx}',
@@ -24,13 +23,20 @@ const config = {
         },
       },
     ],
+    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)':
+      '<rootDir>/../common/test/fileTransform.js',
+    '^.+\\.css$': '<rootDir>/../common/test/cssTransform.js',
   },
   transformIgnorePatterns: [
     '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   moduleNameMapper: {
+    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     '^axios$': '<rootDir>/node_modules/axios/dist/axios.js',
+    '^@frontend/(.*)$': '<rootDir>/src/$1',
+    '^@common/(.*)$': '<rootDir>/../common/src/$1',
+    '^@common-test/(.*)$': '<rootDir>/../common/test/$1',
   },
   moduleFileExtensions: [
     'web.js',
@@ -50,9 +56,6 @@ const config = {
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
-  fakeTimers: {
-    legacyFakeTimers: true,
-  },
 };
 
 module.exports = config;

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
+const path = require('path');
 const chalk = require('chalk');
 const spawn = require('cross-spawn');
-const path = require('path');
 const { StringStream } = require('scramjet');
 
 const args = process.argv.slice(2);

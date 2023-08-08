@@ -76,6 +76,30 @@ export class PostResolver {
     });
   }
 
+  @Query(() => [Post], {
+    description:
+      'Search posts (full text search on title / intro). Content will be added in the future',
+    nullable: true,
+  })
+  async searchPosts(
+    @Arg('query', () => String) query: string,
+  ): Promise<Post[]> {
+    return db.post.findMany({
+      where: {
+        title: {
+          search: query,
+        },
+        OR: [
+          {
+            intro: {
+              search: query,
+            },
+          },
+        ],
+      },
+    });
+  }
+
   @Query(() => Post, { nullable: true })
   async post(@Arg('slug', () => String) slug: string): Promise<PostResponse> {
     const post = await db.post.findUnique({
@@ -138,6 +162,7 @@ export class PostResolver {
           {
             field: 'title',
             message: 'You are not authorized to update this post',
+            code: '401',
           },
         ],
       };

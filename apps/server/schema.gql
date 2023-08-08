@@ -62,7 +62,7 @@ input EnumStatusFilter {
 }
 
 type FieldError {
-  code: String!
+  code: String
   field: String!
   message: String!
 }
@@ -170,6 +170,7 @@ input NestedStringFilter {
   lte: String
   not: NestedStringFilter
   notIn: [String!]
+  search: String
   startsWith: String
 }
 
@@ -184,6 +185,7 @@ input NestedStringNullableFilter {
   lte: String
   not: NestedStringNullableFilter
   notIn: [String!]
+  search: String
   startsWith: String
 }
 
@@ -350,6 +352,11 @@ type Query {
 
   """Returns the 5 most recent projects"""
   recentProjects: [Project!]
+
+  """
+  Search posts (full text search on title / intro). Content will be added in the future
+  """
+  searchPosts(query: String!): [Post!]
   user(id: String!): User
 }
 
@@ -384,6 +391,7 @@ input StringFilter {
   mode: QueryMode
   not: NestedStringFilter
   notIn: [String!]
+  search: String
   startsWith: String
 }
 
@@ -399,6 +407,7 @@ input StringNullableFilter {
   mode: QueryMode
   not: NestedStringNullableFilter
   notIn: [String!]
+  search: String
   startsWith: String
 }
 

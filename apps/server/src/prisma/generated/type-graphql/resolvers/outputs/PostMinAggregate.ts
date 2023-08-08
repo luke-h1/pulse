@@ -39,6 +39,11 @@ export class PostMinAggregate {
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
+  readingTime!: string | null;
+
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
   authorId!: string | null;
 
   @TypeGraphQL.Field(_type => Date, {

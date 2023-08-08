@@ -20,7 +20,7 @@ export class GroupByProjectArgs {
   @TypeGraphQL.Field(_type => [ProjectScalarFieldEnum], {
     nullable: false
   })
-  by!: Array<"id" | "title" | "slug" | "intro" | "image" | "content" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "status" | "authorId" | "createdAt" | "updatedAt">;
+  by!: Array<"id" | "title" | "slug" | "intro" | "image" | "content" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "status" | "readingTime" | "authorId" | "createdAt" | "updatedAt">;
 
   @TypeGraphQL.Field(_type => ProjectScalarWhereWithAggregatesInput, {
     nullable: true

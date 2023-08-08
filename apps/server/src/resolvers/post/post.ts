@@ -9,6 +9,7 @@ import {
   Resolver,
 } from 'type-graphql';
 import slugify from 'slugify';
+import readingTime from 'reading-time';
 import { FieldError } from '../../utils/FieldError';
 import { Post } from '../../prisma/generated/type-graphql';
 import { db } from '../../db/prisma';
@@ -135,6 +136,7 @@ export class PostResolver {
         ...options,
         authorId: req.session.userId,
         slug,
+        readingTime: readingTime(options.content).text,
       },
     });
 
@@ -175,6 +177,7 @@ export class PostResolver {
       data: {
         ...options,
         slug: slugify(options.title),
+        readingTime: readingTime(options.content).text,
       },
     });
 

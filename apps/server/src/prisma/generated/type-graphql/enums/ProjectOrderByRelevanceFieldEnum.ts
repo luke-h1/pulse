@@ -11,6 +11,7 @@ export enum ProjectOrderByRelevanceFieldEnum {
   appStoreUrl = "appStoreUrl",
   playStoreUrl = "playStoreUrl",
   tags = "tags",
+  readingTime = "readingTime",
   authorId = "authorId"
 }
 TypeGraphQL.registerEnumType(ProjectOrderByRelevanceFieldEnum, {

@@ -13,6 +13,7 @@ export enum ProjectScalarFieldEnum {
   playStoreUrl = "playStoreUrl",
   tags = "tags",
   status = "status",
+  readingTime = "readingTime",
   authorId = "authorId",
   createdAt = "createdAt",
   updatedAt = "updatedAt"

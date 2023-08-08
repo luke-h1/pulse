@@ -47,6 +47,11 @@ export class Post {
   })
   status!: "PUBLISHED" | "DRAFT";
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  readingTime!: string;
+
   author?: User;
 
   @TypeGraphQL.Field(_type => String, {

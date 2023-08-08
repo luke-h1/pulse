@@ -49,6 +49,7 @@
     "morgan": "^1.10.0",
     "pino": "8.15.0",
     "pino-pretty": "^10.2.0",
+    "reading-time": "^1.5.0",
     "reflect-metadata": "^0.1.13",
     "slugify": "^1.6.6",
     "tslib": "^2.6.1",

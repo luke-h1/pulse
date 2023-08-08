@@ -67,6 +67,11 @@ export class Project {
   })
   status!: "PUBLISHED" | "DRAFT";
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  readingTime!: string;
+
   author?: User;
 
   @TypeGraphQL.Field(_type => String, {

@@ -68,6 +68,11 @@ export class ProjectCreateInput {
   })
   status?: "PUBLISHED" | "DRAFT" | undefined;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: false
+  })
+  readingTime!: string;
+
   @TypeGraphQL.Field(_type => Date, {
     nullable: true
   })

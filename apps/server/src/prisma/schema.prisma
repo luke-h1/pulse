@@ -4,13 +4,13 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
 generator typegraphql {
-  provider = "typegraphql-prisma"
-  output   = "./generated/type-graphql"
+  provider                  = "typegraphql-prisma"
+  output                    = "./generated/type-graphql"
   omitOutputFieldsByDefault = ["password"]
 }
 
@@ -31,13 +31,13 @@ enum Status {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   provider      String
   firstName     String
   lastName      String
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
-  username      String    @unique
+  username      String        @unique
   password      String
   image         String?
   role          Role          @default(USER)
@@ -67,6 +67,7 @@ model Project {
   playStoreUrl String?
   tags         String[]
   status       Status   @default(DRAFT)
+  readingTime String
   author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId     String
 
@@ -75,16 +76,17 @@ model Project {
 }
 
 model Post {
-  id       String  @id @default(cuid())
-  title    String  @db.VarChar(50)
-  slug     String  @unique @db.VarChar(50)
-  intro    String
-  image    String?
-  tags     String[]
-  content  Json
-  status   Status  @default(DRAFT)
-  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId String
+  id          String   @id @default(cuid())
+  title       String   @db.VarChar(50)
+  slug        String   @unique @db.VarChar(50)
+  intro       String
+  image       String?
+  tags        String[]
+  content     Json
+  status      Status   @default(DRAFT)
+  readingTime String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

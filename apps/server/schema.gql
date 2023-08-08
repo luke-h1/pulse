@@ -196,6 +196,7 @@ type Post {
   id: String!
   image: String
   intro: String!
+  readingTime: String!
   slug: String!
   status: Status!
   tags: [String!]!
@@ -243,6 +244,7 @@ input PostWhereInput {
   intro: StringFilter
   NOT: [PostWhereInput!]
   OR: [PostWhereInput!]
+  readingTime: StringFilter
   slug: StringFilter
   status: EnumStatusFilter
   tags: StringNullableListFilter
@@ -260,6 +262,7 @@ type Project {
   image: String
   intro: String!
   playStoreUrl: String
+  readingTime: String!
   siteUrl: String
   slug: String!
   status: Status!
@@ -319,6 +322,7 @@ input ProjectWhereInput {
   NOT: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
   playStoreUrl: StringNullableFilter
+  readingTime: StringFilter
   siteUrl: StringNullableFilter
   slug: StringFilter
   status: EnumStatusFilter

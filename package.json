@@ -48,6 +48,9 @@
     ],
     "*.{js,jsx,ts,tsx,css,scss,html}": [
       "prettier --write"
+    ],
+    "package.json": [
+      "node scripts/alphabetizePackageJson.js"
     ]
   }
 }

@@ -37,7 +37,7 @@
     "isomorphic-unfetch": "^4.0.2",
     "lodash": "^4.17.21",
     "next": "13.4.13",
-    "next-auth": "^4.22.3",
+    "next-auth": "^4.22.5",
     "next-seo": "^6.1.0",
     "next-sitemap": "^4.1.8",
     "next-urql": "^5.0.2",

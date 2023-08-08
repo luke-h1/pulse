@@ -5,6 +5,13 @@ import { Exchange, ClientOptions, SSRExchange, dedupExchange } from 'urql';
 import { pipe, tap } from 'wonka';
 import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
 import { isServer } from '@common/hooks';
+import {
+  LoginMutation,
+  LogoutMutation,
+  MeDocument,
+  MeQuery,
+} from '@graphql-hooks/generated';
+import CustomUpdateQuery from './customUpdateQuery';
 
 const errorExchange: Exchange =
   ({ forward }) =>
@@ -50,7 +57,32 @@ export const createUrqlClient = (
     exchanges: [
       cacheExchange({
         updates: {
-          Mutation: {},
+          Mutation: {
+            login: (result, args, cache) => {
+              CustomUpdateQuery<LoginMutation, MeQuery>(
+                cache,
+                { query: MeDocument },
+                result,
+                // eslint-disable-next-line @typescript-eslint/no-shadow
+                (result, query) => {
+                  if (result.login.errors) {
+                    return query;
+                  }
+                  return {
+                    me: result.login.user,
+                  };
+                },
+              );
+            },
+            logout: (result, args, cache) => {
+              CustomUpdateQuery<LogoutMutation, MeQuery>(
+                cache,
+                { query: MeDocument },
+                result,
+                () => ({ me: null }),
+              );
+            },
+          },
         },
       }),
       errorExchange,

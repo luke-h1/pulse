@@ -8,6 +8,8 @@ export class FieldError {
   @Field()
   message: string;
 
-  @Field()
+  @Field({
+    nullable: true,
+  })
   code?: string;
 }

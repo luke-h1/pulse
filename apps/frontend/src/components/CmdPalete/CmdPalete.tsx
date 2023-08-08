@@ -3,7 +3,6 @@ import { AnimatePresence, motion, Variants } from 'framer-motion';
 import {
   Flex,
   FlexProps,
-  Input,
   List,
   ListItem,
   Portal,
@@ -17,13 +16,9 @@ import { IoMoon, IoSunny } from 'react-icons/io5';
 import { createDescendantContext } from '@chakra-ui/descendant';
 import { CgArrowRight } from 'react-icons/cg';
 import { useKeyPressEvent } from 'react-use';
-import {
-  ActionItem,
-  PageItem,
-  ThemeItem,
-  useCmdPalleteContext,
-} from '@frontend/context/CmdPalleteContext';
+import { useCmdPalleteContext } from '@frontend/context/CmdPalleteContext';
 import useMe from '@frontend/hooks/useMe';
+import { useLogoutMutation } from '@graphql-hooks/generated';
 import CommandItem from './CommandItem';
 
 export const [
@@ -91,17 +86,11 @@ const MotionFlex = motion<FlexProps>(Flex);
 const MotionVStack = motion<StackProps>(VStack);
 
 const CmdPallete = () => {
-  const {
-    close,
-    commands,
-    filterCommands,
-    focusedIndex,
-    isOpen,
-    open,
-    setFocusedIndex,
-  } = useCmdPalleteContext();
+  const { close, focusedIndex, isOpen, open, setFocusedIndex } =
+    useCmdPalleteContext();
   const { descendants } = useMenu();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [, logout] = useLogoutMutation();
 
   const hidePallete = useCallback(() => {
     close();
@@ -143,7 +132,11 @@ const CmdPallete = () => {
     }
   });
 
-  const { me, fetching: meFetching } = useMe();
+  const { isAuth } = useMe();
+
+  const onLogout = () => {
+    logout({});
+  };
 
   return (
     <AnimatePresence mode="wait">
@@ -186,109 +179,112 @@ const CmdPallete = () => {
               borderWidth="1px"
               borderStyle="solid"
             >
-              <Input
-                px={3}
-                py={4}
-                borderBottomWidth="1px"
-                borderBottomStyle="solid"
-                autoFocus
-                onChange={e => filterCommands(e.currentTarget.value)}
-                placeholder="Search commands"
-                rounded="none"
-                variant="unstyled"
-              />
               <List overflow="auto" w="full" pb={2} px={2}>
                 <MenuDescendantsProvider value={descendants}>
-                  {Object.keys(commands).map(section => (
-                    <>
-                      {/* @ts-expect-error testing */}
-                      {commands[section].length > 0 && (
-                        <ListItem key={section}>
-                          <Text
-                            my={2}
-                            color="gray.500"
-                            fontSize="xs"
-                            textTransform="capitalize"
-                          >
-                            {section}
-                          </Text>
-                        </ListItem>
-                      )}
-                      {/* @ts-expect-error testing */}
-                      {commands[section].map(
-                        (command: PageItem | ThemeItem) => {
-                          switch (section) {
-                            case 'pages': {
-                              const { title, href } = command as PageItem;
-                              return (
-                                <CommandItem
-                                  key={title}
-                                  title={title}
-                                  href={href}
-                                  icon={CgArrowRight}
-                                />
-                              );
-                            }
-
-                            case 'unauthenticated': {
-                              if (!meFetching && me) {
-                                return null;
-                              }
-
-                              const { title, href } = command as PageItem;
-
-                              return (
-                                <CommandItem
-                                  key={title}
-                                  title={title}
-                                  href={href}
-                                  icon={CgArrowRight}
-                                />
-                              );
-                            }
-
-                            case 'authenticated': {
-                              if (!meFetching && !me) {
-                                return null;
-                              }
-
-                              const { title, href, action } =
-                                command as ActionItem;
-
-                              return (
-                                <CommandItem
-                                  key={title}
-                                  title={title}
-                                  onClick={action}
-                                  href={href}
-                                  icon={CgArrowRight}
-                                />
-                              );
-                            }
-
-                            case 'themes': {
-                              const { title, id } = command as ThemeItem;
-
-                              const icon =
-                                colorMode === 'dark' ? IoSunny : IoMoon;
-
-                              return (
-                                <CommandItem
-                                  key={id}
-                                  title={title}
-                                  icon={icon}
-                                  onClick={toggleColorMode}
-                                />
-                              );
-                            }
-
-                            default:
-                              return null;
-                          }
-                        },
-                      )}
-                    </>
-                  ))}
+                  <ListItem>
+                    <Text
+                      my={2}
+                      color="gray.500"
+                      fontSize="xs"
+                      textTransform="capitalize"
+                    >
+                      Pages
+                    </Text>
+                    <CommandItem title="Home" href="/" icon={CgArrowRight} />
+                    {isAuth && (
+                      <CommandItem
+                        title="Feed"
+                        href="/feed"
+                        icon={CgArrowRight}
+                      />
+                    )}
+                    <CommandItem
+                      title="Posts"
+                      href="/posts"
+                      icon={CgArrowRight}
+                    />
+                    <CommandItem
+                      title="Projects"
+                      href="/projects"
+                      icon={CgArrowRight}
+                    />
+                    {isAuth && (
+                      <>
+                        <CommandItem
+                          title="My Projects"
+                          href="/projects/me"
+                          icon={CgArrowRight}
+                        />
+                        <CommandItem
+                          title="My Posts"
+                          href="/posts/me"
+                          icon={CgArrowRight}
+                        />
+                      </>
+                    )}
+                  </ListItem>
+                  <ListItem>
+                    <Text
+                      my={2}
+                      color="gray.500"
+                      fontSize="xs"
+                      textTransform="capitalize"
+                    >
+                      Actions
+                    </Text>
+                    {!isAuth ? (
+                      <>
+                        <CommandItem
+                          title="Register"
+                          href="/auth/register"
+                          icon={CgArrowRight}
+                        />
+                        <CommandItem
+                          title="Login"
+                          href="/auth/login"
+                          icon={CgArrowRight}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <CommandItem
+                          title="Create Post"
+                          href="/posts/create"
+                          icon={CgArrowRight}
+                        />
+                        <CommandItem
+                          title="Create Project"
+                          href="/projects/create"
+                          icon={CgArrowRight}
+                        />
+                        <CommandItem
+                          title="Logout"
+                          icon={CgArrowRight}
+                          onClick={onLogout}
+                        />
+                        <CommandItem
+                          title="My Profile"
+                          href="/users/me"
+                          icon={CgArrowRight}
+                        />
+                      </>
+                    )}
+                  </ListItem>
+                  <ListItem>
+                    <Text
+                      my={2}
+                      color="gray.500"
+                      fontSize="xs"
+                      textTransform="capitalize"
+                    >
+                      Theme
+                    </Text>
+                    <CommandItem
+                      onClick={toggleColorMode}
+                      title="Toggle theme"
+                      icon={colorMode === 'dark' ? IoSunny : IoMoon}
+                    />
+                  </ListItem>
                 </MenuDescendantsProvider>
               </List>
             </MotionVStack>

@@ -83,6 +83,7 @@ export class UserResolver {
             {
               field: 'email',
               message: 'An account with that email already exists.',
+              code: '409',
             },
           ],
         };
@@ -105,6 +106,7 @@ export class UserResolver {
         {
           field: 'email',
           message: 'An unknown error occurred.',
+          code: '500',
         },
       ],
     };
@@ -127,6 +129,7 @@ export class UserResolver {
           {
             field: 'email',
             message: 'Invalid email or password.',
+            code: '401',
           },
         ],
       };
@@ -138,6 +141,7 @@ export class UserResolver {
           {
             field: 'email',
             message: 'Your account has been suspended.',
+            code: '403',
           },
         ],
       };
@@ -151,6 +155,7 @@ export class UserResolver {
           {
             field: 'email',
             message: 'Invalid email or password.',
+            code: '401',
           },
         ],
       };

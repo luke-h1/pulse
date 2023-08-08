@@ -24,7 +24,7 @@ export default function FormProvider<TFormValues extends FieldValues>({
   initialValues,
   validationSchema,
 }: FormProviderProps<TFormValues>) {
-  const form = useForm<TFormValues>({
+  const methods = useForm<TFormValues>({
     defaultValues: initialValues,
     mode: 'onBlur',
     resolver: validationSchema ? zodResolver(validationSchema) : undefined,
@@ -46,14 +46,14 @@ export default function FormProvider<TFormValues extends FieldValues>({
       enableReinitialize &&
       !isEqual(previousInitialValues.current, initialValues)
     ) {
-      form.reset(initialValues as TFormValues);
+      methods.reset(initialValues as TFormValues);
       previousInitialValues.current = initialValues;
     }
-  }, [enableReinitialize, form, initialValues]);
+  }, [enableReinitialize, methods, initialValues]);
 
   return (
-    <RHFormProvider {...form}>
-      {typeof children === 'function' ? children(form) : children}
+    <RHFormProvider {...methods}>
+      {typeof children === 'function' ? children(methods) : children}
     </RHFormProvider>
   );
 }

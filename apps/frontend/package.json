@@ -32,6 +32,8 @@
     "framer-motion": "^10.15.0",
     "graphql": "^16.7.1",
     "graphql-hooks": "workspace:*",
+    "graphql-request": "^6.1.0",
+    "identity-obj-proxy": "^3.0.0",
     "isomorphic-unfetch": "^4.0.2",
     "lodash": "^4.17.21",
     "next": "13.4.12",

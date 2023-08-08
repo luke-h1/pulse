@@ -28,5 +28,5 @@ export default function useToggle(initialValue: boolean): [boolean, Toggle] {
   toggle.off = useCallback(() => setValue(false), [setValue]);
   toggle.on = useCallback(() => setValue(true), [setValue]);
 
-    return [value, toggle];
+  return [value, toggle];
 }

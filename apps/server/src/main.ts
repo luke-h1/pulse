@@ -47,6 +47,7 @@ const main = async () => {
     cors({
       origin:
         process.env.NODE_ENV === 'production' ? PROD_ORIGINS : DEV_ORIGINS,
+      credentials: true,
     }),
   );
 

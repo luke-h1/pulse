@@ -6,7 +6,7 @@ mutation Login($options: UserLoginInput!) {
       code
     }
     user {
-      id
+      ...UserFragment
     }
   }
 }

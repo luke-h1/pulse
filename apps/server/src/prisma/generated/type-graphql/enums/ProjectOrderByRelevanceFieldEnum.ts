@@ -1,0 +1,19 @@
+import * as TypeGraphQL from "type-graphql";
+
+export enum ProjectOrderByRelevanceFieldEnum {
+  id = "id",
+  title = "title",
+  slug = "slug",
+  intro = "intro",
+  image = "image",
+  githubUrl = "githubUrl",
+  siteUrl = "siteUrl",
+  appStoreUrl = "appStoreUrl",
+  playStoreUrl = "playStoreUrl",
+  tags = "tags",
+  authorId = "authorId"
+}
+TypeGraphQL.registerEnumType(ProjectOrderByRelevanceFieldEnum, {
+  name: "ProjectOrderByRelevanceFieldEnum",
+  description: undefined,
+});

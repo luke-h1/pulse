@@ -1,5 +1,11 @@
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
-import { PostsQuery, usePostsQuery } from '@graphql-hooks/generated';
+import {
+  PostsQuery,
+  SearchPostsDocument,
+  SearchPostsQuery,
+  SearchPostsQueryVariables,
+  usePostsQuery,
+} from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 import {
@@ -20,6 +26,8 @@ import Page from '@frontend/components/Page';
 import { HiOutlineSearch } from 'react-icons/hi';
 import PostCard from '@frontend/components/PostCard';
 import Tag from '@frontend/components/Tag';
+import useDebouncedCallback from '@common/hooks/useDebouncedCallback';
+import searchClient from '@frontend/utils/searchClient';
 
 const PostPage: NextPage = () => {
   const [{ data }] = usePostsQuery();
@@ -28,11 +36,21 @@ const PostPage: NextPage = () => {
     data,
   );
 
-  const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
+  const [onSearch] = useDebouncedCallback(
+    async (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value.length > 0) {
+        const result = await searchClient.request<
+          SearchPostsQuery,
+          SearchPostsQueryVariables
+        >(SearchPostsDocument, {
+          query: e.target.value,
+        });
 
-    // TODO: implement full text search in BE
-  };
+        setDisplayedPosts(result?.searchPosts as PostsQuery);
+      }
+    },
+    800,
+  );
 
   return (
     <Page>

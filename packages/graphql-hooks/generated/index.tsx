@@ -94,7 +94,7 @@ export type EnumStatusFilter = {
 
 export type FieldError = {
   __typename?: 'FieldError';
-  code: Scalars['String']['output'];
+  code?: Maybe<Scalars['String']['output']>;
   field: Scalars['String']['output'];
   message: Scalars['String']['output'];
 };
@@ -255,6 +255,7 @@ export type NestedStringFilter = {
   lte?: InputMaybe<Scalars['String']['input']>;
   not?: InputMaybe<NestedStringFilter>;
   notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -269,6 +270,7 @@ export type NestedStringNullableFilter = {
   lte?: InputMaybe<Scalars['String']['input']>;
   not?: InputMaybe<NestedStringNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -434,6 +436,8 @@ export type Query = {
   recentPosts?: Maybe<Array<Post>>;
   /** Returns the 5 most recent projects */
   recentProjects?: Maybe<Array<Project>>;
+  /** Search posts (full text search on title / intro). Content will be added in the future */
+  searchPosts?: Maybe<Array<Post>>;
   user?: Maybe<User>;
 };
 
@@ -443,6 +447,10 @@ export type QueryPostArgs = {
 
 export type QueryProjectArgs = {
   slug: Scalars['String']['input'];
+};
+
+export type QuerySearchPostsArgs = {
+  query: Scalars['String']['input'];
 };
 
 export type QueryUserArgs = {
@@ -481,6 +489,7 @@ export type StringFilter = {
   mode?: InputMaybe<QueryMode>;
   not?: InputMaybe<NestedStringFilter>;
   notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -496,6 +505,7 @@ export type StringNullableFilter = {
   mode?: InputMaybe<QueryMode>;
   not?: InputMaybe<NestedStringNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  search?: InputMaybe<Scalars['String']['input']>;
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -659,7 +669,7 @@ export type CreatePostMutation = {
     __typename?: 'PostResponse';
     errors?: Array<{
       __typename?: 'FieldError';
-      code: string;
+      code?: string | null;
       field: string;
       message: string;
     }> | null;
@@ -691,7 +701,7 @@ export type CreateProjectMutation = {
       __typename?: 'FieldError';
       message: string;
       field: string;
-      code: string;
+      code?: string | null;
     }> | null;
     project?: {
       __typename?: 'Project';
@@ -743,9 +753,23 @@ export type LoginMutation = {
       __typename?: 'FieldError';
       message: string;
       field: string;
-      code: string;
+      code?: string | null;
     }> | null;
-    user?: { __typename?: 'User'; id: string } | null;
+    user?: {
+      __typename?: 'User';
+      id: string;
+      firstName: string;
+      lastName: string;
+      image?: string | null;
+      github?: string | null;
+      email?: string | null;
+      bio?: string | null;
+      twitter?: string | null;
+      username: string;
+      website?: string | null;
+      createdAt: any;
+      location?: string | null;
+    } | null;
   };
 };
 
@@ -765,7 +789,7 @@ export type RegisterMutation = {
       __typename?: 'FieldError';
       message: string;
       field: string;
-      code: string;
+      code?: string | null;
     }> | null;
     user?: { __typename?: 'User'; id: string } | null;
   };
@@ -784,7 +808,7 @@ export type UpdateProjectMutation = {
       __typename?: 'FieldError';
       field: string;
       message: string;
-      code: string;
+      code?: string | null;
     }> | null;
     project?: {
       __typename?: 'Project';
@@ -977,6 +1001,27 @@ export type RecentProjectsQuery = {
   }> | null;
 };
 
+export type SearchPostsQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+}>;
+
+export type SearchPostsQuery = {
+  __typename?: 'Query';
+  searchPosts?: Array<{
+    __typename?: 'Post';
+    id: string;
+    title: string;
+    intro: string;
+    content: any;
+    slug: string;
+    tags: Array<string>;
+    image?: string | null;
+    status: Status;
+    createdAt: any;
+    updatedAt: any;
+  }> | null;
+};
+
 export type UserQueryVariables = Exact<{
   userId: Scalars['String']['input'];
 }>;
@@ -1123,10 +1168,11 @@ export const LoginDocument = gql`
         code
       }
       user {
-        id
+        ...UserFragment
       }
     }
   }
+  ${UserFragmentFragmentDoc}
 `;
 
 export function useLoginMutation() {
@@ -1333,6 +1379,23 @@ export function useRecentProjectsQuery(
 ) {
   return Urql.useQuery<RecentProjectsQuery, RecentProjectsQueryVariables>({
     query: RecentProjectsDocument,
+    ...options,
+  });
+}
+export const SearchPostsDocument = gql`
+  query SearchPosts($query: String!) {
+    searchPosts(query: $query) {
+      ...PostFragment
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+
+export function useSearchPostsQuery(
+  options: Omit<Urql.UseQueryArgs<SearchPostsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<SearchPostsQuery, SearchPostsQueryVariables>({
+    query: SearchPostsDocument,
     ...options,
   });
 }

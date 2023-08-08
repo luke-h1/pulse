@@ -11,7 +11,7 @@ interface Props<T extends FieldValues> {
   isSubmitted?: boolean;
 }
 
-const createFormErrorHelper = <T extends FieldValues>({
+const createRHFFormErrorHelper = <T extends FieldValues>({
   errors,
   touchedFields,
   isSubmitted,
@@ -64,7 +64,7 @@ const createFormErrorHelper = <T extends FieldValues>({
     getError,
     hasError,
     getAllErrors: () => getAllErrors(errors),
-  }
+  };
 };
 
-export default createFormErrorHelper;
+export default createRHFFormErrorHelper;

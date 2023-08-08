@@ -5,10 +5,11 @@ import { DecimalJSScalar } from "../../scalars";
 import { PostOrderByRelationAggregateInput } from "../inputs/PostOrderByRelationAggregateInput";
 import { ProjectOrderByRelationAggregateInput } from "../inputs/ProjectOrderByRelationAggregateInput";
 import { SortOrderInput } from "../inputs/SortOrderInput";
+import { UserOrderByRelevanceInput } from "../inputs/UserOrderByRelevanceInput";
 import { SortOrder } from "../../enums/SortOrder";
 
-@TypeGraphQL.InputType("UserOrderByWithRelationInput", {})
-export class UserOrderByWithRelationInput {
+@TypeGraphQL.InputType("UserOrderByWithRelationAndSearchRelevanceInput", {})
+export class UserOrderByWithRelationAndSearchRelevanceInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
@@ -108,4 +109,9 @@ export class UserOrderByWithRelationInput {
     nullable: true
   })
   posts?: PostOrderByRelationAggregateInput | undefined;
+
+  @TypeGraphQL.Field(_type => UserOrderByRelevanceInput, {
+    nullable: true
+  })
+  _relevance?: UserOrderByRelevanceInput | undefined;
 }

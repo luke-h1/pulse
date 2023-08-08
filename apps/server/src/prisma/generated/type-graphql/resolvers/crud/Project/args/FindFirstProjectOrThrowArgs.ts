@@ -1,6 +1,6 @@
 import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
-import { ProjectOrderByWithRelationInput } from "../../../inputs/ProjectOrderByWithRelationInput";
+import { ProjectOrderByWithRelationAndSearchRelevanceInput } from "../../../inputs/ProjectOrderByWithRelationAndSearchRelevanceInput";
 import { ProjectWhereInput } from "../../../inputs/ProjectWhereInput";
 import { ProjectWhereUniqueInput } from "../../../inputs/ProjectWhereUniqueInput";
 import { ProjectScalarFieldEnum } from "../../../../enums/ProjectScalarFieldEnum";
@@ -12,10 +12,10 @@ export class FindFirstProjectOrThrowArgs {
   })
   where?: ProjectWhereInput | undefined;
 
-  @TypeGraphQL.Field(_type => [ProjectOrderByWithRelationInput], {
+  @TypeGraphQL.Field(_type => [ProjectOrderByWithRelationAndSearchRelevanceInput], {
     nullable: true
   })
-  orderBy?: ProjectOrderByWithRelationInput[] | undefined;
+  orderBy?: ProjectOrderByWithRelationAndSearchRelevanceInput[] | undefined;
 
   @TypeGraphQL.Field(_type => ProjectWhereUniqueInput, {
     nullable: true

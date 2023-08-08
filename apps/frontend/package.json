@@ -36,7 +36,7 @@
     "identity-obj-proxy": "^3.0.0",
     "isomorphic-unfetch": "^4.0.2",
     "lodash": "^4.17.21",
-    "next": "13.4.12",
+    "next": "13.4.13",
     "next-auth": "^4.22.3",
     "next-seo": "^6.1.0",
     "next-sitemap": "^4.1.8",

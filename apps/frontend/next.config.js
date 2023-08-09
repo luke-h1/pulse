@@ -5,7 +5,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  transpilePackages: ['common', 'graphql-hooks'],
+  transpilePackages: ['common', 'graphql-hooks', 'editor'],
 };
 
 module.exports = nextConfig;

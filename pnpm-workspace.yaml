@@ -3,6 +3,4 @@ packages:
   - 'apps/admin'
   - 'apps/common'
   - 'apps/frontend'
-  - 'packages/ui'
   - 'packages/graphql-hooks'
-  - 'packages/editor'

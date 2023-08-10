@@ -19,7 +19,7 @@
     "clsx": "^2.0.0",
     "common": "workspace:*",
     "eslint": "8.46.0",
-    "eslint-config-next": "13.4.12",
+    "eslint-config-next": "13.4.13",
     "lodash": "^4.17.21",
     "next": "13.4.13",
     "next-seo": "^6.1.0",

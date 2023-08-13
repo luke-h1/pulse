@@ -13,19 +13,20 @@
     "branchTopic": "{{{datasource}}}-{{{depName}}}-vulnerability",
     "prCreation": "immediate"
   },
+  "schedule": [
+    "before 4am"
+  ],
   "packageRules": [
     {
       "matchDatasources": ["npm"],
       "groupName": "Minor frontend dependencies",
       "matchUpdateTypes": ["minor", "patch"],
-      "schedule": ["every day"],
       "enabled": true
     },
     {
       "matchDatasources": ["npm"],
       "groupName": "Major frontend dependencies",
       "matchUpdateTypes": ["major"],
-      "schedule": ["every day"],
       "enabled": true
     },
     {

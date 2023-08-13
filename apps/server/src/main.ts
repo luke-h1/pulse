@@ -10,6 +10,7 @@ import { ApolloServer } from '@apollo/server';
 import { json } from 'body-parser';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { ApolloArmor } from '@escape.tech/graphql-armor';
 import redis from './db/redis';
 import buildCookieOptions from './utils/buildCookieOptions';
 import createSchema from './utils/createSchema';
@@ -18,7 +19,7 @@ import config from './utils/config';
 
 const DEV_ORIGINS = [
   'http://localhost:3000',
-  'http://localhost:4000',
+  'http://localhost:3005',
   'https://studio.apollographql.com',
 ];
 
@@ -48,10 +49,17 @@ const main = async () => {
     }),
   );
 
+  const armor = new ApolloArmor();
+  const protection = armor.protect();
+
   const apolloServer = new ApolloServer({
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+      ...protection.plugins,
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+    ],
     allowBatchedHttpRequests: true,
     schema: await createSchema(),
+    csrfPrevention: process.env.NODE_ENV === 'production',
   });
 
   await apolloServer.start();

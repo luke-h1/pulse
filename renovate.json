@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dependencyDashboard": true,
+  "extends": ["config:base"],
+  "timezone": "Europe/London",
+  "recreateWhen": "never",
+  "vulnerabilityAlerts": {
+    "groupName": "renovate",
+    "dependencyDashboardApproval": false,
+    "minimumReleaseAge": "0d",
+    "rangeStrategy": "update-lockfile",
+    "commitMessageSuffix": "[SECURITY]",
+    "branchTopic": "{{{datasource}}}-{{{depName}}}-vulnerability",
+    "prCreation": "immediate"
+  },
+  "packageRules": [
+    {
+      "matchDatasources": ["npm"],
+      "groupName": "Minor frontend dependencies",
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["every day"],
+      "enabled": true
+    },
+    {
+      "matchDatasources": ["npm"],
+      "groupName": "Major frontend dependencies",
+      "matchUpdateTypes": ["major"],
+      "schedule": ["every day"],
+      "enabled": true
+    },
+    {
+      "matchDatasources": ["docker"],
+      "groupName": "docker image updates",
+      "enabled": true
+    },
+    {
+      "packageNames": ["node"],
+      "enabled": true
+    }
+  ]
+}

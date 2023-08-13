@@ -22,11 +22,13 @@
     "postinstall": "pnpm prisma generate"
   },
   "dependencies": {
+    "@apollo/server": "^4.9.1",
     "@prisma/client": "5.1.1",
     "apollo-server-cache-redis": "^3.3.1",
     "apollo-server-core": "3.12.0",
     "apollo-server-express": "^3.12.0",
     "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "cloudinary": "1.40.0",
@@ -58,6 +60,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/body-parser": "^1.19.2",
     "@types/compression": "^1.7.2",
     "@types/connect-redis": "^0.0.18",
     "@types/cors": "^2.8.13",

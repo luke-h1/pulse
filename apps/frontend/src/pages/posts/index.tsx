@@ -71,7 +71,7 @@ const PostPage: NextPage = () => {
           />
         </InputGroup>
       </VStack>
-      {displayedPosts?.posts && displayedPosts.posts.length && (
+      {displayedPosts?.posts && displayedPosts.posts.length > 0 && (
         <HStack
           as="section"
           flexWrap="wrap"

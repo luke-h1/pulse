@@ -75,6 +75,29 @@ export class ProjectResolver {
     return { slugs: slugs.map(({ slug }) => slug) };
   }
 
+  @Query(() => [Project], {
+    description: 'Search projects (full text search on title / intro)',
+    nullable: true,
+  })
+  async searchProjects(
+    @Arg('query', () => String) query: string,
+  ): Promise<Project[]> {
+    return db.project.findMany({
+      where: {
+        title: {
+          search: query,
+        },
+        OR: [
+          {
+            intro: {
+              search: query,
+            },
+          },
+        ],
+      },
+    });
+  }
+
   @Query(() => Project, { nullable: true })
   async project(
     @Arg('slug', () => String) slug: string,

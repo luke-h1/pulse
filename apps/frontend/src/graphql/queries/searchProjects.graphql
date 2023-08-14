@@ -1,0 +1,5 @@
+query SearchProjects($query: String!) {
+  searchProjects(query: $query) {
+    ...ProjectFragment
+  }
+}

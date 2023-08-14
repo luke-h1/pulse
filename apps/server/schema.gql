@@ -361,6 +361,9 @@ type Query {
   Search posts (full text search on title / intro). Content will be added in the future
   """
   searchPosts(query: String!): [Post!]
+
+  """Search projects (full text search on title / intro)"""
+  searchProjects(query: String!): [Project!]
   user(id: String!): User
 }
 

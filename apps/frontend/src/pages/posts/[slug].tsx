@@ -1,12 +1,5 @@
 import { NextPage } from 'next';
-import {
-  VStack,
-  Heading,
-  HStack,
-  Text,
-  Spinner,
-  Divider,
-} from '@chakra-ui/react';
+import { VStack, Heading, HStack, Text, Divider } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';

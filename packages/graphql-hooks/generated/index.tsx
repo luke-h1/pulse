@@ -442,6 +442,8 @@ export type Query = {
   recentProjects?: Maybe<Array<Project>>;
   /** Search posts (full text search on title / intro). Content will be added in the future */
   searchPosts?: Maybe<Array<Post>>;
+  /** Search projects (full text search on title / intro) */
+  searchProjects?: Maybe<Array<Project>>;
   user?: Maybe<User>;
 };
 
@@ -454,6 +456,10 @@ export type QueryProjectArgs = {
 };
 
 export type QuerySearchPostsArgs = {
+  query: Scalars['String']['input'];
+};
+
+export type QuerySearchProjectsArgs = {
   query: Scalars['String']['input'];
 };
 
@@ -1027,6 +1033,31 @@ export type SearchPostsQuery = {
   }> | null;
 };
 
+export type SearchProjectsQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+}>;
+
+export type SearchProjectsQuery = {
+  __typename?: 'Query';
+  searchProjects?: Array<{
+    __typename?: 'Project';
+    id: string;
+    title: string;
+    intro: string;
+    image?: string | null;
+    tags: Array<string>;
+    status: Status;
+    slug: string;
+    siteUrl?: string | null;
+    playStoreUrl?: string | null;
+    githubUrl?: string | null;
+    appStoreUrl?: string | null;
+    content: any;
+    createdAt: any;
+    updatedAt: any;
+  }> | null;
+};
+
 export type UserQueryVariables = Exact<{
   userId: Scalars['String']['input'];
 }>;
@@ -1402,6 +1433,23 @@ export function useSearchPostsQuery(
 ) {
   return Urql.useQuery<SearchPostsQuery, SearchPostsQueryVariables>({
     query: SearchPostsDocument,
+    ...options,
+  });
+}
+export const SearchProjectsDocument = gql`
+  query SearchProjects($query: String!) {
+    searchProjects(query: $query) {
+      ...ProjectFragment
+    }
+  }
+  ${ProjectFragmentFragmentDoc}
+`;
+
+export function useSearchProjectsQuery(
+  options: Omit<Urql.UseQueryArgs<SearchProjectsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<SearchProjectsQuery, SearchProjectsQueryVariables>({
+    query: SearchProjectsDocument,
     ...options,
   });
 }

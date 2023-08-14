@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 jest.setTimeout(10000);
 // This is just a little hack to silence a warning that we'll get until React

@@ -4,3 +4,4 @@ packages:
   - 'apps/common'
   - 'apps/frontend'
   - 'packages/graphql-hooks'
+  - 'packages/editor'

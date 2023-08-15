@@ -1,9 +1,7 @@
 {
   "name": "editor",
   "version": "1.0.0",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "dependencies": {
     "react": "18.2.0",
     "@editorjs/code": "^2.8.0",

@@ -8,6 +8,7 @@ export default function Editor() {
   const isMounted = useMountedRef();
 
   const initializeEditor = useCallback(async () => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const EditorJS = (await import('@editorjs/editorjs')).default;
     const Header = (await import('@editorjs/header')).default;
     const Embed = (await import('@editorjs/embed')).default;
@@ -50,18 +51,19 @@ export default function Editor() {
     };
 
     if (isMounted.current) {
-        initEditor();
+      initEditor();
 
-        return () => {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-            ref?.current?.destroy();
-            ref.current = undefined;
-
-        }
+      return () => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        ref?.current?.destroy();
+        ref.current = undefined;
+      };
     }
+
+    return () => {};
   }, [isMounted, initializeEditor]);
 
   if (!isMounted.current) {
-    return null
+    return null;
   }
 }

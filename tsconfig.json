@@ -22,7 +22,7 @@
       "@admin/*": ["./apps/admin/src/*"],
       "@frontend/*": ["./apps/frontend/src/*"],
       "@common/*": ["./apps/common/src/*"],
-      // "@ui/*": ["./packages/ui/src/*"],
+      "@editor/*": ["./packages/editor/src/*"],
       "@graphql-hooks/*": ["./packages/graphql-hooks/src/*"]
     }
   },

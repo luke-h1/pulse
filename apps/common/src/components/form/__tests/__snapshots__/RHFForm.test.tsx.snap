@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Form Does not render errors for fields that do not have errors 1`] = `
-<form class="chakra-stack css-ashix1"
+<form class="chakra-stack css-22bnw2"
       id="test-form"
 >
   <div class="chakra-stack css-1pyx7hi">

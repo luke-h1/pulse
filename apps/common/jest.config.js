@@ -31,6 +31,7 @@ const config = {
   ],
   moduleNameMapper: {
     '^axios$': '<rootDir>/node_modules/axios/dist/axios.js',
+    '@common/(.*)$': '<rootDir>/src/$1',
   },
   moduleFileExtensions: [
     'web.js',

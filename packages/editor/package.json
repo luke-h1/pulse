@@ -1,9 +1,7 @@
 {
   "name": "editor",
   "version": "1.0.0",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
-  },
+  "scripts": {},
   "dependencies": {
     "@chakra-ui/descendant": "^3.1.0",
     "@chakra-ui/next-js": "^2.1.5",

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "alphabetize": "node ./scripts/alphabetizePackageJson.js",
     "clean": "pnpm -r --parallel exec rm -rf node_modules && rm -rf node_modules",
     "lint": "eslint \"./{apps,packages}/**/*.{js, jsx,ts,tsx}\" --quiet --fix && eslint \"./**/*.{js, jsx,ts,tsx}\" --quiet --fix",
     "lint:style": "stylelint --fix apps/**/*.{scss,css}",

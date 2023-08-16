@@ -1,9 +1,9 @@
 import { ButtonGroup, Heading, Stack } from '@chakra-ui/react';
 import Page from '@frontend/components/Page';
-import FormProvider from '@frontend/components/form/FormProvider';
-import Input from '@frontend/components/form/Input';
-import RHFForm from '@frontend/components/form/RHFForm';
-import SubmitButton from '@frontend/components/form/SubmitButton';
+import FormProvider from '@common/components/form/FormProvider';
+import Input from '@common/components/form/Input';
+import RHFForm from '@common/components/form/RHFForm';
+import SubmitButton from '@common/components/form/SubmitButton';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import toErrorMap from '@frontend/utils/toErrorMap';
 import { loginInput, loginSchema } from '@frontend/validation/auth';

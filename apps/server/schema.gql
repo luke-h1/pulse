@@ -223,7 +223,6 @@ type PostResponse {
   post: Post
 }
 
-"""Post update input data"""
 input PostUpdateInput {
   content: String!
   image: String
@@ -235,6 +234,8 @@ input PostUpdateInput {
 
 input PostWhereInput {
   AND: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+  OR: [PostWhereInput!]
   author: UserRelationFilter
   authorId: StringFilter
   content: JsonFilter
@@ -242,8 +243,6 @@ input PostWhereInput {
   id: StringFilter
   image: StringNullableFilter
   intro: StringFilter
-  NOT: [PostWhereInput!]
-  OR: [PostWhereInput!]
   readingTime: StringFilter
   slug: StringFilter
   status: EnumStatusFilter
@@ -294,7 +293,6 @@ type ProjectResponse {
   project: Project
 }
 
-"""Project update input data"""
 input ProjectUpdateInput {
   appStoreUrl: String
   content: String!
@@ -310,6 +308,8 @@ input ProjectUpdateInput {
 
 input ProjectWhereInput {
   AND: [ProjectWhereInput!]
+  NOT: [ProjectWhereInput!]
+  OR: [ProjectWhereInput!]
   appStoreUrl: StringNullableFilter
   author: UserRelationFilter
   authorId: StringFilter
@@ -319,8 +319,6 @@ input ProjectWhereInput {
   id: StringFilter
   image: StringNullableFilter
   intro: StringFilter
-  NOT: [ProjectWhereInput!]
-  OR: [ProjectWhereInput!]
   playStoreUrl: StringNullableFilter
   readingTime: StringFilter
   siteUrl: StringNullableFilter
@@ -338,18 +336,18 @@ type Query {
   me: User
   post(slug: String!): Post
 
-  """Returns all posts"""
-  posts: [Post!]
-
   """Returns all post slugs"""
   postSlugs: SlugsResponse
-  project(slug: String!): Project
 
-  """Returns all projects"""
-  projects: [Project!]
+  """Returns all posts"""
+  posts: [Post!]
+  project(slug: String!): Project
 
   """Returns all project slugs"""
   projectSlugs: SlugsResponse
+
+  """Returns all projects"""
+  projects: [Project!]
 
   """Returns the 5 most recent posts"""
   recentPosts: [Post!]
@@ -484,8 +482,10 @@ input UserUpdateInput {
 }
 
 input UserWhereInput {
-  accountStatus: EnumAccountStatusFilter
   AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  accountStatus: EnumAccountStatusFilter
   bio: StringNullableFilter
   createdAt: DateTimeFilter
   email: StringNullableFilter
@@ -496,8 +496,6 @@ input UserWhereInput {
   image: StringNullableFilter
   lastName: StringFilter
   location: StringNullableFilter
-  NOT: [UserWhereInput!]
-  OR: [UserWhereInput!]
   password: StringFilter
   posts: PostListRelationFilter
   projects: ProjectListRelationFilter

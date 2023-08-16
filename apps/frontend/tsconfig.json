@@ -25,7 +25,7 @@
       "@frontend/*": ["./src/*"],
       "@common/*": ["../common/src/*"],
       "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
-      // "@ui/*": ["../../packages/ui/src/*"]
+      "@editor/*": ["../../packages/editor/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -24,6 +24,7 @@ interface Props<TFormValues extends FieldValues> {
   showErrorSummary?: boolean;
   onSubmit: (values: TFormValues) => Promise<void>;
   showSubmitError?: boolean;
+  width?: string;
 }
 
 export interface ErrorSummaryMessage {
@@ -38,6 +39,7 @@ export default function RHFForm<TFormValues extends FieldValues>({
   submitId = `${id}-submit`,
   showErrorSummary = true,
   showSubmitError = false,
+  width,
 }: Props<TFormValues>) {
   const isMounted = useMountedRef();
 
@@ -116,10 +118,11 @@ export default function RHFForm<TFormValues extends FieldValues>({
   return (
     <FormIdContextProvider id={id}>
       <VStack
+        width={width}
         id={id}
         onSubmit={handleSubmit}
         as="form"
-        align="start"
+        // align="start"
         spacing={5}
       >
         {showErrorSummary && (

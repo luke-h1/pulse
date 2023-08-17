@@ -18,16 +18,15 @@ import { PostCreateInput } from './inputs/postCreateInput';
 import { Context } from '../../types/Context';
 import { PostUpdateInput } from './inputs/postUpdateInput';
 import { isAdmin } from '../../middleware/isAdmin';
+import Pagination from '../../pagination/pagination';
 
 @ObjectType()
-class PostResponse {
+class PostResponse extends Pagination {
   @Field(() => [FieldError], { nullable: true })
   errors?: FieldError[];
 
   @Field(() => Post, { nullable: true })
   post?: Post;
-
-  // TODO: extend from base pagination class for posts and projects
 }
 
 @ObjectType()

@@ -220,7 +220,10 @@ input PostListRelationFilter {
 
 type PostResponse {
   errors: [FieldError!]
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
   post: Post
+  totalCount: Float
 }
 
 input PostUpdateInput {

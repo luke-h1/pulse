@@ -8,7 +8,7 @@ const postPayload = {
     required_error: 'Intro is required',
   }),
   image: z.string().nullable(),
-  tags: z.string().array(),
+  tags: z.string(),
   content: z.string(),
 };
 

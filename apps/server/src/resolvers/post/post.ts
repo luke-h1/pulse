@@ -21,7 +21,7 @@ import { isAdmin } from '../../middleware/isAdmin';
 import Pagination from '../../pagination/pagination';
 
 @ObjectType()
-class PostResponse extends Pagination {
+class PostResponse {
   @Field(() => [FieldError], { nullable: true })
   errors?: FieldError[];
 

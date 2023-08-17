@@ -310,7 +310,6 @@ export type PostResponse = {
   post?: Maybe<Post>;
 };
 
-/** Post update input data */
 export type PostUpdateInput = {
   content: Scalars['String']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
@@ -383,7 +382,6 @@ export type ProjectResponse = {
   project?: Maybe<Project>;
 };
 
-/** Project update input data */
 export type ProjectUpdateInput = {
   appStoreUrl?: InputMaybe<Scalars['String']['input']>;
   content: Scalars['String']['input'];

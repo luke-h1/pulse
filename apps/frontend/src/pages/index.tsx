@@ -11,14 +11,14 @@ import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 
 const Home: NextPage = () => {
-  const [{ data }] = useRecentPostsQuery();
-  const [{ data: projectsData }] = useRecentProjectsQuery();
+  // const [{ data }] = useRecentPostsQuery();
+  // const [{ data: projectsData }] = useRecentProjectsQuery();
 
   return (
     <Page>
       <Hero />
-      <PostsSection posts={data?.recentPosts} />
-      <ProjectsSection projects={projectsData?.recentProjects} />
+      {/* <PostsSection posts={data?.recentPosts} />
+      <ProjectsSection projects={projectsData?.recentProjects} /> */}
     </Page>
   );
 };

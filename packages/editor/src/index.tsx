@@ -5,22 +5,21 @@ import { Flex, Kbd, Text } from '@chakra-ui/react';
 import { useController } from 'react-hook-form';
 
 import { InputControlProps } from '@common/components/form/Input';
+import { BaseProps } from '@common/components/form/FormControl';
 
-interface Props {
+interface Props extends BaseProps {
   props: InputControlProps;
   editorRef: MutableRefObject<HTMLDivElement | null>;
 }
 
-export default function Editor({ props, editorRef }: Props) {
+export default function Editor({ props }: Props) {
   const ref = useRef<EditorJS>();
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const { isMounted } = useMounted();
 
-  const { name, control } = props;
-
   const { field } = useController({
-    name,
-    control,
+    name: props.name,
+    control: props.control,
   });
 
   const initializeEditor = useCallback(async () => {
@@ -38,6 +37,9 @@ export default function Editor({ props, editorRef }: Props) {
     if (!ref.current) {
       const editor = new EditorJS({
         holder: 'editor',
+        placeholder: 'Type here to write your post',
+        inlineToolbar: true,
+        data: { blocks: [] },
         onReady() {
           ref.current = editor;
         },
@@ -103,8 +105,8 @@ export default function Editor({ props, editorRef }: Props) {
     <Flex direction="column" w="full" p="4" rounded="lg" border="2px">
       <div
         id="editor"
+        // ref={editorRef}
         {...field}
-        ref={editorRef}
         style={{
           minHeight: '500px',
         }}

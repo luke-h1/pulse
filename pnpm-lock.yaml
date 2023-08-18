@@ -607,11 +607,11 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       type-graphql:
-        specifier: 2.0.0-beta.2
-        version: 2.0.0-beta.2(class-validator@0.14.0)(graphql@16.7.1)
+        specifier: 2.0.0-beta.3
+        version: 2.0.0-beta.3(class-validator@0.14.0)(graphql-scalars@1.22.2)(graphql@16.7.1)
       typegraphql-prisma:
         specifier: 0.27.0
-        version: 0.27.0(@prisma/client@5.1.1)(@types/graphql-fields@1.3.5)(@types/node@20.5.0)(graphql-fields@2.0.3)(graphql-scalars@1.22.2)(prisma@5.1.1)(tslib@2.6.1)(type-graphql@2.0.0-beta.2)
+        version: 0.27.0(@prisma/client@5.1.1)(@types/graphql-fields@1.3.5)(@types/node@20.5.0)(graphql-fields@2.0.3)(graphql-scalars@1.22.2)(prisma@5.1.1)(tslib@2.6.1)(type-graphql@2.0.0-beta.3)
     devDependencies:
       '@types/bcrypt':
         specifier: ^5.0.0
@@ -14990,12 +14990,13 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /type-graphql@2.0.0-beta.2(class-validator@0.14.0)(graphql@16.7.1):
-    resolution: {integrity: sha512-MCGxRvNADu5Wp9QEudI/WQgiqHJfjanGcKRk/ErCow6IaG04NNI7o3bjjxQVWC+qDundSOhmaquNdjDiiTbcqQ==}
-    engines: {node: '>= 14.5.0'}
+  /type-graphql@2.0.0-beta.3(class-validator@0.14.0)(graphql-scalars@1.22.2)(graphql@16.7.1):
+    resolution: {integrity: sha512-5HEiQaWHPYhPmbJuMmT+IZgjsnbNWsW37osUISwgr5EpcHZ4krLl8eBoOfjFya4mxAWYshlpSO1ahaucJQqM5g==}
+    engines: {node: '>= 16.16.0'}
     peerDependencies:
       class-validator: '>=0.14.0'
-      graphql: ^16.6.0
+      graphql: ^16.7.1
+      graphql-scalars: ^1.22.2
     peerDependenciesMeta:
       class-validator:
         optional: true
@@ -15005,6 +15006,7 @@ packages:
       class-validator: 0.14.0
       graphql: 16.7.1
       graphql-query-complexity: 0.12.0(graphql@16.7.1)
+      graphql-scalars: 1.22.2(graphql@16.7.1)
       graphql-subscriptions: 2.0.0(graphql@16.7.1)
       semver: 7.5.4
       tslib: 2.6.1
@@ -15052,7 +15054,7 @@ packages:
       for-each: 0.3.3
       is-typed-array: 1.1.12
 
-  /typegraphql-prisma@0.27.0(@prisma/client@5.1.1)(@types/graphql-fields@1.3.5)(@types/node@20.5.0)(graphql-fields@2.0.3)(graphql-scalars@1.22.2)(prisma@5.1.1)(tslib@2.6.1)(type-graphql@2.0.0-beta.2):
+  /typegraphql-prisma@0.27.0(@prisma/client@5.1.1)(@types/graphql-fields@1.3.5)(@types/node@20.5.0)(graphql-fields@2.0.3)(graphql-scalars@1.22.2)(prisma@5.1.1)(tslib@2.6.1)(type-graphql@2.0.0-beta.3):
     resolution: {integrity: sha512-yZTco+qR9nTWf9hpjPPx8BPa+GEoKQl0+Zq1wiXiUgBrXX/b77TrkqphVia0nb5nSyIdSmRcPUbqMPi0DwCOtA==}
     engines: {node: '>=12.4'}
     hasBin: true
@@ -15078,7 +15080,7 @@ packages:
       semver: 7.5.4
       ts-morph: 19.0.0
       tslib: 2.6.1
-      type-graphql: 2.0.0-beta.2(class-validator@0.14.0)(graphql@16.7.1)
+      type-graphql: 2.0.0-beta.3(class-validator@0.14.0)(graphql-scalars@1.22.2)(graphql@16.7.1)
     transitivePeerDependencies:
       - encoding
       - supports-color

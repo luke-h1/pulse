@@ -1,12 +1,6 @@
 import { graphql, GraphQLSchema } from 'graphql';
 import createSchema from '../utils/createSchema';
 
-export type Maybe<T> = T | null | undefined;
-
-export type InputType<T> = {
-  [K in keyof T]: unknown;
-};
-
 interface Options {
   source: string;
   variableValues?: { [key: string]: unknown };
@@ -15,7 +9,7 @@ interface Options {
 
 let schema: GraphQLSchema;
 
-const graphqlCall = async <T>({ source, userId, variableValues }: Options) => {
+const graphqlCall = async ({ source, userId, variableValues }: Options) => {
   if (!schema) {
     schema = await createSchema();
   }
@@ -27,6 +21,7 @@ const graphqlCall = async <T>({ source, userId, variableValues }: Options) => {
       req: {
         session: {
           userId,
+          destroy: jest.fn(),
         },
       },
       res: {

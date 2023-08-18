@@ -18,7 +18,6 @@ import { PostCreateInput } from './inputs/postCreateInput';
 import { Context } from '../../types/Context';
 import { PostUpdateInput } from './inputs/postUpdateInput';
 import { isAdmin } from '../../middleware/isAdmin';
-import Pagination from '../../pagination/pagination';
 
 @ObjectType()
 class PostResponse {

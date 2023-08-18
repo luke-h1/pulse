@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@common/*": ["../common/src/*"]
+      "@common/*": ["../common/src/*"],
+      "graphql-hooks/*": ["../../packages/graphql-hooks/src/*"],
     },
     "module": "commonjs",
     "emitDecoratorMetadata": true,

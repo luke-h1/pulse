@@ -13,31 +13,31 @@ type CountResponse {
   count: Float
 }
 
-"""
-The javascript `Date` as string. Type represents date and time as the ISO Date string.
-"""
-scalar DateTime
-
 input DateTimeFilter {
-  equals: DateTime
-  gt: DateTime
-  gte: DateTime
-  in: [DateTime!]
-  lt: DateTime
-  lte: DateTime
+  equals: DateTimeISO
+  gt: DateTimeISO
+  gte: DateTimeISO
+  in: [DateTimeISO!]
+  lt: DateTimeISO
+  lte: DateTimeISO
   not: NestedDateTimeFilter
-  notIn: [DateTime!]
+  notIn: [DateTimeISO!]
 }
 
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format.
+"""
+scalar DateTimeISO
+
 input DateTimeNullableFilter {
-  equals: DateTime
-  gt: DateTime
-  gte: DateTime
-  in: [DateTime!]
-  lt: DateTime
-  lte: DateTime
+  equals: DateTimeISO
+  gt: DateTimeISO
+  gte: DateTimeISO
+  in: [DateTimeISO!]
+  lt: DateTimeISO
+  lte: DateTimeISO
   not: NestedDateTimeNullableFilter
-  notIn: [DateTime!]
+  notIn: [DateTimeISO!]
 }
 
 input EnumAccountStatusFilter {
@@ -117,25 +117,25 @@ type Mutation {
 }
 
 input NestedDateTimeFilter {
-  equals: DateTime
-  gt: DateTime
-  gte: DateTime
-  in: [DateTime!]
-  lt: DateTime
-  lte: DateTime
+  equals: DateTimeISO
+  gt: DateTimeISO
+  gte: DateTimeISO
+  in: [DateTimeISO!]
+  lt: DateTimeISO
+  lte: DateTimeISO
   not: NestedDateTimeFilter
-  notIn: [DateTime!]
+  notIn: [DateTimeISO!]
 }
 
 input NestedDateTimeNullableFilter {
-  equals: DateTime
-  gt: DateTime
-  gte: DateTime
-  in: [DateTime!]
-  lt: DateTime
-  lte: DateTime
+  equals: DateTimeISO
+  gt: DateTimeISO
+  gte: DateTimeISO
+  in: [DateTimeISO!]
+  lt: DateTimeISO
+  lte: DateTimeISO
   not: NestedDateTimeNullableFilter
-  notIn: [DateTime!]
+  notIn: [DateTimeISO!]
 }
 
 input NestedEnumAccountStatusFilter {
@@ -192,7 +192,7 @@ input NestedStringNullableFilter {
 type Post {
   authorId: String!
   content: JSON!
-  createdAt: DateTime!
+  createdAt: DateTimeISO!
   id: String!
   image: String
   intro: String!
@@ -201,7 +201,7 @@ type Post {
   status: Status!
   tags: [String!]!
   title: String!
-  updatedAt: DateTime!
+  updatedAt: DateTimeISO!
 }
 
 input PostCreateInput {
@@ -255,7 +255,7 @@ type Project {
   appStoreUrl: String
   authorId: String!
   content: JSON!
-  createdAt: DateTime!
+  createdAt: DateTimeISO!
   githubUrl: String
   id: String!
   image: String
@@ -267,7 +267,7 @@ type Project {
   status: Status!
   tags: [String!]!
   title: String!
-  updatedAt: DateTime!
+  updatedAt: DateTimeISO!
 }
 
 input ProjectCreateInput {
@@ -333,6 +333,7 @@ type Query {
   """Returns the total number of posts"""
   countPosts: CountResponse
   countProjects: CountResponse!
+  health: String!
   me: User
   post(slug: String!): Post
 
@@ -428,9 +429,9 @@ type User {
   _count: UserCount
   accountStatus: AccountStatus!
   bio: String
-  createdAt: DateTime!
+  createdAt: DateTimeISO!
   email: String
-  emailVerified: DateTime
+  emailVerified: DateTimeISO
   firstName: String!
   github: String
   id: String!
@@ -440,7 +441,7 @@ type User {
   provider: String!
   role: Role!
   twitter: String
-  updatedAt: DateTime!
+  updatedAt: DateTimeISO!
   username: String!
   website: String
 }

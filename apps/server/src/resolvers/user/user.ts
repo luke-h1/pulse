@@ -24,7 +24,7 @@ import { UserUpdateInput } from './inputs/UserUpdateInput';
 import { SlugsResponse } from '../post/post';
 
 @ObjectType()
-class UserResponse {
+export class UserResponse {
   @Field(() => [FieldError], { nullable: true })
   errors?: FieldError[];
 
@@ -75,6 +75,7 @@ export class UserResolver {
 
       return {
         user,
+        errors: [],
       };
     } catch (e: unknown) {
       if ((e as { code: string }).code === 'P2002') {
@@ -166,6 +167,7 @@ export class UserResolver {
 
     return {
       user,
+      errors: [],
     };
   }
 

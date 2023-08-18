@@ -6,5 +6,5 @@ public
 build
 cypress
 dist
-apps/server/src/prisma
+apps/server/src/prisma/generated
 packages/graphql-hooks/src/generated

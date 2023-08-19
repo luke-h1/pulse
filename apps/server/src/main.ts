@@ -57,7 +57,6 @@ const main = async () => {
       ...protection.plugins,
       ApolloServerPluginDrainHttpServer({ httpServer }),
     ],
-    allowBatchedHttpRequests: true,
     schema: await createSchema(),
     csrfPrevention: process.env.NODE_ENV === 'production',
   });
@@ -82,8 +81,9 @@ const main = async () => {
   await new Promise<void>(resolve =>
     httpServer.listen({ port: process.env.PORT }, resolve),
   );
+
   logger.info(
-    `Server listening on http://localhost:${process.env.PORT}/api/graphql`,
+    `Server started on http://localhost:${process.env.PORT}/api/graphql `,
   );
 };
 

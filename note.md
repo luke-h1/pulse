@@ -2,8 +2,8 @@
 
 ## TODOS:
 
-* Get inspo for UI styles we'll need - number input etc. 
-* Use zod for FE validation
+* Get inspo for UI styles we'll need - number input etc. ✅
+* Use zod for FE validation ✅
 
 API:
   * project CRUD ✅
@@ -17,12 +17,12 @@ API:
   * Review naming conventions i.e. should getPost be post, getPosts be posts etc. ✅
   * upload images via cloudinary ✅
   * states for publishing - draft/published ✅
-  * fix https://github.com/microsoft/TypeScript/issues/10866
-    * Build and start server project in different way
-  * use s3 for images ???
+  * fix https://github.com/microsoft/TypeScript/issues/10866 ✅
+    * Build and start server project in a different way - no watch etc.
   * potentially look into boilerplate-graphql impl and decide if refactor code that way
-  * decide on testing strategy
-  * Migrate away from express-apollo to @apollo/server
+  * decide on testing strategy ✅
+  * Migrate away from express-apollo to @apollo/server ✅
+  * Image uploads - s3 maybe? - maybe with custom model
 
 FE:
   * Custom package for GQL type generation ✅
@@ -36,10 +36,11 @@ FE:
     * /posts/me - my posts
     * /projects/me - my projects
     * /feed - all projects and posts of all users
-    * /posts - all posts of all users 
-    * /projects - all projects of all users
+    * /posts - all posts of all users ✅
+    * /projects - all projects of all users ✅
     * /user/[slug] - user profile
     * /user/me - my profile with edit toggles
     * Footer ✅
     * Look into boilerplate-graphql for styling
-  * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project
+  * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project ✅
+  * Image uploads - both via editor and general form fields

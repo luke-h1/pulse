@@ -1,4 +1,3 @@
-import { Role } from '@prisma/client';
 import { AuthChecker } from 'type-graphql';
 import { Context } from '../types/Context';
 import { db } from '../db/prisma';
@@ -9,5 +8,10 @@ export const isAdmin: AuthChecker<Context> = async ({ context }) => {
       id: context.req.session.userId,
     },
   });
-  return user?.role === Role.ADMIN;
+
+  if (user && user.role !== 'ADMIN') {
+    return false;
+  }
+
+  return true;
 };

@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
-import { UserRegisterInput } from '../inputs/UserRegisterInput';
-import { UserLoginInput } from '../inputs/UserLoginInput';
-import { db } from '../../../db/prisma';
-import { UserResolver } from '../user';
-import { Context } from '../../../types/Context';
+import { UserRegisterInput } from '../user/inputs/UserRegisterInput';
+import { UserLoginInput } from '../user/inputs/UserLoginInput';
+import { db } from '../../db/prisma';
+import { UserResolver } from '../user/user';
+import { Context } from '../../types/Context';
 
 beforeEach(async () => {
   await db.$queryRaw(
@@ -151,6 +151,61 @@ describe('user', () => {
     });
   });
 
+  test('throws error when provided details are incorrect', async () => {
+    const resolver = new UserResolver();
+
+    const user: UserRegisterInput = {
+      firstName: 'test',
+      lastName: 'test',
+      username: 'test12345',
+      email: '',
+      password: 'blah',
+    };
+
+    await db.user.create({
+      data: {
+        ...user,
+        provider: 'session',
+        password: await bcrypt.hash('password', 10),
+      },
+    });
+
+    const req = {
+      session: {
+        destroy: jest.fn(cb => cb()),
+      },
+    } as unknown as Context['req'];
+
+    const res = {
+      clearCookie: jest.fn(),
+    } as unknown as Context['res'];
+
+    const mockRedis = {
+      del: jest.fn(),
+    } as unknown as Context['redis'];
+
+    const response = await resolver.register(
+      {
+        ...user,
+      },
+      {
+        req,
+        res,
+        redis: mockRedis,
+      },
+    );
+
+    expect(response).toEqual({
+      errors: [
+        {
+          code: '409',
+          field: 'email',
+          message: 'An account with that email already exists.',
+        },
+      ],
+    });
+  });
+
   test('logs user out and destroys cookie', async () => {
     const resolver = new UserResolver();
 
@@ -172,5 +227,112 @@ describe('user', () => {
 
     expect(req.session.destroy).toHaveBeenCalled();
     expect(res.clearCookie).toHaveBeenCalledWith('pulse.sid');
+  });
+
+  test('me query returns null when no user is logged in', async () => {
+    const resolver = new UserResolver();
+
+    const req = {
+      session: {
+        userId: '',
+      },
+    } as unknown as Context['req'];
+
+    const res = {
+      clearCookie: jest.fn(),
+    } as unknown as Context['res'];
+
+    const mockRedis = {
+      del: jest.fn(),
+    } as unknown as Context['redis'];
+
+    const response = await resolver.me({ req, res, redis: mockRedis });
+
+    expect(response).toEqual(null);
+  });
+
+  test('deleteAccount mutation deletes user account', async () => {
+    const resolver = new UserResolver();
+
+    const u = await db.user.create({
+      data: {
+        firstName: 'test',
+        lastName: 'test',
+        username: 'test12345',
+        email: 'test@test.com',
+        provider: 'session',
+        password: await bcrypt.hash('password', 10),
+      },
+    });
+
+    const req = {
+      session: {
+        userId: u.id,
+      },
+    } as unknown as Context['req'];
+
+    const res = {
+      clearCookie: jest.fn(),
+    } as unknown as Context['res'];
+
+    const mockRedis = {
+      del: jest.fn(),
+    } as unknown as Context['redis'];
+
+    const response = await resolver.deleteAccount({
+      req,
+      res,
+      redis: mockRedis,
+    });
+
+    expect(response).toEqual(true);
+  });
+
+  test('deleteUser mutation only runs when user is admin', async () => {
+    const resolver = new UserResolver();
+
+    const adminUser = await db.user.create({
+      data: {
+        firstName: 'test',
+        lastName: 'test',
+        username: 'test12345',
+        email: 'test@test.com',
+        role: 'ADMIN',
+        password: await bcrypt.hash('password', 10),
+        provider: 'session',
+      },
+    });
+
+    const req = {
+      session: {
+        userId: adminUser.id,
+      },
+    } as unknown as Context['req'];
+
+    const res = {
+      clearCookie: jest.fn(),
+    } as unknown as Context['res'];
+
+    const mockRedis = {
+      del: jest.fn(),
+    } as unknown as Context['redis'];
+
+    const user = await db.user.create({
+      data: {
+        firstName: 'test',
+        lastName: 'test',
+        username: 'test123456',
+        email: 'admin@test.com',
+        password: await bcrypt.hash('password', 10),
+        provider: 'session',
+      },
+    });
+
+    const response = await resolver.deleteUser(
+      { req, res, redis: mockRedis },
+      user.id,
+    );
+
+    expect(response).toEqual(true);
   });
 });

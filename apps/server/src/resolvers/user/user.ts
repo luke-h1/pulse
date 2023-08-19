@@ -195,11 +195,15 @@ export class UserResolver {
   @Mutation(() => Boolean)
   @Authorized(isAuth)
   async deleteAccount(@Ctx() { req }: Context): Promise<boolean> {
-    await db.user.delete({
+    const user = await db.user.delete({
       where: {
         id: req.session.userId,
       },
     });
+
+    if (!user) {
+      return false;
+    }
 
     return true;
   }

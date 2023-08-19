@@ -44,4 +44,8 @@ FE:
     * Footer ✅
     * Look into boilerplate-graphql for styling
   * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project ✅
+
+Post Saving:
   * Image uploads - both via editor and general form fields
+  * Sort saving of editor blocks
+  * tag input

@@ -12,6 +12,8 @@ generatorHandler({
     };
   },
   async onGenerate(options) {
+    const start = Date.now();
+
     const enums = options.dmmf.datamodel.enums;
 
     const output = enums.map(e => {
@@ -33,5 +35,9 @@ generatorHandler({
     const outputPath = path.resolve(outputFile.value);
     await fs.mkdir(path.dirname(outputPath), { recursive: true });
     await fs.writeFile(outputPath, header + output.join('\n'), 'utf-8');
+
+    const end = Date.now();
+
+    console.log(`Generated enums in ${end - start}ms`);
   },
 });

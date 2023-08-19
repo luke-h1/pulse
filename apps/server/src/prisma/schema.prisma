@@ -15,7 +15,7 @@ generator typegraphql {
 }
 
 generator enums {
-  provider = "ts-node --transpile-only ./enum-generator"
+  provider = "ts-node  ./src/prisma/enum-generator.ts"
 }
 
 enum Role {

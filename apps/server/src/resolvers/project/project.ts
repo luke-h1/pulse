@@ -33,7 +33,11 @@ class ProjectResponse {
 export class ProjectResolver {
   @Query(() => CountResponse)
   async countProjects() {
-    const count = await db.project.count();
+    const count = await db.project.count({
+      where: {
+        status: 'PUBLISHED',
+      },
+    });
     return { count };
   }
 
@@ -45,6 +49,9 @@ export class ProjectResolver {
     // will need to add pagination args in the future here
     return db.project.findMany({
       take: 50,
+      where: {
+        status: 'PUBLISHED',
+      },
     });
   }
 
@@ -55,6 +62,9 @@ export class ProjectResolver {
   async recentProjects(): Promise<Project[]> {
     return db.project.findMany({
       take: 5,
+      where: {
+        status: 'PUBLISHED',
+      },
       orderBy: {
         createdAt: 'desc',
       },
@@ -67,6 +77,9 @@ export class ProjectResolver {
   })
   async projectSlugs(): Promise<SlugsResponse> {
     const slugs = await db.project.findMany({
+      where: {
+        status: 'PUBLISHED',
+      },
       select: {
         slug: true,
       },
@@ -84,6 +97,7 @@ export class ProjectResolver {
   ): Promise<Project[]> {
     return db.project.findMany({
       where: {
+        status: 'PUBLISHED',
         title: {
           search: query,
         },
@@ -104,6 +118,7 @@ export class ProjectResolver {
   ): Promise<ProjectResponse> {
     const project = await db.project.findUnique({
       where: {
+        status: 'PUBLISHED',
         slug,
       },
     });

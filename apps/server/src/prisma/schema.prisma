@@ -14,6 +14,10 @@ generator typegraphql {
   omitOutputFieldsByDefault = ["password"]
 }
 
+generator enums {
+  provider = "ts-node --transpile-only ./enum-generator"
+}
+
 enum Role {
   USER
   ADMIN

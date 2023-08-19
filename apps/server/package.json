@@ -25,6 +25,7 @@
     "@apollo/server": "^4.9.1",
     "@escape.tech/graphql-armor": "^2.2.0",
     "@prisma/client": "5.1.1",
+    "@prisma/generator-helper": "^5.1.1",
     "apollo-server-cache-redis": "^3.3.1",
     "apollo-server-core": "3.12.0",
     "apollo-server-express": "^3.12.0",
@@ -55,6 +56,7 @@
     "reading-time": "^1.5.0",
     "reflect-metadata": "^0.1.13",
     "slugify": "^1.6.6",
+    "ts-node": "^10.9.1",
     "tslib": "^2.6.1",
     "type-graphql": "2.0.0-beta.3",
     "typegraphql-prisma": "0.27.0"

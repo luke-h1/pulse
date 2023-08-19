@@ -47,7 +47,11 @@ export class PostResolver {
     nullable: true,
   })
   async countPosts() {
-    const count = await db.post.count();
+    const count = await db.post.count({
+      where: {
+        status: 'PUBLISHED',
+      },
+    });
     return { count };
   }
 
@@ -59,6 +63,9 @@ export class PostResolver {
     // will need to add pagination args in the future here
     return db.post.findMany({
       take: 50,
+      where: {
+        status: 'PUBLISHED',
+      },
     });
   }
 
@@ -71,6 +78,9 @@ export class PostResolver {
       take: 5,
       orderBy: {
         createdAt: 'desc',
+      },
+      where: {
+        status: 'PUBLISHED',
       },
     });
   }
@@ -95,6 +105,11 @@ export class PostResolver {
             },
           },
         ],
+        AND: {
+          status: {
+            equals: 'PUBLISHED',
+          },
+        },
       },
     });
   }
@@ -104,6 +119,7 @@ export class PostResolver {
     const post = await db.post.findUnique({
       where: {
         slug,
+        status: 'PUBLISHED',
       },
     });
 
@@ -217,6 +233,9 @@ export class PostResolver {
     const slugs = await db.post.findMany({
       select: {
         slug: true,
+      },
+      where: {
+        status: 'PUBLISHED',
       },
     });
 

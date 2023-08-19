@@ -23,6 +23,7 @@ API:
   * decide on testing strategy ✅
   * Migrate away from express-apollo to @apollo/server ✅
   * Image uploads - s3 maybe? - maybe with custom model
+  * Add filtering by post status for preview purposes - published or draft etc.
 
 FE:
   * Custom package for GQL type generation ✅

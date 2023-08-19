@@ -49,3 +49,10 @@ Post Saving:
   * Image uploads - both via editor and general form fields
   * Sort saving of editor blocks
   * tag input
+
+Infra:
+ * Terraform for Infra - automate it in CI
+ * AWS for hosting
+ * Dockerize frontend + server
+ * ECS for frontend + server
+ * serverless DB potentially if can get postgres in order to save on costs

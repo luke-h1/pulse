@@ -1,25 +1,23 @@
 import EditorJS from '@editorjs/editorjs';
 import { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 import { useMounted } from '@common/hooks/useMounted';
-import { Flex, Kbd, Text } from '@chakra-ui/react';
+import { Flex, Kbd, Text, Textarea } from '@chakra-ui/react';
 import { useController } from 'react-hook-form';
 
-import { InputControlProps } from '@common/components/form/Input';
 import { BaseProps } from '@common/components/form/FormControl';
 
 interface Props extends BaseProps {
-  props: InputControlProps;
-  editorRef: MutableRefObject<HTMLDivElement | null>;
+  editorRef: MutableRefObject<EditorJS | null>;
 }
 
-export default function Editor({ props }: Props) {
+export default function Editor({ name, control }: Props) {
   const ref = useRef<EditorJS>();
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const { isMounted } = useMounted();
 
   const { field } = useController({
-    name: props.name,
-    control: props.control,
+    name,
+    control,
   });
 
   const initializeEditor = useCallback(async () => {
@@ -103,7 +101,7 @@ export default function Editor({ props }: Props) {
 
   return (
     <Flex direction="column" w="full" p="4" rounded="lg" border="2px">
-      <div
+      <Textarea
         id="editor"
         // ref={editorRef}
         {...field}

@@ -24,12 +24,13 @@ import { useRouter } from 'next/router';
 import { SyntheticEvent, useCallback, useRef, useState } from 'react';
 import { UseFormSetError } from 'react-hook-form';
 import TextArea from '@common/components/form/TextArea';
+import { EditorRefType } from '@editor/editorRef';
 
 const CreatePostPage: NextPage = () => {
   const [, createPost] = useCreatePostMutation();
   const router = useRouter();
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [tags, setTags] = useState<string[]>([]);
+  const ref = useRef<EditorRefType | null>(null);
+  const [tags, setTags] = useState<string[]>(['test', 'test2']);
   const tagInputRef = useRef<HTMLInputElement>(null);
   const [previewImage, setPreviewImage] = useState<string>('');
 
@@ -67,21 +68,23 @@ const CreatePostPage: NextPage = () => {
     data: postCreateInput,
     setError: UseFormSetError<postCreateInput>,
   ) => {
-    // const blocks = ref?.current?.save(); // TODO: need ref to be of type EditorJS
+    const blocks = await ref?.current?.save(); // TODO: need ref to be of type EditorJS
     console.log('data is ', data);
     const res = await createPost({
       options: {
         ...data,
         tags,
         image: '',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        content: blocks as any,
       },
     });
 
     const errors = toErrorMap(setError, res.data?.createPost?.errors);
 
-    if (!errors) {
-      router.push('/');
-    }
+    // if (!errors) {
+    //   router.push('/');
+    // }
   };
 
   return (
@@ -122,6 +125,7 @@ const CreatePostPage: NextPage = () => {
                     const reader = new FileReader();
                     reader.onloadend = () => {
                       setPreviewImage(reader.result as string);
+                      methods.setValue('image', reader.result as string);
                     };
                     reader.readAsDataURL(file);
                   }
@@ -147,30 +151,15 @@ const CreatePostPage: NextPage = () => {
               direction={{ base: 'column', lg: 'row' }}
             >
               <Editor
-                props={{
-                  name: 'content',
-                  id: 'content',
-                  label: 'content',
-                }}
                 name="content"
+                id="content"
+                label="Content"
                 editorRef={ref}
+                onChange={() => {
+                  methods.setValue('content', ref?.current?.save());
+                }}
               />
             </Stack>
-            <Container py={8}>
-              {/* need to sort tags being set as one big string */}
-              <Text>Post tags</Text>
-              <ChakraTagInput
-                tags={tags}
-                id="tags"
-                name="tags"
-                label="Tags"
-                placeholder="Add some tags"
-                onTagsChange={handleTagsChange}
-                onTagRemove={handleTagRemove}
-                onTagAdd={handleTagAdd}
-                ref={tagInputRef}
-              />
-            </Container>
             <Button type="submit">submit</Button>
           </RHFForm>
         )}

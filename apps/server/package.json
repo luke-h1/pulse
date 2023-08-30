@@ -22,7 +22,7 @@
     "postinstall": "pnpm prisma generate"
   },
   "dependencies": {
-    "@apollo/server": "^4.9.1",
+    "@apollo/server": "^4.9.3",
     "@escape.tech/graphql-armor": "^2.2.0",
     "@prisma/client": "5.1.1",
     "@prisma/generator-helper": "^5.1.1",

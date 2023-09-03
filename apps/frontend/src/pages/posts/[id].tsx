@@ -7,15 +7,7 @@ import FormattedDate from '@common/components/FormattedDate';
 import ScrollToTop from '@frontend/components/ScrollToTop';
 import { isServer, useMounted } from '@common/hooks';
 import dynamic from 'next/dynamic';
-import useGetIntId from '@common/hooks/useGetIntId';
 import { useRouter } from 'next/router';
-
-const EditorJsRender = dynamic(
-  () => import('@editor/renderers/EditorJSRenderer'),
-  {
-    ssr: false,
-  },
-);
 
 const EditorOutput = dynamic(() => import('@editor/renderers/EditorOutput'), {
   ssr: false,

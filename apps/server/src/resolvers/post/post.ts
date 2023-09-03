@@ -146,8 +146,8 @@ export class PostResolver {
     const slug = slugify(options.title);
 
     const imageResult = await S3Service.uploadImage(
-      options.image?.createReadStream,
-      options.image.filename,
+      options.image.createReadStream,
+      options.image.filename ?? `${options.title}`,
       'post',
     );
 
@@ -213,7 +213,7 @@ export class PostResolver {
       data: {
         ...options,
         slug: slugify(options.title),
-        readingTime: readingTime(options.content).text,
+        // readingTime: readingTime(options.content).text,
         image: hasUpdatedImage ? newImage?.Location : post.image,
       },
     });

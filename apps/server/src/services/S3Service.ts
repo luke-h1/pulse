@@ -1,4 +1,4 @@
-import { ReadStream } from 'fs';
+import { ReadStream, createReadStream } from 'fs';
 import { S3 } from 'aws-sdk';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import { nanoid } from 'nanoid';
@@ -48,16 +48,16 @@ const s3DefaultParams = {
 
 const S3Service = {
   uploadImage: async (
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     createReadStream: () => ReadStream,
     filename: string,
     key: S3Key,
   ): Promise<S3Object | null> => {
     const filenameWithEntropy = `${filename}-${nanoid()}`;
-
     const params: PutObjectRequest = {
       ...s3DefaultParams,
       Key: `${key}/${filenameWithEntropy}`,
-      Body: createReadStream(),
+      Body: createReadStream,
     };
 
     try {
@@ -72,9 +72,9 @@ const S3Service = {
       };
     } catch (e) {
       logger.error(
-        `Error uploading image ${filename} to S3 bucket: ${process.env.AWS_BUCKET_NAME}`,
-        e,
+        `Error uploading image ${filenameWithEntropy} to S3 bucket: ${process.env.AWS_BUCKET_NAME}`,
       );
+      logger.error(e);
     }
     return null;
   },

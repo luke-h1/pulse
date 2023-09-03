@@ -12,17 +12,17 @@ export class EnumStatusWithAggregatesFilter {
   @TypeGraphQL.Field(_type => Status, {
     nullable: true
   })
-  equals?: "PUBLISHED" | "DRAFT" | undefined;
+  equals?: "PUBLISHED" | "DRAFT" | "SCHEDULED" | undefined;
 
   @TypeGraphQL.Field(_type => [Status], {
     nullable: true
   })
-  in?: Array<"PUBLISHED" | "DRAFT"> | undefined;
+  in?: Array<"PUBLISHED" | "DRAFT" | "SCHEDULED"> | undefined;
 
   @TypeGraphQL.Field(_type => [Status], {
     nullable: true
   })
-  notIn?: Array<"PUBLISHED" | "DRAFT"> | undefined;
+  notIn?: Array<"PUBLISHED" | "DRAFT" | "SCHEDULED"> | undefined;
 
   @TypeGraphQL.Field(_type => NestedEnumStatusWithAggregatesFilter, {
     nullable: true

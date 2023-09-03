@@ -13,9 +13,9 @@ export class UserCreateManyInput {
   id?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false
+    nullable: true
   })
-  provider!: string;
+  provider?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false

@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { ContentBlockImageUpdateManyWithoutProjectNestedInput } from "../inputs/ContentBlockImageUpdateManyWithoutProjectNestedInput";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { EnumStatusFieldUpdateOperationsInput } from "../inputs/EnumStatusFieldUpdateOperationsInput";
 import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
@@ -84,4 +85,9 @@ export class ProjectUpdateWithoutAuthorInput {
     nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
+
+  @TypeGraphQL.Field(_type => ContentBlockImageUpdateManyWithoutProjectNestedInput, {
+    nullable: true
+  })
+  ContentBlockImage?: ContentBlockImageUpdateManyWithoutProjectNestedInput | undefined;
 }

@@ -18,6 +18,7 @@ import { PostCreateInput } from './inputs/postCreateInput';
 import { Context } from '../../types/Context';
 import { PostUpdateInput } from './inputs/postUpdateInput';
 import { isAdmin } from '../../middleware/isAdmin';
+import S3Service from '../../services/S3Service';
 
 @ObjectType()
 class PostResponse {
@@ -86,8 +87,7 @@ export class PostResolver {
   }
 
   @Query(() => [Post], {
-    description:
-      'Search posts (full text search on title / intro). Content will be added in the future',
+    description: 'Search posts (full text search on title)',
     nullable: true,
   })
   async searchPosts(
@@ -145,12 +145,20 @@ export class PostResolver {
   ): Promise<PostResponse> {
     const slug = slugify(options.title);
 
+    const imageResult = await S3Service.uploadImage(
+      options.image?.createReadStream,
+      options.image.filename,
+      'post',
+    );
+
     const post = await db.post.create({
       data: {
         ...options,
         authorId: req.session.userId,
         slug,
         readingTime: readingTime(options.content).text,
+        image: imageResult?.Location as string,
+        imageFilename: imageResult?.filename,
       },
     });
 
@@ -184,6 +192,20 @@ export class PostResolver {
       };
     }
 
+    const hasUpdatedImage = options.image.filename !== post.imageFilename;
+
+    let newImage = null;
+
+    if (hasUpdatedImage) {
+      newImage = await S3Service.uploadImage(
+        options.image.createReadStream,
+        options.image.filename,
+        'post',
+      );
+
+      await S3Service.deleteImage('post', post?.imageFilename as string);
+    }
+
     const updatedPost = await db.post.update({
       where: {
         slug,
@@ -192,6 +214,7 @@ export class PostResolver {
         ...options,
         slug: slugify(options.title),
         readingTime: readingTime(options.content).text,
+        image: hasUpdatedImage ? newImage?.Location : post.image,
       },
     });
 
@@ -215,6 +238,8 @@ export class PostResolver {
     if (post?.authorId !== req.session.userId) {
       return false;
     }
+
+    await S3Service.deleteImage('post', post?.imageFilename as string);
 
     await db.post.delete({
       where: {

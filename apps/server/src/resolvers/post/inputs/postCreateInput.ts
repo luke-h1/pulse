@@ -1,4 +1,5 @@
 import { Field, InputType } from 'type-graphql';
+import { GraphQLUpload, FileUpload } from 'graphql-upload-minimal';
 
 @InputType()
 export class PostCreateInput {
@@ -8,10 +9,8 @@ export class PostCreateInput {
   @Field(() => String)
   intro: string;
 
-  @Field({
-    nullable: true,
-  })
-  image?: string;
+  @Field(() => GraphQLUpload, { nullable: true })
+  image: FileUpload;
 
   @Field(() => [String])
   tags: string[];

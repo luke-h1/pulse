@@ -34,6 +34,11 @@ export class PostMinOrderByAggregateInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
+  imageFilename?: "asc" | "desc" | undefined;
+
+  @TypeGraphQL.Field(_type => SortOrder, {
+    nullable: true
+  })
   status?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {

@@ -32,6 +32,11 @@ export class PostCreateManyAuthorInput {
   })
   image?: string | undefined;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  imageFilename?: string | undefined;
+
   @TypeGraphQL.Field(_type => PostCreatetagsInput, {
     nullable: true
   })
@@ -45,7 +50,7 @@ export class PostCreateManyAuthorInput {
   @TypeGraphQL.Field(_type => Status, {
     nullable: true
   })
-  status?: "PUBLISHED" | "DRAFT" | undefined;
+  status?: "PUBLISHED" | "DRAFT" | "SCHEDULED" | undefined;
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false

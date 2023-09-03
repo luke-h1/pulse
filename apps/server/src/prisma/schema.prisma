@@ -11,7 +11,7 @@ generator client {
 generator typegraphql {
   provider                  = "typegraphql-prisma"
   output                    = "./generated/type-graphql"
-  omitOutputFieldsByDefault = ["password"]
+  omitOutputFieldsByDefault = ["password", "Bucket", "etag", "key"]
 }
 
 generator enums {
@@ -32,11 +32,12 @@ enum AccountStatus {
 enum Status {
   PUBLISHED
   DRAFT
+  SCHEDULED
 }
 
 model User {
   id            String        @id @default(cuid())
-  provider      String
+  provider      String        @default("email")
   firstName     String
   lastName      String
   email         String?       @unique
@@ -71,26 +72,48 @@ model Project {
   playStoreUrl String?
   tags         String[]
   status       Status   @default(DRAFT)
-  readingTime String
+  readingTime  String
+  ContentBlockImage ContentBlockImage[]
+
   author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId     String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 }
 
 model Post {
-  id          String   @id @default(cuid())
-  title       String   @db.VarChar(50)
-  slug        String   @unique @db.VarChar(50)
-  intro       String
-  image       String?
+  id            String  @id @default(cuid())
+  title         String  @db.VarChar(50)
+  slug          String  @unique @db.VarChar(50)
+  intro         String
+  image         String?
+  imageFilename String? @db.VarChar(120)
+
   tags        String[]
   content     Json
   status      Status   @default(DRAFT)
   readingTime String
+  ContentBlockImage ContentBlockImage[]
+
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
+
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+}
+
+model ContentBlockImage {
+  id            String  @id @default(cuid())
+  image         String?
+  imageFilename String? @db.VarChar(120)
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  postId String
+
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

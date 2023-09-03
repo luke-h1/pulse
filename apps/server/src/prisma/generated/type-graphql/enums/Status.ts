@@ -2,7 +2,8 @@ import * as TypeGraphQL from "type-graphql";
 
 export enum Status {
   PUBLISHED = "PUBLISHED",
-  DRAFT = "DRAFT"
+  DRAFT = "DRAFT",
+  SCHEDULED = "SCHEDULED"
 }
 TypeGraphQL.registerEnumType(Status, {
   name: "Status",

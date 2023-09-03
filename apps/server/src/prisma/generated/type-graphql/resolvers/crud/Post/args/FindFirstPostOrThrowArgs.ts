@@ -35,5 +35,5 @@ export class FindFirstPostOrThrowArgs {
   @TypeGraphQL.Field(_type => [PostScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "title" | "slug" | "intro" | "image" | "tags" | "content" | "status" | "readingTime" | "authorId" | "createdAt" | "updatedAt"> | undefined;
+  distinct?: Array<"id" | "title" | "slug" | "intro" | "image" | "imageFilename" | "tags" | "content" | "status" | "readingTime" | "authorId" | "createdAt" | "updatedAt"> | undefined;
 }

@@ -1,0 +1,1 @@
+export { ContentBlockImageProjectArgs } from "./ContentBlockImageProjectArgs";

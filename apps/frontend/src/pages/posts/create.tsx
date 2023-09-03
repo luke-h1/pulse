@@ -1,19 +1,15 @@
 import {
   Button,
-  Container,
   Flex,
   Heading,
   InputGroup,
   Stack,
-  Text,
   Image as ChakraImage,
 } from '@chakra-ui/react';
 import FormProvider from '@common/components/form/FormProvider';
 import Input from '@common/components/form/Input';
 import RHFForm from '@common/components/form/RHFForm';
-import Editor from '@editor/index';
 import Page from '@frontend/components/Page';
-import ChakraTagInput from '@frontend/components/form/Tag';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import toErrorMap from '@frontend/utils/toErrorMap';
 import { postCreateInput, postCreateSchema } from '@frontend/validation/post';
@@ -21,70 +17,38 @@ import { useCreatePostMutation } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
-import { SyntheticEvent, useCallback, useRef, useState } from 'react';
-import { UseFormSetError } from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, UseFormSetError } from 'react-hook-form';
 import TextArea from '@common/components/form/TextArea';
-import { EditorRefType } from '@editor/editorRef';
+import dynamic from 'next/dynamic';
+
+const Editor = dynamic(() => import('@editor/index'), {
+  ssr: false,
+});
 
 const CreatePostPage: NextPage = () => {
   const [, createPost] = useCreatePostMutation();
   const router = useRouter();
-  const ref = useRef<EditorRefType | null>(null);
-  const [tags, setTags] = useState<string[]>(['test', 'test2']);
-  const tagInputRef = useRef<HTMLInputElement>(null);
+  const [tags] = useState<string[]>(['test', 'test2']);
   const [previewImage, setPreviewImage] = useState<string>('');
-
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const handleTagsChange = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    (event: SyntheticEvent, tags: string[]) => {
-      setTags(tags);
-    },
-    [],
-  );
-
-  const handleTagRemove = useCallback(
-    (event: SyntheticEvent, index: number) => {
-      const newTags = [...tags];
-      newTags.splice(index, 1);
-      setTags(newTags);
-    },
-
-    [tags],
-  );
-
-  const handleTagAdd = useCallback(
-    (event: SyntheticEvent, tag: string) => {
-      // non mutative
-      const newTags = [...tags, tag];
-      setTags(newTags);
-
-      tagInputRef.current?.focus();
-    },
-    [tags],
-  );
 
   const onSubmit = async (
     data: postCreateInput,
     setError: UseFormSetError<postCreateInput>,
   ) => {
-    const blocks = await ref?.current?.save(); // TODO: need ref to be of type EditorJS
-    console.log('data is ', data);
     const res = await createPost({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       options: {
         ...data,
         tags,
-        image: '',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        content: blocks as any,
       },
     });
 
     const errors = toErrorMap(setError, res.data?.createPost?.errors);
-
-    // if (!errors) {
-    //   router.push('/');
-    // }
+    if (!errors && res.data?.createPost.post) {
+      router.push(`/posts/${res.data.createPost.post.id}`);
+    }
   };
 
   return (
@@ -119,13 +83,16 @@ const CreatePostPage: NextPage = () => {
                 type="file"
                 name="image"
                 id="image"
+                accept="image/*"
                 onChange={e => {
                   if (e.target.validity && e.target.files) {
                     const file = e.target.files[0];
                     const reader = new FileReader();
                     reader.onloadend = () => {
                       setPreviewImage(reader.result as string);
-                      methods.setValue('image', reader.result as string);
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      methods.setValue('image', e.target.files[0]);
                     };
                     reader.readAsDataURL(file);
                   }
@@ -150,13 +117,21 @@ const CreatePostPage: NextPage = () => {
               spacing={5}
               direction={{ base: 'column', lg: 'row' }}
             >
-              <Editor
+              <Controller
+                render={({ field }) => (
+                  <Editor
+                    {...field}
+                    holder="editorjs-container"
+                    onChange={value =>
+                      methods.setValue('content', value.blocks)
+                    }
+                  />
+                )}
                 name="content"
-                id="content"
-                label="Content"
-                editorRef={ref}
-                onChange={() => {
-                  methods.setValue('content', ref?.current?.save());
+                control={methods.control}
+                defaultValue=""
+                rules={{
+                  validate: {},
                 }}
               />
             </Stack>

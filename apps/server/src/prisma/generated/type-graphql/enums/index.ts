@@ -1,4 +1,6 @@
 export { AccountStatus } from "./AccountStatus";
+export { ContentBlockImageOrderByRelevanceFieldEnum } from "./ContentBlockImageOrderByRelevanceFieldEnum";
+export { ContentBlockImageScalarFieldEnum } from "./ContentBlockImageScalarFieldEnum";
 export { JsonNullValueFilter } from "./JsonNullValueFilter";
 export { JsonNullValueInput } from "./JsonNullValueInput";
 export { NullsOrder } from "./NullsOrder";

@@ -51,6 +51,11 @@ export class PostScalarWhereWithAggregatesInput {
   })
   image?: StringNullableWithAggregatesFilter | undefined;
 
+  @TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter, {
+    nullable: true
+  })
+  imageFilename?: StringNullableWithAggregatesFilter | undefined;
+
   @TypeGraphQL.Field(_type => StringNullableListFilter, {
     nullable: true
   })

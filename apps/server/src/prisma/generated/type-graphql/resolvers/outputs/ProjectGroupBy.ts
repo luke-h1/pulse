@@ -67,7 +67,7 @@ export class ProjectGroupBy {
   @TypeGraphQL.Field(_type => Status, {
     nullable: false
   })
-  status!: "PUBLISHED" | "DRAFT";
+  status!: "PUBLISHED" | "DRAFT" | "SCHEDULED";
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false

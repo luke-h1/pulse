@@ -89,7 +89,8 @@ const PostPage: NextPage = () => {
             All
           </Button>
           {displayedPosts.posts.map(post => {
-            const tags = post.tags.map(tag => tag);
+            const { tags } = post;
+
             return tags.map(tag => (
               <Tag
                 key={tag}

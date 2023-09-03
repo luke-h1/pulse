@@ -19,17 +19,17 @@ API:
   * states for publishing - draft/published ✅
   * fix https://github.com/microsoft/TypeScript/issues/10866 ✅
     * Build and start server project in a different way - no watch etc.
-  * potentially look into boilerplate-graphql impl and decide if refactor code that way
   * decide on testing strategy ✅
   * Migrate away from express-apollo to @apollo/server ✅
   * Image uploads - s3 maybe? - maybe with custom model ✅
-  * Add filtering by post status for preview purposes - published or draft etc.
+  * Add filtering by post status for preview purposes - published or draft etc. ✅
   * Add queues for scheduling posts
   * see if possible to create common auth directive to verify if current logged in user is post owner (can delete a lot of post tests if so)
-  * unit test / mock s3 service
-  * review how images are going to be embedded into content - potentially its own image mutation where things like the key/id isn't tracked or maybe a custom model for this i.e. ImageBlock or ContentBlockImage
+  * review how images are going to be embedded into content - potentially its own image mutation where things like the key/id isn't tracked or maybe a custom model for this i.e. ImageBlock or ContentBlockImage✅
   * think if want to go oop style and split functionality of resolver out into its own service - would make unit testing easier
   * split unit tests up into individual describe blocks for a given resolver function
+  * use ids instead of slugs
+
 FE:
   * Custom package for GQL type generation ✅
   * Create Github OAUTH app for auth locally ✅
@@ -47,12 +47,12 @@ FE:
     * /user/[slug] - user profile
     * /user/me - my profile with edit toggles
     * Footer ✅
-    * Look into boilerplate-graphql for styling
+    * Look into boilerplate-graphql for styling✅
   * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project ✅
 
 Post Saving:
-  * Image uploads - both via editor and general form fields
-  * Sort saving of editor blocks
+  * Image uploads - both via editor and general form fields✅
+  * Sort saving of editor blocks✅
   * tag input
 
 Infra:

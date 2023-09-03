@@ -64,7 +64,7 @@ const CreatePostPage: NextPage = () => {
 
       const errors = toErrorMap(setError, res.data?.createPost?.errors);
       if (!errors && res.data?.createPost.post) {
-        router.push(`/posts/${res.data.createPost.post.id}`);
+        router.push(`/posts/${res.data.createPost.post.slug}`);
       }
     }
   };

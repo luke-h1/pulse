@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { usePostQuery } from '@graphql-hooks/generated';
-import { useEffect } from 'react';
 import FormattedDate from '@common/components/FormattedDate';
 import ScrollToTop from '@frontend/components/ScrollToTop';
 
 const PostSlugPage: NextPage = () => {
   const router = useRouter();
+
   const { slug } = router.query;
 
   const [{ data, fetching }] = usePostQuery({
@@ -17,12 +17,6 @@ const PostSlugPage: NextPage = () => {
       slug: slug as string,
     },
   });
-
-  useEffect(() => {
-    if (!data?.post) {
-      router.push('/404');
-    }
-  }, [router, data]);
 
   return (
     !fetching && (

@@ -143,6 +143,24 @@ export class PostResolver {
   ): Promise<PostResponse> {
     const slug = slugify(options.title);
 
+    const slugExists = await db.post.findUnique({
+      where: {
+        slug,
+      },
+    });
+
+    if (slugExists) {
+      return {
+        errors: [
+          {
+            field: 'title',
+            message: 'A post with this title already exists',
+            code: '409',
+          },
+        ],
+      };
+    }
+
     const post = await db.post.create({
       data: {
         ...options,
@@ -219,6 +237,22 @@ export class PostResolver {
     await db.post.delete({
       where: {
         slug,
+      },
+    });
+
+    return true;
+  }
+
+  // Temporary mutation for testing
+  // FIXME: add auth middleware for admin only
+  @Mutation(() => Boolean)
+  async publishAllPosts(): Promise<boolean> {
+    await db.post.updateMany({
+      where: {
+        status: 'DRAFT',
+      },
+      data: {
+        status: 'PUBLISHED',
       },
     });
 

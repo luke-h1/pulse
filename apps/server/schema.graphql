@@ -109,6 +109,7 @@ type Mutation {
   deleteUser(id: String!): Boolean!
   login(options: UserLoginInput!): UserResponse!
   logout: Boolean!
+  publishAllPosts: Boolean!
   register(options: UserRegisterInput!): UserResponse!
 
   """Updates a post"""

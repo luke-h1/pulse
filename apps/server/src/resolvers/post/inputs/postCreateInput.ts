@@ -1,5 +1,6 @@
 import { Field, InputType } from 'type-graphql';
 import { GraphQLUpload, FileUpload } from 'graphql-upload-minimal';
+import { GraphQLJSON } from 'graphql-scalars';
 
 @InputType()
 export class PostCreateInput {
@@ -15,6 +16,6 @@ export class PostCreateInput {
   @Field(() => [String])
   tags: string[];
 
-  @Field(() => String)
-  content: string;
+  @Field(() => GraphQLJSON)
+  content: typeof GraphQLJSON;
 }

@@ -242,7 +242,7 @@ type PostCount {
 }
 
 input PostCreateInput {
-  content: String!
+  content: JSON!
   image: Upload
   intro: String!
   tags: [String!]!
@@ -266,7 +266,7 @@ type PostResponse {
 }
 
 input PostUpdateInput {
-  content: String!
+  content: JSON!
   image: Upload
   intro: String!
   status: Status!

@@ -242,7 +242,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Boolean)
-  @Authorized(isAdmin)
+  // @Authorized(isAdmin)
   async deleteAllPosts(): Promise<boolean> {
     await db.post.deleteMany();
     return true;

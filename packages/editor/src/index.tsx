@@ -30,6 +30,8 @@ export default function Editor({ holder, onChange, data }: Props) {
         holder,
         placeholder: 'Type here to write your post',
         inlineToolbar: true,
+        autofocus: false,
+        data: { blocks: [] },
         onReady() {
           // eslint-disable-next-line no-param-reassign
           ref.current = editor;

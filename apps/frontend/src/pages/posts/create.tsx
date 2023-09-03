@@ -136,21 +136,18 @@ const CreatePostPage: NextPage = () => {
               direction={{ base: 'column', lg: 'row' }}
             >
               <Controller
+                defaultValue={[]}
                 render={({ field }) => (
                   <Editor
                     {...field}
                     holder="editorjs-container"
-                    onChange={value =>
-                      methods.setValue('content', value.blocks)
-                    }
+                    onChange={async value => {
+                      methods.setValue('content', value);
+                    }}
                   />
                 )}
                 name="content"
                 control={methods.control}
-                defaultValue=""
-                rules={{
-                  validate: {},
-                }}
               />
             </Stack>
             <Button type="submit">submit</Button>

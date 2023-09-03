@@ -99,6 +99,11 @@ export type FieldError = {
   message: Scalars['String']['output'];
 };
 
+export type IdsResponse = {
+  __typename?: 'IdsResponse';
+  ids?: Maybe<Array<Scalars['String']['output']>>;
+};
+
 export type ImageSignature = {
   __typename?: 'ImageSignature';
   signature: Scalars['String']['output'];
@@ -137,6 +142,7 @@ export type Mutation = {
   deleteUser: Scalars['Boolean']['output'];
   login: UserResponse;
   logout: Scalars['Boolean']['output'];
+  publishAllPosts: Scalars['Boolean']['output'];
   register: UserResponse;
   /** Updates a post */
   updatePost: PostResponse;
@@ -144,8 +150,8 @@ export type Mutation = {
   updateUserDetails: UserResponse;
   updateUserRole: UserResponse;
   updateUserStatus: UserResponse;
-  /** Returns all user slugs */
-  userSlugs?: Maybe<SlugsResponse>;
+  /** Returns all user ids */
+  userSlugs?: Maybe<IdsResponse>;
 };
 
 export type MutationCreatePostArgs = {
@@ -157,19 +163,19 @@ export type MutationCreateProjectArgs = {
 };
 
 export type MutationDeletePostArgs = {
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeletePostAsAdminArgs = {
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeleteProjectArgs = {
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeleteProjectAdminArgs = {
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeleteUserArgs = {
@@ -185,13 +191,13 @@ export type MutationRegisterArgs = {
 };
 
 export type MutationUpdatePostArgs = {
+  id: Scalars['String']['input'];
   options: PostUpdateInput;
-  slug: Scalars['String']['input'];
 };
 
 export type MutationUpdateProjectArgs = {
+  id: Scalars['String']['input'];
   options: ProjectUpdateInput;
-  slug: Scalars['String']['input'];
 };
 
 export type MutationUpdateUserDetailsArgs = {
@@ -290,7 +296,6 @@ export type Post = {
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
   readingTime: Scalars['String']['output'];
-  slug: Scalars['String']['output'];
   status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
@@ -338,7 +343,6 @@ export type PostWhereInput = {
   image?: InputMaybe<StringNullableFilter>;
   intro?: InputMaybe<StringFilter>;
   readingTime?: InputMaybe<StringFilter>;
-  slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
   title?: InputMaybe<StringFilter>;
@@ -358,7 +362,6 @@ export type Project = {
   playStoreUrl?: Maybe<Scalars['String']['output']>;
   readingTime: Scalars['String']['output'];
   siteUrl?: Maybe<Scalars['String']['output']>;
-  slug: Scalars['String']['output'];
   status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
@@ -418,7 +421,6 @@ export type ProjectWhereInput = {
   playStoreUrl?: InputMaybe<StringNullableFilter>;
   readingTime?: InputMaybe<StringFilter>;
   siteUrl?: InputMaybe<StringNullableFilter>;
-  slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
   title?: InputMaybe<StringFilter>;
@@ -434,12 +436,12 @@ export type Query = {
   me?: Maybe<User>;
   post?: Maybe<Post>;
   /** Returns all post slugs */
-  postSlugs?: Maybe<SlugsResponse>;
+  postIds?: Maybe<IdsResponse>;
   /** Returns all posts */
   posts?: Maybe<Array<Post>>;
   project?: Maybe<Project>;
   /** Returns all project slugs */
-  projectSlugs?: Maybe<SlugsResponse>;
+  projectIds?: Maybe<IdsResponse>;
   /** Returns all projects */
   projects?: Maybe<Array<Project>>;
   /** Returns the 5 most recent posts */
@@ -454,11 +456,11 @@ export type Query = {
 };
 
 export type QueryPostArgs = {
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type QueryProjectArgs = {
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type QuerySearchPostsArgs = {
@@ -482,11 +484,6 @@ export enum Role {
   Admin = 'ADMIN',
   User = 'USER',
 }
-
-export type SlugsResponse = {
-  __typename?: 'SlugsResponse';
-  slugs?: Maybe<Array<Scalars['String']['output']>>;
-};
 
 export enum Status {
   Draft = 'DRAFT',
@@ -634,7 +631,6 @@ export type PostFragmentFragment = {
   title: string;
   intro: string;
   content: any;
-  slug: string;
   tags: Array<string>;
   image?: string | null;
   status: Status;
@@ -650,7 +646,6 @@ export type ProjectFragmentFragment = {
   image?: string | null;
   tags: Array<string>;
   status: Status;
-  slug: string;
   siteUrl?: string | null;
   playStoreUrl?: string | null;
   githubUrl?: string | null;
@@ -696,7 +691,6 @@ export type CreatePostMutation = {
       title: string;
       intro: string;
       content: any;
-      slug: string;
       tags: Array<string>;
       image?: string | null;
       status: Status;
@@ -728,7 +722,6 @@ export type CreateProjectMutation = {
       image?: string | null;
       tags: Array<string>;
       status: Status;
-      slug: string;
       siteUrl?: string | null;
       playStoreUrl?: string | null;
       githubUrl?: string | null;
@@ -752,7 +745,7 @@ export type CreateSignatureMutation = {
 };
 
 export type DeletePostMutationVariables = Exact<{
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 }>;
 
 export type DeletePostMutation = {
@@ -761,7 +754,7 @@ export type DeletePostMutation = {
 };
 
 export type DeleteProjectMutationVariables = Exact<{
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 }>;
 
 export type DeleteProjectMutation = {
@@ -825,7 +818,7 @@ export type RegisterMutation = {
 
 export type UpdateProjectMutationVariables = Exact<{
   options: ProjectUpdateInput;
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 }>;
 
 export type UpdateProjectMutation = {
@@ -846,7 +839,6 @@ export type UpdateProjectMutation = {
       image?: string | null;
       tags: Array<string>;
       status: Status;
-      slug: string;
       siteUrl?: string | null;
       playStoreUrl?: string | null;
       githubUrl?: string | null;
@@ -880,7 +872,7 @@ export type MeQuery = {
 };
 
 export type PostQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 }>;
 
 export type PostQuery = {
@@ -892,7 +884,6 @@ export type PostQuery = {
     title: string;
     intro: string;
     content: any;
-    slug: string;
     tags: Array<string>;
     image?: string | null;
     status: Status;
@@ -901,14 +892,11 @@ export type PostQuery = {
   } | null;
 };
 
-export type PostSlugsQueryVariables = Exact<{ [key: string]: never }>;
+export type PostIdsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type PostSlugsQuery = {
+export type PostIdsQuery = {
   __typename?: 'Query';
-  postSlugs?: {
-    __typename?: 'SlugsResponse';
-    slugs?: Array<string> | null;
-  } | null;
+  postIds?: { __typename?: 'IdsResponse'; ids?: Array<string> | null } | null;
 };
 
 export type PostsQueryVariables = Exact<{ [key: string]: never }>;
@@ -921,7 +909,6 @@ export type PostsQuery = {
     title: string;
     intro: string;
     content: any;
-    slug: string;
     tags: Array<string>;
     image?: string | null;
     status: Status;
@@ -931,7 +918,7 @@ export type PostsQuery = {
 };
 
 export type ProjectQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 }>;
 
 export type ProjectQuery = {
@@ -944,7 +931,6 @@ export type ProjectQuery = {
     image?: string | null;
     tags: Array<string>;
     status: Status;
-    slug: string;
     siteUrl?: string | null;
     playStoreUrl?: string | null;
     githubUrl?: string | null;
@@ -955,13 +941,13 @@ export type ProjectQuery = {
   } | null;
 };
 
-export type ProjectSlugsQueryVariables = Exact<{ [key: string]: never }>;
+export type ProjectIdsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type ProjectSlugsQuery = {
+export type ProjectIdsQuery = {
   __typename?: 'Query';
-  projectSlugs?: {
-    __typename?: 'SlugsResponse';
-    slugs?: Array<string> | null;
+  projectIds?: {
+    __typename?: 'IdsResponse';
+    ids?: Array<string> | null;
   } | null;
 };
 
@@ -977,7 +963,6 @@ export type ProjectsQuery = {
     image?: string | null;
     tags: Array<string>;
     status: Status;
-    slug: string;
     siteUrl?: string | null;
     playStoreUrl?: string | null;
     githubUrl?: string | null;
@@ -998,7 +983,6 @@ export type RecentPostsQuery = {
     title: string;
     intro: string;
     content: any;
-    slug: string;
     tags: Array<string>;
     image?: string | null;
     status: Status;
@@ -1019,7 +1003,6 @@ export type RecentProjectsQuery = {
     image?: string | null;
     tags: Array<string>;
     status: Status;
-    slug: string;
     siteUrl?: string | null;
     playStoreUrl?: string | null;
     githubUrl?: string | null;
@@ -1042,7 +1025,6 @@ export type SearchPostsQuery = {
     title: string;
     intro: string;
     content: any;
-    slug: string;
     tags: Array<string>;
     image?: string | null;
     status: Status;
@@ -1065,7 +1047,6 @@ export type SearchProjectsQuery = {
     image?: string | null;
     tags: Array<string>;
     status: Status;
-    slug: string;
     siteUrl?: string | null;
     playStoreUrl?: string | null;
     githubUrl?: string | null;
@@ -1105,7 +1086,6 @@ export const PostFragmentFragmentDoc = gql`
     title
     intro
     content
-    slug
     tags
     image
     status
@@ -1121,7 +1101,6 @@ export const ProjectFragmentFragmentDoc = gql`
     image
     tags
     status
-    slug
     siteUrl
     playStoreUrl
     githubUrl
@@ -1206,7 +1185,7 @@ export function useCreateSignatureMutation() {
   >(CreateSignatureDocument);
 }
 export const DeletePostDocument = gql`
-  mutation DeletePost($id: ID!) {
+  mutation DeletePost($id: String!) {
     deletePost(id: $id)
   }
 `;
@@ -1217,7 +1196,7 @@ export function useDeletePostMutation() {
   );
 }
 export const DeleteProjectDocument = gql`
-  mutation DeleteProject($id: ID!) {
+  mutation DeleteProject($id: String!) {
     deleteProject(id: $id)
   }
 `;
@@ -1279,7 +1258,7 @@ export function useRegisterMutation() {
   );
 }
 export const UpdateProjectDocument = gql`
-  mutation UpdateProject($options: ProjectUpdateInput!, $id: ID!) {
+  mutation UpdateProject($options: ProjectUpdateInput!, $id: String!) {
     updateProject(options: $options, id: $id) {
       errors {
         field
@@ -1318,7 +1297,7 @@ export function useMeQuery(
   });
 }
 export const PostDocument = gql`
-  query Post($id: ID!) {
+  query Post($id: String!) {
     post(id: $id) {
       ...PostFragment
       readingTime
@@ -1335,19 +1314,19 @@ export function usePostQuery(
     ...options,
   });
 }
-export const PostSlugsDocument = gql`
-  query PostSlugs {
-    postSlugs {
-      slugs
+export const PostIdsDocument = gql`
+  query PostIds {
+    postIds {
+      ids
     }
   }
 `;
 
-export function usePostSlugsQuery(
-  options?: Omit<Urql.UseQueryArgs<PostSlugsQueryVariables>, 'query'>,
+export function usePostIdsQuery(
+  options?: Omit<Urql.UseQueryArgs<PostIdsQueryVariables>, 'query'>,
 ) {
-  return Urql.useQuery<PostSlugsQuery, PostSlugsQueryVariables>({
-    query: PostSlugsDocument,
+  return Urql.useQuery<PostIdsQuery, PostIdsQueryVariables>({
+    query: PostIdsDocument,
     ...options,
   });
 }
@@ -1369,7 +1348,7 @@ export function usePostsQuery(
   });
 }
 export const ProjectDocument = gql`
-  query Project($id: ID!) {
+  query Project($id: String!) {
     project(id: $id) {
       ...ProjectFragment
     }
@@ -1385,19 +1364,19 @@ export function useProjectQuery(
     ...options,
   });
 }
-export const ProjectSlugsDocument = gql`
-  query ProjectSlugs {
-    projectSlugs {
-      slugs
+export const ProjectIdsDocument = gql`
+  query ProjectIds {
+    projectIds {
+      ids
     }
   }
 `;
 
-export function useProjectSlugsQuery(
-  options?: Omit<Urql.UseQueryArgs<ProjectSlugsQueryVariables>, 'query'>,
+export function useProjectIdsQuery(
+  options?: Omit<Urql.UseQueryArgs<ProjectIdsQueryVariables>, 'query'>,
 ) {
-  return Urql.useQuery<ProjectSlugsQuery, ProjectSlugsQueryVariables>({
-    query: ProjectSlugsDocument,
+  return Urql.useQuery<ProjectIdsQuery, ProjectIdsQueryVariables>({
+    query: ProjectIdsDocument,
     ...options,
   });
 }

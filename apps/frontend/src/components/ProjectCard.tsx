@@ -28,7 +28,7 @@ const ProjectCard = ({ project }: Props) => {
           rounded="lg"
         >
           <>
-            <LinkOverlay href={`/projects/${project.slug}`}>
+            <LinkOverlay href={`/projects/${project.id}`}>
               <Flex
                 position="absolute"
                 zIndex="docked"
@@ -58,7 +58,7 @@ const ProjectCard = ({ project }: Props) => {
           </>
         </AspectRatio>{' '}
         <VStack alignItems="flex-start" spacing={2}>
-          <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+          <Link href={`/projects/${project.id}`}>{project.title}</Link>
           <Text color="gray.500" fontSize="sm">
             {project.intro}
           </Text>

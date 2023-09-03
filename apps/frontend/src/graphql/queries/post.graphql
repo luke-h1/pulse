@@ -1,4 +1,4 @@
-query Post($id: ID!) {
+query Post($id: String!) {
   post(id: $id) {
     ...PostFragment
     readingTime

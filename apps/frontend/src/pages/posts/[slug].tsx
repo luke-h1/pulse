@@ -10,11 +10,11 @@ import ScrollToTop from '@frontend/components/ScrollToTop';
 const PostSlugPage: NextPage = () => {
   const router = useRouter();
 
-  const { slug } = router.query;
+  const { id } = router.query;
 
   const [{ data, fetching }] = usePostQuery({
     variables: {
-      slug: slug as string,
+      id: id as string,
     },
   });
 

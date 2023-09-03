@@ -10,11 +10,11 @@ import { useEffect } from 'react';
 
 const ProjectSlugPage: NextPage = () => {
   const router = useRouter();
-  const { slug } = router.query;
+  const { id } = router.query;
 
   const [{ data, fetching }] = useProjectQuery({
     variables: {
-      slug: slug as string,
+      id: id as string,
     },
   });
 

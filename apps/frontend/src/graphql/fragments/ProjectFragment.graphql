@@ -5,7 +5,6 @@ fragment ProjectFragment on Project {
   image
   tags
   status
-  slug
   siteUrl
   playStoreUrl
   githubUrl

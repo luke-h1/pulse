@@ -35,7 +35,7 @@ const PostCard = ({ post }: Props) => {
       >
         <VStack alignItems="flex-start">
           <Heading size="md">
-            <LinkOverlay as={Link} href={`/posts/${post.slug}`}>
+            <LinkOverlay as={Link} href={`/posts/${post.id}`}>
               {post.title}
             </LinkOverlay>
           </Heading>

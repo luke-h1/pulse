@@ -75,7 +75,7 @@ export class ProjectResolver {
     description: 'Returns all project slugs',
     nullable: true,
   })
-  async projectSlugs(): Promise<IdsResponse> {
+  async projectIds(): Promise<IdsResponse> {
     const projects = await db.project.findMany({
       where: {
         status: 'PUBLISHED',
@@ -146,7 +146,7 @@ export class ProjectResolver {
       data: {
         ...options,
         authorId: req.session.userId,
-        readingTime: readingTime(options.content).text,
+        readingTime: '10m',
       },
     });
 

@@ -241,7 +241,7 @@ export class PostResolver {
     description: 'Returns all post slugs',
     nullable: true,
   })
-  async postSlugs(): Promise<IdsResponse> {
+  async postIds(): Promise<IdsResponse> {
     const posts = await db.post.findMany({
       select: {
         id: true,

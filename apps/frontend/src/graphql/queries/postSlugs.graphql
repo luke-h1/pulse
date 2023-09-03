@@ -1,5 +1,5 @@
-query PostSlugs {
-  postSlugs {
-    slugs
+query PostIds {
+  postIds {
+    ids
   }
 }

@@ -1,4 +1,4 @@
-query Project($id: ID!) {
+query Project($id: String!) {
   project(id: $id) {
     ...ProjectFragment
   }

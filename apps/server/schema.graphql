@@ -345,14 +345,14 @@ type Query {
   post(id: String!): Post
 
   """Returns all post slugs"""
-  postSlugs: IdsResponse
+  postIds: IdsResponse
 
   """Returns all posts"""
   posts: [Post!]
   project(id: String!): Project
 
   """Returns all project slugs"""
-  projectSlugs: IdsResponse
+  projectIds: IdsResponse
 
   """Returns all projects"""
   projects: [Project!]

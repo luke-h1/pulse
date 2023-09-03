@@ -3,7 +3,6 @@ fragment PostFragment on Post {
     title
     intro
     content
-    slug
     tags
     image
     status

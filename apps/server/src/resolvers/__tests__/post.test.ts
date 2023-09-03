@@ -103,6 +103,7 @@ describe('post', () => {
       content: { test: 'test' },
       authorId: user.id,
       readingTime: '10m',
+      image: '',
       status: Status.PUBLISHED,
       tags: [],
       createdAt: new Date(),
@@ -123,8 +124,7 @@ describe('post', () => {
         },
         createdAt: expect.any(Date),
         id: expect.any(String),
-        image: null,
-        imageFilename: null,
+        image: '',
         intro: 'test',
         readingTime: '10m',
         status: 'PUBLISHED',
@@ -201,7 +201,7 @@ describe('post', () => {
     expect(response.length).toEqual(1);
   });
 
-  test('post return post by slug', async () => {
+  test('post return post by ud', async () => {
     const resolver = new PostResolver();
 
     const user = await db.user.create({
@@ -240,7 +240,6 @@ describe('post', () => {
         createdAt: expect.any(Date),
         id: expect.any(String),
         image: null,
-        imageFilename: null,
         intro: 'test',
         readingTime: '10m',
         status: 'PUBLISHED',

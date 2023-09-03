@@ -67,6 +67,10 @@ type FieldError {
   message: String!
 }
 
+type IdsResponse {
+  ids: [String!]
+}
+
 type ImageSignature {
   signature: String!
   timestamp: Int!
@@ -102,10 +106,10 @@ type Mutation {
   deleteAllProjects: Boolean!
 
   """Deletes a post"""
-  deletePost(slug: String!): Boolean!
-  deletePostAsAdmin(slug: String!): Boolean!
-  deleteProject(slug: String!): Boolean!
-  deleteProjectAdmin(slug: String!): Boolean!
+  deletePost(id: String!): Boolean!
+  deletePostAsAdmin(id: String!): Boolean!
+  deleteProject(id: String!): Boolean!
+  deleteProjectAdmin(id: String!): Boolean!
   deleteUser(id: String!): Boolean!
   login(options: UserLoginInput!): UserResponse!
   logout: Boolean!
@@ -113,14 +117,14 @@ type Mutation {
   register(options: UserRegisterInput!): UserResponse!
 
   """Updates a post"""
-  updatePost(options: PostUpdateInput!, slug: String!): PostResponse!
-  updateProject(options: ProjectUpdateInput!, slug: String!): ProjectResponse!
+  updatePost(id: String!, options: PostUpdateInput!): PostResponse!
+  updateProject(id: String!, options: ProjectUpdateInput!): ProjectResponse!
   updateUserDetails(options: UserUpdateInput!): UserResponse!
   updateUserRole(id: String!, role: Role!): UserResponse!
   updateUserStatus(id: String!, status: AccountStatus!): UserResponse!
 
-  """Returns all user slugs"""
-  userSlugs: SlugsResponse
+  """Returns all user ids"""
+  userSlugs: IdsResponse
 }
 
 input NestedDateTimeFilter {
@@ -204,7 +208,6 @@ type Post {
   image: String
   intro: String!
   readingTime: String!
-  slug: String!
   status: Status!
   tags: [String!]!
   title: String!
@@ -251,7 +254,6 @@ input PostWhereInput {
   image: StringNullableFilter
   intro: StringFilter
   readingTime: StringFilter
-  slug: StringFilter
   status: EnumStatusFilter
   tags: StringNullableListFilter
   title: StringFilter
@@ -270,7 +272,6 @@ type Project {
   playStoreUrl: String
   readingTime: String!
   siteUrl: String
-  slug: String!
   status: Status!
   tags: [String!]!
   title: String!
@@ -329,7 +330,6 @@ input ProjectWhereInput {
   playStoreUrl: StringNullableFilter
   readingTime: StringFilter
   siteUrl: StringNullableFilter
-  slug: StringFilter
   status: EnumStatusFilter
   tags: StringNullableListFilter
   title: StringFilter
@@ -342,17 +342,17 @@ type Query {
   countProjects: CountResponse!
   health: String!
   me: User
-  post(slug: String!): Post
+  post(id: String!): Post
 
   """Returns all post slugs"""
-  postSlugs: SlugsResponse
+  postSlugs: IdsResponse
 
   """Returns all posts"""
   posts: [Post!]
-  project(slug: String!): Project
+  project(id: String!): Project
 
   """Returns all project slugs"""
-  projectSlugs: SlugsResponse
+  projectSlugs: IdsResponse
 
   """Returns all projects"""
   projects: [Project!]
@@ -379,10 +379,6 @@ enum QueryMode {
 enum Role {
   ADMIN
   USER
-}
-
-type SlugsResponse {
-  slugs: [String!]
 }
 
 enum Status {

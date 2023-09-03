@@ -226,7 +226,7 @@ export class ProjectResolver {
 
     await db.project.delete({
       where: {
-        slug,
+        id,
       },
     });
 

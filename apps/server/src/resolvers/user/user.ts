@@ -21,7 +21,7 @@ import isErrorLike from '../../utils/isErrorLike';
 import { UserLoginInput } from './inputs/UserLoginInput';
 import config from '../../utils/config';
 import { UserUpdateInput } from './inputs/UserUpdateInput';
-import { SlugsResponse } from '../post/post';
+import { IdsResponse } from '../post/post';
 
 @ObjectType()
 export class UserResponse {
@@ -291,19 +291,19 @@ export class UserResolver {
     };
   }
 
-  @Mutation(() => SlugsResponse, {
-    description: 'Returns all user slugs',
+  @Mutation(() => IdsResponse, {
+    description: 'Returns all user ids',
     nullable: true,
   })
-  async userSlugs(): Promise<SlugsResponse> {
-    const slugs = await db.user.findMany({
+  async userSlugs(): Promise<IdsResponse> {
+    const users = await db.user.findMany({
       select: {
         id: true,
       },
     });
 
     return {
-      slugs: slugs && slugs.map(({ id }) => id),
+      ids: users && users.map(({ id }) => id),
     };
   }
 }

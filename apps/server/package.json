@@ -24,7 +24,7 @@
   "dependencies": {
     "@apollo/server": "^4.9.1",
     "@escape.tech/graphql-armor": "^2.2.0",
-    "@prisma/client": "5.1.1",
+    "@prisma/client": "5.2.0",
     "@prisma/generator-helper": "^5.1.1",
     "@types/busboy": "^1.5.0",
     "apollo-server-cache-redis": "^3.3.1",

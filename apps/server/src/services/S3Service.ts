@@ -48,7 +48,7 @@ const s3DefaultParams = {
 
 const S3Service = {
   uploadImage: async (
-    createReadStream: ReadStream,
+    createReadStream: () => ReadStream,
     filename: string,
     key: S3Key,
   ): Promise<S3Object | null> => {
@@ -57,7 +57,7 @@ const S3Service = {
     const params: PutObjectRequest = {
       ...s3DefaultParams,
       Key: `${key}/${filenameWithEntropy}`,
-      Body: createReadStream,
+      Body: createReadStream(),
     };
 
     try {

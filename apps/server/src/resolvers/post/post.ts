@@ -146,7 +146,7 @@ export class PostResolver {
     const slug = slugify(options.title);
 
     const imageResult = await S3Service.uploadImage(
-      options.image?.createReadStream(),
+      options.image?.createReadStream,
       options.image.filename,
       'post',
     );

@@ -9,7 +9,6 @@ import {
   Resolver,
 } from 'type-graphql';
 import slugify from 'slugify';
-import readingTime from 'reading-time';
 import { FieldError } from '../../utils/FieldError';
 import { Post } from '../../prisma/generated/type-graphql';
 import { db } from '../../db/prisma';
@@ -18,7 +17,6 @@ import { PostCreateInput } from './inputs/postCreateInput';
 import { Context } from '../../types/Context';
 import { PostUpdateInput } from './inputs/postUpdateInput';
 import { isAdmin } from '../../middleware/isAdmin';
-import S3Service from '../../services/S3Service';
 
 @ObjectType()
 class PostResponse {
@@ -145,20 +143,13 @@ export class PostResolver {
   ): Promise<PostResponse> {
     const slug = slugify(options.title);
 
-    const imageResult = await S3Service.uploadImage(
-      options.image.createReadStream,
-      options.image.filename ?? `${options.title}`,
-      'post',
-    );
-
     const post = await db.post.create({
       data: {
         ...options,
         authorId: req.session.userId,
         slug,
         readingTime: '10m',
-        image: imageResult?.Location as string,
-        imageFilename: imageResult?.filename,
+        image: options.image,
       },
     });
 
@@ -192,20 +183,6 @@ export class PostResolver {
       };
     }
 
-    const hasUpdatedImage = options.image.filename !== post.imageFilename;
-
-    let newImage = null;
-
-    if (hasUpdatedImage) {
-      newImage = await S3Service.uploadImage(
-        options.image.createReadStream,
-        options.image.filename,
-        'post',
-      );
-
-      await S3Service.deleteImage('post', post?.imageFilename as string);
-    }
-
     const updatedPost = await db.post.update({
       where: {
         slug,
@@ -214,7 +191,7 @@ export class PostResolver {
         ...options,
         slug: slugify(options.title),
         // readingTime: readingTime(options.content).text,
-        image: hasUpdatedImage ? newImage?.Location : post.image,
+        image: post.image,
       },
     });
 
@@ -238,8 +215,6 @@ export class PostResolver {
     if (post?.authorId !== req.session.userId) {
       return false;
     }
-
-    await S3Service.deleteImage('post', post?.imageFilename as string);
 
     await db.post.delete({
       where: {

@@ -2,10 +2,8 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
-import { ContentBlockImage } from "../models/ContentBlockImage";
 import { User } from "../models/User";
 import { Status } from "../enums/Status";
-import { ProjectCount } from "../resolvers/outputs/ProjectCount";
 
 @TypeGraphQL.ObjectType("Project", {})
 export class Project {
@@ -74,8 +72,6 @@ export class Project {
   })
   readingTime!: string;
 
-  ContentBlockImage?: ContentBlockImage[];
-
   author?: User;
 
   @TypeGraphQL.Field(_type => String, {
@@ -92,9 +88,4 @@ export class Project {
     nullable: false
   })
   updatedAt!: Date;
-
-  @TypeGraphQL.Field(_type => ProjectCount, {
-    nullable: true
-  })
-  _count?: ProjectCount | null;
 }

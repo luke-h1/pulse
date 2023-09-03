@@ -35,11 +35,6 @@ export class PostOrderByWithAggregationInput {
   })
   image?: SortOrderInput | undefined;
 
-  @TypeGraphQL.Field(_type => SortOrderInput, {
-    nullable: true
-  })
-  imageFilename?: SortOrderInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })

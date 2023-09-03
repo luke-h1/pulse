@@ -13,7 +13,10 @@ import Page from '@frontend/components/Page';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import toErrorMap from '@frontend/utils/toErrorMap';
 import { postCreateInput, postCreateSchema } from '@frontend/validation/post';
-import { useCreatePostMutation } from '@graphql-hooks/generated';
+import {
+  useCreatePostMutation,
+  useCreateSignatureMutation,
+} from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
@@ -21,6 +24,7 @@ import { useState } from 'react';
 import { Controller, UseFormSetError } from 'react-hook-form';
 import TextArea from '@common/components/form/TextArea';
 import dynamic from 'next/dynamic';
+import uploadImage from '@frontend/utils/cloudinary';
 
 const Editor = dynamic(() => import('@editor/index'), {
   ssr: false,
@@ -28,6 +32,7 @@ const Editor = dynamic(() => import('@editor/index'), {
 
 const CreatePostPage: NextPage = () => {
   const [, createPost] = useCreatePostMutation();
+  const [, createSignature] = useCreateSignatureMutation();
   const router = useRouter();
   const [tags] = useState<string[]>(['test', 'test2']);
   const [previewImage, setPreviewImage] = useState<string>('');
@@ -36,18 +41,31 @@ const CreatePostPage: NextPage = () => {
     data: postCreateInput,
     setError: UseFormSetError<postCreateInput>,
   ) => {
-    const res = await createPost({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      options: {
-        ...data,
-        tags,
-      },
-    });
+    const { data: signatureData } = await createSignature({});
 
-    const errors = toErrorMap(setError, res.data?.createPost?.errors);
-    if (!errors && res.data?.createPost.post) {
-      router.push(`/posts/${res.data.createPost.post.id}`);
+    if (signatureData) {
+      const { signature, timestamp } = signatureData.createImageSignature;
+
+      const imageData = await uploadImage(
+        data.image as unknown as File,
+        signature,
+        timestamp,
+      );
+
+      const res = await createPost({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        options: {
+          ...data,
+          image: imageData?.secure_url,
+          tags,
+        },
+      });
+
+      const errors = toErrorMap(setError, res.data?.createPost?.errors);
+      if (!errors && res.data?.createPost.post) {
+        router.push(`/posts/${res.data.createPost.post.id}`);
+      }
     }
   };
 

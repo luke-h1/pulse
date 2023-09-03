@@ -34,11 +34,6 @@ export class PostGroupBy {
   })
   image!: string | null;
 
-  @TypeGraphQL.Field(_type => String, {
-    nullable: true
-  })
-  imageFilename!: string | null;
-
   @TypeGraphQL.Field(_type => [String], {
     nullable: true
   })

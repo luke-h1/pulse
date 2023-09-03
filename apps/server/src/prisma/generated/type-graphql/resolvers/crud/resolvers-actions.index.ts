@@ -1,17 +1,3 @@
-export { AggregateContentBlockImageResolver } from "./ContentBlockImage/AggregateContentBlockImageResolver";
-export { CreateManyContentBlockImageResolver } from "./ContentBlockImage/CreateManyContentBlockImageResolver";
-export { CreateOneContentBlockImageResolver } from "./ContentBlockImage/CreateOneContentBlockImageResolver";
-export { DeleteManyContentBlockImageResolver } from "./ContentBlockImage/DeleteManyContentBlockImageResolver";
-export { DeleteOneContentBlockImageResolver } from "./ContentBlockImage/DeleteOneContentBlockImageResolver";
-export { FindFirstContentBlockImageResolver } from "./ContentBlockImage/FindFirstContentBlockImageResolver";
-export { FindFirstContentBlockImageOrThrowResolver } from "./ContentBlockImage/FindFirstContentBlockImageOrThrowResolver";
-export { FindManyContentBlockImageResolver } from "./ContentBlockImage/FindManyContentBlockImageResolver";
-export { FindUniqueContentBlockImageResolver } from "./ContentBlockImage/FindUniqueContentBlockImageResolver";
-export { FindUniqueContentBlockImageOrThrowResolver } from "./ContentBlockImage/FindUniqueContentBlockImageOrThrowResolver";
-export { GroupByContentBlockImageResolver } from "./ContentBlockImage/GroupByContentBlockImageResolver";
-export { UpdateManyContentBlockImageResolver } from "./ContentBlockImage/UpdateManyContentBlockImageResolver";
-export { UpdateOneContentBlockImageResolver } from "./ContentBlockImage/UpdateOneContentBlockImageResolver";
-export { UpsertOneContentBlockImageResolver } from "./ContentBlockImage/UpsertOneContentBlockImageResolver";
 export { AggregatePostResolver } from "./Post/AggregatePostResolver";
 export { CreateManyPostResolver } from "./Post/CreateManyPostResolver";
 export { CreateOnePostResolver } from "./Post/CreateOnePostResolver";

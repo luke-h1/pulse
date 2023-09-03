@@ -73,47 +73,28 @@ model Project {
   tags         String[]
   status       Status   @default(DRAFT)
   readingTime  String
-  ContentBlockImage ContentBlockImage[]
 
-  author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId     String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
 
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Post {
-  id            String  @id @default(cuid())
-  title         String  @db.VarChar(50)
-  slug          String  @unique @db.VarChar(50)
-  intro         String
-  image         String?
-  imageFilename String? @db.VarChar(120)
+  id    String  @id @default(cuid())
+  title String  @db.VarChar(50)
+  slug  String  @unique @db.VarChar(50)
+  intro String
+  image String?
 
   tags        String[]
   content     Json
   status      Status   @default(DRAFT)
   readingTime String
-  ContentBlockImage ContentBlockImage[]
 
-  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String
-
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-}
-
-model ContentBlockImage {
-  id            String  @id @default(cuid())
-  image         String?
-  imageFilename String? @db.VarChar(120)
-
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-  postId String
-
-  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  projectId String?
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

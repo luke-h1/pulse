@@ -2,7 +2,6 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { ContentBlockImageCreateNestedManyWithoutProjectInput } from "../inputs/ContentBlockImageCreateNestedManyWithoutProjectInput";
 import { ProjectCreatetagsInput } from "../inputs/ProjectCreatetagsInput";
 import { UserCreateNestedOneWithoutProjectsInput } from "../inputs/UserCreateNestedOneWithoutProjectsInput";
 import { Status } from "../../enums/Status";
@@ -83,11 +82,6 @@ export class ProjectCreateInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
-
-  @TypeGraphQL.Field(_type => ContentBlockImageCreateNestedManyWithoutProjectInput, {
-    nullable: true
-  })
-  ContentBlockImage?: ContentBlockImageCreateNestedManyWithoutProjectInput | undefined;
 
   @TypeGraphQL.Field(_type => UserCreateNestedOneWithoutProjectsInput, {
     nullable: false

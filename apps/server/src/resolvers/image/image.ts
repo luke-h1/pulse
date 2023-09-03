@@ -1,47 +1,36 @@
 import {
-  Arg,
-  Authorized,
-  Field,
-  InputType,
-  Mutation,
   ObjectType,
+  Field,
+  Int,
   Resolver,
+  Mutation,
+  Authorized,
 } from 'type-graphql';
-import { GraphQLUpload, FileUpload } from 'graphql-upload-minimal';
 import isAuth from '../../middleware/isAuth';
-import { db } from '../../db/prisma';
-import S3Service from '../../services/S3Service';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const cloudinary = require('cloudinary').v2;
 
 @ObjectType()
 class ImageSignature {
   @Field(() => String)
-  image: string;
-}
+  signature: string;
 
-@InputType()
-class ImageCreateInput {
-  @Field(() => GraphQLUpload, { nullable: true })
-  image: FileUpload;
-
-  @Field(() => String)
-  type: 'post' | 'project';
+  @Field(() => Int)
+  timestamp: number;
 }
 
 @Resolver()
 export class ImageResolver {
   @Authorized(isAuth)
   @Mutation(() => ImageSignature)
-  async createContentBlockImage(
-    @Arg('options') options: ImageCreateInput,
-  ): Promise<ImageSignature> {
-    const image = await S3Service.uploadImage(
-      options.image.createReadStream,
-      options.image.fieldName,
-      options.type,
+  createImageSignature(): ImageSignature {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const signature: string = cloudinary.utils.api_sign_request(
+      {
+        timestamp,
+      },
+      process.env.CLOUDINARY_SECRET,
     );
-
-    return {
-      image: image?.Location as string,
-    };
+    return { timestamp, signature };
   }
 }

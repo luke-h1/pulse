@@ -34,7 +34,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  DateTime: { input: any; output: any };
+  DateTimeISO: { input: any; output: any };
   JSON: { input: any; output: any };
 };
 
@@ -50,25 +50,25 @@ export type CountResponse = {
 };
 
 export type DateTimeFilter = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
-  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  equals?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gte?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
+  lt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  lte?: InputMaybe<Scalars['DateTimeISO']['input']>;
   not?: InputMaybe<NestedDateTimeFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
 };
 
 export type DateTimeNullableFilter = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
-  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  equals?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gte?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
+  lt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  lte?: InputMaybe<Scalars['DateTimeISO']['input']>;
   not?: InputMaybe<NestedDateTimeNullableFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
 };
 
 export type EnumAccountStatusFilter = {
@@ -99,6 +99,12 @@ export type FieldError = {
   message: Scalars['String']['output'];
 };
 
+export type ImageSignature = {
+  __typename?: 'ImageSignature';
+  signature: Scalars['String']['output'];
+  timestamp: Scalars['Int']['output'];
+};
+
 export type JsonFilter = {
   array_contains?: InputMaybe<Scalars['JSON']['input']>;
   array_ends_with?: InputMaybe<Scalars['JSON']['input']>;
@@ -117,6 +123,7 @@ export type JsonFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createImageSignature: ImageSignature;
   createPost: PostResponse;
   createProject: ProjectResponse;
   deleteAccount: Scalars['Boolean']['output'];
@@ -202,25 +209,25 @@ export type MutationUpdateUserStatusArgs = {
 };
 
 export type NestedDateTimeFilter = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
-  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  equals?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gte?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
+  lt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  lte?: InputMaybe<Scalars['DateTimeISO']['input']>;
   not?: InputMaybe<NestedDateTimeFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
 };
 
 export type NestedDateTimeNullableFilter = {
-  equals?: InputMaybe<Scalars['DateTime']['input']>;
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
-  in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  equals?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  gte?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  in?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
+  lt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  lte?: InputMaybe<Scalars['DateTimeISO']['input']>;
   not?: InputMaybe<NestedDateTimeNullableFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
 };
 
 export type NestedEnumAccountStatusFilter = {
@@ -278,7 +285,7 @@ export type Post = {
   __typename?: 'Post';
   authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
@@ -287,12 +294,12 @@ export type Post = {
   status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 export type PostCreateInput = {
-  content: Scalars['String']['input'];
-  image?: InputMaybe<Scalars['String']['input']>;
+  content: Scalars['JSON']['input'];
+  image: Scalars['String']['input'];
   intro: Scalars['String']['input'];
   tags: Array<Scalars['String']['input']>;
   title: Scalars['String']['input'];
@@ -311,8 +318,8 @@ export type PostResponse = {
 };
 
 export type PostUpdateInput = {
-  content: Scalars['String']['input'];
-  image?: InputMaybe<Scalars['String']['input']>;
+  content: Scalars['JSON']['input'];
+  image: Scalars['String']['input'];
   intro: Scalars['String']['input'];
   status: Status;
   tags: Array<Scalars['String']['input']>;
@@ -343,7 +350,7 @@ export type Project = {
   appStoreUrl?: Maybe<Scalars['String']['output']>;
   authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   githubUrl?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
@@ -355,7 +362,7 @@ export type Project = {
   status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
 };
 
 export type ProjectCreateInput = {
@@ -423,6 +430,7 @@ export type Query = {
   /** Returns the total number of posts */
   countPosts?: Maybe<CountResponse>;
   countProjects: CountResponse;
+  health: Scalars['String']['output'];
   me?: Maybe<User>;
   post?: Maybe<Post>;
   /** Returns all post slugs */
@@ -438,7 +446,7 @@ export type Query = {
   recentPosts?: Maybe<Array<Post>>;
   /** Returns the 5 most recent projects */
   recentProjects?: Maybe<Array<Project>>;
-  /** Search posts (full text search on title / intro). Content will be added in the future */
+  /** Search posts (full text search on title) */
   searchPosts?: Maybe<Array<Post>>;
   /** Search projects (full text search on title / intro) */
   searchProjects?: Maybe<Array<Project>>;
@@ -483,6 +491,7 @@ export type SlugsResponse = {
 export enum Status {
   Draft = 'DRAFT',
   Published = 'PUBLISHED',
+  Scheduled = 'SCHEDULED',
 }
 
 export type StringFilter = {
@@ -530,9 +539,9 @@ export type User = {
   _count?: Maybe<UserCount>;
   accountStatus: AccountStatus;
   bio?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTimeISO']['output'];
   email?: Maybe<Scalars['String']['output']>;
-  emailVerified?: Maybe<Scalars['DateTime']['output']>;
+  emailVerified?: Maybe<Scalars['DateTimeISO']['output']>;
   firstName: Scalars['String']['output'];
   github?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
@@ -542,7 +551,7 @@ export type User = {
   provider: Scalars['String']['output'];
   role: Role;
   twitter?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars['DateTimeISO']['output'];
   username: Scalars['String']['output'];
   website?: Maybe<Scalars['String']['output']>;
 };
@@ -728,6 +737,17 @@ export type CreateProjectMutation = {
       createdAt: any;
       updatedAt: any;
     } | null;
+  };
+};
+
+export type CreateSignatureMutationVariables = Exact<{ [key: string]: never }>;
+
+export type CreateSignatureMutation = {
+  __typename?: 'Mutation';
+  createImageSignature: {
+    __typename?: 'ImageSignature';
+    signature: string;
+    timestamp: number;
   };
 };
 
@@ -1169,6 +1189,21 @@ export function useCreateProjectMutation() {
     CreateProjectMutation,
     CreateProjectMutationVariables
   >(CreateProjectDocument);
+}
+export const CreateSignatureDocument = gql`
+  mutation CreateSignature {
+    createImageSignature {
+      signature
+      timestamp
+    }
+  }
+`;
+
+export function useCreateSignatureMutation() {
+  return Urql.useMutation<
+    CreateSignatureMutation,
+    CreateSignatureMutationVariables
+  >(CreateSignatureDocument);
 }
 export const DeletePostDocument = gql`
   mutation DeletePost($slug: String!) {

@@ -11,7 +11,6 @@ import { json } from 'body-parser';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { ApolloArmor } from '@escape.tech/graphql-armor';
-import { graphqlUploadExpress } from 'graphql-upload-minimal';
 import redis from './db/redis';
 import buildCookieOptions from './utils/buildCookieOptions';
 import createSchema from './utils/createSchema';
@@ -29,7 +28,7 @@ const PROD_ORIGINS = [''];
 const main = async () => {
   const app = express();
   app.set('trust proxy', 1);
-  app.use(graphqlUploadExpress());
+
   const httpServer = http.createServer(app);
 
   app.use(compression());

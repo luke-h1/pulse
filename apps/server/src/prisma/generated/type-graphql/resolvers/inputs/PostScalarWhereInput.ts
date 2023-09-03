@@ -51,11 +51,6 @@ export class PostScalarWhereInput {
   })
   image?: StringNullableFilter | undefined;
 
-  @TypeGraphQL.Field(_type => StringNullableFilter, {
-    nullable: true
-  })
-  imageFilename?: StringNullableFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringNullableListFilter, {
     nullable: true
   })

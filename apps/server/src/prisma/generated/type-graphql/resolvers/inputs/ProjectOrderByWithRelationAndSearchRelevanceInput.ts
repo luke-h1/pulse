@@ -2,7 +2,6 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { ContentBlockImageOrderByRelationAggregateInput } from "../inputs/ContentBlockImageOrderByRelationAggregateInput";
 import { ProjectOrderByRelevanceInput } from "../inputs/ProjectOrderByRelevanceInput";
 import { SortOrderInput } from "../inputs/SortOrderInput";
 import { UserOrderByWithRelationAndSearchRelevanceInput } from "../inputs/UserOrderByWithRelationAndSearchRelevanceInput";
@@ -89,11 +88,6 @@ export class ProjectOrderByWithRelationAndSearchRelevanceInput {
     nullable: true
   })
   updatedAt?: "asc" | "desc" | undefined;
-
-  @TypeGraphQL.Field(_type => ContentBlockImageOrderByRelationAggregateInput, {
-    nullable: true
-  })
-  ContentBlockImage?: ContentBlockImageOrderByRelationAggregateInput | undefined;
 
   @TypeGraphQL.Field(_type => UserOrderByWithRelationAndSearchRelevanceInput, {
     nullable: true

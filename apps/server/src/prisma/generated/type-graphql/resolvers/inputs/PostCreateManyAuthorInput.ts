@@ -32,11 +32,6 @@ export class PostCreateManyAuthorInput {
   })
   image?: string | undefined;
 
-  @TypeGraphQL.Field(_type => String, {
-    nullable: true
-  })
-  imageFilename?: string | undefined;
-
   @TypeGraphQL.Field(_type => PostCreatetagsInput, {
     nullable: true
   })

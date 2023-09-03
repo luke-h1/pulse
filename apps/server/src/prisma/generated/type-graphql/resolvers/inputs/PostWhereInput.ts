@@ -2,7 +2,6 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { ContentBlockImageListRelationFilter } from "../inputs/ContentBlockImageListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { EnumStatusFilter } from "../inputs/EnumStatusFilter";
 import { JsonFilter } from "../inputs/JsonFilter";
@@ -53,11 +52,6 @@ export class PostWhereInput {
   })
   image?: StringNullableFilter | undefined;
 
-  @TypeGraphQL.Field(_type => StringNullableFilter, {
-    nullable: true
-  })
-  imageFilename?: StringNullableFilter | undefined;
-
   @TypeGraphQL.Field(_type => StringNullableListFilter, {
     nullable: true
   })
@@ -92,11 +86,6 @@ export class PostWhereInput {
     nullable: true
   })
   updatedAt?: DateTimeFilter | undefined;
-
-  @TypeGraphQL.Field(_type => ContentBlockImageListRelationFilter, {
-    nullable: true
-  })
-  ContentBlockImage?: ContentBlockImageListRelationFilter | undefined;
 
   @TypeGraphQL.Field(_type => UserRelationFilter, {
     nullable: true

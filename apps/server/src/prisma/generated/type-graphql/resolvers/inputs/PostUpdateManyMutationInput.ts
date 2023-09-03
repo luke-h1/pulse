@@ -35,11 +35,6 @@ export class PostUpdateManyMutationInput {
   })
   image?: NullableStringFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  imageFilename?: NullableStringFieldUpdateOperationsInput | undefined;
-
   @TypeGraphQL.Field(_type => PostUpdatetagsInput, {
     nullable: true
   })

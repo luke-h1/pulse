@@ -22,11 +22,6 @@ export class PostGroupBy {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
-  slug!: string;
-
-  @TypeGraphQL.Field(_type => String, {
-    nullable: false
-  })
   intro!: string;
 
   @TypeGraphQL.Field(_type => String, {

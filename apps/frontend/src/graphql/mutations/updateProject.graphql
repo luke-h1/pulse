@@ -1,5 +1,5 @@
-mutation UpdateProject($options: ProjectUpdateInput!, $slug: String!) {
-  updateProject(options: $options, slug: $slug) {
+mutation UpdateProject($options: ProjectUpdateInput!, $id: ID!) {
+  updateProject(options: $options, id: $id) {
     errors {
       field
       message

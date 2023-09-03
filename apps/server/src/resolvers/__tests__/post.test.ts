@@ -53,7 +53,6 @@ describe('post', () => {
           title: 'test',
           intro: 'test',
           content: { test: 'test' },
-          slug: 'test',
           authorId: users[0].id,
           readingTime: '10m',
           status: 'PUBLISHED',
@@ -62,7 +61,6 @@ describe('post', () => {
           title: 'test 2',
           intro: 'test 2',
           content: { test: 'test 2' },
-          slug: 'test-2',
           authorId: users[1].id,
           readingTime: '10m',
           status: 'PUBLISHED',
@@ -71,7 +69,6 @@ describe('post', () => {
           title: 'test 3',
           intro: 'test 3',
           content: { test: 'test 3' },
-          slug: 'test-3',
           authorId: users[2].id,
           readingTime: '10m',
           status: 'PUBLISHED',
@@ -104,7 +101,6 @@ describe('post', () => {
       title: 'test',
       intro: 'test',
       content: { test: 'test' },
-      slug: 'test',
       authorId: user.id,
       readingTime: '10m',
       status: Status.PUBLISHED,
@@ -131,7 +127,6 @@ describe('post', () => {
         imageFilename: null,
         intro: 'test',
         readingTime: '10m',
-        slug: 'test',
         status: 'PUBLISHED',
         tags: expect.any(Array),
         title: 'test',
@@ -161,7 +156,6 @@ describe('post', () => {
           title: `test ${i}`,
           intro: `test ${i}`,
           content: { test: `test ${i}` },
-          slug: `test-${i}`,
           authorId: user.id,
           readingTime: '10m',
           status: 'PUBLISHED',
@@ -195,7 +189,6 @@ describe('post', () => {
           title: `test ${i}`,
           intro: `test ${i}`,
           content: { test: `test ${i}` },
-          slug: `test-${i}`,
           authorId: user.id,
           readingTime: '10m',
           status: 'PUBLISHED',
@@ -226,7 +219,6 @@ describe('post', () => {
       title: 'test',
       intro: 'test',
       content: { test: 'test' },
-      slug: 'test',
       authorId: user.id,
       readingTime: '10m',
       status: Status.PUBLISHED,
@@ -239,7 +231,7 @@ describe('post', () => {
       data: testPost,
     });
 
-    const response = await resolver.post(post.slug);
+    const response = await resolver.post(post.id);
 
     expect(response).toEqual({
       post: {
@@ -251,7 +243,6 @@ describe('post', () => {
         imageFilename: null,
         intro: 'test',
         readingTime: '10m',
-        slug: 'test',
         status: 'PUBLISHED',
         tags: [],
         title: 'test',

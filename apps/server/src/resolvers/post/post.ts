@@ -34,9 +34,9 @@ export class CountResponse {
 }
 
 @ObjectType()
-export class SlugsResponse {
+export class IdsResponse {
   @Field(() => [String], { nullable: true })
-  slugs?: string[];
+  ids?: string[];
 }
 
 @Resolver(Post)
@@ -113,10 +113,10 @@ export class PostResolver {
   }
 
   @Query(() => Post, { nullable: true })
-  async post(@Arg('slug', () => String) slug: string): Promise<PostResponse> {
+  async post(@Arg('id', () => String) id: string): Promise<PostResponse> {
     const post = await db.post.findUnique({
       where: {
-        slug,
+        id,
         status: 'PUBLISHED',
       },
     });
@@ -125,7 +125,7 @@ export class PostResolver {
       return {
         errors: [
           {
-            field: 'slug',
+            field: 'id',
             message: 'Post does not exist',
           },
         ],
@@ -141,31 +141,10 @@ export class PostResolver {
     @Arg('options') options: PostCreateInput,
     @Ctx() { req }: Context,
   ): Promise<PostResponse> {
-    const slug = slugify(options.title);
-
-    const slugExists = await db.post.findUnique({
-      where: {
-        slug,
-      },
-    });
-
-    if (slugExists) {
-      return {
-        errors: [
-          {
-            field: 'title',
-            message: 'A post with this title already exists',
-            code: '409',
-          },
-        ],
-      };
-    }
-
     const post = await db.post.create({
       data: {
         ...options,
         authorId: req.session.userId,
-        slug,
         readingTime: '10m',
         image: options.image,
       },
@@ -180,12 +159,12 @@ export class PostResolver {
   @Authorized(isAuth)
   async updatePost(
     @Ctx() { req }: Context,
-    @Arg('slug', () => String) slug: string,
+    @Arg('id', () => String) id: string,
     @Arg('options') options: PostUpdateInput,
   ): Promise<PostResponse> {
     const post = await db.post.findUnique({
       where: {
-        slug,
+        id,
       },
     });
 
@@ -203,11 +182,10 @@ export class PostResolver {
 
     const updatedPost = await db.post.update({
       where: {
-        slug,
+        id,
       },
       data: {
         ...options,
-        slug: slugify(options.title),
         // readingTime: readingTime(options.content).text,
         image: post.image,
       },
@@ -221,12 +199,12 @@ export class PostResolver {
   })
   @Authorized(isAuth)
   async deletePost(
-    @Arg('slug', () => String) slug: string,
+    @Arg('id', () => String) id: string,
     @Ctx() { req }: Context,
   ): Promise<boolean> {
     const post = await db.post.findUnique({
       where: {
-        slug,
+        id,
       },
     });
 
@@ -236,7 +214,7 @@ export class PostResolver {
 
     await db.post.delete({
       where: {
-        slug,
+        id,
       },
     });
 
@@ -259,21 +237,21 @@ export class PostResolver {
     return true;
   }
 
-  @Query(() => SlugsResponse, {
+  @Query(() => IdsResponse, {
     description: 'Returns all post slugs',
     nullable: true,
   })
-  async postSlugs(): Promise<SlugsResponse> {
-    const slugs = await db.post.findMany({
+  async postSlugs(): Promise<IdsResponse> {
+    const posts = await db.post.findMany({
       select: {
-        slug: true,
+        id: true,
       },
       where: {
         status: 'PUBLISHED',
       },
     });
 
-    return { slugs: slugs.map(slug => slug.slug) };
+    return { ids: posts.map(post => post.id) };
   }
 
   @Mutation(() => Boolean)
@@ -286,11 +264,11 @@ export class PostResolver {
   @Mutation(() => Boolean)
   @Authorized(isAdmin)
   async deletePostAsAdmin(
-    @Arg('slug', () => String) slug: string,
+    @Arg('id', () => String) id: string,
   ): Promise<boolean> {
     await db.post.delete({
       where: {
-        slug,
+        id,
       },
     });
 

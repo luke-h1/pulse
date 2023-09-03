@@ -12,7 +12,7 @@ import slugify from 'slugify';
 import readingTime from 'reading-time';
 import { FieldError } from '../../utils/FieldError';
 import { Project } from '../../prisma/generated/type-graphql';
-import { CountResponse, SlugsResponse } from '../post/post';
+import { CountResponse, IdsResponse } from '../post/post';
 import { db } from '../../db/prisma';
 import isAuth from '../../middleware/isAuth';
 import { ProjectCreateInput } from './inputs/ProjectCreateInput';
@@ -71,21 +71,21 @@ export class ProjectResolver {
     });
   }
 
-  @Query(() => SlugsResponse, {
+  @Query(() => IdsResponse, {
     description: 'Returns all project slugs',
     nullable: true,
   })
-  async projectSlugs(): Promise<SlugsResponse> {
-    const slugs = await db.project.findMany({
+  async projectSlugs(): Promise<IdsResponse> {
+    const projects = await db.project.findMany({
       where: {
         status: 'PUBLISHED',
       },
       select: {
-        slug: true,
+        id: true,
       },
     });
 
-    return { slugs: slugs.map(({ slug }) => slug) };
+    return { ids: projects.map(({ id }) => id) };
   }
 
   @Query(() => [Project], {
@@ -113,13 +113,11 @@ export class ProjectResolver {
   }
 
   @Query(() => Project, { nullable: true })
-  async project(
-    @Arg('slug', () => String) slug: string,
-  ): Promise<ProjectResponse> {
+  async project(@Arg('id', () => String) id: string): Promise<ProjectResponse> {
     const project = await db.project.findUnique({
       where: {
         status: 'PUBLISHED',
-        slug,
+        id,
       },
     });
 
@@ -144,12 +142,9 @@ export class ProjectResolver {
     @Arg('options') options: ProjectCreateInput,
     @Ctx() { req }: Context,
   ): Promise<ProjectResponse> {
-    const slug = slugify(options.title);
-
     const project = await db.project.create({
       data: {
         ...options,
-        slug,
         authorId: req.session.userId,
         readingTime: readingTime(options.content).text,
       },
@@ -162,12 +157,12 @@ export class ProjectResolver {
   @Authorized(isAuth)
   async updateProject(
     @Ctx() { req }: Context,
-    @Arg('slug', () => String) slug: string,
+    @Arg('id', () => String) id: string,
     @Arg('options') options: ProjectUpdateInput,
   ): Promise<ProjectResponse> {
     const project = await db.project.findUnique({
       where: {
-        slug,
+        id,
         authorId: req.session.userId,
       },
     });
@@ -176,7 +171,7 @@ export class ProjectResolver {
       return {
         errors: [
           {
-            field: 'slug',
+            field: 'id',
             message: 'Project does not exist',
             code: '404',
           },
@@ -188,7 +183,7 @@ export class ProjectResolver {
       return {
         errors: [
           {
-            field: 'slug',
+            field: 'id',
             message: 'You are not authorized to update this project',
             code: '401',
           },
@@ -198,11 +193,10 @@ export class ProjectResolver {
 
     const updatedProject = await db.project.update({
       where: {
-        slug,
+        id,
       },
       data: {
         ...options,
-        slug: slugify(options.title),
         readingTime: readingTime(options.content).text,
       },
     });
@@ -214,11 +208,11 @@ export class ProjectResolver {
   @Authorized(isAuth)
   async deleteProject(
     @Ctx() { req }: Context,
-    @Arg('slug', () => String) slug: string,
+    @Arg('id', () => String) id: string,
   ): Promise<boolean> {
     const project = await db.project.findUnique({
       where: {
-        slug,
+        id,
       },
     });
 
@@ -242,11 +236,11 @@ export class ProjectResolver {
   @Mutation(() => Boolean)
   @Authorized(isAdmin)
   async deleteProjectAdmin(
-    @Arg('slug', () => String) slug: string,
+    @Arg('id', () => String) id: string,
   ): Promise<boolean> {
     const project = await db.project.findUnique({
       where: {
-        slug,
+        id,
       },
     });
 
@@ -256,7 +250,7 @@ export class ProjectResolver {
 
     await db.project.delete({
       where: {
-        slug,
+        id,
       },
     });
 

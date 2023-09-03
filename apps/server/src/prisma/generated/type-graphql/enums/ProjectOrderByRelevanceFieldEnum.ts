@@ -3,7 +3,6 @@ import * as TypeGraphQL from "type-graphql";
 export enum ProjectOrderByRelevanceFieldEnum {
   id = "id",
   title = "title",
-  slug = "slug",
   intro = "intro",
   image = "image",
   githubUrl = "githubUrl",

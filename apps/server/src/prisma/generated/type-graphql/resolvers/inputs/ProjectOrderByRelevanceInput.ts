@@ -10,7 +10,7 @@ export class ProjectOrderByRelevanceInput {
   @TypeGraphQL.Field(_type => [ProjectOrderByRelevanceFieldEnum], {
     nullable: false
   })
-  fields!: Array<"id" | "title" | "slug" | "intro" | "image" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "readingTime" | "authorId">;
+  fields!: Array<"id" | "title" | "intro" | "image" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "readingTime" | "authorId">;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: false

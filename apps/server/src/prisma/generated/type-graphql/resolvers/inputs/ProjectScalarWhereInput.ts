@@ -39,11 +39,6 @@ export class ProjectScalarWhereInput {
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
-  slug?: StringFilter | undefined;
-
-  @TypeGraphQL.Field(_type => StringFilter, {
-    nullable: true
-  })
   intro?: StringFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringNullableFilter, {

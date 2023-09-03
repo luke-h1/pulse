@@ -60,9 +60,8 @@ model User {
 }
 
 model Project {
-  id           String   @id @default(cuid())
+  id           String   @id @unique @default(cuid())
   title        String   @db.VarChar(50)
-  slug         String   @unique @db.VarChar(50)
   intro        String
   image        String?
   content      Json
@@ -82,9 +81,8 @@ model Project {
 }
 
 model Post {
-  id    String  @id @default(cuid())
+  id    String  @id @unique @default(cuid())
   title String  @db.VarChar(50)
-  slug  String  @unique @db.VarChar(50)
   intro String
   image String?
 

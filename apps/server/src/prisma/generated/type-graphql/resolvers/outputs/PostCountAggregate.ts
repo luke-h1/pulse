@@ -18,11 +18,6 @@ export class PostCountAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
     nullable: false
   })
-  slug!: number;
-
-  @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false
-  })
   intro!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {

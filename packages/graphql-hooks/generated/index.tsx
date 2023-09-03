@@ -1206,8 +1206,8 @@ export function useCreateSignatureMutation() {
   >(CreateSignatureDocument);
 }
 export const DeletePostDocument = gql`
-  mutation DeletePost($slug: String!) {
-    deletePost(slug: $slug)
+  mutation DeletePost($id: ID!) {
+    deletePost(id: $id)
   }
 `;
 
@@ -1217,8 +1217,8 @@ export function useDeletePostMutation() {
   );
 }
 export const DeleteProjectDocument = gql`
-  mutation DeleteProject($slug: String!) {
-    deleteProject(slug: $slug)
+  mutation DeleteProject($id: ID!) {
+    deleteProject(id: $id)
   }
 `;
 
@@ -1279,8 +1279,8 @@ export function useRegisterMutation() {
   );
 }
 export const UpdateProjectDocument = gql`
-  mutation UpdateProject($options: ProjectUpdateInput!, $slug: String!) {
-    updateProject(options: $options, slug: $slug) {
+  mutation UpdateProject($options: ProjectUpdateInput!, $id: ID!) {
+    updateProject(options: $options, id: $id) {
       errors {
         field
         message
@@ -1318,8 +1318,8 @@ export function useMeQuery(
   });
 }
 export const PostDocument = gql`
-  query Post($slug: String!) {
-    post(slug: $slug) {
+  query Post($id: ID!) {
+    post(id: $id) {
       ...PostFragment
       readingTime
     }
@@ -1369,8 +1369,8 @@ export function usePostsQuery(
   });
 }
 export const ProjectDocument = gql`
-  query Project($slug: String!) {
-    project(slug: $slug) {
+  query Project($id: ID!) {
+    project(id: $id) {
       ...ProjectFragment
     }
   }

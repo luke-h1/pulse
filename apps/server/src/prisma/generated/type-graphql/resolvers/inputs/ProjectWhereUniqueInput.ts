@@ -18,11 +18,6 @@ export class ProjectWhereUniqueInput {
   })
   id?: string | undefined;
 
-  @TypeGraphQL.Field(_type => String, {
-    nullable: true
-  })
-  slug?: string | undefined;
-
   @TypeGraphQL.Field(_type => [ProjectWhereInput], {
     nullable: true
   })

@@ -19,11 +19,6 @@ export class ProjectMaxAggregate {
   @TypeGraphQL.Field(_type => String, {
     nullable: true
   })
-  slug!: string | null;
-
-  @TypeGraphQL.Field(_type => String, {
-    nullable: true
-  })
   intro!: string | null;
 
   @TypeGraphQL.Field(_type => String, {

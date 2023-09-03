@@ -3,7 +3,6 @@ import * as TypeGraphQL from "type-graphql";
 export enum ProjectScalarFieldEnum {
   id = "id",
   title = "title",
-  slug = "slug",
   intro = "intro",
   image = "image",
   content = "content",

@@ -79,7 +79,7 @@
     "@types/lodash": "^4.14.197",
     "@types/node": "20.5.1",
     "@types/nprogress": "^0.2.0",
-    "@types/react": "18.2.20",
+    "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@types/react-draft-wysiwyg": "^1.13.4",
     "gen-env-types": "^1.3.4",

@@ -7,6 +7,15 @@ interface Props {
   data?: OutputData;
   onChange(val: OutputData): void;
   holder: string;
+  // uploadImage: (file: File) => Promise<
+  //   | {
+  //       success: number;
+  //       file: {
+  //         url: string;
+  //       };
+  //     }
+  //   | undefined
+  // >;
 }
 
 export default function Editor({ holder, onChange, data }: Props) {
@@ -31,20 +40,21 @@ export default function Editor({ holder, onChange, data }: Props) {
         placeholder: 'Type here to write your post',
         inlineToolbar: true,
         autofocus: false,
-        data: { blocks: [] },
+        data: { blocks: data?.blocks ?? [] },
         onReady() {
           // eslint-disable-next-line no-param-reassign
           ref.current = editor;
         },
         tools: {
+          linkTool: {
+            class: LinkTool,
+            config: {
+              endpoint: `/api/link`,
+            },
+          },
           image: {
             class: ImageTool,
-            config: {
-              uploader: {
-                // TODO: include upload image mutation here and return the url
-                // will potentially need to include prop here or create new Image table
-              },
-            },
+            config: {},
           },
           header: Header,
           list: List,
@@ -52,14 +62,7 @@ export default function Editor({ holder, onChange, data }: Props) {
           inlineCode: InlineCode,
           table: Table,
           embed: Embed,
-          linkTool: {
-            class: LinkTool,
-            config: {
-              endpoint: '',
-            },
-          },
         },
-        data,
         async onChange(api) {
           // eslint-disable-next-line @typescript-eslint/no-shadow
           const data = await api.saver.save();

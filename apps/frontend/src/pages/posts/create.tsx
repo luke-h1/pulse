@@ -69,6 +69,24 @@ const CreatePostPage: NextPage = () => {
     }
   };
 
+  // eslint-disable-next-line consistent-return
+  const handleUploadImage = async (file: File) => {
+    const { data: signatureData } = await createSignature({});
+
+    if (signatureData) {
+      const { signature, timestamp } = signatureData.createImageSignature;
+
+      const imageData = await uploadImage(file, signature, timestamp);
+
+      return {
+        success: 1,
+        file: {
+          url: imageData?.secure_url,
+        },
+      };
+    }
+  };
+
   return (
     <Page>
       <FormProvider enableReinitialize validationSchema={postCreateSchema}>

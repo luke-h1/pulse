@@ -6,17 +6,16 @@ import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { usePostQuery } from '@graphql-hooks/generated';
 import FormattedDate from '@common/components/FormattedDate';
 import ScrollToTop from '@frontend/components/ScrollToTop';
-import useGetIntId from '@common/hooks/useGetIntId';
 import { isServer } from '@common/hooks';
 
 const PostSlugPage: NextPage = () => {
   const router = useRouter();
 
   const [{ data, fetching }] = usePostQuery({
-    pause: isServer,
     variables: {
       id: router.query.id as string,
     },
+    pause: router.query.id === -1,
   });
 
   return (

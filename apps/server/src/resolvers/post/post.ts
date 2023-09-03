@@ -113,26 +113,13 @@ export class PostResolver {
   }
 
   @Query(() => Post, { nullable: true })
-  async post(@Arg('id', () => String) id: string): Promise<PostResponse> {
-    const post = await db.post.findUnique({
+  async post(@Arg('id', () => String) id: string): Promise<Post | null> {
+    return db.post.findUnique({
       where: {
         id,
         status: 'PUBLISHED',
       },
     });
-
-    if (!post) {
-      return {
-        errors: [
-          {
-            field: 'id',
-            message: 'Post does not exist',
-          },
-        ],
-      };
-    }
-
-    return { post };
   }
 
   @Mutation(() => PostResponse)

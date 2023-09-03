@@ -9,5 +9,5 @@ export class EnumStatusFieldUpdateOperationsInput {
   @TypeGraphQL.Field(_type => Status, {
     nullable: true
   })
-  set?: "PUBLISHED" | "DRAFT" | undefined;
+  set?: "PUBLISHED" | "DRAFT" | "SCHEDULED" | undefined;
 }

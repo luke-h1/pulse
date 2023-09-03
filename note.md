@@ -22,9 +22,14 @@ API:
   * potentially look into boilerplate-graphql impl and decide if refactor code that way
   * decide on testing strategy ✅
   * Migrate away from express-apollo to @apollo/server ✅
-  * Image uploads - s3 maybe? - maybe with custom model
+  * Image uploads - s3 maybe? - maybe with custom model ✅
   * Add filtering by post status for preview purposes - published or draft etc.
-
+  * Add queues for scheduling posts
+  * see if possible to create common auth directive to verify if current logged in user is post owner (can delete a lot of post tests if so)
+  * unit test / mock s3 service
+  * review how images are going to be embedded into content - potentially its own image mutation where things like the key/id isn't tracked or maybe a custom model for this i.e. ImageBlock or ContentBlockImage
+  * think if want to go oop style and split functionality of resolver out into its own service - would make unit testing easier
+  * split unit tests up into individual describe blocks for a given resolver function
 FE:
   * Custom package for GQL type generation ✅
   * Create Github OAUTH app for auth locally ✅
@@ -54,5 +59,5 @@ Infra:
  * Terraform for Infra - automate it in CI
  * AWS for hosting
  * Dockerize frontend + server
- * ECS for frontend + server
- * serverless DB potentially if can get postgres in order to save on costs
+ * ECS for frontend + server - kuberentes if have time 
+ * serverless DB potentially if can get postgres in order to save on costs - athena if cold starts aren't too bad

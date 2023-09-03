@@ -2,8 +2,10 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
+import { ContentBlockImage } from "../models/ContentBlockImage";
 import { User } from "../models/User";
 import { Status } from "../enums/Status";
+import { PostCount } from "../resolvers/outputs/PostCount";
 
 @TypeGraphQL.ObjectType("Post", {})
 export class Post {
@@ -32,6 +34,11 @@ export class Post {
   })
   image?: string | null;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  imageFilename?: string | null;
+
   @TypeGraphQL.Field(_type => [String], {
     nullable: false
   })
@@ -45,12 +52,14 @@ export class Post {
   @TypeGraphQL.Field(_type => Status, {
     nullable: false
   })
-  status!: "PUBLISHED" | "DRAFT";
+  status!: "PUBLISHED" | "DRAFT" | "SCHEDULED";
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
   readingTime!: string;
+
+  ContentBlockImage?: ContentBlockImage[];
 
   author?: User;
 
@@ -68,4 +77,9 @@ export class Post {
     nullable: false
   })
   updatedAt!: Date;
+
+  @TypeGraphQL.Field(_type => PostCount, {
+    nullable: true
+  })
+  _count?: PostCount | null;
 }

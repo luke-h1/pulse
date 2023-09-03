@@ -20,6 +20,8 @@
     "@emotion/styled": "^11.11.0",
     "common": "workspace:*",
     "editor": "workspace:*",
+    "editorjs-html": "^3.4.3",
+    "prismjs": "^1.29.0",
     "react": "18.2.0",
     "react-hook-form": "^7.45.4",
     "react-textarea-autosize": "^8.5.2",
@@ -27,6 +29,7 @@
   },
   "devDependencies": {
     "@types/editorjs__header": "^2.6.0",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7"
   }

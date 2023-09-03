@@ -17,6 +17,7 @@ export type AccountStatus = (typeof AccountStatus)[keyof typeof AccountStatus];
 export const Status = {
   PUBLISHED: 'PUBLISHED',
   DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
 } as const;
 
 export type Status = (typeof Status)[keyof typeof Status];

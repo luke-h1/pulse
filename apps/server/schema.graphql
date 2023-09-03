@@ -9,6 +9,27 @@ enum AccountStatus {
   ON_HOLD
 }
 
+input ContentBlockImageListRelationFilter {
+  every: ContentBlockImageWhereInput
+  none: ContentBlockImageWhereInput
+  some: ContentBlockImageWhereInput
+}
+
+input ContentBlockImageWhereInput {
+  AND: [ContentBlockImageWhereInput!]
+  NOT: [ContentBlockImageWhereInput!]
+  OR: [ContentBlockImageWhereInput!]
+  createdAt: DateTimeFilter
+  id: StringFilter
+  image: StringNullableFilter
+  imageFilename: StringNullableFilter
+  post: PostRelationFilter
+  postId: StringFilter
+  project: ProjectNullableRelationFilter
+  projectId: StringNullableFilter
+  updatedAt: DateTimeFilter
+}
+
 type CountResponse {
   count: Float
 }
@@ -67,6 +88,15 @@ type FieldError {
   message: String!
 }
 
+input ImageCreateInput {
+  image: Upload
+  type: String!
+}
+
+type ImageSignature {
+  image: String!
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -89,6 +119,7 @@ input JsonFilter {
 }
 
 type Mutation {
+  createContentBlockImage(options: ImageCreateInput!): ImageSignature!
   createPost(options: PostCreateInput!): PostResponse!
   createProject(options: ProjectCreateInput!): ProjectResponse!
   deleteAccount: Boolean!
@@ -190,11 +221,13 @@ input NestedStringNullableFilter {
 }
 
 type Post {
+  _count: PostCount
   authorId: String!
   content: JSON!
   createdAt: DateTimeISO!
   id: String!
   image: String
+  imageFilename: String
   intro: String!
   readingTime: String!
   slug: String!
@@ -204,9 +237,13 @@ type Post {
   updatedAt: DateTimeISO!
 }
 
+type PostCount {
+  ContentBlockImage(where: ContentBlockImageWhereInput): Int!
+}
+
 input PostCreateInput {
   content: String!
-  image: String
+  image: Upload
   intro: String!
   tags: [String!]!
   title: String!
@@ -218,6 +255,11 @@ input PostListRelationFilter {
   some: PostWhereInput
 }
 
+input PostRelationFilter {
+  is: PostWhereInput
+  isNot: PostWhereInput
+}
+
 type PostResponse {
   errors: [FieldError!]
   post: Post
@@ -225,7 +267,7 @@ type PostResponse {
 
 input PostUpdateInput {
   content: String!
-  image: String
+  image: Upload
   intro: String!
   status: Status!
   tags: [String!]!
@@ -234,6 +276,7 @@ input PostUpdateInput {
 
 input PostWhereInput {
   AND: [PostWhereInput!]
+  ContentBlockImage: ContentBlockImageListRelationFilter
   NOT: [PostWhereInput!]
   OR: [PostWhereInput!]
   author: UserRelationFilter
@@ -242,6 +285,7 @@ input PostWhereInput {
   createdAt: DateTimeFilter
   id: StringFilter
   image: StringNullableFilter
+  imageFilename: StringNullableFilter
   intro: StringFilter
   readingTime: StringFilter
   slug: StringFilter
@@ -252,6 +296,7 @@ input PostWhereInput {
 }
 
 type Project {
+  _count: ProjectCount
   appStoreUrl: String
   authorId: String!
   content: JSON!
@@ -268,6 +313,10 @@ type Project {
   tags: [String!]!
   title: String!
   updatedAt: DateTimeISO!
+}
+
+type ProjectCount {
+  ContentBlockImage(where: ContentBlockImageWhereInput): Int!
 }
 
 input ProjectCreateInput {
@@ -286,6 +335,11 @@ input ProjectListRelationFilter {
   every: ProjectWhereInput
   none: ProjectWhereInput
   some: ProjectWhereInput
+}
+
+input ProjectNullableRelationFilter {
+  is: ProjectWhereInput
+  isNot: ProjectWhereInput
 }
 
 type ProjectResponse {
@@ -308,6 +362,7 @@ input ProjectUpdateInput {
 
 input ProjectWhereInput {
   AND: [ProjectWhereInput!]
+  ContentBlockImage: ContentBlockImageListRelationFilter
   NOT: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
   appStoreUrl: StringNullableFilter
@@ -356,9 +411,7 @@ type Query {
   """Returns the 5 most recent projects"""
   recentProjects: [Project!]
 
-  """
-  Search posts (full text search on title / intro). Content will be added in the future
-  """
+  """Search posts (full text search on title)"""
   searchPosts(query: String!): [Post!]
 
   """Search projects (full text search on title / intro)"""
@@ -383,6 +436,7 @@ type SlugsResponse {
 enum Status {
   DRAFT
   PUBLISHED
+  SCHEDULED
 }
 
 input StringFilter {
@@ -424,6 +478,9 @@ input StringNullableListFilter {
   hasSome: [String!]
   isEmpty: Boolean
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   _count: UserCount

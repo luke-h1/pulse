@@ -6,6 +6,7 @@ export enum PostScalarFieldEnum {
   slug = "slug",
   intro = "intro",
   image = "image",
+  imageFilename = "imageFilename",
   tags = "tags",
   content = "content",
   status = "status",

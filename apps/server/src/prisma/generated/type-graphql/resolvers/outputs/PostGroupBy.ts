@@ -34,6 +34,11 @@ export class PostGroupBy {
   })
   image!: string | null;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  imageFilename!: string | null;
+
   @TypeGraphQL.Field(_type => [String], {
     nullable: true
   })
@@ -47,7 +52,7 @@ export class PostGroupBy {
   @TypeGraphQL.Field(_type => Status, {
     nullable: false
   })
-  status!: "PUBLISHED" | "DRAFT";
+  status!: "PUBLISHED" | "DRAFT" | "SCHEDULED";
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false

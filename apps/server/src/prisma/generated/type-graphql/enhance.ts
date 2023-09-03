@@ -13,7 +13,8 @@ export type MethodDecoratorOverrideFn = (decorators: MethodDecorator[]) => Metho
 const crudResolversMap = {
   User: crudResolvers.UserCrudResolver,
   Project: crudResolvers.ProjectCrudResolver,
-  Post: crudResolvers.PostCrudResolver
+  Post: crudResolvers.PostCrudResolver,
+  ContentBlockImage: crudResolvers.ContentBlockImageCrudResolver
 };
 const actionResolversMap = {
   User: {
@@ -63,12 +64,29 @@ const actionResolversMap = {
     updateManyPost: actionResolvers.UpdateManyPostResolver,
     updateOnePost: actionResolvers.UpdateOnePostResolver,
     upsertOnePost: actionResolvers.UpsertOnePostResolver
+  },
+  ContentBlockImage: {
+    aggregateContentBlockImage: actionResolvers.AggregateContentBlockImageResolver,
+    createManyContentBlockImage: actionResolvers.CreateManyContentBlockImageResolver,
+    createOneContentBlockImage: actionResolvers.CreateOneContentBlockImageResolver,
+    deleteManyContentBlockImage: actionResolvers.DeleteManyContentBlockImageResolver,
+    deleteOneContentBlockImage: actionResolvers.DeleteOneContentBlockImageResolver,
+    findFirstContentBlockImage: actionResolvers.FindFirstContentBlockImageResolver,
+    findFirstContentBlockImageOrThrow: actionResolvers.FindFirstContentBlockImageOrThrowResolver,
+    contentBlockImages: actionResolvers.FindManyContentBlockImageResolver,
+    contentBlockImage: actionResolvers.FindUniqueContentBlockImageResolver,
+    getContentBlockImage: actionResolvers.FindUniqueContentBlockImageOrThrowResolver,
+    groupByContentBlockImage: actionResolvers.GroupByContentBlockImageResolver,
+    updateManyContentBlockImage: actionResolvers.UpdateManyContentBlockImageResolver,
+    updateOneContentBlockImage: actionResolvers.UpdateOneContentBlockImageResolver,
+    upsertOneContentBlockImage: actionResolvers.UpsertOneContentBlockImageResolver
   }
 };
 const crudResolversInfo = {
   User: ["aggregateUser", "createManyUser", "createOneUser", "deleteManyUser", "deleteOneUser", "findFirstUser", "findFirstUserOrThrow", "users", "user", "getUser", "groupByUser", "updateManyUser", "updateOneUser", "upsertOneUser"],
   Project: ["aggregateProject", "createManyProject", "createOneProject", "deleteManyProject", "deleteOneProject", "findFirstProject", "findFirstProjectOrThrow", "projects", "project", "getProject", "groupByProject", "updateManyProject", "updateOneProject", "upsertOneProject"],
-  Post: ["aggregatePost", "createManyPost", "createOnePost", "deleteManyPost", "deleteOnePost", "findFirstPost", "findFirstPostOrThrow", "posts", "post", "getPost", "groupByPost", "updateManyPost", "updateOnePost", "upsertOnePost"]
+  Post: ["aggregatePost", "createManyPost", "createOnePost", "deleteManyPost", "deleteOnePost", "findFirstPost", "findFirstPostOrThrow", "posts", "post", "getPost", "groupByPost", "updateManyPost", "updateOnePost", "upsertOnePost"],
+  ContentBlockImage: ["aggregateContentBlockImage", "createManyContentBlockImage", "createOneContentBlockImage", "deleteManyContentBlockImage", "deleteOneContentBlockImage", "findFirstContentBlockImage", "findFirstContentBlockImageOrThrow", "contentBlockImages", "contentBlockImage", "getContentBlockImage", "groupByContentBlockImage", "updateManyContentBlockImage", "updateOneContentBlockImage", "upsertOneContentBlockImage"]
 };
 const argsInfo = {
   AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"],
@@ -112,7 +130,21 @@ const argsInfo = {
   GroupByPostArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyPostArgs: ["data", "where"],
   UpdateOnePostArgs: ["data", "where"],
-  UpsertOnePostArgs: ["where", "create", "update"]
+  UpsertOnePostArgs: ["where", "create", "update"],
+  AggregateContentBlockImageArgs: ["where", "orderBy", "cursor", "take", "skip"],
+  CreateManyContentBlockImageArgs: ["data", "skipDuplicates"],
+  CreateOneContentBlockImageArgs: ["data"],
+  DeleteManyContentBlockImageArgs: ["where"],
+  DeleteOneContentBlockImageArgs: ["where"],
+  FindFirstContentBlockImageArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstContentBlockImageOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindManyContentBlockImageArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindUniqueContentBlockImageArgs: ["where"],
+  FindUniqueContentBlockImageOrThrowArgs: ["where"],
+  GroupByContentBlockImageArgs: ["where", "orderBy", "by", "having", "take", "skip"],
+  UpdateManyContentBlockImageArgs: ["data", "where"],
+  UpdateOneContentBlockImageArgs: ["data", "where"],
+  UpsertOneContentBlockImageArgs: ["where", "create", "update"]
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
@@ -212,12 +244,14 @@ export function applyArgsTypesEnhanceMap(
 const relationResolversMap = {
   User: relationResolvers.UserRelationsResolver,
   Project: relationResolvers.ProjectRelationsResolver,
-  Post: relationResolvers.PostRelationsResolver
+  Post: relationResolvers.PostRelationsResolver,
+  ContentBlockImage: relationResolvers.ContentBlockImageRelationsResolver
 };
 const relationResolversInfo = {
   User: ["projects", "posts"],
-  Project: ["author"],
-  Post: ["author"]
+  Project: ["ContentBlockImage", "author"],
+  Post: ["ContentBlockImage", "author"],
+  ContentBlockImage: ["post", "project"]
 };
 
 type RelationResolverModelNames = keyof typeof relationResolversMap;
@@ -301,7 +335,8 @@ function applyTypeClassEnhanceConfig<
 const modelsInfo = {
   User: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   Project: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
-  Post: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"]
+  Post: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  ContentBlockImage: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"]
 };
 
 type ModelNames = keyof typeof models;
@@ -345,18 +380,25 @@ const outputsInfo = {
   AggregateProject: ["_count", "_min", "_max"],
   ProjectGroupBy: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_count", "_min", "_max"],
   AggregatePost: ["_count", "_min", "_max"],
-  PostGroupBy: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_count", "_min", "_max"],
+  PostGroupBy: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_count", "_min", "_max"],
+  AggregateContentBlockImage: ["_count", "_min", "_max"],
+  ContentBlockImageGroupBy: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt", "_count", "_min", "_max"],
   AffectedRowsOutput: ["count"],
   UserCount: ["projects", "posts"],
   UserCountAggregate: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "_all"],
   UserMinAggregate: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   UserMaxAggregate: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
+  ProjectCount: ["ContentBlockImage"],
   ProjectCountAggregate: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_all"],
   ProjectMinAggregate: ["id", "title", "slug", "intro", "image", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
   ProjectMaxAggregate: ["id", "title", "slug", "intro", "image", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
-  PostCountAggregate: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_all"],
-  PostMinAggregate: ["id", "title", "slug", "intro", "image", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
-  PostMaxAggregate: ["id", "title", "slug", "intro", "image", "status", "readingTime", "authorId", "createdAt", "updatedAt"]
+  PostCount: ["ContentBlockImage"],
+  PostCountAggregate: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_all"],
+  PostMinAggregate: ["id", "title", "slug", "intro", "image", "imageFilename", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostMaxAggregate: ["id", "title", "slug", "intro", "image", "imageFilename", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  ContentBlockImageCountAggregate: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt", "_all"],
+  ContentBlockImageMinAggregate: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"],
+  ContentBlockImageMaxAggregate: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"]
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
@@ -402,28 +444,37 @@ const inputsInfo = {
   UserWhereUniqueInput: ["id", "email", "username", "AND", "OR", "NOT", "provider", "firstName", "lastName", "emailVerified", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
   UserOrderByWithAggregationInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "_count", "_max", "_min"],
   UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
-  ProjectWhereInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "author"],
-  ProjectOrderByWithRelationAndSearchRelevanceInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "author", "_relevance"],
-  ProjectWhereUniqueInput: ["id", "slug", "AND", "OR", "NOT", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "author"],
+  ProjectWhereInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "ContentBlockImage", "author"],
+  ProjectOrderByWithRelationAndSearchRelevanceInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "ContentBlockImage", "author", "_relevance"],
+  ProjectWhereUniqueInput: ["id", "slug", "AND", "OR", "NOT", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "ContentBlockImage", "author"],
   ProjectOrderByWithAggregationInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_count", "_max", "_min"],
   ProjectScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
-  PostWhereInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "author"],
-  PostOrderByWithRelationAndSearchRelevanceInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "author", "_relevance"],
-  PostWhereUniqueInput: ["id", "slug", "AND", "OR", "NOT", "title", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "author"],
-  PostOrderByWithAggregationInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_count", "_max", "_min"],
-  PostScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostWhereInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "ContentBlockImage", "author"],
+  PostOrderByWithRelationAndSearchRelevanceInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "ContentBlockImage", "author", "_relevance"],
+  PostWhereUniqueInput: ["id", "slug", "AND", "OR", "NOT", "title", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "ContentBlockImage", "author"],
+  PostOrderByWithAggregationInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt", "_count", "_max", "_min"],
+  PostScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  ContentBlockImageWhereInput: ["AND", "OR", "NOT", "id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt", "post", "project"],
+  ContentBlockImageOrderByWithRelationAndSearchRelevanceInput: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt", "post", "project", "_relevance"],
+  ContentBlockImageWhereUniqueInput: ["id", "AND", "OR", "NOT", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt", "post", "project"],
+  ContentBlockImageOrderByWithAggregationInput: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt", "_count", "_max", "_min"],
+  ContentBlockImageScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"],
   UserCreateInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
   UserUpdateInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
   UserCreateManyInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   UserUpdateManyMutationInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
-  ProjectCreateInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "author"],
-  ProjectUpdateInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "author"],
+  ProjectCreateInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage", "author"],
+  ProjectUpdateInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage", "author"],
   ProjectCreateManyInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
   ProjectUpdateManyMutationInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt"],
-  PostCreateInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "author"],
-  PostUpdateInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "author"],
-  PostCreateManyInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
-  PostUpdateManyMutationInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "createdAt", "updatedAt"],
+  PostCreateInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage", "author"],
+  PostUpdateInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage", "author"],
+  PostCreateManyInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostUpdateManyMutationInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt"],
+  ContentBlockImageCreateInput: ["id", "image", "imageFilename", "createdAt", "updatedAt", "post", "project"],
+  ContentBlockImageUpdateInput: ["id", "image", "imageFilename", "createdAt", "updatedAt", "post", "project"],
+  ContentBlockImageCreateManyInput: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"],
+  ContentBlockImageUpdateManyMutationInput: ["id", "image", "imageFilename", "createdAt", "updatedAt"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "mode", "not"],
   StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "mode", "not"],
   DateTimeNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
@@ -448,7 +499,9 @@ const inputsInfo = {
   JsonFilter: ["equals", "path", "string_contains", "string_starts_with", "string_ends_with", "array_contains", "array_starts_with", "array_ends_with", "lt", "lte", "gt", "gte", "not"],
   StringNullableListFilter: ["equals", "has", "hasEvery", "hasSome", "isEmpty"],
   EnumStatusFilter: ["equals", "in", "notIn", "not"],
+  ContentBlockImageListRelationFilter: ["every", "some", "none"],
   UserRelationFilter: ["is", "isNot"],
+  ContentBlockImageOrderByRelationAggregateInput: ["_count"],
   ProjectOrderByRelevanceInput: ["fields", "sort", "search"],
   ProjectCountOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
   ProjectMaxOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
@@ -456,9 +509,15 @@ const inputsInfo = {
   JsonWithAggregatesFilter: ["equals", "path", "string_contains", "string_starts_with", "string_ends_with", "array_contains", "array_starts_with", "array_ends_with", "lt", "lte", "gt", "gte", "not", "_count", "_min", "_max"],
   EnumStatusWithAggregatesFilter: ["equals", "in", "notIn", "not", "_count", "_min", "_max"],
   PostOrderByRelevanceInput: ["fields", "sort", "search"],
-  PostCountOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
-  PostMaxOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
-  PostMinOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostCountOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostMaxOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "imageFilename", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostMinOrderByAggregateInput: ["id", "title", "slug", "intro", "image", "imageFilename", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostRelationFilter: ["is", "isNot"],
+  ProjectNullableRelationFilter: ["is", "isNot"],
+  ContentBlockImageOrderByRelevanceInput: ["fields", "sort", "search"],
+  ContentBlockImageCountOrderByAggregateInput: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"],
+  ContentBlockImageMaxOrderByAggregateInput: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"],
+  ContentBlockImageMinOrderByAggregateInput: ["id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"],
   ProjectCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
   PostCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
   StringFieldUpdateOperationsInput: ["set"],
@@ -470,14 +529,22 @@ const inputsInfo = {
   ProjectUpdateManyWithoutAuthorNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   PostUpdateManyWithoutAuthorNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   ProjectCreatetagsInput: ["set"],
+  ContentBlockImageCreateNestedManyWithoutProjectInput: ["create", "connectOrCreate", "createMany", "connect"],
   UserCreateNestedOneWithoutProjectsInput: ["create", "connectOrCreate", "connect"],
   ProjectUpdatetagsInput: ["set", "push"],
   EnumStatusFieldUpdateOperationsInput: ["set"],
+  ContentBlockImageUpdateManyWithoutProjectNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   UserUpdateOneRequiredWithoutProjectsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
   PostCreatetagsInput: ["set"],
+  ContentBlockImageCreateNestedManyWithoutPostInput: ["create", "connectOrCreate", "createMany", "connect"],
   UserCreateNestedOneWithoutPostsInput: ["create", "connectOrCreate", "connect"],
   PostUpdatetagsInput: ["set", "push"],
+  ContentBlockImageUpdateManyWithoutPostNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   UserUpdateOneRequiredWithoutPostsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
+  PostCreateNestedOneWithoutContentBlockImageInput: ["create", "connectOrCreate", "connect"],
+  ProjectCreateNestedOneWithoutContentBlockImageInput: ["create", "connectOrCreate", "connect"],
+  PostUpdateOneRequiredWithoutContentBlockImageNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
+  ProjectUpdateOneWithoutContentBlockImageNestedInput: ["create", "connectOrCreate", "upsert", "disconnect", "delete", "connect", "update"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "not"],
   NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "not"],
   NestedDateTimeNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
@@ -495,10 +562,10 @@ const inputsInfo = {
   NestedEnumStatusFilter: ["equals", "in", "notIn", "not"],
   NestedJsonFilter: ["equals", "path", "string_contains", "string_starts_with", "string_ends_with", "array_contains", "array_starts_with", "array_ends_with", "lt", "lte", "gt", "gte", "not"],
   NestedEnumStatusWithAggregatesFilter: ["equals", "in", "notIn", "not", "_count", "_min", "_max"],
-  ProjectCreateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt"],
+  ProjectCreateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage"],
   ProjectCreateOrConnectWithoutAuthorInput: ["where", "create"],
   ProjectCreateManyAuthorInputEnvelope: ["data", "skipDuplicates"],
-  PostCreateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "createdAt", "updatedAt"],
+  PostCreateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage"],
   PostCreateOrConnectWithoutAuthorInput: ["where", "create"],
   PostCreateManyAuthorInputEnvelope: ["data", "skipDuplicates"],
   ProjectUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
@@ -508,21 +575,48 @@ const inputsInfo = {
   PostUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
   PostUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
   PostUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
-  PostScalarWhereInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  PostScalarWhereInput: ["AND", "OR", "NOT", "id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "authorId", "createdAt", "updatedAt"],
+  ContentBlockImageCreateWithoutProjectInput: ["id", "image", "imageFilename", "createdAt", "updatedAt", "post"],
+  ContentBlockImageCreateOrConnectWithoutProjectInput: ["where", "create"],
+  ContentBlockImageCreateManyProjectInputEnvelope: ["data", "skipDuplicates"],
   UserCreateWithoutProjectsInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "posts"],
   UserCreateOrConnectWithoutProjectsInput: ["where", "create"],
+  ContentBlockImageUpsertWithWhereUniqueWithoutProjectInput: ["where", "update", "create"],
+  ContentBlockImageUpdateWithWhereUniqueWithoutProjectInput: ["where", "data"],
+  ContentBlockImageUpdateManyWithWhereWithoutProjectInput: ["where", "data"],
+  ContentBlockImageScalarWhereInput: ["AND", "OR", "NOT", "id", "image", "imageFilename", "postId", "projectId", "createdAt", "updatedAt"],
   UserUpsertWithoutProjectsInput: ["update", "create", "where"],
   UserUpdateToOneWithWhereWithoutProjectsInput: ["where", "data"],
   UserUpdateWithoutProjectsInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "posts"],
+  ContentBlockImageCreateWithoutPostInput: ["id", "image", "imageFilename", "createdAt", "updatedAt", "project"],
+  ContentBlockImageCreateOrConnectWithoutPostInput: ["where", "create"],
+  ContentBlockImageCreateManyPostInputEnvelope: ["data", "skipDuplicates"],
   UserCreateWithoutPostsInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects"],
   UserCreateOrConnectWithoutPostsInput: ["where", "create"],
+  ContentBlockImageUpsertWithWhereUniqueWithoutPostInput: ["where", "update", "create"],
+  ContentBlockImageUpdateWithWhereUniqueWithoutPostInput: ["where", "data"],
+  ContentBlockImageUpdateManyWithWhereWithoutPostInput: ["where", "data"],
   UserUpsertWithoutPostsInput: ["update", "create", "where"],
   UserUpdateToOneWithWhereWithoutPostsInput: ["where", "data"],
   UserUpdateWithoutPostsInput: ["id", "provider", "firstName", "lastName", "email", "emailVerified", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects"],
+  PostCreateWithoutContentBlockImageInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "author"],
+  PostCreateOrConnectWithoutContentBlockImageInput: ["where", "create"],
+  ProjectCreateWithoutContentBlockImageInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "author"],
+  ProjectCreateOrConnectWithoutContentBlockImageInput: ["where", "create"],
+  PostUpsertWithoutContentBlockImageInput: ["update", "create", "where"],
+  PostUpdateToOneWithWhereWithoutContentBlockImageInput: ["where", "data"],
+  PostUpdateWithoutContentBlockImageInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "author"],
+  ProjectUpsertWithoutContentBlockImageInput: ["update", "create", "where"],
+  ProjectUpdateToOneWithWhereWithoutContentBlockImageInput: ["where", "data"],
+  ProjectUpdateWithoutContentBlockImageInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "author"],
   ProjectCreateManyAuthorInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt"],
-  PostCreateManyAuthorInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "createdAt", "updatedAt"],
-  ProjectUpdateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt"],
-  PostUpdateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "tags", "content", "status", "readingTime", "createdAt", "updatedAt"]
+  PostCreateManyAuthorInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt"],
+  ProjectUpdateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage"],
+  PostUpdateWithoutAuthorInput: ["id", "title", "slug", "intro", "image", "imageFilename", "tags", "content", "status", "readingTime", "createdAt", "updatedAt", "ContentBlockImage"],
+  ContentBlockImageCreateManyProjectInput: ["id", "image", "imageFilename", "postId", "createdAt", "updatedAt"],
+  ContentBlockImageUpdateWithoutProjectInput: ["id", "image", "imageFilename", "createdAt", "updatedAt", "post"],
+  ContentBlockImageCreateManyPostInput: ["id", "image", "imageFilename", "projectId", "createdAt", "updatedAt"],
+  ContentBlockImageUpdateWithoutPostInput: ["id", "image", "imageFilename", "createdAt", "updatedAt", "project"]
 };
 
 type InputTypesNames = keyof typeof inputTypes;

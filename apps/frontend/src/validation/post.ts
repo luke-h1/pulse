@@ -7,7 +7,7 @@ const postPayload = {
   intro: z.string({
     required_error: 'Intro is required',
   }),
-  image: z.string().nullable(),
+  // image: z.string().nullable(),
   // tags: z.string({
   //   required_error: 'Tags is required',
   // }),

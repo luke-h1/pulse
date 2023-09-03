@@ -1,24 +1,17 @@
-import EditorJS from '@editorjs/editorjs';
-import { MutableRefObject, useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import EditorJS, { OutputData } from '@editorjs/editorjs';
 import { useMounted } from '@common/hooks/useMounted';
-import { Flex, Kbd, Text, Textarea } from '@chakra-ui/react';
-import { useController } from 'react-hook-form';
+import { Flex } from '@chakra-ui/react';
 
-import { BaseProps } from '@common/components/form/FormControl';
-
-interface Props extends BaseProps {
-  editorRef: MutableRefObject<EditorJS | null>;
+interface Props {
+  data?: OutputData;
+  onChange(val: OutputData): void;
+  holder: string;
 }
 
-export default function Editor({ name, control }: Props) {
+export default function Editor({ holder, onChange, data }: Props) {
   const ref = useRef<EditorJS>();
-  const titleRef = useRef<HTMLTextAreaElement>(null);
   const { isMounted } = useMounted();
-
-  const { field } = useController({
-    name,
-    control,
-  });
 
   const initializeEditor = useCallback(async () => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -34,15 +27,14 @@ export default function Editor({ name, control }: Props) {
 
     if (!ref.current) {
       const editor = new EditorJS({
-        holder: 'editor',
+        holder,
         placeholder: 'Type here to write your post',
         inlineToolbar: true,
-        data: { blocks: [] },
         onReady() {
+          // eslint-disable-next-line no-param-reassign
           ref.current = editor;
         },
         tools: {
-          header: Header,
           image: {
             class: ImageTool,
             config: {
@@ -52,6 +44,7 @@ export default function Editor({ name, control }: Props) {
               },
             },
           },
+          header: Header,
           list: List,
           code: Code,
           inlineCode: InlineCode,
@@ -64,8 +57,16 @@ export default function Editor({ name, control }: Props) {
             },
           },
         },
+        data,
+        async onChange(api) {
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          const data = await api.saver.save();
+          onChange(data);
+        },
+        hideToolbar: false,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // eslint-disable-next-line consistent-return
@@ -74,7 +75,7 @@ export default function Editor({ name, control }: Props) {
       await initializeEditor();
 
       setTimeout(() => {
-        titleRef.current?.focus();
+        ref.current?.focus();
       }, 0);
     };
 
@@ -82,18 +83,11 @@ export default function Editor({ name, control }: Props) {
       init();
       return () => {
         ref.current?.destroy();
+        // eslint-disable-next-line no-param-reassign
         ref.current = undefined;
       };
     }
   }, [isMounted, initializeEditor]);
-
-  // async function onSubmit(data: FormData) {
-  //   const blocks = await ref.current?.save();
-
-  //   const payload = {};
-
-  //   // submit here
-  // }
 
   if (!isMounted) {
     return null;
@@ -101,18 +95,7 @@ export default function Editor({ name, control }: Props) {
 
   return (
     <Flex direction="column" w="full" p="4" rounded="lg" border="2px">
-      <Textarea
-        id="editor"
-        // ref={editorRef}
-        {...field}
-        style={{
-          minHeight: '500px',
-        }}
-        placeholder="Enter content..."
-      />
-      <Text size="sm" color="black.500">
-        Use <Kbd>Tab</Kbd> to open the command menu.
-      </Text>
+      <div id={holder} className="prose max-w-full" />
     </Flex>
   );
 }

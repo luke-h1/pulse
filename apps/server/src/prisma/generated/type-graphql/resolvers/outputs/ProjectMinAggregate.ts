@@ -54,7 +54,7 @@ export class ProjectMinAggregate {
   @TypeGraphQL.Field(_type => Status, {
     nullable: true
   })
-  status!: "PUBLISHED" | "DRAFT" | null;
+  status!: "PUBLISHED" | "DRAFT" | "SCHEDULED" | null;
 
   @TypeGraphQL.Field(_type => String, {
     nullable: true

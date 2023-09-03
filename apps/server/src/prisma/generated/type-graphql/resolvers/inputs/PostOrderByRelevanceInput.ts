@@ -10,7 +10,7 @@ export class PostOrderByRelevanceInput {
   @TypeGraphQL.Field(_type => [PostOrderByRelevanceFieldEnum], {
     nullable: false
   })
-  fields!: Array<"id" | "title" | "slug" | "intro" | "image" | "tags" | "readingTime" | "authorId">;
+  fields!: Array<"id" | "title" | "slug" | "intro" | "image" | "imageFilename" | "tags" | "readingTime" | "authorId">;
 
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: false

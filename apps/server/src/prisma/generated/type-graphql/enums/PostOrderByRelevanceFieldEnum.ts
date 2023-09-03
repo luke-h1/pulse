@@ -6,6 +6,7 @@ export enum PostOrderByRelevanceFieldEnum {
   slug = "slug",
   intro = "intro",
   image = "image",
+  imageFilename = "imageFilename",
   tags = "tags",
   readingTime = "readingTime",
   authorId = "authorId"

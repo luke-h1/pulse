@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { ContentBlockImageCreateNestedManyWithoutPostInput } from "../inputs/ContentBlockImageCreateNestedManyWithoutPostInput";
 import { PostCreatetagsInput } from "../inputs/PostCreatetagsInput";
 import { Status } from "../../enums/Status";
 
@@ -32,6 +33,11 @@ export class PostCreateWithoutAuthorInput {
   })
   image?: string | undefined;
 
+  @TypeGraphQL.Field(_type => String, {
+    nullable: true
+  })
+  imageFilename?: string | undefined;
+
   @TypeGraphQL.Field(_type => PostCreatetagsInput, {
     nullable: true
   })
@@ -45,7 +51,7 @@ export class PostCreateWithoutAuthorInput {
   @TypeGraphQL.Field(_type => Status, {
     nullable: true
   })
-  status?: "PUBLISHED" | "DRAFT" | undefined;
+  status?: "PUBLISHED" | "DRAFT" | "SCHEDULED" | undefined;
 
   @TypeGraphQL.Field(_type => String, {
     nullable: false
@@ -61,4 +67,9 @@ export class PostCreateWithoutAuthorInput {
     nullable: true
   })
   updatedAt?: Date | undefined;
+
+  @TypeGraphQL.Field(_type => ContentBlockImageCreateNestedManyWithoutPostInput, {
+    nullable: true
+  })
+  ContentBlockImage?: ContentBlockImageCreateNestedManyWithoutPostInput | undefined;
 }

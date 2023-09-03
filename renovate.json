@@ -22,28 +22,28 @@
       "groupName": "Minor backend dependencies",
       "matchUpdateTypes": ["minor", "patch"],
       "enabled": true,
-      "matchPackageNames": ["server"]
+      "matchPackagePatterns": ["server"]
     },
     {
       "matchDatasources": ["npm"],
       "groupName": "Major backend dependencies",
       "matchUpdateTypes": ["major"],
       "enabled": true,
-      "matchPackageNames": ["server"]
+      "matchPackagePatterns": ["server"]
     },
     {
       "matchDatasources": ["npm"],
       "groupName": "Minor frontend dependencies",
       "matchUpdateTypes": ["minor", "patch"],
       "enabled": true,
-      "matchPackageNames": ["admin", "common", "frontend", "graphql-hooks", "editor"]
+      "matchPackagePatterns": ["admin", "common", "frontend", "graphql-hooks", "editor"]
     },
     {
       "matchDatasources": ["npm"],
       "groupName": "Major frontend dependencies",
       "matchUpdateTypes": ["major"],
       "enabled": true,
-      "matchPackageNames": ["admin", "common", "frontend", "graphql-hooks", "editor"]
+      "matchPackagePatterns": ["admin", "common", "frontend", "graphql-hooks", "editor"]
     },
     {
       "matchDatasources": ["docker"],

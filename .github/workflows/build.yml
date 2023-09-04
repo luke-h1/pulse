@@ -71,18 +71,14 @@ jobs:
       - name: lint
         run: pnpm lint
 
+      - name: tsc
+        run: pnpm tsc
+
       - name: start server DB
         run: cd apps/server && docker-compose up -d && cd ../../
-
-      - name: migrate DB
-        run: pnpm --filter server db:migrate
-        env:
-          DATABASE_URL: "postgresql://pulse:pulse@localhost:5432/pulse?schema=public"
 
       - name: jest
         run: pnpm test
         env:
           DATABASE_URL: "postgresql://pulse:pulse@localhost:5432/pulse?schema=public"
 
-      - name: tsc
-        run: pnpm tsc

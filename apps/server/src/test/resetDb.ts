@@ -6,5 +6,6 @@ export default async function resetDb() {
   await db.post.deleteMany();
   await db.user.deleteMany();
   await db.project.deleteMany();
+  exec('pnpm db:migrate');
   // run a prisma migration via the CLI
 }

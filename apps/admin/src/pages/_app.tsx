@@ -4,9 +4,11 @@ import NProgress from 'nprogress';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import { useEffect } from 'react';
+import getConfig from 'next/config';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
-  const canonicalUrl = `${process.env.PUBLIC_URL}${router.asPath}`;
+  const { publicRuntimeConfig } = getConfig();
+  const canonicalUrl = `${publicRuntimeConfig.PUBLIC_URL}${router.asPath}`;
 
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();
@@ -36,7 +38,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
           site_name: 'pulse',
           images: [
             {
-              url: `${process.env.PUBLIC_URL}/icons/logo.png`,
+              url: `${publicRuntimeConfig.PUBLIC_URL}/icons/logo.png`,
               alt: 'logo for pulse',
               width: 1200,
               height: 630,

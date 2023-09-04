@@ -129,6 +129,7 @@ export class PostResolver {
     @Ctx() { req }: Context,
   ): Promise<PostResponse> {
     const post = await db.post.create({
+      // @ts-expect-error GraphQL type mismatch
       data: {
         ...options,
         authorId: req.session.userId,
@@ -171,6 +172,7 @@ export class PostResolver {
       where: {
         id,
       },
+      // @ts-expect-error GraphQL type mismatch
       data: {
         ...options,
         // readingTime: readingTime(options.content).text,

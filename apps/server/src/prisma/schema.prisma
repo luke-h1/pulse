@@ -11,7 +11,7 @@ generator client {
 generator typegraphql {
   provider                  = "typegraphql-prisma"
   output                    = "./generated/type-graphql"
-  omitOutputFieldsByDefault = ["password", "Bucket", "etag", "key"]
+  omitOutputFieldsByDefault = ["password"]
 }
 
 generator enums {

@@ -92,7 +92,7 @@
     "jest-mock-extended": "^3.0.5",
     "jest-resolve": "^29.6.2",
     "jest-serializer-html": "^7.1.0",
-    "nanoid": "3.3.6",
+    "nanoid": "4.0.2",
     "node-mocks-http": "^1.13.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.2",

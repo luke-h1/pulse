@@ -1,4 +1,4 @@
-import { AppProps } from 'next/app';
+import NextApp, { AppContext, AppProps } from 'next/app';
 import 'nprogress/nprogress.css';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
@@ -6,11 +6,13 @@ import useNProgress from '@frontend/hooks/useNProgress';
 import { ChakraProvider } from '@chakra-ui/react';
 import { CmdPalleteContextProvider } from '@frontend/context/CmdPalleteContext';
 import getConfig from 'next/config';
+import loadEnv from '@common/lib/loadEnv';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
   const { publicRuntimeConfig } = getConfig();
+  loadEnv();
 
-  const canonicalUrl = `${publicRuntimeConfig.PUBLIC_URL}${router.asPath}`;
+  const canonicalUrl = `${process.env.PUBLIC_URL}${router.asPath}`;
   useNProgress();
 
   return (
@@ -26,7 +28,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
           site_name: 'pulse',
           images: [
             {
-              url: `${publicRuntimeConfig.PUBLIC_URL}/icons/logo.png`,
+              url: `${process.env.PUBLIC_URL}/icons/logo.png`,
               alt: 'logo for pulse',
               width: 1200,
               height: 630,
@@ -49,3 +51,13 @@ const App = ({ Component, pageProps, router }: AppProps) => {
   );
 };
 export default App;
+
+App.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+
+  loadEnv();
+
+  return {
+    ...appProps,
+  };
+};

@@ -8,7 +8,7 @@ import getConfig from 'next/config';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
   const { publicRuntimeConfig } = getConfig();
-  const canonicalUrl = `${publicRuntimeConfig.PUBLIC_URL}${router.asPath}`;
+  const canonicalUrl = `${process.env.PUBLIC_URL}${router.asPath}`;
 
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();
@@ -38,7 +38,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
           site_name: 'pulse',
           images: [
             {
-              url: `${publicRuntimeConfig.PUBLIC_URL}/icons/logo.png`,
+              url: `${process.env.PUBLIC_URL}/icons/logo.png`,
               alt: 'logo for pulse',
               width: 1200,
               height: 630,

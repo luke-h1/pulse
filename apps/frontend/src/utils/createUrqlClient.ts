@@ -50,7 +50,7 @@ export const createUrqlClient = (
   }
 
   return {
-    url: publicRuntimeConfig.PUBLIC_PULSE_API_URL,
+    url: process.env.PUBLIC_PULSE_API_URL,
     fetchOptions: {
       credentials: 'include',
       headers: cookie ? { cookie } : undefined,

@@ -18,7 +18,7 @@ API:
   * upload images via cloudinary ✅
   * states for publishing - draft/published ✅
   * fix https://github.com/microsoft/TypeScript/issues/10866 ✅
-    * Build and start server project in a different way - no watch etc.
+    * Build and start server project in a different way - no watch etc. ✅
   * decide on testing strategy ✅
   * Migrate away from express-apollo to @apollo/server ✅
   * Image uploads - s3 maybe? - maybe with custom model ✅
@@ -29,7 +29,8 @@ API:
   * think if want to go oop style and split functionality of resolver out into its own service - would make unit testing easier
   * split unit tests up into individual describe blocks for a given resolver function
   * use ids instead of slugs ✅
-  * sort prisma mock
+  * sort prisma mock ✅
+  * sort logging for server
 
 FE:
   * Custom package for GQL type generation ✅

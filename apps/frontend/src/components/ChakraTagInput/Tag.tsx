@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import type { MouseEvent, SyntheticEvent } from 'react';
-
 import { Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 import type {
   TagProps,
@@ -11,7 +10,6 @@ import type {
 export type ChakraTagInputTagProps = TagProps & {
   children: string;
   onRemove?(event: SyntheticEvent): void;
-
   tagLabelProps?: TagLabelProps;
   tagCloseButtonProps?: TagCloseButtonProps;
 };
@@ -27,7 +25,9 @@ export default function ChakraTagInputTag({
   const handleClickTagCloseButton = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
       onTagCloseButtonClick?.(event);
-      if (event.isDefaultPrevented()) return;
+      if (event.isDefaultPrevented()) {
+        return;
+      }
 
       onRemove?.(event);
     },

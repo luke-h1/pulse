@@ -11,6 +11,7 @@ import {
   MeDocument,
   MeQuery,
 } from '@graphql-hooks/generated';
+import getConfig from 'next/config';
 import CustomUpdateQuery from './customUpdateQuery';
 
 const errorExchange: Exchange =
@@ -42,13 +43,14 @@ export const createUrqlClient = (
   ctx?: NextPageContext,
 ): ClientOptions => {
   let cookie: string | undefined = '';
+  const { publicRuntimeConfig } = getConfig();
 
   if (isServer) {
     cookie = ctx?.req?.headers?.cookie;
   }
 
   return {
-    url: process.env.NEXT_PUBLIC_PULSE_API_URL,
+    url: publicRuntimeConfig.PUBLIC_PULSE_API_URL,
     fetchOptions: {
       credentials: 'include',
       headers: cookie ? { cookie } : undefined,

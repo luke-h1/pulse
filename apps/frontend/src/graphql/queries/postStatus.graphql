@@ -1,0 +1,9 @@
+query PostStatus($postStatusId: String!) {
+  postStatus(id: $postStatusId) {
+    id
+    creator {
+      id
+    }
+    status
+  }
+}

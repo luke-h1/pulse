@@ -1,5 +1,6 @@
 import { Field, InputType } from 'type-graphql';
 import { GraphQLJSON } from 'graphql-scalars';
+import { Status } from '../../../prisma/generated/type-graphql';
 
 @InputType()
 export class PostCreateInput {
@@ -17,4 +18,7 @@ export class PostCreateInput {
 
   @Field(() => GraphQLJSON)
   content: typeof GraphQLJSON;
+
+  @Field(() => Status)
+  status: Status;
 }

@@ -8,6 +8,7 @@ const postPayload = {
     required_error: 'Intro is required',
   }),
   image: z.object({}).nullable(),
+  status: z.enum(['PUBLISHED', 'DRAFT', 'SCHEDULED'] as const),
   // tags: z.string({
   //   required_error: 'Tags is required',
   // }),

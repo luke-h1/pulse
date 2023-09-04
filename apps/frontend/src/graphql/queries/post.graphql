@@ -1,5 +1,5 @@
-query Post($id: String!) {
-  post(id: $id) {
+query Post($id: String!, $status: Status!) {
+  post(id: $id, status: $status) {
     ...PostFragment
     readingTime
   }

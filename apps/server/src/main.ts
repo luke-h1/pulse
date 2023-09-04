@@ -16,6 +16,7 @@ import buildCookieOptions from './utils/buildCookieOptions';
 import createSchema from './utils/createSchema';
 import logger from './utils/logger';
 import config from './utils/config';
+import createUserDataLoader from './dataloader/createUserLoader';
 
 const DEV_ORIGINS = [
   'http://localhost:3000',
@@ -75,7 +76,12 @@ const main = async () => {
       limit: '50mb',
     }),
     expressMiddleware(apolloServer, {
-      context: async ({ req, res }) => ({ req, res, redis }),
+      context: async ({ req, res }) => ({
+        req,
+        res,
+        redis,
+        userLoader: createUserDataLoader(),
+      }),
     }),
   );
 

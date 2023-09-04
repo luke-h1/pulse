@@ -1,13 +1,19 @@
 import { NextPage } from 'next';
-import { VStack, Heading, HStack, Text, Divider } from '@chakra-ui/react';
+import { VStack, Heading, HStack, Text } from '@chakra-ui/react';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
-import { usePostQuery } from '@graphql-hooks/generated';
+import {
+  Status,
+  usePostQuery,
+  usePostStatusQuery,
+} from '@graphql-hooks/generated';
 import FormattedDate from '@common/components/FormattedDate';
 import ScrollToTop from '@frontend/components/ScrollToTop';
 import { isServer, useMounted } from '@common/hooks';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import Page from '@frontend/components/Page';
+import useMe from '@frontend/hooks/useMe';
 
 const EditorOutput = dynamic(() => import('@editor/renderers/EditorOutput'), {
   ssr: false,
@@ -21,6 +27,7 @@ const PostSlugPage: NextPage = () => {
   const [{ data }] = usePostQuery({
     variables: {
       id: router.query.id as string,
+      status: Status.Published,
     },
     pause: isServer,
   });
@@ -29,8 +36,16 @@ const PostSlugPage: NextPage = () => {
     return null;
   }
 
+  if (data?.post?.status !== Status.Published) {
+    return (
+      <Page>
+        <Text>Post is not published yet</Text>
+      </Page>
+    );
+  }
+
   return (
-    <>
+    <Page>
       <VStack position="relative" alignItems="stretch" w="full" spacing={8}>
         <VStack alignItems="flex-start" spacing={3}>
           <Heading as="h1" size="lg">
@@ -60,10 +75,7 @@ const PostSlugPage: NextPage = () => {
             </Text>
           </HStack>
         </VStack>
-        {/* editorjs output here */}
         <EditorOutput content={data?.post?.content} />
-        {/* <EditorJsRender data={data?.post && data?.post.content} /> */}
-        <Divider />
         {/* needs BE functionality */}
         {/* {!fetching && (
           <HStack alignItems="center" justifyContent="center">
@@ -76,7 +88,7 @@ const PostSlugPage: NextPage = () => {
         )} */}
       </VStack>
       <ScrollToTop />
-    </>
+    </Page>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: false })(PostSlugPage);

@@ -3,10 +3,12 @@ import {
   Authorized,
   Ctx,
   Field,
+  FieldResolver,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
 } from 'type-graphql';
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
@@ -42,6 +44,11 @@ export class UserResolver {
         id: req.session.userId,
       },
     });
+  }
+
+  @FieldResolver(() => String)
+  fullName(@Root() user: User) {
+    return `${user.firstName} ${user.lastName}`;
   }
 
   @Query(() => User, { nullable: true })

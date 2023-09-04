@@ -28,7 +28,8 @@ API:
   * review how images are going to be embedded into content - potentially its own image mutation where things like the key/id isn't tracked or maybe a custom model for this i.e. ImageBlock or ContentBlockImage✅
   * think if want to go oop style and split functionality of resolver out into its own service - would make unit testing easier
   * split unit tests up into individual describe blocks for a given resolver function
-  * use ids instead of slugs
+  * use ids instead of slugs ✅
+  * sort prisma mock
 
 FE:
   * Custom package for GQL type generation ✅

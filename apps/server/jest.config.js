@@ -1,15 +1,25 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
+const path = require('path');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { defaults } = require('jest-config');
+
+/** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   preset: 'ts-jest',
   displayName: 'server',
-  testEnvironment: 'node',
   testMatch: ['**/**/*.test.ts'],
   verbose: true,
   forceExit: true,
-  clearMocks: true, // clear calls of a mock
-  resetMocks: true, // resets mocks between tests
-  restoreMocks: true, // reset modules back to their orgiinal state between tests
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true,
   setupFilesAfterEnv: ['<rootDir>/src/test/setupTests.js'],
+  testEnvironment: path.join(
+    __dirname,
+    'src',
+    'prisma',
+    'prisma-test-environment.mjs',
+  ),
+  moduleFileExtensions: [...defaults.moduleFileExtensions, 'mjs'],
   moduleNameMapper: {
     '^@graphql-hooks/(.*)$': '<rootDir>/../../../packages/graphql-hooks/src/$1',
   },

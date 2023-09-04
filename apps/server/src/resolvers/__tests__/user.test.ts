@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import bcrypt from 'bcrypt';
-import { Prisma } from '@prisma/client';
 import { UserRegisterInput } from '../user/inputs/UserRegisterInput';
 import { UserLoginInput } from '../user/inputs/UserLoginInput';
 import { db } from '../../db/prisma';

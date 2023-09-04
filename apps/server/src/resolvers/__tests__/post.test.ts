@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { db } from '../../db/prisma';
 import { PostResolver } from '../post/post';
 import resetDb from '../../test/resetDb';
-import { Status } from '../../prisma/generated/type-graphql';
+import { Status } from '../../prisma/enums';
 
 beforeEach(async () => {
   await resetDb();

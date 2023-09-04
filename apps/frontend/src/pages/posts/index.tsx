@@ -4,6 +4,7 @@ import {
   SearchPostsDocument,
   SearchPostsQuery,
   SearchPostsQueryVariables,
+  Status,
   usePostsQuery,
 } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
@@ -30,7 +31,11 @@ import useDebouncedCallback from '@common/hooks/useDebouncedCallback';
 import searchClient from '@frontend/utils/searchClient';
 
 const PostPage: NextPage = () => {
-  const [{ data }] = usePostsQuery();
+  const [{ data }] = usePostsQuery({
+    variables: {
+      status: Status.Published,
+    },
+  });
   const [selectedTag, setSelectedTag] = useState<string>();
   const [displayedPosts, setDisplayedPosts] = useState<PostsQuery | undefined>(
     data,

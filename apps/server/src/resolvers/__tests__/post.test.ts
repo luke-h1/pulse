@@ -201,7 +201,7 @@ describe('post', () => {
     expect(response.length).toEqual(1);
   });
 
-  test('post return post by ud', async () => {
+  test('post returns post by id', async () => {
     const resolver = new PostResolver();
 
     const user = await db.user.create({
@@ -234,19 +234,19 @@ describe('post', () => {
     const response = await resolver.post(post.id);
 
     expect(response).toEqual({
-      post: {
-        authorId: expect.any(String),
-        content: { test: 'test' },
-        createdAt: expect.any(Date),
-        id: expect.any(String),
-        image: null,
-        intro: 'test',
-        readingTime: '10m',
-        status: 'PUBLISHED',
-        tags: [],
-        title: 'test',
-        updatedAt: expect.any(Date),
+      authorId: expect.any(String),
+      content: {
+        test: 'test',
       },
+      createdAt: expect.any(Date),
+      id: expect.any(String),
+      image: null,
+      intro: 'test',
+      readingTime: '10m',
+      status: 'PUBLISHED',
+      tags: expect.any(Array),
+      title: 'test',
+      updatedAt: expect.any(Date),
     });
   });
 

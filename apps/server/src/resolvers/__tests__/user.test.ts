@@ -146,8 +146,8 @@ describe('user', () => {
     const user: UserRegisterInput = {
       firstName: 'test',
       lastName: 'test',
-      username: 'test12345',
-      email: '',
+      username: 'test123456',
+      email: 'testing123@test.com',
       password: 'blah',
     };
 

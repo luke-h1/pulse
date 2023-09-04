@@ -1,11 +1,14 @@
 fragment PostFragment on Post {
+  id
+  title
+  intro
+  content
+  tags
+  image
+  status
+  creator {
     id
-    title
-    intro
-    content
-    tags
-    image
-    status
-    createdAt
-    updatedAt
+  }
+  createdAt
+  updatedAt
 }

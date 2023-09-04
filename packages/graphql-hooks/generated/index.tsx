@@ -292,6 +292,7 @@ export type Post = {
   authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
+  creator: User;
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
@@ -306,6 +307,7 @@ export type PostCreateInput = {
   content: Scalars['JSON']['input'];
   image: Scalars['String']['input'];
   intro: Scalars['String']['input'];
+  status: Status;
   tags: Array<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
@@ -437,6 +439,7 @@ export type Query = {
   post?: Maybe<Post>;
   /** Returns all post slugs */
   postIds?: Maybe<IdsResponse>;
+  postStatus?: Maybe<Post>;
   /** Returns all posts */
   posts?: Maybe<Array<Post>>;
   project?: Maybe<Project>;
@@ -457,6 +460,15 @@ export type Query = {
 
 export type QueryPostArgs = {
   id: Scalars['String']['input'];
+  status: Status;
+};
+
+export type QueryPostStatusArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type QueryPostsArgs = {
+  status: Status;
 };
 
 export type QueryProjectArgs = {
@@ -540,6 +552,7 @@ export type User = {
   email?: Maybe<Scalars['String']['output']>;
   emailVerified?: Maybe<Scalars['DateTimeISO']['output']>;
   firstName: Scalars['String']['output'];
+  fullName: Scalars['String']['output'];
   github?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
@@ -636,6 +649,7 @@ export type PostFragmentFragment = {
   status: Status;
   createdAt: any;
   updatedAt: any;
+  creator: { __typename?: 'User'; id: string };
 };
 
 export type ProjectFragmentFragment = {
@@ -696,6 +710,7 @@ export type CreatePostMutation = {
       status: Status;
       createdAt: any;
       updatedAt: any;
+      creator: { __typename?: 'User'; id: string };
     } | null;
   };
 };
@@ -873,6 +888,7 @@ export type MeQuery = {
 
 export type PostQueryVariables = Exact<{
   id: Scalars['String']['input'];
+  status: Status;
 }>;
 
 export type PostQuery = {
@@ -889,6 +905,7 @@ export type PostQuery = {
     status: Status;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   } | null;
 };
 
@@ -899,7 +916,23 @@ export type PostIdsQuery = {
   postIds?: { __typename?: 'IdsResponse'; ids?: Array<string> | null } | null;
 };
 
-export type PostsQueryVariables = Exact<{ [key: string]: never }>;
+export type PostStatusQueryVariables = Exact<{
+  postStatusId: Scalars['String']['input'];
+}>;
+
+export type PostStatusQuery = {
+  __typename?: 'Query';
+  postStatus?: {
+    __typename?: 'Post';
+    id: string;
+    status: Status;
+    creator: { __typename?: 'User'; id: string };
+  } | null;
+};
+
+export type PostsQueryVariables = Exact<{
+  status: Status;
+}>;
 
 export type PostsQuery = {
   __typename?: 'Query';
@@ -914,6 +947,7 @@ export type PostsQuery = {
     status: Status;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   }> | null;
 };
 
@@ -988,6 +1022,7 @@ export type RecentPostsQuery = {
     status: Status;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   }> | null;
 };
 
@@ -1030,6 +1065,7 @@ export type SearchPostsQuery = {
     status: Status;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   }> | null;
 };
 
@@ -1089,6 +1125,9 @@ export const PostFragmentFragmentDoc = gql`
     tags
     image
     status
+    creator {
+      id
+    }
     createdAt
     updatedAt
   }
@@ -1297,8 +1336,8 @@ export function useMeQuery(
   });
 }
 export const PostDocument = gql`
-  query Post($id: String!) {
-    post(id: $id) {
+  query Post($id: String!, $status: Status!) {
+    post(id: $id, status: $status) {
       ...PostFragment
       readingTime
     }
@@ -1330,9 +1369,29 @@ export function usePostIdsQuery(
     ...options,
   });
 }
+export const PostStatusDocument = gql`
+  query PostStatus($postStatusId: String!) {
+    postStatus(id: $postStatusId) {
+      id
+      creator {
+        id
+      }
+      status
+    }
+  }
+`;
+
+export function usePostStatusQuery(
+  options: Omit<Urql.UseQueryArgs<PostStatusQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<PostStatusQuery, PostStatusQueryVariables>({
+    query: PostStatusDocument,
+    ...options,
+  });
+}
 export const PostsDocument = gql`
-  query Posts {
-    posts {
+  query Posts($status: Status!) {
+    posts(status: $status) {
       ...PostFragment
     }
   }
@@ -1340,7 +1399,7 @@ export const PostsDocument = gql`
 `;
 
 export function usePostsQuery(
-  options?: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'>,
+  options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'>,
 ) {
   return Urql.useQuery<PostsQuery, PostsQueryVariables>({
     query: PostsDocument,

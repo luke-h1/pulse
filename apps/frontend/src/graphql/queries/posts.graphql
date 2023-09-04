@@ -1,5 +1,5 @@
-query Posts {
-  posts {
+query Posts($status: Status!) {
+  posts(status: $status) {
     ...PostFragment
   }
 }

@@ -5,6 +5,8 @@ import {
   InputGroup,
   Stack,
   Image as ChakraImage,
+  Select,
+  Text,
 } from '@chakra-ui/react';
 import FormProvider from '@common/components/form/FormProvider';
 import Input from '@common/components/form/Input';
@@ -20,23 +22,33 @@ import {
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { SyntheticEvent, useCallback, useState } from 'react';
 import { Controller, UseFormSetError } from 'react-hook-form';
 import TextArea from '@common/components/form/TextArea';
 import dynamic from 'next/dynamic';
 import uploadImage from '@frontend/utils/cloudinary';
+import { useIsAuth } from '@frontend/hooks/useIsAuth';
+import ChakraTagInput from '@frontend/components/ChakraTagInput';
 
 const Editor = dynamic(() => import('@editor/index'), {
   ssr: false,
 });
 
 const CreatePostPage: NextPage = () => {
+  useIsAuth();
   const [, createPost] = useCreatePostMutation();
   const [, createSignature] = useCreateSignatureMutation();
   const router = useRouter();
-  const [tags] = useState<string[]>(['test', 'test2']);
   const [previewImage, setPreviewImage] = useState<string>('');
+  const [tags, setTags] = useState(['foo', 'bar']);
 
+  const handleTagsChange = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (event: SyntheticEvent, tags: string[]) => {
+      setTags(tags);
+    },
+    [],
+  );
   const onSubmit = async (
     data: postCreateInput,
     setError: UseFormSetError<postCreateInput>,
@@ -69,24 +81,6 @@ const CreatePostPage: NextPage = () => {
     }
   };
 
-  // eslint-disable-next-line consistent-return
-  const handleUploadImage = async (file: File) => {
-    const { data: signatureData } = await createSignature({});
-
-    if (signatureData) {
-      const { signature, timestamp } = signatureData.createImageSignature;
-
-      const imageData = await uploadImage(file, signature, timestamp);
-
-      return {
-        success: 1,
-        file: {
-          url: imageData?.secure_url,
-        },
-      };
-    }
-  };
-
   return (
     <Page>
       <FormProvider enableReinitialize validationSchema={postCreateSchema}>
@@ -113,6 +107,23 @@ const CreatePostPage: NextPage = () => {
               />
             </Stack>
             <TextArea name="intro" id="intro" placeholder="intro" size="sm" />
+            <Stack
+              padding={0}
+              width="100%"
+              spacing={5}
+              direction={{ base: 'column', lg: 'row' }}
+              mb={5}
+            >
+              {' '}
+              <Text mt={2} mb={2}>
+                Tags
+              </Text>
+              <ChakraTagInput
+                tags={tags}
+                onTagsChange={handleTagsChange}
+                wrapProps={{ direction: 'column', align: 'start' }}
+              />
+            </Stack>
             <InputGroup>
               <input
                 placeholder="image"
@@ -142,7 +153,8 @@ const CreatePostPage: NextPage = () => {
                   src={previewImage}
                   alt="preview"
                   width={650}
-                  height={400}
+                  height={300}
+                  mt={5}
                   mb={10}
                 />
               </Flex>
@@ -168,6 +180,17 @@ const CreatePostPage: NextPage = () => {
                 control={methods.control}
               />
             </Stack>
+            <Controller
+              name="status"
+              defaultValue="DRAFT"
+              render={({ field }) => (
+                <Select {...field}>
+                  <option value="DRAFT">DRAFT</option>
+                  <option value="SCHEDULED">SCHEDULED</option>
+                  <option value="PUBLISHED">PUBLISHED</option>
+                </Select>
+              )}
+            />
             <Button type="submit">submit</Button>
           </RHFForm>
         )}

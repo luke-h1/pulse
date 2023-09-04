@@ -3,14 +3,20 @@ import {
   Authorized,
   Ctx,
   Field,
+  FieldResolver,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
 } from 'type-graphql';
-import slugify from 'slugify';
 import { FieldError } from '../../utils/FieldError';
-import { Post } from '../../prisma/generated/type-graphql';
+import {
+  JsonNullValueInput,
+  Post,
+  Status,
+  User,
+} from '../../prisma/generated/type-graphql';
 import { db } from '../../db/prisma';
 import isAuth from '../../middleware/isAuth';
 import { PostCreateInput } from './inputs/postCreateInput';
@@ -41,6 +47,11 @@ export class IdsResponse {
 
 @Resolver(Post)
 export class PostResolver {
+  @FieldResolver(() => User)
+  creator(@Root() post: Post, @Ctx() { userLoader }: Context) {
+    return userLoader.load(parseInt(post.authorId, 10));
+  }
+
   @Query(() => CountResponse, {
     description: 'Returns the total number of posts',
     nullable: true,
@@ -54,16 +65,28 @@ export class PostResolver {
     return { count };
   }
 
+  @Query(() => Post, { nullable: true })
+  async postStatus(@Arg('id', () => String) id: string) {
+    return db.post.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        status: true,
+      },
+    });
+  }
+
   @Query(() => [Post], {
     description: 'Returns all posts',
     nullable: true,
   })
-  async posts(): Promise<Post[]> {
+  async posts(@Arg('status', () => Status) status: Status): Promise<Post[]> {
     // will need to add pagination args in the future here
     return db.post.findMany({
       take: 50,
       where: {
-        status: 'PUBLISHED',
+        status,
       },
     });
   }
@@ -113,11 +136,14 @@ export class PostResolver {
   }
 
   @Query(() => Post, { nullable: true })
-  async post(@Arg('id', () => String) id: string): Promise<Post | null> {
+  async post(
+    @Arg('id', () => String) id: string,
+    @Arg('status', () => Status) status: Status,
+  ): Promise<Post | null> {
     return db.post.findUnique({
       where: {
         id,
-        status: 'PUBLISHED',
+        status,
       },
     });
   }
@@ -129,9 +155,9 @@ export class PostResolver {
     @Ctx() { req }: Context,
   ): Promise<PostResponse> {
     const post = await db.post.create({
-      // @ts-expect-error GraphQL type mismatch
       data: {
         ...options,
+        content: options.content as unknown as JsonNullValueInput,
         authorId: req.session.userId,
         readingTime: '10m',
         image: options.image,
@@ -172,9 +198,9 @@ export class PostResolver {
       where: {
         id,
       },
-      // @ts-expect-error GraphQL type mismatch
       data: {
         ...options,
+        content: options.content as unknown as JsonNullValueInput,
         // readingTime: readingTime(options.content).text,
         image: post.image,
       },
@@ -210,8 +236,7 @@ export class PostResolver {
     return true;
   }
 
-  // Temporary mutation for testing
-  // FIXME: add auth middleware for admin only
+  @Authorized(isAdmin)
   @Mutation(() => Boolean)
   async publishAllPosts(): Promise<boolean> {
     await db.post.updateMany({
@@ -244,7 +269,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Boolean)
-  // @Authorized(isAdmin)
+  @Authorized(isAdmin)
   async deleteAllPosts(): Promise<boolean> {
     await db.post.deleteMany();
     return true;
@@ -255,12 +280,15 @@ export class PostResolver {
   async deletePostAsAdmin(
     @Arg('id', () => String) id: string,
   ): Promise<boolean> {
-    await db.post.delete({
-      where: {
-        id,
-      },
-    });
-
-    return true;
+    try {
+      await db.post.delete({
+        where: {
+          id,
+        },
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

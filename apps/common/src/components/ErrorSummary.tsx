@@ -28,7 +28,7 @@ const ErrorSummary = ({ errors, onFocus, focusOnError = false }: Props) => {
     <Stack spacing={3}>
       {errors &&
         errors.map(error => (
-          <Alert status="error" key={error.id}>
+          <Alert status="error" key={error.id} rounded="lg" py={4}>
             <AlertIcon />
             {error.message}
           </Alert>

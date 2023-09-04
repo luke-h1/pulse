@@ -204,6 +204,7 @@ type Post {
   authorId: String!
   content: JSON!
   createdAt: DateTimeISO!
+  creator: User!
   id: String!
   image: String
   intro: String!
@@ -218,6 +219,7 @@ input PostCreateInput {
   content: JSON!
   image: String!
   intro: String!
+  status: Status!
   tags: [String!]!
   title: String!
 }
@@ -342,13 +344,14 @@ type Query {
   countProjects: CountResponse!
   health: String!
   me: User
-  post(id: String!): Post
+  post(id: String!, status: Status!): Post
 
   """Returns all post slugs"""
   postIds: IdsResponse
+  postStatus(id: String!): Post
 
   """Returns all posts"""
-  posts: [Post!]
+  posts(status: Status!): [Post!]
   project(id: String!): Project
 
   """Returns all project slugs"""
@@ -435,6 +438,7 @@ type User {
   email: String
   emailVerified: DateTimeISO
   firstName: String!
+  fullName: String!
   github: String
   id: String!
   image: String

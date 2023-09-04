@@ -1,8 +1,9 @@
 import 'reflect-metadata';
+import { Status } from '@prisma/client';
 import { db } from '../../db/prisma';
 import { PostResolver } from '../post/post';
 import resetDb from '../../test/resetDb';
-import { Status } from '../../prisma/enums';
+import { Status as TypeGraphQLStatus } from '../../prisma/generated/type-graphql';
 
 beforeEach(async () => {
   await resetDb();
@@ -114,7 +115,7 @@ describe('post', () => {
       data: testPost,
     });
 
-    const response = await resolver.posts();
+    const response = await resolver.posts(TypeGraphQLStatus.PUBLISHED);
 
     expect(response).toEqual([
       {
@@ -231,7 +232,7 @@ describe('post', () => {
       data: testPost,
     });
 
-    const response = await resolver.post(post.id);
+    const response = await resolver.post(post.id, TypeGraphQLStatus.PUBLISHED);
 
     expect(response).toEqual({
       authorId: expect.any(String),

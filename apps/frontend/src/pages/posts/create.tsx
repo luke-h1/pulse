@@ -40,11 +40,11 @@ const CreatePostPage: NextPage = () => {
   const [, createSignature] = useCreateSignatureMutation();
   const router = useRouter();
   const [previewImage, setPreviewImage] = useState<string>('');
-  const [tags, setTags] = useState(['foo', 'bar']);
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleTagsChange = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    (event: SyntheticEvent, tags: string[]) => {
+    (_event: SyntheticEvent, tags: string[]) => {
       setTags(tags);
     },
     [],
@@ -76,7 +76,7 @@ const CreatePostPage: NextPage = () => {
 
       const errors = toErrorMap(setError, res.data?.createPost?.errors);
       if (!errors && res.data?.createPost.post) {
-        router.push(`/posts/${res.data.createPost.post.id}`);
+        router.push(`/posts/${res.data.createPost.post.id}/preview`);
       }
     }
   };

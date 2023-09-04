@@ -6,8 +6,8 @@ const loginPayload = {
     .string({
       required_error: 'Password is required',
     })
-    .min(8, {
-      message: 'Password must be at least 8 characters',
+    .min(4, {
+      message: 'Password must be at least 4 characters',
     }),
 };
 

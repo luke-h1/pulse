@@ -5,9 +5,12 @@ import { DefaultSeo } from 'next-seo';
 import useNProgress from '@frontend/hooks/useNProgress';
 import { ChakraProvider } from '@chakra-ui/react';
 import { CmdPalleteContextProvider } from '@frontend/context/CmdPalleteContext';
+import getConfig from 'next/config';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_URL}${router.asPath}`;
+  const { publicRuntimeConfig } = getConfig();
+
+  const canonicalUrl = `${publicRuntimeConfig.PUBLIC_URL}${router.asPath}`;
   useNProgress();
 
   return (
@@ -23,7 +26,7 @@ const App = ({ Component, pageProps, router }: AppProps) => {
           site_name: 'pulse',
           images: [
             {
-              url: `${process.env.NEXT_PUBLIC_URL}/icons/logo.png`,
+              url: `${publicRuntimeConfig.PUBLIC_URL}/icons/logo.png`,
               alt: 'logo for pulse',
               width: 1200,
               height: 630,

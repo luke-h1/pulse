@@ -1,0 +1,6 @@
+{
+  "watch": ["src/**/*"],
+  "execMap": {
+      "ts": "ts-node --transpile-only --project tsconfig.server.json -r tsconfig-paths/register"
+  }
+}

@@ -556,7 +556,7 @@ importers:
   apps/server:
     dependencies:
       '@apollo/server':
-        specifier: ^4.9.3
+        specifier: ^4.0.0
         version: 4.9.3(graphql@16.7.1)
       '@escape.tech/graphql-armor':
         specifier: ^2.2.0
@@ -579,9 +579,6 @@ importers:
       apollo-server-express:
         specifier: ^3.12.0
         version: 3.12.0(express@4.18.2)(graphql@16.7.1)
-      apollo-server-plugin-base:
-        specifier: ^3.7.2
-        version: 3.7.2(graphql@16.7.1)
       aws-sdk:
         specifier: ^2.991.0
         version: 2.1440.0
@@ -5796,7 +5793,7 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
-      '@graphql-tools/utils': 10.0.3(graphql@16.6.0)
+      '@graphql-tools/utils': 10.0.4(graphql@16.6.0)
       graphql: 16.6.0
       tslib: 2.6.1
     dev: true
@@ -5807,7 +5804,7 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
-      '@graphql-tools/utils': 10.0.3(graphql@16.7.1)
+      '@graphql-tools/utils': 10.0.4(graphql@16.7.1)
       graphql: 16.7.1
       tslib: 2.6.1
     dev: false
@@ -6006,18 +6003,6 @@ packages:
       graphql: 16.6.0
       tslib: 2.6.1
     dev: true
-
-  /@graphql-tools/utils@10.0.3(graphql@16.7.1):
-    resolution: {integrity: sha512-6uO41urAEIs4sXQT2+CYGsUTkHkVo/2MpM/QjoHj6D6xoEF2woXHBpdAVi0HKIInDwZqWgEYOwIFez0pERxa1Q==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-    dependencies:
-      '@graphql-typed-document-node/core': 3.2.0(graphql@16.7.1)
-      dset: 3.1.2
-      graphql: 16.7.1
-      tslib: 2.6.1
-    dev: false
 
   /@graphql-tools/utils@10.0.4(graphql@16.6.0):
     resolution: {integrity: sha512-MF+nZgGROSnFgyOYWhrl2PuJMlIBvaCH48vtnlnDQKSeDc2fUfOzUVloBAQvnYmK9JBmHHks4Pxv25Ybg3r45Q==}

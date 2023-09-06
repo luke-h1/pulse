@@ -592,8 +592,8 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0
       chalk:
-        specifier: '4'
-        version: 4.1.2
+        specifier: '5'
+        version: 5.3.0
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -9624,7 +9624,6 @@ packages:
   /chalk@5.3.0:
     resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
-    dev: true
 
   /change-case-all@1.0.14:
     resolution: {integrity: sha512-CWVm2uT7dmSHdO/z1CXT/n47mWonyypzBbuCy5tN7uMg22BsfkhwT6oHmFCAk+gL1LOOxhdbB9SZz3J1KTY3gA==}

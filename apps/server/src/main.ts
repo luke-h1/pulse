@@ -24,7 +24,7 @@ const DEV_ORIGINS = [
   'https://studio.apollographql.com',
 ];
 
-const PROD_ORIGINS = [''];
+const PROD_ORIGINS = ['']; // TODO: Add production origins once Infra is setup
 
 const main = async () => {
   const app = express();
@@ -61,6 +61,7 @@ const main = async () => {
     ],
     schema: await createSchema(),
     csrfPrevention: process.env.NODE_ENV === 'production',
+    status400ForVariableCoercionErrors: true,
   });
 
   await apolloServer.start();

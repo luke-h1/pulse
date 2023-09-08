@@ -2,18 +2,13 @@ import { NextPage } from 'next';
 import { VStack, Heading, HStack, Text } from '@chakra-ui/react';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
-import {
-  Status,
-  usePostQuery,
-  usePostStatusQuery,
-} from '@graphql-hooks/generated';
+import { Status, usePostQuery } from '@graphql-hooks/generated';
 import FormattedDate from '@common/components/FormattedDate';
 import ScrollToTop from '@frontend/components/ScrollToTop';
 import { isServer, useMounted } from '@common/hooks';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Page from '@frontend/components/Page';
-import useMe from '@frontend/hooks/useMe';
 
 const EditorOutput = dynamic(() => import('@editor/renderers/EditorOutput'), {
   ssr: false,
@@ -44,6 +39,10 @@ const PostSlugPage: NextPage = () => {
     );
   }
 
+  if (!data.post) {
+    router.push('/404');
+  }
+
   return (
     <Page>
       <VStack position="relative" alignItems="stretch" w="full" spacing={8}>
@@ -61,34 +60,15 @@ const PostSlugPage: NextPage = () => {
             <Text color="gray.500" fontSize="sm">
               <FormattedDate>{data?.post?.createdAt}</FormattedDate>
             </Text>
-            {/* needs BE functionality */}
-            {/* <HStack>
-              {!views && <Spinner color='gray.500' size='xs' />}
-              {views && (
-                <Text color='gray.500' fontSize='sm'>
-                  {views} views
-                </Text>
-              )}
-            </HStack> */}
             <Text color="gray.500" fontSize="sm">
               {data?.post?.readingTime}
             </Text>
           </HStack>
         </VStack>
         <EditorOutput content={data?.post?.content} />
-        {/* needs BE functionality */}
-        {/* {!fetching && (
-          <HStack alignItems="center" justifyContent="center">
-            <LikeButton
-              onLike={incrementLikes}
-              likes={likes}
-              userLikes={userLikes}
-            />
-          </HStack>
-        )} */}
       </VStack>
       <ScrollToTop />
     </Page>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: false })(PostSlugPage);
+export default withUrqlClient(createUrqlClient, { ssr: true })(PostSlugPage);

@@ -17,8 +17,8 @@ import logger from '../utils/logger';
  * 
  * SELECT * FROM users WHERE id IN (1, 2, 3); # 90ms :)
  */
-const createUserDataLoader = (): DataLoader<number, User> =>
-  new DataLoader<number, User>(async userIds => {
+const createUserDataLoader = (): DataLoader<number, User> => {
+  return new DataLoader<number, User>(async userIds => {
     const users = await db.user.findMany();
 
     const userIdToUser: Record<number, User> = {};
@@ -31,5 +31,6 @@ const createUserDataLoader = (): DataLoader<number, User> =>
 
     return userIds.map(userId => userIdToUser[userId]);
   });
+};
 
 export default createUserDataLoader;

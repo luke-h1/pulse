@@ -5,11 +5,9 @@ import { DefaultSeo } from 'next-seo';
 import useNProgress from '@frontend/hooks/useNProgress';
 import { ChakraProvider } from '@chakra-ui/react';
 import { CmdPalleteContextProvider } from '@frontend/context/CmdPalleteContext';
-import getConfig from 'next/config';
 import loadEnv from '@common/lib/loadEnv';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
-  const { publicRuntimeConfig } = getConfig();
   loadEnv();
 
   const canonicalUrl = `${process.env.PUBLIC_URL}${router.asPath}`;

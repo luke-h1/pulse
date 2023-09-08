@@ -7,7 +7,7 @@ import getConfig from 'next/config';
  * we need to add the environment variables to the publicRuntimeConfig
  * in next.config.js
  * and then assign them to the process.env here so we don't have to do
- *  `const { MY_ENV_VAR } = publicRuntimeConfig`
+ *  `const { MY_ENV_VAR } = publicRuntimeConfig` everywhere
  * this also means we have to opt out of static optimization
  * because we have to load them in getInitialProps in _app.tsx
  */

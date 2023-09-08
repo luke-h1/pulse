@@ -12,7 +12,7 @@ import {
 } from 'type-graphql';
 import bcrypt from 'bcrypt';
 import { GraphQLError } from 'graphql';
-import { FieldError } from '../../utils/FieldError';
+import { FieldError } from '../../fields/FieldError';
 import { AccountStatus, Role, User } from '../../prisma/generated/type-graphql';
 import { Context } from '../../types/Context';
 import isAuth from '../../middleware/isAuth';

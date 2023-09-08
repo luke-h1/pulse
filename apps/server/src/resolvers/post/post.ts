@@ -4,13 +4,14 @@ import {
   Ctx,
   Field,
   FieldResolver,
+  Int,
   Mutation,
   ObjectType,
   Query,
   Resolver,
   Root,
 } from 'type-graphql';
-import { FieldError } from '../../utils/FieldError';
+import { FieldError } from '../../fields/FieldError';
 import {
   JsonNullValueInput,
   Post,
@@ -65,6 +66,7 @@ export class PostResolver {
     return { count };
   }
 
+  @Authorized(isAuth)
   @Query(() => Post, { nullable: true })
   async postStatus(@Arg('id', () => String) id: string) {
     return db.post.findUnique({
@@ -75,6 +77,71 @@ export class PostResolver {
         status: true,
       },
     });
+  }
+
+  @Mutation(() => Boolean)
+  @Authorized(isAuth)
+  async vote(
+    @Arg('postId', () => Int) postId: number,
+    @Arg('value', () => Int) value: number,
+    @Ctx() { req }: Context,
+  ) {
+    const isUpvote = value !== -1;
+    const realValue = isUpvote ? 1 : -1;
+    const { userId } = req.session;
+
+    const upvote = await db.upvote.findFirst({
+      where: {
+        postId: postId.toString(),
+        userId,
+      },
+      include: {
+        post: true,
+      },
+    });
+
+    // the user has voted on the post before
+    // and they are changing their vote now (upvote to downvote or vice versa)
+
+    if (upvote && upvote.value !== realValue) {
+      await db.$transaction([
+        db.upvote.update({
+          where: {
+            id: upvote.id,
+          },
+          data: {
+            value: realValue,
+          },
+        }),
+        db.post.update({
+          where: {
+            id: upvote.postId,
+          },
+          data: {
+            likes: upvote.post.likes + 2 * realValue,
+          },
+        }),
+      ]);
+    } else if (!upvote) {
+      // user has not voted on the post before
+      await db.$transaction([
+        db.upvote.create({
+          data: {
+            userId,
+            postId: postId.toString(),
+            value: realValue,
+          },
+        }),
+        db.post.update({
+          where: {
+            id: postId.toString(),
+          },
+          data: {
+            likes: realValue,
+          },
+        }),
+      ]);
+    }
   }
 
   @Query(() => [Post], {
@@ -236,7 +303,7 @@ export class PostResolver {
     return true;
   }
 
-  @Authorized(isAdmin)
+  // @Authorized(isAdmin)
   @Mutation(() => Boolean)
   async publishAllPosts(): Promise<boolean> {
     await db.post.updateMany({

@@ -17,7 +17,7 @@ import { createDescendantContext } from '@chakra-ui/descendant';
 import { CgArrowRight } from 'react-icons/cg';
 import { useKeyPressEvent } from 'react-use';
 import { useCmdPalleteContext } from '@frontend/context/CmdPalleteContext';
-import useMe from '@frontend/hooks/useMe';
+import useMe from '@common/hooks/useMe';
 import { useLogoutMutation } from '@graphql-hooks/generated';
 import CommandItem from './CommandItem';
 

@@ -25,9 +25,10 @@
       "@frontend/*": ["./src/*"],
       "@common/*": ["../common/src/*"],
       "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
-      "@editor/*": ["../../packages/editor/src/*"]
+      "@editor/*": ["../../packages/editor/src/*"],
+      "@ui/*": ["../../packages/ui/src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../common/src/hooks/useIsAuth.ts"],
   "exclude": ["node_modules"]
 }

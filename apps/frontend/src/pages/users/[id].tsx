@@ -1,5 +1,5 @@
 import { useIsAuth } from '@frontend/hooks/useIsAuth';
-import useMe from '@frontend/hooks/useMe';
+import useMe from '@common/hooks/useMe';
 import { NextPage } from 'next';
 
 const UserPage: NextPage = () => {

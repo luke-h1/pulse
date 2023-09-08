@@ -5,11 +5,10 @@ import {
   Link,
   Tooltip,
   Container,
-  chakra,
 } from '@chakra-ui/react';
 import { useCmdPalleteContext } from '@frontend/context/CmdPalleteContext';
 import NextLink from 'next/link';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiCommand } from 'react-icons/fi';
 import { BiPulse } from 'react-icons/bi';
 

@@ -4,7 +4,7 @@ import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { Status, usePostQuery } from '@graphql-hooks/generated';
 import FormattedDate from '@common/components/FormattedDate';
-import ScrollToTop from '@frontend/components/ScrollToTop';
+import { ScrollToTop } from '@ui/index';
 import { isServer, useMounted } from '@common/hooks';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';

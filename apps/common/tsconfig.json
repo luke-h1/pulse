@@ -3,15 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@common/*": ["./src/*"]
+      "@common/*": ["./src/*"],
+      "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
     }
   },
-  "include": [
-    "src",
-    "test"
-  ],
-  "exclude": [
-    "build",
-    "node_modules"
-  ]
+  "include": ["src", "test", "../frontend/src/hooks/useIsAuth.ts"],
+  "exclude": ["build", "node_modules"]
 }

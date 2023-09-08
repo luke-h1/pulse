@@ -1,6 +1,6 @@
 import { VStack, Heading, HStack, Divider, Text } from '@chakra-ui/react';
 import FormattedDate from '@common/components/FormattedDate';
-import ScrollToTop from '@frontend/components/ScrollToTop';
+import { ScrollToTop } from '@ui/index';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { useProjectQuery } from '@graphql-hooks/generated';
 import { NextPage } from 'next';

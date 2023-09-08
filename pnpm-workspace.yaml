@@ -5,3 +5,4 @@ packages:
   - 'apps/frontend'
   - 'packages/graphql-hooks'
   - 'packages/editor'
+  - 'packages/ui'

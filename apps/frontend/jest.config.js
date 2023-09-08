@@ -38,6 +38,7 @@ const config = {
     '^@common/(.*)$': '<rootDir>/../common/src/$1',
     '^@common-test/(.*)$': '<rootDir>/../common/test/$1',
     '^@editor/(.*)$': '<rootDir>/../../../packages/editor/src/$1',
+    '^@ui/(.*)$': '<rootDir>/../../../packages/ui/src/$1',
   },
   moduleFileExtensions: [
     'web.js',

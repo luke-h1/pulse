@@ -2,7 +2,7 @@ import NextApp, { AppContext, AppProps } from 'next/app';
 import 'nprogress/nprogress.css';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
-import useNProgress from '@frontend/hooks/useNProgress';
+import useNProgress from '@common/hooks/useNProgress';
 import { ChakraProvider } from '@chakra-ui/react';
 import { CmdPalleteContextProvider } from '@frontend/context/CmdPalleteContext';
 import loadEnv from '@common/lib/loadEnv';

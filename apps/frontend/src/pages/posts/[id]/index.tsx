@@ -22,7 +22,6 @@ const PostSlugPage: NextPage = () => {
   const [{ data }] = usePostQuery({
     variables: {
       id: router.query.id as string,
-      status: Status.Published,
     },
     pause: isServer,
   });

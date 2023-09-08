@@ -1,0 +1,12 @@
+mutation UpdatePost($options: PostUpdateInput!, $id: String!) {
+  updatePost(options: $options, id: $id) {
+    errors {
+      code
+      field
+      message
+    }
+    post {
+      ...PostFragment
+    }
+  }
+}

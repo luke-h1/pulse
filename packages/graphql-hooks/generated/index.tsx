@@ -110,28 +110,6 @@ export type ImageSignature = {
   timestamp: Scalars['Int']['output'];
 };
 
-export type IntFilter = {
-  equals?: InputMaybe<Scalars['Int']['input']>;
-  gt?: InputMaybe<Scalars['Int']['input']>;
-  gte?: InputMaybe<Scalars['Int']['input']>;
-  in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  lt?: InputMaybe<Scalars['Int']['input']>;
-  lte?: InputMaybe<Scalars['Int']['input']>;
-  not?: InputMaybe<NestedIntFilter>;
-  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
-};
-
-export type IntNullableFilter = {
-  equals?: InputMaybe<Scalars['Int']['input']>;
-  gt?: InputMaybe<Scalars['Int']['input']>;
-  gte?: InputMaybe<Scalars['Int']['input']>;
-  in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  lt?: InputMaybe<Scalars['Int']['input']>;
-  lte?: InputMaybe<Scalars['Int']['input']>;
-  not?: InputMaybe<NestedIntNullableFilter>;
-  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
-};
-
 export type JsonFilter = {
   array_contains?: InputMaybe<Scalars['JSON']['input']>;
   array_ends_with?: InputMaybe<Scalars['JSON']['input']>;
@@ -174,7 +152,6 @@ export type Mutation = {
   updateUserStatus: UserResponse;
   /** Returns all user ids */
   userSlugs?: Maybe<IdsResponse>;
-  vote: Scalars['Boolean']['output'];
 };
 
 export type MutationCreatePostArgs = {
@@ -237,11 +214,6 @@ export type MutationUpdateUserStatusArgs = {
   status: AccountStatus;
 };
 
-export type MutationVoteArgs = {
-  postId: Scalars['Int']['input'];
-  value: Scalars['Int']['input'];
-};
-
 export type NestedDateTimeFilter = {
   equals?: InputMaybe<Scalars['DateTimeISO']['input']>;
   gt?: InputMaybe<Scalars['DateTimeISO']['input']>;
@@ -285,28 +257,6 @@ export type NestedEnumStatusFilter = {
   notIn?: InputMaybe<Array<Status>>;
 };
 
-export type NestedIntFilter = {
-  equals?: InputMaybe<Scalars['Int']['input']>;
-  gt?: InputMaybe<Scalars['Int']['input']>;
-  gte?: InputMaybe<Scalars['Int']['input']>;
-  in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  lt?: InputMaybe<Scalars['Int']['input']>;
-  lte?: InputMaybe<Scalars['Int']['input']>;
-  not?: InputMaybe<NestedIntFilter>;
-  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
-};
-
-export type NestedIntNullableFilter = {
-  equals?: InputMaybe<Scalars['Int']['input']>;
-  gt?: InputMaybe<Scalars['Int']['input']>;
-  gte?: InputMaybe<Scalars['Int']['input']>;
-  in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  lt?: InputMaybe<Scalars['Int']['input']>;
-  lte?: InputMaybe<Scalars['Int']['input']>;
-  not?: InputMaybe<NestedIntNullableFilter>;
-  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
-};
-
 export type NestedStringFilter = {
   contains?: InputMaybe<Scalars['String']['input']>;
   endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -339,7 +289,6 @@ export type NestedStringNullableFilter = {
 
 export type Post = {
   __typename?: 'Post';
-  _count?: Maybe<PostCount>;
   authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
@@ -347,23 +296,11 @@ export type Post = {
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
-  likes: Scalars['Int']['output'];
-  postVoteStatus?: Maybe<Scalars['Int']['output']>;
   readingTime: Scalars['String']['output'];
   status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updatedAt: Scalars['DateTimeISO']['output'];
-  voteStatus?: Maybe<Scalars['Int']['output']>;
-};
-
-export type PostCount = {
-  __typename?: 'PostCount';
-  Upvote: Scalars['Int']['output'];
-};
-
-export type PostCountUpvoteArgs = {
-  where?: InputMaybe<UpvoteWhereInput>;
 };
 
 export type PostCreateInput = {
@@ -379,11 +316,6 @@ export type PostListRelationFilter = {
   every?: InputMaybe<PostWhereInput>;
   none?: InputMaybe<PostWhereInput>;
   some?: InputMaybe<PostWhereInput>;
-};
-
-export type PostRelationFilter = {
-  is?: InputMaybe<PostWhereInput>;
-  isNot?: InputMaybe<PostWhereInput>;
 };
 
 export type PostResponse = {
@@ -405,7 +337,6 @@ export type PostWhereInput = {
   AND?: InputMaybe<Array<PostWhereInput>>;
   NOT?: InputMaybe<Array<PostWhereInput>>;
   OR?: InputMaybe<Array<PostWhereInput>>;
-  Upvote?: InputMaybe<UpvoteListRelationFilter>;
   author?: InputMaybe<UserRelationFilter>;
   authorId?: InputMaybe<StringFilter>;
   content?: InputMaybe<JsonFilter>;
@@ -413,13 +344,11 @@ export type PostWhereInput = {
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringNullableFilter>;
   intro?: InputMaybe<StringFilter>;
-  likes?: InputMaybe<IntFilter>;
   readingTime?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
   title?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
-  voteStatus?: InputMaybe<IntNullableFilter>;
 };
 
 export type Project = {
@@ -531,7 +460,6 @@ export type Query = {
 
 export type QueryPostArgs = {
   id: Scalars['String']['input'];
-  status: Status;
 };
 
 export type QueryPostStatusArgs = {
@@ -614,26 +542,6 @@ export type StringNullableListFilter = {
   isEmpty?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type UpvoteListRelationFilter = {
-  every?: InputMaybe<UpvoteWhereInput>;
-  none?: InputMaybe<UpvoteWhereInput>;
-  some?: InputMaybe<UpvoteWhereInput>;
-};
-
-export type UpvoteWhereInput = {
-  AND?: InputMaybe<Array<UpvoteWhereInput>>;
-  NOT?: InputMaybe<Array<UpvoteWhereInput>>;
-  OR?: InputMaybe<Array<UpvoteWhereInput>>;
-  createdAt?: InputMaybe<DateTimeFilter>;
-  id?: InputMaybe<StringFilter>;
-  post?: InputMaybe<PostRelationFilter>;
-  postId?: InputMaybe<StringFilter>;
-  updatedAt?: InputMaybe<DateTimeFilter>;
-  user?: InputMaybe<UserRelationFilter>;
-  userId?: InputMaybe<StringFilter>;
-  value?: InputMaybe<IntFilter>;
-};
-
 export type User = {
   __typename?: 'User';
   _count?: Maybe<UserCount>;
@@ -659,13 +567,8 @@ export type User = {
 
 export type UserCount = {
   __typename?: 'UserCount';
-  Upvote: Scalars['Int']['output'];
   posts: Scalars['Int']['output'];
   projects: Scalars['Int']['output'];
-};
-
-export type UserCountUpvoteArgs = {
-  where?: InputMaybe<UpvoteWhereInput>;
 };
 
 export type UserCountPostsArgs = {
@@ -712,7 +615,6 @@ export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
-  Upvote?: InputMaybe<UpvoteListRelationFilter>;
   accountStatus?: InputMaybe<EnumAccountStatusFilter>;
   bio?: InputMaybe<StringNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
@@ -744,7 +646,6 @@ export type PostFragmentFragment = {
   tags: Array<string>;
   image?: string | null;
   status: Status;
-  likes: number;
   createdAt: any;
   updatedAt: any;
   creator: { __typename?: 'User'; id: string };
@@ -806,7 +707,6 @@ export type CreatePostMutation = {
       tags: Array<string>;
       image?: string | null;
       status: Status;
-      likes: number;
       createdAt: any;
       updatedAt: any;
       creator: { __typename?: 'User'; id: string };
@@ -930,6 +830,37 @@ export type RegisterMutation = {
   };
 };
 
+export type UpdatePostMutationVariables = Exact<{
+  options: PostUpdateInput;
+  id: Scalars['String']['input'];
+}>;
+
+export type UpdatePostMutation = {
+  __typename?: 'Mutation';
+  updatePost: {
+    __typename?: 'PostResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      code?: string | null;
+      field: string;
+      message: string;
+    }> | null;
+    post?: {
+      __typename?: 'Post';
+      id: string;
+      title: string;
+      intro: string;
+      content: any;
+      tags: Array<string>;
+      image?: string | null;
+      status: Status;
+      createdAt: any;
+      updatedAt: any;
+      creator: { __typename?: 'User'; id: string };
+    } | null;
+  };
+};
+
 export type UpdateProjectMutationVariables = Exact<{
   options: ProjectUpdateInput;
   id: Scalars['String']['input'];
@@ -964,13 +895,6 @@ export type UpdateProjectMutation = {
   };
 };
 
-export type VoteMutationVariables = Exact<{
-  value: Scalars['Int']['input'];
-  postId: Scalars['Int']['input'];
-}>;
-
-export type VoteMutation = { __typename?: 'Mutation'; vote: boolean };
-
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
@@ -994,7 +918,6 @@ export type MeQuery = {
 
 export type PostQueryVariables = Exact<{
   id: Scalars['String']['input'];
-  status: Status;
 }>;
 
 export type PostQuery = {
@@ -1002,7 +925,6 @@ export type PostQuery = {
   post?: {
     __typename?: 'Post';
     readingTime: string;
-    voteStatus?: number | null;
     id: string;
     title: string;
     intro: string;
@@ -1010,7 +932,6 @@ export type PostQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
-    likes: number;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1053,7 +974,6 @@ export type PostsQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
-    likes: number;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1129,7 +1049,6 @@ export type RecentPostsQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
-    likes: number;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1173,7 +1092,6 @@ export type SearchPostsQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
-    likes: number;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1236,7 +1154,6 @@ export const PostFragmentFragmentDoc = gql`
     tags
     image
     status
-    likes
     creator {
       id
     }
@@ -1408,6 +1325,27 @@ export function useRegisterMutation() {
     RegisterDocument,
   );
 }
+export const UpdatePostDocument = gql`
+  mutation UpdatePost($options: PostUpdateInput!, $id: String!) {
+    updatePost(options: $options, id: $id) {
+      errors {
+        code
+        field
+        message
+      }
+      post {
+        ...PostFragment
+      }
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+
+export function useUpdatePostMutation() {
+  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(
+    UpdatePostDocument,
+  );
+}
 export const UpdateProjectDocument = gql`
   mutation UpdateProject($options: ProjectUpdateInput!, $id: String!) {
     updateProject(options: $options, id: $id) {
@@ -1430,15 +1368,6 @@ export function useUpdateProjectMutation() {
     UpdateProjectMutationVariables
   >(UpdateProjectDocument);
 }
-export const VoteDocument = gql`
-  mutation Vote($value: Int!, $postId: Int!) {
-    vote(value: $value, postId: $postId)
-  }
-`;
-
-export function useVoteMutation() {
-  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument);
-}
 export const MeDocument = gql`
   query Me {
     me {
@@ -1457,11 +1386,10 @@ export function useMeQuery(
   });
 }
 export const PostDocument = gql`
-  query Post($id: String!, $status: Status!) {
-    post(id: $id, status: $status) {
+  query Post($id: String!) {
+    post(id: $id) {
       ...PostFragment
       readingTime
-      voteStatus
     }
   }
   ${PostFragmentFragmentDoc}

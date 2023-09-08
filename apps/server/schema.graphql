@@ -125,7 +125,6 @@ type Mutation {
 
   """Returns all user ids"""
   userSlugs: IdsResponse
-  vote(postId: Int!, value: Int!): Boolean!
 }
 
 input NestedDateTimeFilter {
@@ -345,7 +344,7 @@ type Query {
   countProjects: CountResponse!
   health: String!
   me: User
-  post(id: String!, status: Status!): Post
+  post(id: String!): Post
 
   """Returns all post slugs"""
   postIds: IdsResponse

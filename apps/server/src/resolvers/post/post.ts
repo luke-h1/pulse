@@ -79,71 +79,6 @@ export class PostResolver {
     });
   }
 
-  @Mutation(() => Boolean)
-  @Authorized(isAuth)
-  async vote(
-    @Arg('postId', () => Int) postId: number,
-    @Arg('value', () => Int) value: number,
-    @Ctx() { req }: Context,
-  ) {
-    const isUpvote = value !== -1;
-    const realValue = isUpvote ? 1 : -1;
-    const { userId } = req.session;
-
-    const upvote = await db.upvote.findFirst({
-      where: {
-        postId: postId.toString(),
-        userId,
-      },
-      include: {
-        post: true,
-      },
-    });
-
-    // the user has voted on the post before
-    // and they are changing their vote now (upvote to downvote or vice versa)
-
-    if (upvote && upvote.value !== realValue) {
-      await db.$transaction([
-        db.upvote.update({
-          where: {
-            id: upvote.id,
-          },
-          data: {
-            value: realValue,
-          },
-        }),
-        db.post.update({
-          where: {
-            id: upvote.postId,
-          },
-          data: {
-            likes: upvote.post.likes + 2 * realValue,
-          },
-        }),
-      ]);
-    } else if (!upvote) {
-      // user has not voted on the post before
-      await db.$transaction([
-        db.upvote.create({
-          data: {
-            userId,
-            postId: postId.toString(),
-            value: realValue,
-          },
-        }),
-        db.post.update({
-          where: {
-            id: postId.toString(),
-          },
-          data: {
-            likes: realValue,
-          },
-        }),
-      ]);
-    }
-  }
-
   @Query(() => [Post], {
     description: 'Returns all posts',
     nullable: true,
@@ -203,14 +138,10 @@ export class PostResolver {
   }
 
   @Query(() => Post, { nullable: true })
-  async post(
-    @Arg('id', () => String) id: string,
-    @Arg('status', () => Status) status: Status,
-  ): Promise<Post | null> {
+  async post(@Arg('id', () => String) id: string): Promise<Post | null> {
     return db.post.findUnique({
       where: {
         id,
-        status,
       },
     });
   }

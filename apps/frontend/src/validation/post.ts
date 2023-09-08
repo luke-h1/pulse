@@ -18,9 +18,6 @@ const postPayload = {
 };
 
 const postUpdatePayload = {
-  id: z.string({
-    required_error: 'ID is a required field',
-  }),
   ...postPayload,
 };
 

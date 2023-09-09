@@ -9,11 +9,6 @@ const postPayload = {
   }),
   image: z.object({}).nullish(),
   status: z.enum(['PUBLISHED', 'DRAFT', 'SCHEDULED'] as const),
-  tags: z.array(
-    z.string({
-      required_error: 'Tags is required',
-    }),
-  ),
   // content: z.string({
   //   required_error: 'Content is required',
   // }),

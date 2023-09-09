@@ -66,6 +66,9 @@ const CreatePostPage: NextPage = () => {
     );
 
     if (hasDuplicatedTags) {
+      // @ts-expect-error not defined in validation schema due to us
+      // handling errors outside of react-hook-form
+      // so react-hook-form doesn't know about it
       setError('tags', {
         type: 'manual',
         message: 'Tags must be unique',
@@ -96,6 +99,10 @@ const CreatePostPage: NextPage = () => {
 
       const errors = toErrorMap(setError, res.data?.createPost?.errors);
       if (!errors && res.data?.createPost.post) {
+        if (res.data.createPost.post.status === 'PUBLISHED') {
+          router.push(`/posts/${res.data.createPost.post.id}`);
+          return;
+        }
         router.push(`/posts/${res.data.createPost.post.id}/preview`);
       }
     }
@@ -145,6 +152,7 @@ const CreatePostPage: NextPage = () => {
               </Text>
               <ChakraTagInput
                 tags={tags}
+                isRequired={tags.length === 0}
                 onTagsChange={handleTagsChange}
                 wrapProps={{ direction: 'column', align: 'start' }}
               />
@@ -216,7 +224,14 @@ const CreatePostPage: NextPage = () => {
                 </Select>
               )}
             />
-            <Button type="submit">submit</Button>
+            <Button
+              type="submit"
+              disabled={
+                methods.formState.isSubmitting || methods.formState.isLoading
+              }
+            >
+              submit
+            </Button>
           </RHFForm>
         )}
       </FormProvider>

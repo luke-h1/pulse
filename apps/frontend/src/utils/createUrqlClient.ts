@@ -6,6 +6,7 @@ import { pipe, tap } from 'wonka';
 import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
 import { isServer } from '@common/hooks';
 import {
+  DeletePostMutationVariables,
   LoginMutation,
   LogoutMutation,
   MeDocument,
@@ -38,10 +39,15 @@ function invalidateAllCacheItems(cache: Cache, item: string) {
 }
 
 function invalidateCacheItem(cache: Cache, item: string, id: string) {
-  cache.invalidate({
-    __typename: item,
-    id,
-  });
+  try {
+    console.log('Invalidating cache item with id: ', id);
+    cache.invalidate({
+      __typename: item,
+      id,
+    });
+  } catch (e) {
+    console.error('Failed to invalidate cache item with id: ', id);
+  }
 }
 
 export const createUrqlClient = (
@@ -93,7 +99,7 @@ export const createUrqlClient = (
             },
             /* posts */
             createPost: (_result, _args, cache) => {
-              invalidateAllCacheItems(cache, 'posts');
+              invalidateAllCacheItems(cache, 'Post');
             },
             updatePost: (_result, args, cache) => {
               invalidateCacheItem(
@@ -102,12 +108,16 @@ export const createUrqlClient = (
                 args.id as UpdatePostMutationVariables['id'],
               );
             },
-            deletePost: (_result, _args, cache) => {
-              invalidateAllCacheItems(cache, 'posts');
+            deletePost: (_result, args, cache) => {
+              invalidateCacheItem(
+                cache,
+                'Post',
+                args.id as DeletePostMutationVariables['id'],
+              );
             },
             /* projects */
             createProject: (_result, _args, cache) => {
-              invalidateAllCacheItems(cache, 'projects');
+              invalidateAllCacheItems(cache, 'Project');
             },
             updateProject: (_result, args, cache) => {
               invalidateCacheItem(
@@ -117,7 +127,7 @@ export const createUrqlClient = (
               );
             },
             deleteProject: (_result, _args, cache) => {
-              invalidateAllCacheItems(cache, 'projects');
+              invalidateAllCacheItems(cache, 'Project');
             },
           },
         },

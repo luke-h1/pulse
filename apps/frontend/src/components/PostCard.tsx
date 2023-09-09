@@ -1,4 +1,7 @@
 import {
+  Box,
+  Button,
+  ButtonGroup,
   HStack,
   Heading,
   LinkBox,
@@ -8,14 +11,28 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import FormattedDate from '@common/components/FormattedDate';
-import { RecentPostsQuery } from '@graphql-hooks/generated';
+import {
+  RecentPostsQuery,
+  useDeletePostMutation,
+} from '@graphql-hooks/generated';
 import { ArrayElementType } from '@frontend/types/util';
 
 interface Props {
   post: ArrayElementType<RecentPostsQuery['recentPosts']>;
+  showControls?: boolean;
 }
 
-const PostCard = ({ post }: Props) => {
+const PostCard = ({ post, showControls }: Props) => {
+  const [, deletePost] = useDeletePostMutation();
+
+  const handleDeletePost = async () => {
+    // confirm before deleting
+    console.log('delete post');
+    await deletePost({
+      id: post.id,
+    });
+  };
+
   return (
     <LinkBox as="article">
       <VStack
@@ -54,6 +71,18 @@ const PostCard = ({ post }: Props) => {
         <Text color="gray.500" fontSize="sm">
           {post.intro}
         </Text>
+        <Box p={{ base: 0, full: 4 }} w="full">
+          {showControls && (
+            <ButtonGroup>
+              <Button as={Link} href={`/posts/${post.id}/update`} size="sm">
+                Edit post
+              </Button>
+              <Button size="sm" color="red.500" onClick={handleDeletePost}>
+                Delete post
+              </Button>
+            </ButtonGroup>
+          )}
+        </Box>
       </VStack>
     </LinkBox>
   );

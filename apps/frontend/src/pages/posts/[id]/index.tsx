@@ -1,18 +1,12 @@
 import { NextPage } from 'next';
-import { VStack, Heading, HStack, Text } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { Status, usePostQuery } from '@graphql-hooks/generated';
-import FormattedDate from '@common/components/FormattedDate';
-import { ScrollToTop } from '@ui/components';
 import { isServer, useMounted } from '@common/hooks';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Page from '@frontend/components/Page';
-
-const EditorOutput = dynamic(() => import('@editor/renderers/EditorOutput'), {
-  ssr: false,
-});
+import PostPage from '@frontend/components/PostPage';
 
 const PostSlugPage: NextPage = () => {
   const { isMounted } = useMounted();
@@ -52,31 +46,21 @@ const PostSlugPage: NextPage = () => {
       seo={{
         title: data?.post?.title,
         description: data?.post?.intro,
+        openGraph: {
+          title: data?.post?.title,
+          description: data?.post?.intro,
+          images: [
+            {
+              url: data?.post?.image as string,
+              width: 800,
+              height: 600,
+              alt: data?.post?.title,
+            },
+          ],
+        },
       }}
     >
-      <VStack position="relative" alignItems="stretch" w="full" spacing={8}>
-        <VStack alignItems="flex-start" spacing={3}>
-          <Heading as="h1" size="lg">
-            {data?.post?.title}
-          </Heading>
-          <HStack
-            divider={
-              <Text mx={2} color="gray.500">
-                •
-              </Text>
-            }
-          >
-            <Text color="gray.500" fontSize="sm">
-              <FormattedDate>{data?.post?.createdAt}</FormattedDate>
-            </Text>
-            <Text color="gray.500" fontSize="sm">
-              {data?.post?.readingTime}
-            </Text>
-          </HStack>
-        </VStack>
-        <EditorOutput content={data?.post?.content} />
-      </VStack>
-      <ScrollToTop />
+      <PostPage post={data.post} />
     </Page>
   );
 };

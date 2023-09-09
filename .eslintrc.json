@@ -14,9 +14,6 @@
   "settings": {
     "react": {
       "version": "detect"
-    },
-    "next": {
-      "rootDir": ["./apps/**/src"]
     }
   },
   "plugins": ["@typescript-eslint", "react-hooks"],
@@ -126,6 +123,15 @@
         "import/no-dynamic-require": "off",
         "no-console": "off"
       }
+    },
+    {
+      "files": ["./apps/**/src"],
+      "settings": {
+        "next": {
+          "rootDir": "./apps/**/src"
+        }
+      },
+      "extends": ["plugin:@next/next/recommended"]
     }
   ],
   "ignorePatterns": [

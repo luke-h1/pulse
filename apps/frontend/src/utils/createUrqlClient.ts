@@ -7,6 +7,7 @@ import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
 import { isServer } from '@common/hooks';
 import {
   DeletePostMutationVariables,
+  DeleteProjectMutationVariables,
   LoginMutation,
   LogoutMutation,
   MeDocument,
@@ -126,8 +127,12 @@ export const createUrqlClient = (
                 args.id as UpdateProjectMutationVariables['id'],
               );
             },
-            deleteProject: (_result, _args, cache) => {
-              invalidateAllCacheItems(cache, 'Project');
+            deleteProject: (_result, args, cache) => {
+              invalidateCacheItem(
+                cache,
+                'Project',
+                args.id as DeleteProjectMutationVariables['id'],
+              );
             },
           },
         },

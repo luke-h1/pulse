@@ -2,57 +2,18 @@ import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import { chakra, Stack, VStack, Divider, Link, Text } from '@chakra-ui/react';
 
-interface Link {
+export interface FooterLink {
   label: string;
   href: string;
 }
 
-const firstGroup: Link[] = [
-  {
-    href: '/',
-    label: 'Home',
-  },
-  {
-    href: '/feed',
-    label: 'Feed',
-  },
-  {
-    href: '/projects',
-    label: 'Projects',
-  },
-  {
-    href: '/posts',
-    label: 'Posts',
-  },
-];
+interface Props {
+  firstGroup: FooterLink[];
+  secondGroup: FooterLink[];
+  thirdGroup: FooterLink[];
+}
 
-const secondGroup: Link[] = [
-  {
-    href: '/posts/me',
-    label: 'My Posts',
-  },
-  {
-    href: '/projects/me',
-    label: 'My Projects',
-  },
-];
-
-const thirdGroup: Link[] = [
-  {
-    href: '/uses',
-    label: 'Uses',
-  },
-  {
-    href: '/uses/me',
-    label: 'My Uses',
-  },
-  {
-    href: '/users/me',
-    label: 'My Profile',
-  },
-];
-
-const Footer = () => {
+const Footer = ({ firstGroup, secondGroup, thirdGroup }: Props) => {
   const router = useRouter();
 
   return (

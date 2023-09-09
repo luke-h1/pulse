@@ -1,12 +1,57 @@
 import { VStack, Container } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import Footer, { FooterLink } from '@ui/components/Footer';
 import Header from './Header';
-import Footer from './Footer';
 import CmdPallete from './CmdPalete/CmdPalete';
 
 interface Props {
   children: ReactNode;
 }
+
+const firstGroup: FooterLink[] = [
+  {
+    href: '/',
+    label: 'Home',
+  },
+  {
+    href: '/feed',
+    label: 'Feed',
+  },
+  {
+    href: '/projects',
+    label: 'Projects',
+  },
+  {
+    href: '/posts',
+    label: 'Posts',
+  },
+];
+
+const secondGroup: FooterLink[] = [
+  {
+    href: '/posts/me',
+    label: 'My Posts',
+  },
+  {
+    href: '/projects/me',
+    label: 'My Projects',
+  },
+];
+
+const thirdGroup: FooterLink[] = [
+  {
+    href: '/uses',
+    label: 'Uses',
+  },
+  {
+    href: '/uses/me',
+    label: 'My Uses',
+  },
+  {
+    href: '/users/me',
+    label: 'My Profile',
+  },
+];
 
 const Page = ({ children }: Props) => {
   return (
@@ -24,7 +69,11 @@ const Page = ({ children }: Props) => {
             <CmdPallete />
             {children}
           </VStack>
-          <Footer />
+          <Footer
+            firstGroup={firstGroup}
+            secondGroup={secondGroup}
+            thirdGroup={thirdGroup}
+          />
         </VStack>
       </Container>
     </>

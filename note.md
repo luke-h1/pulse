@@ -65,6 +65,8 @@ Infra:
  * Dockerize frontend + server
  * ECS for frontend + server - kuberentes if have time 
  * serverless DB potentially if can get postgres in order to save on costs - athena if cold starts aren't too bad
+ * Sort CI caching
+ * Employ NX for faster builds
 
 
 General:

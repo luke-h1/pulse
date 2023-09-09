@@ -1,5 +1,3 @@
-import getConfig from 'next/config';
-
 interface IUploadImageResponse {
   // eslint-disable-next-line camelcase
   secure_url: string;
@@ -10,7 +8,6 @@ export default async function uploadImage(
   signature: string,
   timestamp: number,
 ): Promise<IUploadImageResponse> {
-  const { publicRuntimeConfig } = getConfig();
   const url = `https://api.cloudinary.com/v1_1/${process.env.PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
   const formData = new FormData();
   formData.append('file', image);

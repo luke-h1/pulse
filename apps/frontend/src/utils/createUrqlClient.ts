@@ -10,8 +10,9 @@ import {
   LogoutMutation,
   MeDocument,
   MeQuery,
+  UpdatePostMutationVariables,
+  UpdateProjectMutationVariables,
 } from '@graphql-hooks/generated';
-import getConfig from 'next/config';
 import CustomUpdateQuery from './customUpdateQuery';
 
 const errorExchange: Exchange =
@@ -36,6 +37,13 @@ function invalidateAllCacheItems(cache: Cache, item: string) {
   });
 }
 
+function invalidateCacheItem(cache: Cache, item: string, id: string) {
+  cache.invalidate({
+    __typename: item,
+    id,
+  });
+}
+
 export const createUrqlClient = (
   // eslint-disable-next-line @typescript-eslint/no-shadow
   ssrExchange: SSRExchange,
@@ -43,7 +51,6 @@ export const createUrqlClient = (
   ctx?: NextPageContext,
 ): ClientOptions => {
   let cookie: string | undefined = '';
-  const { publicRuntimeConfig } = getConfig();
 
   if (isServer) {
     cookie = ctx?.req?.headers?.cookie;
@@ -60,7 +67,7 @@ export const createUrqlClient = (
       cacheExchange({
         updates: {
           Mutation: {
-            login: (result, args, cache) => {
+            login: (result, _args, cache) => {
               CustomUpdateQuery<LoginMutation, MeQuery>(
                 cache,
                 { query: MeDocument },
@@ -76,13 +83,41 @@ export const createUrqlClient = (
                 },
               );
             },
-            logout: (result, args, cache) => {
+            logout: (result, _args, cache) => {
               CustomUpdateQuery<LogoutMutation, MeQuery>(
                 cache,
                 { query: MeDocument },
                 result,
                 () => ({ me: null }),
               );
+            },
+            /* posts */
+            createPost: (_result, _args, cache) => {
+              invalidateAllCacheItems(cache, 'posts');
+            },
+            updatePost: (_result, args, cache) => {
+              invalidateCacheItem(
+                cache,
+                'Post',
+                args.id as UpdatePostMutationVariables['id'],
+              );
+            },
+            deletePost: (_result, _args, cache) => {
+              invalidateAllCacheItems(cache, 'posts');
+            },
+            /* projects */
+            createProject: (_result, _args, cache) => {
+              invalidateAllCacheItems(cache, 'projects');
+            },
+            updateProject: (_result, args, cache) => {
+              invalidateCacheItem(
+                cache,
+                'Project',
+                args.id as UpdateProjectMutationVariables['id'],
+              );
+            },
+            deleteProject: (_result, _args, cache) => {
+              invalidateAllCacheItems(cache, 'projects');
             },
           },
         },

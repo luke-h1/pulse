@@ -53,7 +53,13 @@ const ProjectPage: NextPage = () => {
   );
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: 'Projects',
+        description:
+          'All types of projects about software development, programming, and related topics',
+      }}
+    >
       <VStack as="section" alignItems="flex-start" w="full" spacing={3}>
         <Heading size="md">Projects.</Heading>
         <Text fontSize="md">

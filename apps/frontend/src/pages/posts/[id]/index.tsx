@@ -32,7 +32,12 @@ const PostSlugPage: NextPage = () => {
 
   if (data?.post?.status !== Status.Published) {
     return (
-      <Page>
+      <Page
+        seo={{
+          title: 'Post not published',
+          description: 'Post is not published yet',
+        }}
+      >
         <Text>Post is not published yet</Text>
       </Page>
     );
@@ -43,7 +48,12 @@ const PostSlugPage: NextPage = () => {
   }
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: data?.post?.title,
+        description: data?.post?.intro,
+      }}
+    >
       <VStack position="relative" alignItems="stretch" w="full" spacing={8}>
         <VStack alignItems="flex-start" spacing={3}>
           <Heading as="h1" size="lg">

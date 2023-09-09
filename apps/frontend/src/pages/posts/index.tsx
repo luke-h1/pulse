@@ -58,7 +58,13 @@ const PostPage: NextPage = () => {
   );
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: 'Posts',
+        description:
+          'All types of articles about software development, programming, and related topics.',
+      }}
+    >
       <VStack as="section" alignItems="flex-start" w="full" spacing={3}>
         <Heading size="md">Blog Posts.</Heading>
         <Text fontSize="md">

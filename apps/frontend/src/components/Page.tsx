@@ -1,12 +1,10 @@
 import { VStack, Container } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import Footer, { FooterLink } from '@ui/components/Footer';
+import { NextSeo, NextSeoProps } from 'next-seo';
+import { useRouter } from 'next/router';
 import Header from './Header';
 import CmdPallete from './CmdPalete/CmdPalete';
-
-interface Props {
-  children: ReactNode;
-}
 
 const firstGroup: FooterLink[] = [
   {
@@ -53,9 +51,23 @@ const thirdGroup: FooterLink[] = [
   },
 ];
 
-const Page = ({ children }: Props) => {
+interface Props {
+  children: ReactNode;
+  seo: NextSeoProps;
+}
+
+const Page = ({ children, seo }: Props) => {
+  const router = useRouter();
   return (
     <>
+      <NextSeo
+        {...seo}
+        canonical={`${process.env.PUBLIC_URL}${router.asPath}`}
+        openGraph={{
+          url: `${process.env.PUBLIC_URL}${router.asPath}`,
+          ...seo.openGraph,
+        }}
+      />
       <Header />
       <Container
         display="flex"

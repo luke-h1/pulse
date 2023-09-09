@@ -42,7 +42,12 @@ const LoginPage: NextPage = () => {
   };
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: 'Login',
+        description: 'Login to your Pulse account',
+      }}
+    >
       <FormProvider
         enableReinitialize
         initialValues={{

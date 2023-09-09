@@ -15,7 +15,13 @@ const Home: NextPage = () => {
   const [{ data: projectsData }] = useRecentProjectsQuery();
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: 'Home',
+        description:
+          'Pulse is a platform for developers to share their knowledge and connect with other developers.',
+      }}
+    >
       <Hero />
       <PostsSection posts={data?.recentPosts} />
       <ProjectsSection projects={projectsData?.recentProjects} />

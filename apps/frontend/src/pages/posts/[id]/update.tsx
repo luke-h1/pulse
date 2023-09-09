@@ -103,7 +103,12 @@ const UpdatePostPage: NextPage = () => {
   };
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: `Update post ${data?.post?.title}`,
+        description: 'Update your post',
+      }}
+    >
       <FormProvider
         enableReinitialize
         validationSchema={postUpdateSchema}
@@ -113,6 +118,7 @@ const UpdatePostPage: NextPage = () => {
           content: data?.post?.content,
           image: data?.post?.image,
           status: data?.post?.status,
+          tags,
         }}
       >
         {methods => (
@@ -152,6 +158,7 @@ const UpdatePostPage: NextPage = () => {
               <ChakraTagInput
                 tags={tags}
                 onTagsChange={handleTagsChange}
+                isRequired
                 wrapProps={{ direction: 'column', align: 'start' }}
               />
             </Stack>

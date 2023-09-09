@@ -4,7 +4,6 @@ import {
   Ctx,
   Field,
   FieldResolver,
-  Int,
   Mutation,
   ObjectType,
   Query,
@@ -86,7 +85,6 @@ export class PostResolver {
   async posts(@Arg('status', () => Status) status: Status): Promise<Post[]> {
     // will need to add pagination args in the future here
     return db.post.findMany({
-      take: 50,
       where: {
         status,
       },

@@ -44,7 +44,15 @@ const CreatePostPage: NextPage = () => {
 
   const handleTagsChange = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    (_event: SyntheticEvent, tags: string[]) => {
+    (_event: SyntheticEvent<Element, Event>, tags: string[]) => {
+      const hasDuplicatedTags = tags.some(
+        (tag, index) => tags.indexOf(tag) !== index,
+      );
+
+      if (hasDuplicatedTags) {
+        return;
+      }
+
       setTags(tags);
     },
     [],
@@ -53,6 +61,18 @@ const CreatePostPage: NextPage = () => {
     data: postCreateInput,
     setError: UseFormSetError<postCreateInput>,
   ) => {
+    const hasDuplicatedTags = tags.some(
+      (tag, index) => tags.indexOf(tag) !== index,
+    );
+
+    if (hasDuplicatedTags) {
+      setError('tags', {
+        type: 'manual',
+        message: 'Tags must be unique',
+      });
+      return;
+    }
+
     const { data: signatureData } = await createSignature({});
 
     if (signatureData) {
@@ -82,7 +102,12 @@ const CreatePostPage: NextPage = () => {
   };
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: 'Create post',
+        description: 'Create a new post',
+      }}
+    >
       <FormProvider enableReinitialize validationSchema={postCreateSchema}>
         {methods => (
           <RHFForm<postCreateInput>

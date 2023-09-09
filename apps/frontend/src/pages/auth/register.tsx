@@ -43,7 +43,12 @@ const RegisterPage: NextPage = () => {
   };
 
   return (
-    <Page>
+    <Page
+      seo={{
+        title: 'Register',
+        description: 'Register to your Pulse account',
+      }}
+    >
       <FormProvider
         enableReinitialize
         initialValues={{

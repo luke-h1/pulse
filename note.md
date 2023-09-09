@@ -26,11 +26,11 @@ API:
   * Add queues for scheduling posts
   * see if possible to create common auth directive to verify if current logged in user is post owner (can delete a lot of post tests if so)
   * review how images are going to be embedded into content - potentially its own image mutation where things like the key/id isn't tracked or maybe a custom model for this i.e. ImageBlock or ContentBlockImage✅
-  * think if want to go oop style and split functionality of resolver out into its own service - would make unit testing easier
+  *go oop style and split functionality of resolver out into its own service with implements block - would make unit testing easier
   * split unit tests up into individual describe blocks for a given resolver function
   * use ids instead of slugs ✅
   * sort prisma mock ✅
-  * sort logging for server
+  * sort logging for server - need to log execution time, request logging etc.
 
 FE:
   * Custom package for GQL type generation ✅
@@ -46,7 +46,7 @@ FE:
     * /feed - all projects and posts of all users
     * /posts - all posts of all users ✅
     * /projects - all projects of all users ✅
-    * /user/[slug] - user profile
+    * /user/[id] - user profile
     * /user/me - my profile with edit toggles
     * Footer ✅
     * Look into boilerplate-graphql for styling✅
@@ -54,8 +54,10 @@ FE:
 
 Post Saving:
   * Image uploads - both via editor and general form fields✅
-  * Sort saving of editor blocks✅
-  * tag input
+  * Sort saving of editor blocks ✅
+  * tag input ✅
+  * sort preview functionality - need to split PostPage into it's own component for better reusability
+  * split post create/update into it's own component for less duplication
 
 Infra:
  * Terraform for Infra - automate it in CI
@@ -63,3 +65,7 @@ Infra:
  * Dockerize frontend + server
  * ECS for frontend + server - kuberentes if have time 
  * serverless DB potentially if can get postgres in order to save on costs - athena if cold starts aren't too bad
+
+
+General:
+* fix path aliases for @editor/index, @ui/index etc.

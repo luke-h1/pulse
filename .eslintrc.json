@@ -14,6 +14,9 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "next": {
+      "rootDir": ["./apps/**/src"]
     }
   },
   "plugins": ["@typescript-eslint", "react-hooks"],
@@ -123,24 +126,6 @@
         "import/no-dynamic-require": "off",
         "no-console": "off"
       }
-    },
-    {
-      "files": ["./apps/admin/**/*.{tsx, ts}"],
-      "settings": {
-        "next": {
-          "rootDir": "./apps/admin"
-        }
-      },
-      "extends": ["plugin:@next/next/recommended"]
-    },
-    {
-      "files": ["./apps/frontend/**/*.{tsx, ts}"],
-      "settings": {
-        "next": {
-          "rootDir": "./apps/frontend"
-        }
-      },
-      "extends": ["plugin:@next/next/recommended"]
     }
   ],
   "ignorePatterns": [

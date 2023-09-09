@@ -18,6 +18,11 @@ generator enums {
   provider = "ts-node  ./src/prisma/enum-generator.ts"
 }
 
+// https://dbdiagram.io/d
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 enum Role {
   USER
   ADMIN

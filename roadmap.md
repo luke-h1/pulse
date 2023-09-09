@@ -31,7 +31,7 @@ API:
   * use ids instead of slugs ✅
   * sort prisma mock ✅
   * sort logging for server - need to log execution time, request logging etc.
-
+  * use https://github.com/CarterGrimmeisen/zod-prisma to build brand new validation package
 FE:
   * Custom package for GQL type generation ✅
   * Create Github OAUTH app for auth locally ✅

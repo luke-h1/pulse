@@ -10,10 +10,12 @@ import {
 } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
+import { Spinner } from '@chakra-ui/react';
 
 const Home: NextPage = () => {
-  const [{ data }] = useRecentPostsQuery();
-  const [{ data: projectsData }] = useRecentProjectsQuery();
+  const [{ data, fetching: postFetching }] = useRecentPostsQuery();
+  const [{ data: projectsData, fetching: projectFetching }] =
+    useRecentProjectsQuery();
   const [{ data: meData }] = useMeQuery();
 
   return (
@@ -25,8 +27,16 @@ const Home: NextPage = () => {
       }}
     >
       <Hero />
-      <PostsSection posts={data?.recentPosts} user={meData?.me} />
-      <ProjectsSection projects={projectsData?.recentProjects} />
+      {postFetching ? (
+        <Spinner />
+      ) : (
+        <PostsSection posts={data?.recentPosts} user={meData?.me} />
+      )}
+      {projectFetching ? (
+        <Spinner />
+      ) : (
+        <ProjectsSection projects={projectsData?.recentProjects} />
+      )}
     </Page>
   );
 };

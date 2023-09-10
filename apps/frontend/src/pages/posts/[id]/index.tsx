@@ -3,10 +3,11 @@ import { Text } from '@chakra-ui/react';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { Status, usePostQuery } from '@graphql-hooks/generated';
-import { isServer, useMounted } from '@common/hooks';
 import { useRouter } from 'next/router';
 import Page from '@frontend/components/Page';
 import PostPage from '@frontend/components/PostPage';
+import isServer from '@common/hooks/isServer';
+import useMounted from '@common/hooks/useMounted';
 
 const PostSlugPage: NextPage = () => {
   const { isMounted } = useMounted();

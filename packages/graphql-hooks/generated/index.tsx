@@ -296,6 +296,7 @@ export type Post = {
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
+  isAuthor: Scalars['Boolean']['output'];
   readingTime: Scalars['String']['output'];
   status: Status;
   tags: Array<Scalars['String']['output']>;
@@ -646,6 +647,7 @@ export type PostFragmentFragment = {
   tags: Array<string>;
   image?: string | null;
   status: Status;
+  isAuthor: boolean;
   createdAt: any;
   updatedAt: any;
   creator: { __typename?: 'User'; id: string };
@@ -707,6 +709,7 @@ export type CreatePostMutation = {
       tags: Array<string>;
       image?: string | null;
       status: Status;
+      isAuthor: boolean;
       createdAt: any;
       updatedAt: any;
       creator: { __typename?: 'User'; id: string };
@@ -839,12 +842,6 @@ export type UpdatePostMutation = {
   __typename?: 'Mutation';
   updatePost: {
     __typename?: 'PostResponse';
-    errors?: Array<{
-      __typename?: 'FieldError';
-      code?: string | null;
-      field: string;
-      message: string;
-    }> | null;
     post?: {
       __typename?: 'Post';
       id: string;
@@ -854,10 +851,17 @@ export type UpdatePostMutation = {
       tags: Array<string>;
       image?: string | null;
       status: Status;
+      isAuthor: boolean;
       createdAt: any;
       updatedAt: any;
       creator: { __typename?: 'User'; id: string };
     } | null;
+    errors?: Array<{
+      __typename?: 'FieldError';
+      code?: string | null;
+      field: string;
+      message: string;
+    }> | null;
   };
 };
 
@@ -932,6 +936,7 @@ export type PostQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
+    isAuthor: boolean;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -974,6 +979,7 @@ export type PostsQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
+    isAuthor: boolean;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1049,6 +1055,7 @@ export type RecentPostsQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
+    isAuthor: boolean;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1092,6 +1099,7 @@ export type SearchPostsQuery = {
     tags: Array<string>;
     image?: string | null;
     status: Status;
+    isAuthor: boolean;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1154,6 +1162,7 @@ export const PostFragmentFragmentDoc = gql`
     tags
     image
     status
+    isAuthor
     creator {
       id
     }
@@ -1328,13 +1337,13 @@ export function useRegisterMutation() {
 export const UpdatePostDocument = gql`
   mutation UpdatePost($options: PostUpdateInput!, $id: String!) {
     updatePost(options: $options, id: $id) {
+      post {
+        ...PostFragment
+      }
       errors {
         code
         field
         message
-      }
-      post {
-        ...PostFragment
       }
     }
   }

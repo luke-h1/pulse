@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import EditorJS, { OutputData } from '@editorjs/editorjs';
-import { useMounted } from '@common/hooks/useMounted';
+import useMounted from '@common/hooks/useMounted';
 import { Flex } from '@chakra-ui/react';
 
 interface Props {

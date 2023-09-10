@@ -11,12 +11,14 @@ import { json } from 'body-parser';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { ApolloArmor } from '@escape.tech/graphql-armor';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import redis from './db/redis';
 import buildCookieOptions from './utils/buildCookieOptions';
 import createSchema from './utils/createSchema';
 import logger from './utils/logger';
 import config from './utils/config';
 import createUserDataLoader from './dataloader/createUserLoader';
+import createPostLoader from './dataloader/createPostLoader';
 
 const DEV_ORIGINS = [
   'http://localhost:3000',
@@ -24,7 +26,7 @@ const DEV_ORIGINS = [
   'https://studio.apollographql.com',
 ];
 
-const PROD_ORIGINS = ['']; // TODO: Add production origins once Infra is setup
+const PROD_ORIGINS = ['https://studio.apollographql.com'];
 
 const main = async () => {
   const app = express();
@@ -58,6 +60,10 @@ const main = async () => {
     plugins: [
       ...protection.plugins,
       ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginLandingPageLocalDefault({
+        footer: false,
+        includeCookies: true,
+      }),
     ],
     schema: await createSchema(),
     csrfPrevention: process.env.NODE_ENV === 'production',
@@ -82,6 +88,7 @@ const main = async () => {
         res,
         redis,
         userLoader: createUserDataLoader(),
+        postLoader: createPostLoader(),
       }),
     }),
   );

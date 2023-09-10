@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { Exchange, ClientOptions, SSRExchange, dedupExchange } from 'urql';
 import { pipe, tap } from 'wonka';
 import { multipartFetchExchange } from '@urql/exchange-multipart-fetch';
-import { isServer } from '@common/hooks';
+import isServer from '@common/hooks/isServer';
 import {
   DeletePostMutationVariables,
   DeleteProjectMutationVariables,
@@ -25,6 +25,11 @@ const errorExchange: Exchange =
       tap(({ error }) => {
         if (error?.graphQLErrors[0]?.extensions?.code === 'UNAUTHENTICATED') {
           Router.push('/auth/login');
+        }
+
+        if (error) {
+          // eslint-disable-next-line no-console
+          console.error('Error: ', error);
         }
       }),
     );

@@ -21,7 +21,6 @@ import toErrorMap from '@frontend/utils/toErrorMap';
 import { postUpdateInput, postUpdateSchema } from '@frontend/validation/post';
 import {
   useCreateSignatureMutation,
-  useMeQuery,
   usePostQuery,
   useUpdatePostMutation,
 } from '@graphql-hooks/generated';
@@ -31,6 +30,9 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { SyntheticEvent, useCallback, useState } from 'react';
 import { Controller, UseFormSetError } from 'react-hook-form';
+import useMounted from '@common/hooks/useMounted';
+import isServer from '@common/hooks/isServer';
+import useIsPostAuthor from '@frontend/hooks/useIsPostAuthor';
 
 const Editor = dynamic(() => import('@editor/index'), {
   ssr: false,
@@ -38,28 +40,24 @@ const Editor = dynamic(() => import('@editor/index'), {
 
 const UpdatePostPage: NextPage = () => {
   useIsAuth();
-  const [{ data: meData }] = useMeQuery();
+  const { isMounted } = useMounted();
   const [, updatePost] = useUpdatePostMutation();
   const router = useRouter();
-  const [previewImage, setPreviewImage] = useState<string>('');
+
+  const [{ data, fetching }] = usePostQuery({
+    variables: {
+      id: router.query.id as string,
+    },
+    pause: isServer,
+  });
+  useIsPostAuthor(fetching, data?.post);
+
+  const [previewImage, setPreviewImage] = useState<string>(
+    data?.post?.image as string,
+  );
   const [, createSignature] = useCreateSignatureMutation();
 
-  const id = router.query.id as string;
-
-  const [{ data }] = usePostQuery({
-    variables: {
-      id,
-    },
-  });
   const [tags, setTags] = useState<string[]>(data?.post?.tags ?? []);
-
-  if (!data?.post) {
-    router.push('/404');
-  }
-
-  if (data?.post?.creator.id !== meData?.me?.id) {
-    router.push('/404');
-  }
 
   const handleTagsChange = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -85,7 +83,7 @@ const UpdatePostPage: NextPage = () => {
         timestamp,
       );
       const res = await updatePost({
-        id,
+        id: router.query.id as string,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         options: {
@@ -94,13 +92,35 @@ const UpdatePostPage: NextPage = () => {
           tags,
         },
       });
-
       const errors = toErrorMap(setError, res.data?.updatePost?.errors);
-      if (!errors && res.data?.updatePost.post) {
-        router.push(`/posts/${res.data.updatePost.post.id}/preview`);
+
+      if (!errors) {
+        switch (data.status) {
+          case 'DRAFT':
+            router.push(`/posts/${router.query.id}/preview`);
+            break;
+          case 'PUBLISHED':
+            router.push(`/posts/${router.query.id}`);
+            break;
+          case 'SCHEDULED':
+            router.push(`/posts/${router.query.id}/preview`);
+            break;
+
+          default:
+            router.push('/posts');
+            break;
+        }
       }
     }
   };
+
+  if (!isMounted) {
+    return null;
+  }
+
+  if (!fetching && !data?.post?.isAuthor) {
+    router.push('/unauthorized');
+  }
 
   return (
     <Page
@@ -158,7 +178,6 @@ const UpdatePostPage: NextPage = () => {
               <ChakraTagInput
                 tags={tags}
                 onTagsChange={handleTagsChange}
-                isRequired
                 wrapProps={{ direction: 'column', align: 'start' }}
               />
             </Stack>

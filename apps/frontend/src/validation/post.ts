@@ -16,6 +16,7 @@ const postPayload = {
 
 const postUpdatePayload = {
   ...postPayload,
+  image: z.object({}).or(z.string()).nullish(),
 };
 
 export const postCreateSchema = z.object(postPayload);

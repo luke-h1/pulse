@@ -1,12 +1,12 @@
 mutation UpdatePost($options: PostUpdateInput!, $id: String!) {
   updatePost(options: $options, id: $id) {
+    post {
+      ...PostFragment
+    }
     errors {
       code
       field
       message
-    }
-    post {
-      ...PostFragment
     }
   }
 }

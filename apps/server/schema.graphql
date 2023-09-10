@@ -208,6 +208,7 @@ type Post {
   id: String!
   image: String
   intro: String!
+  isAuthor: Boolean!
   readingTime: String!
   status: Status!
   tags: [String!]!

@@ -4,7 +4,9 @@ import {
   AlertIcon,
   AlertTitle,
 } from '@chakra-ui/react';
-import { isServer, useMounted } from '@common/hooks';
+import isServer from '@common/hooks/isServer';
+import useMounted from '@common/hooks/useMounted';
+
 import Page from '@frontend/components/Page';
 import PostPage from '@frontend/components/PostPage';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';

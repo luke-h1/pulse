@@ -23,6 +23,7 @@ import { PostCreateInput } from './inputs/postCreateInput';
 import { Context } from '../../types/Context';
 import { PostUpdateInput } from './inputs/postUpdateInput';
 import { isAdmin } from '../../middleware/isAdmin';
+import logger from '../../utils/logger';
 
 @ObjectType()
 class PostResponse {
@@ -50,6 +51,15 @@ export class PostResolver {
   @FieldResolver(() => User)
   creator(@Root() post: Post, @Ctx() { userLoader }: Context) {
     return userLoader.load(parseInt(post.authorId, 10));
+  }
+
+  @FieldResolver(() => Boolean)
+  async isAuthor(
+    @Root() post: Post,
+    @Ctx() { req, postLoader }: Context,
+  ): Promise<boolean> {
+    const p = await postLoader.load(parseInt(post.id, 10));
+    return p.authorId === req.session.userId;
   }
 
   @Query(() => CountResponse, {
@@ -179,6 +189,7 @@ export class PostResolver {
     });
 
     if (post?.authorId !== req.session.userId) {
+      logger.info('User in un-authorized to view this post');
       return {
         errors: [
           {
@@ -189,7 +200,6 @@ export class PostResolver {
         ],
       };
     }
-
     const updatedPost = await db.post.update({
       where: {
         id,
@@ -202,7 +212,9 @@ export class PostResolver {
       },
     });
 
-    return { post: updatedPost };
+    return {
+      post: updatedPost,
+    };
   }
 
   @Mutation(() => Boolean, {

@@ -19,14 +19,12 @@ import { ArrayElementType } from '@frontend/types/util';
 
 interface Props {
   post: ArrayElementType<RecentPostsQuery['recentPosts']>;
-  showControls?: boolean;
 }
 
-const PostCard = ({ post, showControls }: Props) => {
+const PostCard = ({ post }: Props) => {
   const [, deletePost] = useDeletePostMutation();
 
   const handleDeletePost = async () => {
-    // TODO: modal instead of alert
     // eslint-disable-next-line no-alert
     alert('Are you sure you want to delete this post?');
     await deletePost({
@@ -73,7 +71,7 @@ const PostCard = ({ post, showControls }: Props) => {
           {post.intro}
         </Text>
         <Box p={{ base: 0, full: 4 }} w="full">
-          {showControls && (
+          {post.isAuthor && (
             <ButtonGroup>
               <Button as={Link} href={`/posts/${post.id}/update`} size="sm">
                 Edit post

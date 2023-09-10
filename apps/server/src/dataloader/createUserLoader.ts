@@ -1,7 +1,6 @@
 import { User } from '@prisma/client';
 import DataLoader from 'dataloader';
 import { db } from '../db/prisma';
-import logger from '../utils/logger';
 
 /**
  * Creates a DataLoader instance for efficiently loading and caching User objects by user IDs.
@@ -24,7 +23,6 @@ const createUserDataLoader = (): DataLoader<number, User> => {
     const userIdToUser: Record<number, User> = {};
 
     users.forEach(u => {
-      logger.info(`createUserDataLoader: u.id: ${u.id}`);
       const userIdNum = parseInt(u.id, 10);
       userIdToUser[userIdNum] = u;
     });

@@ -1,7 +1,7 @@
 /* eslint-disable  react-hooks/exhaustive-deps */
 import { EffectCallback, useEffect, useState } from 'react';
 
-export const useMounted = (effect?: EffectCallback, initialState = false) => {
+const useMounted = (effect?: EffectCallback, initialState = false) => {
   const [isMounted, setMounted] = useState(initialState);
 
   useEffect(() => {
@@ -21,3 +21,4 @@ export const useMounted = (effect?: EffectCallback, initialState = false) => {
     },
   };
 };
+export default useMounted;

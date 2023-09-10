@@ -29,17 +29,6 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTimeISO
 
-input DateTimeNullableFilter {
-  equals: DateTimeISO
-  gt: DateTimeISO
-  gte: DateTimeISO
-  in: [DateTimeISO!]
-  lt: DateTimeISO
-  lte: DateTimeISO
-  not: NestedDateTimeNullableFilter
-  notIn: [DateTimeISO!]
-}
-
 input EnumAccountStatusFilter {
   equals: AccountStatus
   in: [AccountStatus!]
@@ -136,17 +125,6 @@ input NestedDateTimeFilter {
   lt: DateTimeISO
   lte: DateTimeISO
   not: NestedDateTimeFilter
-  notIn: [DateTimeISO!]
-}
-
-input NestedDateTimeNullableFilter {
-  equals: DateTimeISO
-  gt: DateTimeISO
-  gte: DateTimeISO
-  in: [DateTimeISO!]
-  lt: DateTimeISO
-  lte: DateTimeISO
-  not: NestedDateTimeNullableFilter
   notIn: [DateTimeISO!]
 }
 
@@ -439,7 +417,6 @@ type User {
   bio: String
   createdAt: DateTimeISO!
   email: String
-  emailVerified: DateTimeISO
   firstName: String!
   fullName: String!
   github: String
@@ -499,7 +476,6 @@ input UserWhereInput {
   bio: StringNullableFilter
   createdAt: DateTimeFilter
   email: StringNullableFilter
-  emailVerified: DateTimeNullableFilter
   firstName: StringFilter
   github: StringNullableFilter
   id: StringFilter

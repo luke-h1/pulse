@@ -8,7 +8,6 @@ Table User {
   firstName String [not null]
   lastName String [not null]
   email String [unique]
-  emailVerified DateTime
   username String [unique, not null]
   password String [not null]
   image String

@@ -46,7 +46,6 @@ model User {
   firstName     String
   lastName      String
   email         String?       @unique
-  emailVerified DateTime?
   username      String        @unique
   password      String
   image         String?

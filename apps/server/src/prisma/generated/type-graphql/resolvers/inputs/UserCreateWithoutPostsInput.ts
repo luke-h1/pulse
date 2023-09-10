@@ -33,11 +33,6 @@ export class UserCreateWithoutPostsInput {
   })
   email?: string | undefined;
 
-  @TypeGraphQL.Field(_type => Date, {
-    nullable: true
-  })
-  emailVerified?: Date | undefined;
-
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })

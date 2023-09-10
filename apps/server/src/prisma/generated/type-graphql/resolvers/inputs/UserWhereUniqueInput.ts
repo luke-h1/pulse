@@ -3,7 +3,6 @@ import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
-import { DateTimeNullableFilter } from "../inputs/DateTimeNullableFilter";
 import { EnumAccountStatusFilter } from "../inputs/EnumAccountStatusFilter";
 import { EnumRoleFilter } from "../inputs/EnumRoleFilter";
 import { PostListRelationFilter } from "../inputs/PostListRelationFilter";
@@ -58,11 +57,6 @@ export class UserWhereUniqueInput {
     nullable: true
   })
   lastName?: StringFilter | undefined;
-
-  @TypeGraphQL.Field(_type => DateTimeNullableFilter, {
-    nullable: true
-  })
-  emailVerified?: DateTimeNullableFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true

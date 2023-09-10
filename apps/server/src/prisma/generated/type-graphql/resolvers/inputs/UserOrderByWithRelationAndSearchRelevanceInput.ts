@@ -35,11 +35,6 @@ export class UserOrderByWithRelationAndSearchRelevanceInput {
   })
   email?: SortOrderInput | undefined;
 
-  @TypeGraphQL.Field(_type => SortOrderInput, {
-    nullable: true
-  })
-  emailVerified?: SortOrderInput | undefined;
-
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })

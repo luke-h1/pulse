@@ -2,7 +2,6 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
-import { DateTimeNullableWithAggregatesFilter } from "../inputs/DateTimeNullableWithAggregatesFilter";
 import { DateTimeWithAggregatesFilter } from "../inputs/DateTimeWithAggregatesFilter";
 import { EnumAccountStatusWithAggregatesFilter } from "../inputs/EnumAccountStatusWithAggregatesFilter";
 import { EnumRoleWithAggregatesFilter } from "../inputs/EnumRoleWithAggregatesFilter";
@@ -50,11 +49,6 @@ export class UserScalarWhereWithAggregatesInput {
     nullable: true
   })
   email?: StringNullableWithAggregatesFilter | undefined;
-
-  @TypeGraphQL.Field(_type => DateTimeNullableWithAggregatesFilter, {
-    nullable: true
-  })
-  emailVerified?: DateTimeNullableWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
     nullable: true

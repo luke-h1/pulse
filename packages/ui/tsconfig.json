@@ -2,8 +2,13 @@
   "extends": "../../tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "./dist",
-    "target": "ES6"
+    "target": "ES6",
+    "paths": {
+      "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
+      "@common/*": ["../../apps/common/src/*"]
+    }
   },
   "files": ["./src/index.ts", "./src/components/index.ts"]
 }

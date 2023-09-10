@@ -3,8 +3,8 @@ import { ReactNode } from 'react';
 import Footer, { FooterLink } from '@ui/components/Footer';
 import { NextSeo, NextSeoProps } from 'next-seo';
 import { useRouter } from 'next/router';
+import CmdPallete, { CmdLink } from '@ui/components/CmdPalete';
 import Header from './Header';
-import CmdPallete from './CmdPalete/CmdPalete';
 
 const firstGroup: FooterLink[] = [
   {
@@ -51,6 +51,50 @@ const thirdGroup: FooterLink[] = [
   },
 ];
 
+const actionLinks: CmdLink = {
+  authLinks: [
+    {
+      title: 'Create Post',
+      href: '/posts/create',
+    },
+    {
+      title: 'Create Project',
+      href: '/projects/create',
+    },
+    {
+      title: 'My Profile',
+      href: '/users/me',
+    },
+  ],
+  unauthLinks: [
+    {
+      title: 'Login',
+      href: '/auth/login',
+    },
+    {
+      title: 'Register',
+      href: '/auth/register',
+    },
+  ],
+};
+
+const pageLinks: CmdLink = {
+  authLinks: [
+    {
+      title: 'Feed',
+      href: '/feed',
+    },
+    {
+      title: 'Posts',
+      href: '/posts',
+    },
+    {
+      title: 'Projects',
+      href: '/projects',
+    },
+  ],
+};
+
 interface Props {
   children: ReactNode;
   seo: NextSeoProps;
@@ -78,7 +122,7 @@ const Page = ({ children, seo }: Props) => {
       >
         <VStack alignItems="stretch" flex={1} w="full" spacing={16}>
           <VStack as="main" flex={1} w="full" spacing={16}>
-            <CmdPallete />
+            <CmdPallete actionLinks={actionLinks} pageLinks={pageLinks} />
             {children}
           </VStack>
           <Footer

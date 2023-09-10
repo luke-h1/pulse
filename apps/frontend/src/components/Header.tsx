@@ -6,7 +6,7 @@ import {
   Tooltip,
   Container,
 } from '@chakra-ui/react';
-import { useCmdPalleteContext } from '@frontend/context/CmdPalleteContext';
+import { useCmdPalleteContext } from '@common/context/CmdPalleteContext';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import { FiCommand } from 'react-icons/fi';

@@ -16,7 +16,7 @@ import { IoMoon, IoSunny } from 'react-icons/io5';
 import { createDescendantContext } from '@chakra-ui/descendant';
 import { CgArrowRight } from 'react-icons/cg';
 import { useKeyPressEvent } from 'react-use';
-import { useCmdPalleteContext } from '@frontend/context/CmdPalleteContext';
+import { useCmdPalleteContext } from '@common/context/CmdPalleteContext';
 import useMe from '@common/hooks/useMe';
 import { useLogoutMutation } from '@graphql-hooks/generated';
 import CommandItem from './CommandItem';
@@ -85,7 +85,23 @@ const commandPaleteVariants: Variants = {
 const MotionFlex = motion<FlexProps>(Flex);
 const MotionVStack = motion<StackProps>(VStack);
 
-const CmdPallete = () => {
+export interface CmdLink {
+  unauthLinks?: {
+    title: string;
+    href?: string;
+  }[];
+  authLinks: {
+    title: string;
+    href?: string;
+  }[];
+}
+
+interface Props {
+  pageLinks: CmdLink;
+  actionLinks: CmdLink;
+}
+
+const CmdPallete = ({ actionLinks, pageLinks }: Props) => {
   const { close, focusedIndex, isOpen, open, setFocusedIndex } =
     useCmdPalleteContext();
   const { descendants } = useMenu();
@@ -191,37 +207,15 @@ const CmdPallete = () => {
                       Pages
                     </Text>
                     <CommandItem title="Home" href="/" icon={CgArrowRight} />
-                    {isAuth && (
-                      <CommandItem
-                        title="Feed"
-                        href="/feed"
-                        icon={CgArrowRight}
-                      />
-                    )}
-                    <CommandItem
-                      title="Posts"
-                      href="/posts"
-                      icon={CgArrowRight}
-                    />
-                    <CommandItem
-                      title="Projects"
-                      href="/projects"
-                      icon={CgArrowRight}
-                    />
-                    {isAuth && (
-                      <>
+                    {isAuth &&
+                      pageLinks.authLinks.map(link => (
                         <CommandItem
-                          title="My Projects"
-                          href="/projects/me"
+                          title={link.title}
+                          href={link.href}
                           icon={CgArrowRight}
+                          key={link.title}
                         />
-                        <CommandItem
-                          title="My Posts"
-                          href="/posts/me"
-                          icon={CgArrowRight}
-                        />
-                      </>
-                    )}
+                      ))}
                   </ListItem>
                   <ListItem>
                     <Text
@@ -232,42 +226,29 @@ const CmdPallete = () => {
                     >
                       Actions
                     </Text>
-                    {!isAuth ? (
-                      <>
-                        <CommandItem
-                          title="Register"
-                          href="/auth/register"
-                          icon={CgArrowRight}
-                        />
-                        <CommandItem
-                          title="Login"
-                          href="/auth/login"
-                          icon={CgArrowRight}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <CommandItem
-                          title="Create Post"
-                          href="/posts/create"
-                          icon={CgArrowRight}
-                        />
-                        <CommandItem
-                          title="Create Project"
-                          href="/projects/create"
-                          icon={CgArrowRight}
-                        />
-                        <CommandItem
-                          title="Logout"
-                          icon={CgArrowRight}
-                          onClick={onLogout}
-                        />
-                        <CommandItem
-                          title="My Profile"
-                          href="/users/me"
-                          icon={CgArrowRight}
-                        />
-                      </>
+                    {!isAuth
+                      ? actionLinks.unauthLinks?.map(link => (
+                          <CommandItem
+                            title={link.title}
+                            href={link.href}
+                            icon={CgArrowRight}
+                            key={link.title}
+                          />
+                        ))
+                      : actionLinks.authLinks.map(link => (
+                          <CommandItem
+                            title={link.title}
+                            href={link.href}
+                            icon={CgArrowRight}
+                            key={link.title}
+                          />
+                        ))}
+                    {isAuth && (
+                      <CommandItem
+                        title="Logout"
+                        onClick={onLogout}
+                        icon={CgArrowRight}
+                      />
                     )}
                   </ListItem>
                   <ListItem>

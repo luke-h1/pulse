@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import useNProgress from '@common/hooks/useNProgress';
 import { ChakraProvider } from '@chakra-ui/react';
-import { CmdPalleteContextProvider } from '@frontend/context/CmdPalleteContext';
+import { CmdPalleteContextProvider } from '@common/context/CmdPalleteContext';
 import loadEnv from '@common/lib/loadEnv';
 
 const App = ({ Component, pageProps, router }: AppProps) => {

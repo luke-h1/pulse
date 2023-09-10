@@ -5,7 +5,7 @@ import {
   Text,
   useMenuDescendant,
 } from '@chakra-ui/react';
-import { useCmdPalleteContext } from '@frontend/context/CmdPalleteContext';
+import { useCmdPalleteContext } from '@common/context/CmdPalleteContext';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { FiArrowUpRight } from 'react-icons/fi';

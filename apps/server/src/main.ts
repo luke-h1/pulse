@@ -19,6 +19,7 @@ import logger from './utils/logger';
 import config from './utils/config';
 import createUserDataLoader from './dataloader/createUserLoader';
 import createPostLoader from './dataloader/createPostLoader';
+import createProjectLoader from './dataloader/createProjectLoader';
 
 const DEV_ORIGINS = [
   'http://localhost:3000',
@@ -89,6 +90,7 @@ const main = async () => {
         redis,
         userLoader: createUserDataLoader(),
         postLoader: createPostLoader(),
+        projectLoader: createProjectLoader(),
       }),
     }),
   );

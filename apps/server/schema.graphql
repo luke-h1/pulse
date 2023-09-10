@@ -114,6 +114,7 @@ type Mutation {
   login(options: UserLoginInput!): UserResponse!
   logout: Boolean!
   publishAllPosts: Boolean!
+  publishAllProjects: Boolean!
   register(options: UserRegisterInput!): UserResponse!
 
   """Updates a post"""
@@ -264,13 +265,16 @@ input PostWhereInput {
 
 type Project {
   appStoreUrl: String
+  authorFullName: String!
   authorId: String!
   content: JSON!
   createdAt: DateTimeISO!
+  creator: User!
   githubUrl: String
   id: String!
   image: String
   intro: String!
+  isAuthor: Boolean!
   playStoreUrl: String
   siteUrl: String
   status: Status!
@@ -281,12 +285,13 @@ type Project {
 
 input ProjectCreateInput {
   appStoreUrl: String
-  content: String!
+  content: JSON!
   githubUrl: String
   image: String
   intro: String!
   playStoreUrl: String
   siteUrl: String
+  status: Status!
   tags: [String!]!
   title: String!
 }
@@ -304,7 +309,7 @@ type ProjectResponse {
 
 input ProjectUpdateInput {
   appStoreUrl: String
-  content: String!
+  content: JSON!
   githubUrl: String
   image: String
   intro: String!

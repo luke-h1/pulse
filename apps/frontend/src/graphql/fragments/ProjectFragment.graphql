@@ -10,6 +10,11 @@ fragment ProjectFragment on Project {
   githubUrl
   appStoreUrl
   content
+  isAuthor
+  creator {
+    id
+  }
+  authorFullName
   createdAt
   updatedAt
 }

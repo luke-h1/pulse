@@ -4,7 +4,6 @@ import PostsSection from '@frontend/components/PostsSection';
 import ProjectsSection from '@frontend/components/ProjectsSection';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import {
-  useMeQuery,
   useRecentPostsQuery,
   useRecentProjectsQuery,
 } from '@graphql-hooks/generated';

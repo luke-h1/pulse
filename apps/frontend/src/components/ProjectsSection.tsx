@@ -20,7 +20,7 @@ const ProjectsSection = ({ projects }: Props) => {
         {projects?.length && projects.length > 0 ? (
           projects?.map(project => (
             <GridItem key={project.id} as="article">
-              <ProjectCard project={project} />
+              <ProjectCard project={project} key={project.id} />
             </GridItem>
           ))
         ) : (

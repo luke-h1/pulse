@@ -12,21 +12,22 @@ import FormProvider from '@common/components/form/FormProvider';
 import Input from '@common/components/form/Input';
 import RHFForm from '@common/components/form/RHFForm';
 import TextArea from '@common/components/form/TextArea';
+import useMounted from '@common/hooks/useMounted';
 import ChakraTagInput from '@frontend/components/ChakraTagInput';
 import Page from '@frontend/components/Page';
 import { useIsAuth } from '@frontend/hooks/useIsAuth';
+import useIsProjectAuthor from '@frontend/hooks/useIsProjectAuthor';
 import uploadImage from '@frontend/utils/cloudinary';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import toErrorMap from '@frontend/utils/toErrorMap';
 import {
-  projectCreateInput,
-  projectCreateSchema,
+  projectUpdateInput,
+  projectUpdateSchema,
 } from '@frontend/validation/project';
 import {
-  ProjectCreateInput,
-  Status,
-  useCreateProjectMutation,
   useCreateSignatureMutation,
+  useProjectQuery,
+  useUpdateProjectMutation,
 } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
@@ -39,39 +40,45 @@ const Editor = dynamic(() => import('@editor/index'), {
   ssr: false,
 });
 
-const CreateProjectPage: NextPage = () => {
-  useIsAuth();
-  const [, createProject] = useCreateProjectMutation();
-  const [, createSignature] = useCreateSignatureMutation();
+const UpdateProjectPage: NextPage = () => {
+  const { isMounted } = useMounted();
+  const [, updateProject] = useUpdateProjectMutation();
   const router = useRouter();
-  const [previewImage, setPreviewImage] = useState<string>('');
-  const [tags, setTags] = useState<string[]>([]);
+  useIsAuth();
+
+  const [{ data, fetching }] = useProjectQuery({
+    variables: {
+      id: router.query.id as string,
+    },
+  });
+
+  useIsProjectAuthor(fetching, data?.project);
+
+  const [previewImage, setPreviewImage] = useState<string>(
+    data?.project?.image as string,
+  );
+  const [tags, setTags] = useState<string[]>(data?.project?.tags ?? []);
+  const [, createSignature] = useCreateSignatureMutation();
 
   const handleTagsChange = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    (_event: SyntheticEvent<Element, Event>, tags: string[]) => {
-      const hasDuplicatedTags = tags.some(
-        (tag, index) => tags.indexOf(tag) !== index,
-      );
-
-      if (hasDuplicatedTags) {
-        return;
-      }
-
+    (_event: SyntheticEvent, tags: string[]) => {
       setTags(tags);
     },
     [],
   );
 
   const onSubmit = async (
-    data: ProjectCreateInput,
-    setError: UseFormSetError<ProjectCreateInput>,
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    data: projectUpdateInput,
+    setError: UseFormSetError<projectUpdateInput>,
   ) => {
     const hasDuplicatedTags = tags.some(
       (tag, index) => tags.indexOf(tag) !== index,
     );
 
     if (hasDuplicatedTags) {
+      // @ts-expect-error not defined in types
       setError('tags', {
         type: 'manual',
         message: 'Tags must be unique',
@@ -84,60 +91,72 @@ const CreateProjectPage: NextPage = () => {
 
     if (signatureData) {
       const { signature, timestamp } = signatureData.createImageSignature;
-
       const imageData = await uploadImage(
         data.image as unknown as File,
         signature,
         timestamp,
       );
 
-      const res = await createProject({
+      const res = await updateProject({
+        id: router.query.id as string,
+        // @ts-expect-error content not defined in types
         options: {
           ...data,
           image: imageData?.secure_url,
           tags,
         },
       });
+      const errors = toErrorMap(setError, res.data?.updateProject?.errors);
 
-      const errors = toErrorMap(setError, res.data?.createProject?.errors);
-
-      if (!errors && res.data?.createProject.project?.id) {
-        switch (res.data.createProject.project?.status) {
-          case Status.Draft:
-            router.push(
-              `/projects/${res.data.createProject.project?.id}/preview`,
-            );
+      if (!errors) {
+        switch (res.data?.updateProject.project?.status) {
+          case 'DRAFT':
+            router.push(`/projects/${router.query.id}/preview`);
             break;
-          case Status.Scheduled:
-            router.push(
-              `/projects/${res.data.createProject.project?.id}/preview`,
-            );
+          case 'PUBLISHED':
+            router.push(`/projects/${router.query.id}`);
             break;
-          case Status.Published:
-            router.push(`/projects/${res.data.createProject.project?.id}`);
+          case 'SCHEDULED':
+            router.push(`/projects/${router.query.id}/preview`);
             break;
-
           default:
-            router.push(`/projects/${res.data.createProject.project?.id}`);
+            router.push('/projects');
             break;
         }
       }
     }
   };
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Page
       seo={{
-        title: 'Create Project',
-        description: 'Create a new project',
+        title: `Update Project ${data?.project?.title}`,
+        description: 'Update your project',
       }}
     >
-      <FormProvider enableReinitialize validationSchema={projectCreateSchema}>
+      <FormProvider
+        enableReinitialize
+        validationSchema={projectUpdateSchema}
+        initialValues={{
+          title: data?.project?.title,
+          intro: data?.project?.intro,
+          image: data?.project?.image,
+          content: data?.project?.content,
+          appStoreUrl: data?.project?.appStoreUrl,
+          githubUrl: data?.project?.githubUrl,
+          playStoreUrl: data?.project?.playStoreUrl,
+          siteUrl: data?.project?.siteUrl,
+          status: data?.project?.status,
+          tags,
+        }}
+      >
         {methods => (
-          <RHFForm<projectCreateInput>
-            id="project-create"
+          <RHFForm<projectUpdateInput>
+            id="project-update"
             onSubmit={async values => {
-              // @ts-expect-error not defined in validation schema due to us
               await onSubmit(values, methods.setError);
             }}
             width="80%"
@@ -170,7 +189,6 @@ const CreateProjectPage: NextPage = () => {
               </Text>
               <ChakraTagInput
                 tags={tags}
-                isRequired={tags.length === 0}
                 onTagsChange={handleTagsChange}
                 wrapProps={{ direction: 'column', align: 'start' }}
               />
@@ -281,6 +299,6 @@ const CreateProjectPage: NextPage = () => {
     </Page>
   );
 };
-export default withUrqlClient(createUrqlClient, { ssr: true })(
-  CreateProjectPage,
-);
+export default withUrqlClient(createUrqlClient, {
+  ssr: true,
+})(UpdateProjectPage);

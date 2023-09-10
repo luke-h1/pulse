@@ -12,6 +12,9 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   transpilePackages: ['common', 'graphql-hooks', 'editor'],
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
 };
 
 module.exports = nextConfig;

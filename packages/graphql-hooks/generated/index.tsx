@@ -143,6 +143,7 @@ export type Mutation = {
   login: UserResponse;
   logout: Scalars['Boolean']['output'];
   publishAllPosts: Scalars['Boolean']['output'];
+  publishAllProjects: Scalars['Boolean']['output'];
   register: UserResponse;
   /** Updates a post */
   updatePost: PostResponse;
@@ -354,13 +355,16 @@ export type PostWhereInput = {
 export type Project = {
   __typename?: 'Project';
   appStoreUrl?: Maybe<Scalars['String']['output']>;
+  authorFullName: Scalars['String']['output'];
   authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
+  creator: User;
   githubUrl?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
+  isAuthor: Scalars['Boolean']['output'];
   playStoreUrl?: Maybe<Scalars['String']['output']>;
   siteUrl?: Maybe<Scalars['String']['output']>;
   status: Status;
@@ -371,12 +375,13 @@ export type Project = {
 
 export type ProjectCreateInput = {
   appStoreUrl?: InputMaybe<Scalars['String']['input']>;
-  content: Scalars['String']['input'];
+  content: Scalars['JSON']['input'];
   githubUrl?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   intro: Scalars['String']['input'];
   playStoreUrl?: InputMaybe<Scalars['String']['input']>;
   siteUrl?: InputMaybe<Scalars['String']['input']>;
+  status: Status;
   tags: Array<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
@@ -395,7 +400,7 @@ export type ProjectResponse = {
 
 export type ProjectUpdateInput = {
   appStoreUrl?: InputMaybe<Scalars['String']['input']>;
-  content: Scalars['String']['input'];
+  content: Scalars['JSON']['input'];
   githubUrl?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
   intro: Scalars['String']['input'];
@@ -664,8 +669,11 @@ export type ProjectFragmentFragment = {
   githubUrl?: string | null;
   appStoreUrl?: string | null;
   content: any;
+  isAuthor: boolean;
+  authorFullName: string;
   createdAt: any;
   updatedAt: any;
+  creator: { __typename?: 'User'; id: string };
 };
 
 export type UserFragmentFragment = {
@@ -743,8 +751,11 @@ export type CreateProjectMutation = {
       githubUrl?: string | null;
       appStoreUrl?: string | null;
       content: any;
+      isAuthor: boolean;
+      authorFullName: string;
       createdAt: any;
       updatedAt: any;
+      creator: { __typename?: 'User'; id: string };
     } | null;
   };
 };
@@ -893,8 +904,11 @@ export type UpdateProjectMutation = {
       githubUrl?: string | null;
       appStoreUrl?: string | null;
       content: any;
+      isAuthor: boolean;
+      authorFullName: string;
       createdAt: any;
       updatedAt: any;
+      creator: { __typename?: 'User'; id: string };
     } | null;
   };
 };
@@ -1006,8 +1020,11 @@ export type ProjectQuery = {
     githubUrl?: string | null;
     appStoreUrl?: string | null;
     content: any;
+    isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   } | null;
 };
 
@@ -1038,8 +1055,11 @@ export type ProjectsQuery = {
     githubUrl?: string | null;
     appStoreUrl?: string | null;
     content: any;
+    isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   }> | null;
 };
 
@@ -1081,8 +1101,11 @@ export type RecentProjectsQuery = {
     githubUrl?: string | null;
     appStoreUrl?: string | null;
     content: any;
+    isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   }> | null;
 };
 
@@ -1128,8 +1151,11 @@ export type SearchProjectsQuery = {
     githubUrl?: string | null;
     appStoreUrl?: string | null;
     content: any;
+    isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
   }> | null;
 };
 
@@ -1187,6 +1213,11 @@ export const ProjectFragmentFragmentDoc = gql`
     githubUrl
     appStoreUrl
     content
+    isAuthor
+    creator {
+      id
+    }
+    authorFullName
     createdAt
     updatedAt
   }

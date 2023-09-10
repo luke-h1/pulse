@@ -1,5 +1,8 @@
 import {
   AspectRatio,
+  Box,
+  Button,
+  ButtonGroup,
   Flex,
   LinkBox,
   LinkOverlay,
@@ -7,7 +10,10 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { ArrayElementType } from '@frontend/types/util';
-import { ProjectsQuery } from '@graphql-hooks/generated';
+import {
+  ProjectsQuery,
+  useDeleteProjectMutation,
+} from '@graphql-hooks/generated';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,6 +22,16 @@ interface Props {
 }
 
 const ProjectCard = ({ project }: Props) => {
+  const [, deleteProjectMutation] = useDeleteProjectMutation();
+
+  const handleDeleteProject = async () => {
+    // eslint-disable-next-line no-alert
+    alert('Are you sure you want to delete this project?');
+    await deleteProjectMutation({
+      id: project.id,
+    });
+  };
+
   return (
     <LinkBox zIndex="dropdown">
       <VStack alignItems="flex-start" spacing={4}>
@@ -63,6 +79,22 @@ const ProjectCard = ({ project }: Props) => {
             {project.intro}
           </Text>
         </VStack>
+        <Box p={{ base: 0, full: 4 }} w="full">
+          {project.isAuthor && (
+            <ButtonGroup>
+              <Button
+                as={Link}
+                href={`/projects/${project.id}/update`}
+                size="sm"
+              >
+                Edit project
+              </Button>
+              <Button size="sm" color="red.500" onClick={handleDeleteProject}>
+                Delete project
+              </Button>
+            </ButtonGroup>
+          )}
+        </Box>
       </VStack>
     </LinkBox>
   );

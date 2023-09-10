@@ -3,13 +3,15 @@ import {
   Authorized,
   Ctx,
   Field,
+  FieldResolver,
   Mutation,
   ObjectType,
   Query,
   Resolver,
+  Root,
 } from 'type-graphql';
 import { FieldError } from '../../fields/FieldError';
-import { Project } from '../../prisma/generated/type-graphql';
+import { Project, User } from '../../prisma/generated/type-graphql';
 import { CountResponse, IdsResponse } from '../post/post';
 import { db } from '../../db/prisma';
 import isAuth from '../../middleware/isAuth';
@@ -29,6 +31,29 @@ class ProjectResponse {
 
 @Resolver(Project)
 export class ProjectResolver {
+  @FieldResolver(() => User)
+  creator(@Root() project: Project, @Ctx() { userLoader }: Context) {
+    return userLoader.load(parseInt(project.authorId, 10));
+  }
+
+  @FieldResolver(() => Boolean)
+  async isAuthor(
+    @Root() project: Project,
+    @Ctx() { req, projectLoader }: Context,
+  ): Promise<boolean> {
+    const p = await projectLoader.load(parseInt(project.id, 10));
+    return p.authorId === req.session.userId;
+  }
+
+  @FieldResolver(() => String)
+  async authorFullName(
+    @Root() project: Project,
+    @Ctx() { projectLoader }: Context,
+  ): Promise<string> {
+    const p = await projectLoader.load(parseInt(project.authorId, 10));
+    return `${p.author?.firstName} ${p.author?.lastName}`;
+  }
+
   @Query(() => CountResponse)
   async countProjects() {
     const count = await db.project.count({
@@ -111,27 +136,12 @@ export class ProjectResolver {
   }
 
   @Query(() => Project, { nullable: true })
-  async project(@Arg('id', () => String) id: string): Promise<ProjectResponse> {
-    const project = await db.project.findUnique({
+  async project(@Arg('id', () => String) id: string): Promise<Project | null> {
+    return db.project.findUnique({
       where: {
-        status: 'PUBLISHED',
         id,
       },
     });
-
-    if (!project) {
-      return {
-        errors: [
-          {
-            field: 'title',
-            message: 'Project not found',
-            code: '404',
-          },
-        ],
-      };
-    }
-
-    return { project };
   }
 
   @Mutation(() => ProjectResponse)
@@ -257,6 +267,16 @@ export class ProjectResolver {
   @Authorized(isAdmin)
   async deleteAllProjects(): Promise<boolean> {
     await db.project.deleteMany();
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async publishAllProjects(): Promise<boolean> {
+    await db.project.updateMany({
+      data: {
+        status: 'PUBLISHED',
+      },
+    });
     return true;
   }
 }

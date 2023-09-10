@@ -22,15 +22,17 @@ import {
   InputLeftElement,
   List,
   ListItem,
+  Spinner,
   Text,
   VStack,
 } from '@chakra-ui/react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import Tag from '@frontend/components/Tag';
 import ProjectCard from '@frontend/components/ProjectCard';
+import isServer from '@common/hooks/isServer';
 
 const ProjectPage: NextPage = () => {
-  const [{ data }] = useProjectsQuery();
+  const [{ data, fetching }] = useProjectsQuery();
   const [selectedTag, setSelectedTag] = useState<string>();
   const [displayedProjects, setDisplayedProjects] = useState<
     ProjectsQuery | undefined
@@ -51,6 +53,10 @@ const ProjectPage: NextPage = () => {
     },
     800,
   );
+
+  if (fetching) {
+    return <Spinner />;
+  }
 
   return (
     <Page

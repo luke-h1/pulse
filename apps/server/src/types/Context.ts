@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Redis } from 'ioredis';
 import createUserDataLoader from '../dataloader/createUserLoader';
 import createPostLoader from '../dataloader/createPostLoader';
+import createProjectLoader from '../dataloader/createProjectLoader';
 
 export type Context = {
   req: Request & { session: { userId: string } };
@@ -9,4 +10,5 @@ export type Context = {
   res: Response;
   userLoader: ReturnType<typeof createUserDataLoader>;
   postLoader: ReturnType<typeof createPostLoader>;
+  projectLoader: ReturnType<typeof createProjectLoader>;
 };

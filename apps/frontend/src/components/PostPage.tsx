@@ -31,7 +31,7 @@ const PostPage = ({ post }: Props) => {
               <FormattedDate>{post?.createdAt}</FormattedDate>
             </Text>
             <Text color="gray.500" fontSize="sm">
-              {post?.createdAt}
+              {post?.authorFullName}
             </Text>
           </HStack>
         </VStack>

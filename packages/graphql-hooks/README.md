@@ -2,11 +2,11 @@
 
 > GraphQL code generator consumed by admin and frontend. 
 
-## About
+## About
 
 This project introspets the GraphQL API and generates TypeScript types and React hooks for the queries and mutations. Consumed by the admin and frontend apps.
 
-## Usage
+## Usage
 
 Generate types and hooks for admin and frontend queries, mutations etc.
 

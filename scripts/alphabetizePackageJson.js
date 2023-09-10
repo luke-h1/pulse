@@ -2,11 +2,15 @@ const fs = require('fs');
 const path = require('path');
 
 const packageJsonPaths = [
+  // apps
   'apps/server/package.json',
   'apps/admin/package.json',
   'apps/common/package.json',
   'apps/frontend/package.json',
+  // packages
   'packages/graphql-hooks/package.json',
+  'packages/ui/package.json',
+  'packages/editor/package.json',
 ];
 
 packageJsonPaths.forEach(packageJsonPath => {

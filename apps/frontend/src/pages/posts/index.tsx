@@ -23,7 +23,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import { HiOutlineSearch } from 'react-icons/hi';
 import PostCard from '@frontend/components/PostCard';
 import Tag from '@frontend/components/Tag';
@@ -59,6 +59,7 @@ const PostPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: 'Posts',
         description:

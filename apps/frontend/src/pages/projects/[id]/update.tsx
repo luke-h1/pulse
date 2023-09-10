@@ -14,7 +14,7 @@ import RHFForm from '@common/components/form/RHFForm';
 import TextArea from '@common/components/form/TextArea';
 import useMounted from '@common/hooks/useMounted';
 import ChakraTagInput from '@frontend/components/ChakraTagInput';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import { useIsAuth } from '@frontend/hooks/useIsAuth';
 import useIsProjectAuthor from '@frontend/hooks/useIsProjectAuthor';
 import uploadImage from '@frontend/utils/cloudinary';
@@ -132,6 +132,7 @@ const UpdateProjectPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: `Update Project ${data?.project?.title}`,
         description: 'Update your project',

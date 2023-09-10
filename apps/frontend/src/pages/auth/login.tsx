@@ -1,5 +1,5 @@
 import { ButtonGroup, Heading, Stack } from '@chakra-ui/react';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import FormProvider from '@common/components/form/FormProvider';
 import Input from '@common/components/form/Input';
 import RHFForm from '@common/components/form/RHFForm';
@@ -43,6 +43,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: 'Login',
         description: 'Login to your Pulse account',

@@ -1,5 +1,5 @@
 import Hero from '@frontend/components/Hero';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import PostsSection from '@frontend/components/PostsSection';
 import ProjectsSection from '@frontend/components/ProjectsSection';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
@@ -18,6 +18,7 @@ const Home: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: 'Home',
         description:

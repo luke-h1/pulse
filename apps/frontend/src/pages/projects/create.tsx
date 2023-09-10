@@ -13,7 +13,7 @@ import Input from '@common/components/form/Input';
 import RHFForm from '@common/components/form/RHFForm';
 import TextArea from '@common/components/form/TextArea';
 import ChakraTagInput from '@frontend/components/ChakraTagInput';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import { useIsAuth } from '@frontend/hooks/useIsAuth';
 import uploadImage from '@frontend/utils/cloudinary';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
@@ -127,6 +127,7 @@ const CreateProjectPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: 'Create Project',
         description: 'Create a new project',

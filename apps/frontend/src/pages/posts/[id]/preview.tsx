@@ -7,7 +7,7 @@ import {
 import isServer from '@common/hooks/isServer';
 import useMounted from '@common/hooks/useMounted';
 
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import PostPage from '@frontend/components/PostPage';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { useMeQuery, usePostQuery } from '@graphql-hooks/generated';
@@ -31,6 +31,7 @@ const PreviewPage = () => {
   if (meData?.me?.id !== data?.post?.creator.id) {
     return (
       <Page
+        site="frontend"
         seo={{
           title: 'Unauthorized',
         }}
@@ -46,6 +47,7 @@ const PreviewPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: data?.post?.title,
         description: data?.post?.intro,

@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import isServer from '@common/hooks/isServer';
 import useMounted from '@common/hooks/useMounted';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import ProjectPage from '@frontend/components/ProjectPage';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { useMeQuery, useProjectQuery } from '@graphql-hooks/generated';
@@ -30,6 +30,7 @@ const ProjectPreviewPage = () => {
   if (meData?.me?.id !== data?.project?.creator.id) {
     return (
       <Page
+        site="frontend"
         seo={{
           title: 'Unauthorized',
         }}
@@ -45,6 +46,7 @@ const ProjectPreviewPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: data?.project?.title,
         description: data?.project?.intro,

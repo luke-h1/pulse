@@ -11,7 +11,7 @@ import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { ChangeEvent, useState } from 'react';
 import useDebouncedCallback from '@common/hooks/useDebouncedCallback';
 import searchClient from '@frontend/utils/searchClient';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import {
   Button,
   HStack,
@@ -59,6 +59,7 @@ const ProjectPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: 'Projects',
         description:

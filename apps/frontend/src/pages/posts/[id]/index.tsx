@@ -4,7 +4,7 @@ import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import { Status, usePostQuery } from '@graphql-hooks/generated';
 import { useRouter } from 'next/router';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import PostPage from '@frontend/components/PostPage';
 import isServer from '@common/hooks/isServer';
 import useMounted from '@common/hooks/useMounted';
@@ -28,6 +28,7 @@ const PostSlugPage: NextPage = () => {
   if (data?.post?.status !== Status.Published) {
     return (
       <Page
+        site="frontend"
         seo={{
           title: 'Post not published',
           description: 'Post is not published yet',
@@ -44,6 +45,7 @@ const PostSlugPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: data?.post?.title,
         description: data?.post?.intro,

@@ -14,7 +14,7 @@ import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import useMounted from '@common/hooks/useMounted';
 import EditorOutput from '@editor/renderers/EditorOutput';
 import isServer from '@common/hooks/isServer';
@@ -42,6 +42,7 @@ const ProjectSlugPage: NextPage = () => {
   if (data?.project?.status !== Status.Published) {
     return (
       <Page
+        site="frontend"
         seo={{
           title: 'Project not published',
           description: 'Project is not published yet',
@@ -58,6 +59,7 @@ const ProjectSlugPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: data?.project?.title,
         description: data?.project?.intro,

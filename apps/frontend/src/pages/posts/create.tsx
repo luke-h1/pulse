@@ -11,7 +11,7 @@ import {
 import FormProvider from '@common/components/form/FormProvider';
 import Input from '@common/components/form/Input';
 import RHFForm from '@common/components/form/RHFForm';
-import Page from '@frontend/components/Page';
+import Page from '@common/components/Page';
 import { createUrqlClient } from '@frontend/utils/createUrqlClient';
 import toErrorMap from '@frontend/utils/toErrorMap';
 import { postCreateInput, postCreateSchema } from '@frontend/validation/post';
@@ -110,6 +110,7 @@ const CreatePostPage: NextPage = () => {
 
   return (
     <Page
+      site="frontend"
       seo={{
         title: 'Create post',
         description: 'Create a new post',

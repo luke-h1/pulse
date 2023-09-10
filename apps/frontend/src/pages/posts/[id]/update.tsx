@@ -31,7 +31,6 @@ import { useRouter } from 'next/router';
 import { SyntheticEvent, useCallback, useState } from 'react';
 import { Controller, UseFormSetError } from 'react-hook-form';
 import useMounted from '@common/hooks/useMounted';
-import isServer from '@common/hooks/isServer';
 import useIsPostAuthor from '@frontend/hooks/useIsPostAuthor';
 
 const Editor = dynamic(() => import('@editor/index'), {
@@ -48,16 +47,15 @@ const UpdatePostPage: NextPage = () => {
     variables: {
       id: router.query.id as string,
     },
-    pause: isServer,
+    // pause: isServer,
   });
   useIsPostAuthor(fetching, data?.post);
 
   const [previewImage, setPreviewImage] = useState<string>(
     data?.post?.image as string,
   );
-  const [, createSignature] = useCreateSignatureMutation();
-
   const [tags, setTags] = useState<string[]>(data?.post?.tags ?? []);
+  const [, createSignature] = useCreateSignatureMutation();
 
   const handleTagsChange = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -119,7 +117,15 @@ const UpdatePostPage: NextPage = () => {
   }
 
   if (!fetching && !data?.post?.isAuthor) {
-    router.push('/unauthorized');
+    return (
+      <Page
+        seo={{
+          title: 'Unauthorized',
+        }}
+      >
+        <Heading>Unauthorized</Heading>
+      </Page>
+    );
   }
 
   return (

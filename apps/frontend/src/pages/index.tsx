@@ -16,7 +16,6 @@ const Home: NextPage = () => {
   const [{ data, fetching: postFetching }] = useRecentPostsQuery();
   const [{ data: projectsData, fetching: projectFetching }] =
     useRecentProjectsQuery();
-  const [{ data: meData }] = useMeQuery();
 
   return (
     <Page
@@ -27,11 +26,7 @@ const Home: NextPage = () => {
       }}
     >
       <Hero />
-      {postFetching ? (
-        <Spinner />
-      ) : (
-        <PostsSection posts={data?.recentPosts} user={meData?.me} />
-      )}
+      {postFetching ? <Spinner /> : <PostsSection posts={data?.recentPosts} />}
       {projectFetching ? (
         <Spinner />
       ) : (

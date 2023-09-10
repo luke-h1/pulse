@@ -41,12 +41,12 @@ function invalidateAllCacheItems(cache: Cache, item: string) {
 
 function invalidateCacheItem(cache: Cache, item: string, id: string) {
   try {
-    console.log('Invalidating cache item with id: ', id);
     cache.invalidate({
       __typename: item,
       id,
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error('Failed to invalidate cache item with id: ', id);
   }
 }

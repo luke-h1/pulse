@@ -26,8 +26,9 @@ const PostCard = ({ post, showControls }: Props) => {
   const [, deletePost] = useDeletePostMutation();
 
   const handleDeletePost = async () => {
-    // confirm before deleting
-    console.log('delete post');
+    // TODO: modal instead of alert
+    // eslint-disable-next-line no-alert
+    alert('Are you sure you want to delete this post?');
     await deletePost({
       id: post.id,
     });

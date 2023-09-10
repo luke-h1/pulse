@@ -62,6 +62,7 @@ const projectPayload = {
 
       return SITE_URL_REGEX.test(val);
     }),
+  status: z.enum(['DRAFT', 'PUBLISHED', 'SCHEDULED']),
 };
 
 const projectUpdatePayload = {

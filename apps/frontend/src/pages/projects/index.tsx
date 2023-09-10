@@ -29,7 +29,6 @@ import {
 import { HiOutlineSearch } from 'react-icons/hi';
 import Tag from '@frontend/components/Tag';
 import ProjectCard from '@frontend/components/ProjectCard';
-import isServer from '@common/hooks/isServer';
 
 const ProjectPage: NextPage = () => {
   const [{ data, fetching }] = useProjectsQuery();

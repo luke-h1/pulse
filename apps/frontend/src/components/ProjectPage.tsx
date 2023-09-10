@@ -1,4 +1,11 @@
-import { Divider, HStack, Heading, Text, VStack } from '@chakra-ui/react';
+import {
+  Divider,
+  HStack,
+  Heading,
+  Image,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import FormattedDate from '@common/components/FormattedDate';
 import EditorOutput from '@editor/renderers/EditorOutput';
 import { ProjectQuery } from '@graphql-hooks/generated';
@@ -74,6 +81,7 @@ const ProjectPage = ({ project }: Props) => {
             </Text>
           </HStack>
         </VStack>
+        <Image src={project?.image as string} alt={project?.title} />
         <EditorOutput content={project?.content} />
       </VStack>
       <ScrollToTop />

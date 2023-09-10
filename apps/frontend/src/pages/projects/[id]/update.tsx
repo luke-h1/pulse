@@ -109,7 +109,7 @@ const UpdateProjectPage: NextPage = () => {
       const errors = toErrorMap(setError, res.data?.updateProject?.errors);
 
       if (!errors) {
-        switch (res.data?.updateProject.project?.status) {
+        switch (data.status) {
           case 'DRAFT':
             router.push(`/projects/${router.query.id}/preview`);
             break;
@@ -276,7 +276,7 @@ const UpdateProjectPage: NextPage = () => {
             </Stack>
             <Controller
               name="status"
-              defaultValue="DRAFT"
+              defaultValue={data?.project?.status}
               render={({ field }) => (
                 <Select {...field}>
                   <option value="DRAFT">DRAFT</option>

@@ -31,7 +31,7 @@ API:
   * use ids instead of slugs ✅
   * sort prisma mock ✅
   * sort logging for server - need to log execution time, request logging etc.
-  * use https://github.com/CarterGrimmeisen/zod-prisma to build brand new validation package
+  * use https://github.com/CarterGrimmeisen/zod-prisma to build brand new validation package and not handroll own in each package
 FE:
   * Custom package for GQL type generation ✅
   * Create Github OAUTH app for auth locally ✅
@@ -45,7 +45,13 @@ FE:
     * /projects/me - my projects
     * /feed - all projects and posts of all users
     * /posts - all posts of all users ✅
+    * /posts/[id]/preview ✅
+    * /posts/[id] ✅
+    * /posts/[id]/update ✅
     * /projects - all projects of all users ✅
+    * /projects/[id] ✅
+    * /projects/[id]/preview
+    * /projects/[id]/update  ✅
     * /user/[id] - user profile
     * /user/me - my profile with edit toggles
     * Footer ✅
@@ -56,8 +62,8 @@ Post Saving:
   * Image uploads - both via editor and general form fields✅
   * Sort saving of editor blocks ✅
   * tag input ✅
-  * sort preview functionality - need to split PostPage into it's own component for better reusability
-  * split post create/update into it's own component for less duplication
+  * sort preview functionality - need to split PostPage into it's own component for better reusability  ✅
+  * split post create/update into it's own component for less duplication  ✅
 
 Infra:
  * Terraform for Infra - automate it in CI

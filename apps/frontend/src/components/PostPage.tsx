@@ -1,4 +1,4 @@
-import { HStack, Heading, Text, VStack } from '@chakra-ui/react';
+import { HStack, Heading, Image, Text, VStack } from '@chakra-ui/react';
 import FormattedDate from '@common/components/FormattedDate';
 import { PostQuery } from '@graphql-hooks/generated';
 import { ScrollToTop } from '@ui/components';
@@ -35,6 +35,7 @@ const PostPage = ({ post }: Props) => {
             </Text>
           </HStack>
         </VStack>
+        <Image src={post?.image as string} alt={post?.title} />
         <EditorOutput content={post?.content} />
       </VStack>
       <ScrollToTop />

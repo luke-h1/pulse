@@ -1,17 +1,17 @@
-import * as TypeGraphQL from "type-graphql";
-import * as GraphQLScalars from "graphql-scalars";
-import { Prisma } from "@prisma/client";
-import { DecimalJSScalar } from "../../scalars";
+import * as TypeGraphQL from 'type-graphql';
+import * as GraphQLScalars from 'graphql-scalars';
+import { Prisma } from '@prisma/client';
+import { DecimalJSScalar } from '../../scalars';
 
-@TypeGraphQL.InputType("ProjectUpdatetagsInput", {})
+@TypeGraphQL.InputType('ProjectUpdatetagsInput', {})
 export class ProjectUpdatetagsInput {
   @TypeGraphQL.Field(_type => [String], {
-    nullable: true
+    nullable: true,
   })
   set?: string[] | undefined;
 
   @TypeGraphQL.Field(_type => [String], {
-    nullable: true
+    nullable: true,
   })
   push?: string[] | undefined;
 }

@@ -1,39 +1,62 @@
-import * as TypeGraphQL from "type-graphql";
-import * as GraphQLScalars from "graphql-scalars";
-import { UserOrderByWithRelationAndSearchRelevanceInput } from "../../../inputs/UserOrderByWithRelationAndSearchRelevanceInput";
-import { UserWhereInput } from "../../../inputs/UserWhereInput";
-import { UserWhereUniqueInput } from "../../../inputs/UserWhereUniqueInput";
-import { UserScalarFieldEnum } from "../../../../enums/UserScalarFieldEnum";
+import * as TypeGraphQL from 'type-graphql';
+import * as GraphQLScalars from 'graphql-scalars';
+import { UserOrderByWithRelationAndSearchRelevanceInput } from '../../../inputs/UserOrderByWithRelationAndSearchRelevanceInput';
+import { UserWhereInput } from '../../../inputs/UserWhereInput';
+import { UserWhereUniqueInput } from '../../../inputs/UserWhereUniqueInput';
+import { UserScalarFieldEnum } from '../../../../enums/UserScalarFieldEnum';
 
 @TypeGraphQL.ArgsType()
 export class FindManyUserArgs {
   @TypeGraphQL.Field(_type => UserWhereInput, {
-    nullable: true
+    nullable: true,
   })
   where?: UserWhereInput | undefined;
 
-  @TypeGraphQL.Field(_type => [UserOrderByWithRelationAndSearchRelevanceInput], {
-    nullable: true
-  })
+  @TypeGraphQL.Field(
+    _type => [UserOrderByWithRelationAndSearchRelevanceInput],
+    {
+      nullable: true,
+    },
+  )
   orderBy?: UserOrderByWithRelationAndSearchRelevanceInput[] | undefined;
 
   @TypeGraphQL.Field(_type => UserWhereUniqueInput, {
-    nullable: true
+    nullable: true,
   })
   cursor?: UserWhereUniqueInput | undefined;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: true,
   })
   take?: number | undefined;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true
+    nullable: true,
   })
   skip?: number | undefined;
 
   @TypeGraphQL.Field(_type => [UserScalarFieldEnum], {
-    nullable: true
+    nullable: true,
   })
-  distinct?: Array<"id" | "provider" | "firstName" | "lastName" | "email" | "username" | "password" | "image" | "role" | "github" | "website" | "twitter" | "bio" | "location" | "accountStatus" | "createdAt" | "updatedAt"> | undefined;
+  distinct?:
+    | Array<
+        | 'id'
+        | 'provider'
+        | 'firstName'
+        | 'lastName'
+        | 'email'
+        | 'username'
+        | 'password'
+        | 'image'
+        | 'role'
+        | 'github'
+        | 'website'
+        | 'twitter'
+        | 'bio'
+        | 'location'
+        | 'accountStatus'
+        | 'createdAt'
+        | 'updatedAt'
+      >
+    | undefined;
 }

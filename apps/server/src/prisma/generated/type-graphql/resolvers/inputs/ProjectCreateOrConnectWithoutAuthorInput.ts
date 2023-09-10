@@ -1,19 +1,19 @@
-import * as TypeGraphQL from "type-graphql";
-import * as GraphQLScalars from "graphql-scalars";
-import { Prisma } from "@prisma/client";
-import { DecimalJSScalar } from "../../scalars";
-import { ProjectCreateWithoutAuthorInput } from "../inputs/ProjectCreateWithoutAuthorInput";
-import { ProjectWhereUniqueInput } from "../inputs/ProjectWhereUniqueInput";
+import * as TypeGraphQL from 'type-graphql';
+import * as GraphQLScalars from 'graphql-scalars';
+import { Prisma } from '@prisma/client';
+import { DecimalJSScalar } from '../../scalars';
+import { ProjectCreateWithoutAuthorInput } from '../inputs/ProjectCreateWithoutAuthorInput';
+import { ProjectWhereUniqueInput } from '../inputs/ProjectWhereUniqueInput';
 
-@TypeGraphQL.InputType("ProjectCreateOrConnectWithoutAuthorInput", {})
+@TypeGraphQL.InputType('ProjectCreateOrConnectWithoutAuthorInput', {})
 export class ProjectCreateOrConnectWithoutAuthorInput {
   @TypeGraphQL.Field(_type => ProjectWhereUniqueInput, {
-    nullable: false
+    nullable: false,
   })
   where!: ProjectWhereUniqueInput;
 
   @TypeGraphQL.Field(_type => ProjectCreateWithoutAuthorInput, {
-    nullable: false
+    nullable: false,
   })
   create!: ProjectCreateWithoutAuthorInput;
 }

@@ -1,31 +1,39 @@
-import * as TypeGraphQL from "type-graphql";
-import type { GraphQLResolveInfo } from "graphql";
-import { AggregatePostArgs } from "./args/AggregatePostArgs";
-import { CreateManyPostArgs } from "./args/CreateManyPostArgs";
-import { CreateOnePostArgs } from "./args/CreateOnePostArgs";
-import { DeleteManyPostArgs } from "./args/DeleteManyPostArgs";
-import { DeleteOnePostArgs } from "./args/DeleteOnePostArgs";
-import { FindFirstPostArgs } from "./args/FindFirstPostArgs";
-import { FindFirstPostOrThrowArgs } from "./args/FindFirstPostOrThrowArgs";
-import { FindManyPostArgs } from "./args/FindManyPostArgs";
-import { FindUniquePostArgs } from "./args/FindUniquePostArgs";
-import { FindUniquePostOrThrowArgs } from "./args/FindUniquePostOrThrowArgs";
-import { GroupByPostArgs } from "./args/GroupByPostArgs";
-import { UpdateManyPostArgs } from "./args/UpdateManyPostArgs";
-import { UpdateOnePostArgs } from "./args/UpdateOnePostArgs";
-import { UpsertOnePostArgs } from "./args/UpsertOnePostArgs";
-import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
-import { Post } from "../../../models/Post";
-import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
-import { AggregatePost } from "../../outputs/AggregatePost";
-import { PostGroupBy } from "../../outputs/PostGroupBy";
+import * as TypeGraphQL from 'type-graphql';
+import type { GraphQLResolveInfo } from 'graphql';
+import { AggregatePostArgs } from './args/AggregatePostArgs';
+import { CreateManyPostArgs } from './args/CreateManyPostArgs';
+import { CreateOnePostArgs } from './args/CreateOnePostArgs';
+import { DeleteManyPostArgs } from './args/DeleteManyPostArgs';
+import { DeleteOnePostArgs } from './args/DeleteOnePostArgs';
+import { FindFirstPostArgs } from './args/FindFirstPostArgs';
+import { FindFirstPostOrThrowArgs } from './args/FindFirstPostOrThrowArgs';
+import { FindManyPostArgs } from './args/FindManyPostArgs';
+import { FindUniquePostArgs } from './args/FindUniquePostArgs';
+import { FindUniquePostOrThrowArgs } from './args/FindUniquePostOrThrowArgs';
+import { GroupByPostArgs } from './args/GroupByPostArgs';
+import { UpdateManyPostArgs } from './args/UpdateManyPostArgs';
+import { UpdateOnePostArgs } from './args/UpdateOnePostArgs';
+import { UpsertOnePostArgs } from './args/UpsertOnePostArgs';
+import {
+  transformInfoIntoPrismaArgs,
+  getPrismaFromContext,
+  transformCountFieldIntoSelectRelationsCount,
+} from '../../../helpers';
+import { Post } from '../../../models/Post';
+import { AffectedRowsOutput } from '../../outputs/AffectedRowsOutput';
+import { AggregatePost } from '../../outputs/AggregatePost';
+import { PostGroupBy } from '../../outputs/PostGroupBy';
 
 @TypeGraphQL.Resolver(_of => Post)
 export class PostCrudResolver {
   @TypeGraphQL.Query(_returns => AggregatePost, {
-    nullable: false
+    nullable: false,
   })
-  async aggregatePost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: AggregatePostArgs): Promise<AggregatePost> {
+  async aggregatePost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: AggregatePostArgs,
+  ): Promise<AggregatePost> {
     return getPrismaFromContext(ctx).post.aggregate({
       ...args,
       ...transformInfoIntoPrismaArgs(info),
@@ -33,9 +41,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => AffectedRowsOutput, {
-    nullable: false
+    nullable: false,
   })
-  async createManyPost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: CreateManyPostArgs): Promise<AffectedRowsOutput> {
+  async createManyPost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: CreateManyPostArgs,
+  ): Promise<AffectedRowsOutput> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.createMany({
       ...args,
@@ -44,9 +56,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Post, {
-    nullable: false
+    nullable: false,
   })
-  async createOnePost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: CreateOnePostArgs): Promise<Post> {
+  async createOnePost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: CreateOnePostArgs,
+  ): Promise<Post> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.create({
       ...args,
@@ -55,9 +71,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => AffectedRowsOutput, {
-    nullable: false
+    nullable: false,
   })
-  async deleteManyPost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: DeleteManyPostArgs): Promise<AffectedRowsOutput> {
+  async deleteManyPost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: DeleteManyPostArgs,
+  ): Promise<AffectedRowsOutput> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.deleteMany({
       ...args,
@@ -66,9 +86,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Post, {
-    nullable: true
+    nullable: true,
   })
-  async deleteOnePost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: DeleteOnePostArgs): Promise<Post | null> {
+  async deleteOnePost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: DeleteOnePostArgs,
+  ): Promise<Post | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.delete({
       ...args,
@@ -77,9 +101,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Post, {
-    nullable: true
+    nullable: true,
   })
-  async findFirstPost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindFirstPostArgs): Promise<Post | null> {
+  async findFirstPost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: FindFirstPostArgs,
+  ): Promise<Post | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.findFirst({
       ...args,
@@ -88,9 +116,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Post, {
-    nullable: true
+    nullable: true,
   })
-  async findFirstPostOrThrow(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindFirstPostOrThrowArgs): Promise<Post | null> {
+  async findFirstPostOrThrow(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: FindFirstPostOrThrowArgs,
+  ): Promise<Post | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.findFirstOrThrow({
       ...args,
@@ -99,9 +131,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => [Post], {
-    nullable: false
+    nullable: false,
   })
-  async posts(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindManyPostArgs): Promise<Post[]> {
+  async posts(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: FindManyPostArgs,
+  ): Promise<Post[]> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.findMany({
       ...args,
@@ -110,9 +146,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Post, {
-    nullable: true
+    nullable: true,
   })
-  async post(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindUniquePostArgs): Promise<Post | null> {
+  async post(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: FindUniquePostArgs,
+  ): Promise<Post | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.findUnique({
       ...args,
@@ -121,9 +161,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Post, {
-    nullable: true
+    nullable: true,
   })
-  async getPost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindUniquePostOrThrowArgs): Promise<Post | null> {
+  async getPost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: FindUniquePostOrThrowArgs,
+  ): Promise<Post | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.findUniqueOrThrow({
       ...args,
@@ -132,22 +176,33 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => [PostGroupBy], {
-    nullable: false
+    nullable: false,
   })
-  async groupByPost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: GroupByPostArgs): Promise<PostGroupBy[]> {
-    const { _count, _avg, _sum, _min, _max } = transformInfoIntoPrismaArgs(info);
+  async groupByPost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: GroupByPostArgs,
+  ): Promise<PostGroupBy[]> {
+    const { _count, _avg, _sum, _min, _max } =
+      transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.groupBy({
       ...args,
       ...Object.fromEntries(
-        Object.entries({ _count, _avg, _sum, _min, _max }).filter(([_, v]) => v != null)
+        Object.entries({ _count, _avg, _sum, _min, _max }).filter(
+          ([_, v]) => v != null,
+        ),
       ),
     });
   }
 
   @TypeGraphQL.Mutation(_returns => AffectedRowsOutput, {
-    nullable: false
+    nullable: false,
   })
-  async updateManyPost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpdateManyPostArgs): Promise<AffectedRowsOutput> {
+  async updateManyPost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: UpdateManyPostArgs,
+  ): Promise<AffectedRowsOutput> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.updateMany({
       ...args,
@@ -156,9 +211,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Post, {
-    nullable: true
+    nullable: true,
   })
-  async updateOnePost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpdateOnePostArgs): Promise<Post | null> {
+  async updateOnePost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: UpdateOnePostArgs,
+  ): Promise<Post | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.update({
       ...args,
@@ -167,9 +226,13 @@ export class PostCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Post, {
-    nullable: false
+    nullable: false,
   })
-  async upsertOnePost(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpsertOnePostArgs): Promise<Post> {
+  async upsertOnePost(
+    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Info() info: GraphQLResolveInfo,
+    @TypeGraphQL.Args() args: UpsertOnePostArgs,
+  ): Promise<Post> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).post.upsert({
       ...args,

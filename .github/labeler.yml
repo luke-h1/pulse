@@ -1,0 +1,37 @@
+Server:
+    - "**/server/*"
+    - "**/server/**/*"
+
+Frontend:
+    - "**/frontend/*"
+    - "**/frontend/**/*"
+
+Common: 
+    - "**/common/*"
+    - "**/common/**/*"
+
+Admin:
+    - "**/admin/*"
+    - "**/admin/**/*"
+
+Editor:
+    - "**/editor/*"
+    - "**/editor/**/*"
+
+GraphQL-hooks:
+    - "**/graphql-hooks/*"
+    - "**/graphql-hooks/**/*"
+
+ui:
+    - "**/ui/*"
+    - "**/ui/**/*"
+
+Infrastructure:
+    - "**/terraform/*"
+    - "**/terraform/**/*"
+    - ".github/*"
+    - ".github/**/*"
+    - "docker"
+
+Documentation:
+    - "README.md"

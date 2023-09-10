@@ -201,6 +201,7 @@ input NestedStringNullableFilter {
 }
 
 type Post {
+  authorFullName: String!
   authorId: String!
   content: JSON!
   createdAt: DateTimeISO!
@@ -209,7 +210,6 @@ type Post {
   image: String
   intro: String!
   isAuthor: Boolean!
-  readingTime: String!
   status: Status!
   tags: [String!]!
   title: String!
@@ -256,7 +256,6 @@ input PostWhereInput {
   id: StringFilter
   image: StringNullableFilter
   intro: StringFilter
-  readingTime: StringFilter
   status: EnumStatusFilter
   tags: StringNullableListFilter
   title: StringFilter
@@ -273,7 +272,6 @@ type Project {
   image: String
   intro: String!
   playStoreUrl: String
-  readingTime: String!
   siteUrl: String
   status: Status!
   tags: [String!]!
@@ -331,7 +329,6 @@ input ProjectWhereInput {
   image: StringNullableFilter
   intro: StringFilter
   playStoreUrl: StringNullableFilter
-  readingTime: StringFilter
   siteUrl: StringNullableFilter
   status: EnumStatusFilter
   tags: StringNullableListFilter

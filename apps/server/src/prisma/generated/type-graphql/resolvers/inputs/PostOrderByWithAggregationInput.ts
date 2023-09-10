@@ -48,11 +48,6 @@ export class PostOrderByWithAggregationInput {
   @TypeGraphQL.Field(_type => SortOrder, {
     nullable: true
   })
-  readingTime?: "asc" | "desc" | undefined;
-
-  @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true
-  })
   authorId?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {

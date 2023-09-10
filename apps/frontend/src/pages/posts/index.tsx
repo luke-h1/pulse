@@ -5,7 +5,6 @@ import {
   SearchPostsQuery,
   SearchPostsQueryVariables,
   Status,
-  useMeQuery,
   usePostsQuery,
 } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
@@ -30,14 +29,12 @@ import PostCard from '@frontend/components/PostCard';
 import Tag from '@frontend/components/Tag';
 import useDebouncedCallback from '@common/hooks/useDebouncedCallback';
 import searchClient from '@frontend/utils/searchClient';
-import isServer from '@common/hooks/isServer';
 
 const PostPage: NextPage = () => {
   const [{ data }] = usePostsQuery({
     variables: {
       status: Status.Published,
     },
-    pause: isServer,
   });
   const [selectedTag, setSelectedTag] = useState<string>();
   const [displayedPosts, setDisplayedPosts] = useState<PostsQuery | undefined>(

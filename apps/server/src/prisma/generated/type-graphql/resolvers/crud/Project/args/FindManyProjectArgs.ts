@@ -35,5 +35,5 @@ export class FindManyProjectArgs {
   @TypeGraphQL.Field(_type => [ProjectScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "title" | "intro" | "image" | "content" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "status" | "readingTime" | "authorId" | "createdAt" | "updatedAt"> | undefined;
+  distinct?: Array<"id" | "title" | "intro" | "image" | "content" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "status" | "authorId" | "createdAt" | "updatedAt"> | undefined;
 }

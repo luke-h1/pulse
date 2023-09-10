@@ -8,8 +8,6 @@ import {
   Query,
   Resolver,
 } from 'type-graphql';
-import slugify from 'slugify';
-import readingTime from 'reading-time';
 import { FieldError } from '../../fields/FieldError';
 import { Project } from '../../prisma/generated/type-graphql';
 import { CountResponse, IdsResponse } from '../post/post';
@@ -146,7 +144,6 @@ export class ProjectResolver {
       data: {
         ...options,
         authorId: req.session.userId,
-        readingTime: '10m',
       },
     });
 
@@ -197,7 +194,6 @@ export class ProjectResolver {
       },
       data: {
         ...options,
-        readingTime: readingTime(options.content).text,
       },
     });
 

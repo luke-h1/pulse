@@ -53,7 +53,6 @@ const ProjectSlugPage: NextPage = () => {
         </HStack> */}
               <Text color="gray.500" fontSize="sm">
                 {/* needs be work */}
-                {/* {data?.project?.readingTime} */}
               </Text>
             </HStack>
           </VStack>

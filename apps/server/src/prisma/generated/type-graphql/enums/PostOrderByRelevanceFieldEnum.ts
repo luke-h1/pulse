@@ -6,7 +6,6 @@ export enum PostOrderByRelevanceFieldEnum {
   intro = "intro",
   image = "image",
   tags = "tags",
-  readingTime = "readingTime",
   authorId = "authorId"
 }
 TypeGraphQL.registerEnumType(PostOrderByRelevanceFieldEnum, {

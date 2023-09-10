@@ -70,6 +70,9 @@ const PostCard = ({ post }: Props) => {
         <Text color="gray.500" fontSize="sm">
           {post.intro}
         </Text>
+        <Text color="gray.500" fontSize="sm">
+          Author: {post.authorFullName}
+        </Text>
         <Box p={{ base: 0, full: 4 }} w="full">
           {post.isAuthor && (
             <ButtonGroup>

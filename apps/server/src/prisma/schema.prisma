@@ -76,7 +76,6 @@ model Project {
   playStoreUrl String?
   tags         String[]
   status       Status   @default(DRAFT)
-  readingTime  String
 
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String
@@ -91,10 +90,9 @@ model Post {
   intro String
   image String?
 
-  tags        String[]
-  content     Json
-  status      Status   @default(DRAFT)
-  readingTime String
+  tags    String[]
+  content Json
+  status  Status   @default(DRAFT)
 
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String

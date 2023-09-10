@@ -66,11 +66,6 @@ export class ProjectUpdateInput {
   })
   status?: EnumStatusFieldUpdateOperationsInput | undefined;
 
-  @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
-    nullable: true
-  })
-  readingTime?: StringFieldUpdateOperationsInput | undefined;
-
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
     nullable: true
   })

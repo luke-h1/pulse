@@ -37,7 +37,6 @@ Table Project {
   playStoreUrl String
   tags String[] [not null]
   status Status [not null, default: 'DRAFT']
-  readingTime String [not null]
   author User [not null]
   authorId String [not null]
   createdAt DateTime [default: `now()`, not null]
@@ -52,7 +51,6 @@ Table Post {
   tags String[] [not null]
   content Json [not null]
   status Status [not null, default: 'DRAFT']
-  readingTime String [not null]
   author User [not null]
   authorId String [not null]
   createdAt DateTime [default: `now()`, not null]

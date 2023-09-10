@@ -62,6 +62,15 @@ export class PostResolver {
     return p.authorId === req.session.userId;
   }
 
+  @FieldResolver(() => String)
+  async authorFullName(
+    @Root() post: Post,
+    @Ctx() { userLoader }: Context,
+  ): Promise<string> {
+    const user = await userLoader.load(parseInt(post.authorId, 10));
+    return `${user.firstName} ${user.lastName}`;
+  }
+
   @Query(() => CountResponse, {
     description: 'Returns the total number of posts',
     nullable: true,
@@ -97,6 +106,9 @@ export class PostResolver {
     return db.post.findMany({
       where: {
         status,
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   }
@@ -165,7 +177,6 @@ export class PostResolver {
         ...options,
         content: options.content as unknown as JsonNullValueInput,
         authorId: req.session.userId,
-        readingTime: '10m',
         image: options.image,
       },
     });
@@ -207,7 +218,6 @@ export class PostResolver {
       data: {
         ...options,
         content: options.content as unknown as JsonNullValueInput,
-        // readingTime: readingTime(options.content).text,
         image: post.image,
       },
     });

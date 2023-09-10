@@ -47,11 +47,6 @@ export class PostGroupBy {
   @TypeGraphQL.Field(_type => String, {
     nullable: false
   })
-  readingTime!: string;
-
-  @TypeGraphQL.Field(_type => String, {
-    nullable: false
-  })
   authorId!: string;
 
   @TypeGraphQL.Field(_type => Date, {

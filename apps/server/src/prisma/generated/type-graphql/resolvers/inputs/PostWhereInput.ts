@@ -65,11 +65,6 @@ export class PostWhereInput {
   @TypeGraphQL.Field(_type => StringFilter, {
     nullable: true
   })
-  readingTime?: StringFilter | undefined;
-
-  @TypeGraphQL.Field(_type => StringFilter, {
-    nullable: true
-  })
   authorId?: StringFilter | undefined;
 
   @TypeGraphQL.Field(_type => DateTimeFilter, {

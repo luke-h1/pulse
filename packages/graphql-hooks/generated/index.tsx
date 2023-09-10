@@ -289,6 +289,7 @@ export type NestedStringNullableFilter = {
 
 export type Post = {
   __typename?: 'Post';
+  authorFullName: Scalars['String']['output'];
   authorId: Scalars['String']['output'];
   content: Scalars['JSON']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
@@ -297,7 +298,6 @@ export type Post = {
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
   isAuthor: Scalars['Boolean']['output'];
-  readingTime: Scalars['String']['output'];
   status: Status;
   tags: Array<Scalars['String']['output']>;
   title: Scalars['String']['output'];
@@ -345,7 +345,6 @@ export type PostWhereInput = {
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringNullableFilter>;
   intro?: InputMaybe<StringFilter>;
-  readingTime?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
   title?: InputMaybe<StringFilter>;
@@ -363,7 +362,6 @@ export type Project = {
   image?: Maybe<Scalars['String']['output']>;
   intro: Scalars['String']['output'];
   playStoreUrl?: Maybe<Scalars['String']['output']>;
-  readingTime: Scalars['String']['output'];
   siteUrl?: Maybe<Scalars['String']['output']>;
   status: Status;
   tags: Array<Scalars['String']['output']>;
@@ -422,7 +420,6 @@ export type ProjectWhereInput = {
   image?: InputMaybe<StringNullableFilter>;
   intro?: InputMaybe<StringFilter>;
   playStoreUrl?: InputMaybe<StringNullableFilter>;
-  readingTime?: InputMaybe<StringFilter>;
   siteUrl?: InputMaybe<StringNullableFilter>;
   status?: InputMaybe<EnumStatusFilter>;
   tags?: InputMaybe<StringNullableListFilter>;
@@ -648,6 +645,7 @@ export type PostFragmentFragment = {
   image?: string | null;
   status: Status;
   isAuthor: boolean;
+  authorFullName: string;
   createdAt: any;
   updatedAt: any;
   creator: { __typename?: 'User'; id: string };
@@ -710,6 +708,7 @@ export type CreatePostMutation = {
       image?: string | null;
       status: Status;
       isAuthor: boolean;
+      authorFullName: string;
       createdAt: any;
       updatedAt: any;
       creator: { __typename?: 'User'; id: string };
@@ -852,6 +851,7 @@ export type UpdatePostMutation = {
       image?: string | null;
       status: Status;
       isAuthor: boolean;
+      authorFullName: string;
       createdAt: any;
       updatedAt: any;
       creator: { __typename?: 'User'; id: string };
@@ -928,7 +928,6 @@ export type PostQuery = {
   __typename?: 'Query';
   post?: {
     __typename?: 'Post';
-    readingTime: string;
     id: string;
     title: string;
     intro: string;
@@ -937,6 +936,7 @@ export type PostQuery = {
     image?: string | null;
     status: Status;
     isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -980,6 +980,7 @@ export type PostsQuery = {
     image?: string | null;
     status: Status;
     isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1056,6 +1057,7 @@ export type RecentPostsQuery = {
     image?: string | null;
     status: Status;
     isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1100,6 +1102,7 @@ export type SearchPostsQuery = {
     image?: string | null;
     status: Status;
     isAuthor: boolean;
+    authorFullName: string;
     createdAt: any;
     updatedAt: any;
     creator: { __typename?: 'User'; id: string };
@@ -1163,6 +1166,7 @@ export const PostFragmentFragmentDoc = gql`
     image
     status
     isAuthor
+    authorFullName
     creator {
       id
     }
@@ -1398,7 +1402,6 @@ export const PostDocument = gql`
   query Post($id: String!) {
     post(id: $id) {
       ...PostFragment
-      readingTime
     }
   }
   ${PostFragmentFragmentDoc}

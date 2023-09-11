@@ -1,57 +1,57 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { DateTimeFieldUpdateOperationsInput } from '../inputs/DateTimeFieldUpdateOperationsInput';
-import { EnumStatusFieldUpdateOperationsInput } from '../inputs/EnumStatusFieldUpdateOperationsInput';
-import { NullableStringFieldUpdateOperationsInput } from '../inputs/NullableStringFieldUpdateOperationsInput';
-import { PostUpdatetagsInput } from '../inputs/PostUpdatetagsInput';
-import { StringFieldUpdateOperationsInput } from '../inputs/StringFieldUpdateOperationsInput';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
+import { EnumStatusFieldUpdateOperationsInput } from "../inputs/EnumStatusFieldUpdateOperationsInput";
+import { NullableStringFieldUpdateOperationsInput } from "../inputs/NullableStringFieldUpdateOperationsInput";
+import { PostUpdatetagsInput } from "../inputs/PostUpdatetagsInput";
+import { StringFieldUpdateOperationsInput } from "../inputs/StringFieldUpdateOperationsInput";
 
-@TypeGraphQL.InputType('PostUpdateManyMutationInput', {})
+@TypeGraphQL.InputType("PostUpdateManyMutationInput", {})
 export class PostUpdateManyMutationInput {
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
-    nullable: true,
+    nullable: true
   })
   id?: StringFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
-    nullable: true,
+    nullable: true
   })
   title?: StringFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => StringFieldUpdateOperationsInput, {
-    nullable: true,
+    nullable: true
   })
   intro?: StringFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => NullableStringFieldUpdateOperationsInput, {
-    nullable: true,
+    nullable: true
   })
   image?: NullableStringFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => PostUpdatetagsInput, {
-    nullable: true,
+    nullable: true
   })
   tags?: PostUpdatetagsInput | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   content?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => EnumStatusFieldUpdateOperationsInput, {
-    nullable: true,
+    nullable: true
   })
   status?: EnumStatusFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
-    nullable: true,
+    nullable: true
   })
   createdAt?: DateTimeFieldUpdateOperationsInput | undefined;
 
   @TypeGraphQL.Field(_type => DateTimeFieldUpdateOperationsInput, {
-    nullable: true,
+    nullable: true
   })
   updatedAt?: DateTimeFieldUpdateOperationsInput | undefined;
 }

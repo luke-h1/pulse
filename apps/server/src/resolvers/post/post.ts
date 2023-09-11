@@ -129,6 +129,16 @@ export class PostResolver {
     });
   }
 
+  @Authorized(isAuth)
+  @Query(() => [Post], { nullable: true })
+  async myPosts(@Ctx() { req }: Context): Promise<Post[]> {
+    return db.post.findMany({
+      where: {
+        authorId: req.session.userId,
+      },
+    });
+  }
+
   @Query(() => [Post], {
     description: 'Search posts (full text search on title)',
     nullable: true,

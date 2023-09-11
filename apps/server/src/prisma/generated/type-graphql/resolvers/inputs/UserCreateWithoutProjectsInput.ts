@@ -1,100 +1,100 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { PostCreateNestedManyWithoutAuthorInput } from '../inputs/PostCreateNestedManyWithoutAuthorInput';
-import { AccountStatus } from '../../enums/AccountStatus';
-import { Role } from '../../enums/Role';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { PostCreateNestedManyWithoutAuthorInput } from "../inputs/PostCreateNestedManyWithoutAuthorInput";
+import { AccountStatus } from "../../enums/AccountStatus";
+import { Role } from "../../enums/Role";
 
-@TypeGraphQL.InputType('UserCreateWithoutProjectsInput', {})
+@TypeGraphQL.InputType("UserCreateWithoutProjectsInput", {})
 export class UserCreateWithoutProjectsInput {
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   id?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   provider?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   firstName!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   lastName!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   email?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   username!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   password!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   image?: string | undefined;
 
   @TypeGraphQL.Field(_type => Role, {
-    nullable: true,
+    nullable: true
   })
-  role?: 'USER' | 'ADMIN' | undefined;
+  role?: "USER" | "ADMIN" | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   github?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   website?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   twitter?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   bio?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   location?: string | undefined;
 
   @TypeGraphQL.Field(_type => AccountStatus, {
-    nullable: true,
+    nullable: true
   })
-  accountStatus?: 'BANNED' | 'ON_HOLD' | 'ACTIVE' | undefined;
+  accountStatus?: "BANNED" | "ON_HOLD" | "ACTIVE" | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   createdAt?: Date | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   updatedAt?: Date | undefined;
 
   @TypeGraphQL.Field(_type => PostCreateNestedManyWithoutAuthorInput, {
-    nullable: true,
+    nullable: true
   })
   posts?: PostCreateNestedManyWithoutAuthorInput | undefined;
 }

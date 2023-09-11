@@ -4,12 +4,13 @@ import PostCard from './PostCard';
 
 interface Props {
   posts?: RecentPostsQuery['recentPosts'];
+  title: string;
 }
 
-const PostsSection = ({ posts }: Props) => {
+const PostsSection = ({ posts, title }: Props) => {
   return (
     <VStack as="section" alignItems="flex-start" w="full" spacing={4}>
-      <Heading size="md">Recent Posts</Heading>
+      <Heading size="md">{title}</Heading>
       <List w="full" spacing={{ base: 8, md: 2 }}>
         {posts && posts.length > 0 ? (
           posts.map(post => (

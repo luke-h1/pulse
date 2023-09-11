@@ -4,12 +4,13 @@ import ProjectCard from './ProjectCard';
 
 interface Props {
   projects?: ProjectsQuery['projects'];
+  title: string;
 }
 
-const ProjectsSection = ({ projects }: Props) => {
+const ProjectsSection = ({ projects, title }: Props) => {
   return (
     <VStack as="section" alignItems="flex-start" w="full" spacing={4}>
-      <Heading size="md">Recent Projects</Heading>
+      <Heading size="md">{title}</Heading>
       <SimpleGrid
         rowGap={8}
         columnGap={12}

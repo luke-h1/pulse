@@ -78,6 +78,16 @@ export class ProjectResolver {
     });
   }
 
+  @Authorized(isAuth)
+  @Query(() => [Project], { nullable: true })
+  async myProjects(@Ctx() { req }: Context): Promise<Project[]> {
+    return db.project.findMany({
+      where: {
+        authorId: req.session.userId,
+      },
+    });
+  }
+
   @Query(() => [Project], {
     description: 'Returns the 5 most recent projects',
     nullable: true,

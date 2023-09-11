@@ -1,81 +1,81 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../scalars';
-import { User } from '../models/User';
-import { Status } from '../enums/Status';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../scalars";
+import { User } from "../models/User";
+import { Status } from "../enums/Status";
 
-@TypeGraphQL.ObjectType('Project', {})
+@TypeGraphQL.ObjectType("Project", {})
 export class Project {
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   id!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   title!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   intro!: string;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   image?: string | null;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: false,
+    nullable: false
   })
   content!: Prisma.JsonValue;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   githubUrl?: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   siteUrl?: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   appStoreUrl?: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   playStoreUrl?: string | null;
 
   @TypeGraphQL.Field(_type => [String], {
-    nullable: false,
+    nullable: false
   })
   tags!: string[];
 
   @TypeGraphQL.Field(_type => Status, {
-    nullable: false,
+    nullable: false
   })
-  status!: 'PUBLISHED' | 'DRAFT' | 'SCHEDULED';
+  status!: "PUBLISHED" | "DRAFT" | "SCHEDULED";
 
   author?: User;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   authorId!: string;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: false,
+    nullable: false
   })
   createdAt!: Date;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: false,
+    nullable: false
   })
   updatedAt!: Date;
 }

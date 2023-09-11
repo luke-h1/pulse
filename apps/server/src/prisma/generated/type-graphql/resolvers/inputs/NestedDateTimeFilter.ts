@@ -1,47 +1,47 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
 
-@TypeGraphQL.InputType('NestedDateTimeFilter', {})
+@TypeGraphQL.InputType("NestedDateTimeFilter", {})
 export class NestedDateTimeFilter {
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   equals?: Date | undefined;
 
   @TypeGraphQL.Field(_type => [Date], {
-    nullable: true,
+    nullable: true
   })
   in?: Date[] | undefined;
 
   @TypeGraphQL.Field(_type => [Date], {
-    nullable: true,
+    nullable: true
   })
   notIn?: Date[] | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   lt?: Date | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   lte?: Date | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   gt?: Date | undefined;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   gte?: Date | undefined;
 
   @TypeGraphQL.Field(_type => NestedDateTimeFilter, {
-    nullable: true,
+    nullable: true
   })
   not?: NestedDateTimeFilter | undefined;
 }

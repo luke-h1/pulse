@@ -63,7 +63,7 @@ Post Saving:
   * Sort saving of editor blocks ✅
   * tag input ✅
   * sort preview functionality - need to split PostPage into it's own component for better reusability  ✅
-  * split post create/update into it's own component for less duplication  ✅
+  * split post create/update into it's own component for less duplication ✅
 
 Infra:
  * Terraform for Infra - automate it in CI

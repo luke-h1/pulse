@@ -1,89 +1,89 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { NestedIntFilter } from '../inputs/NestedIntFilter';
-import { NestedJsonFilter } from '../inputs/NestedJsonFilter';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { NestedIntFilter } from "../inputs/NestedIntFilter";
+import { NestedJsonFilter } from "../inputs/NestedJsonFilter";
 
-@TypeGraphQL.InputType('JsonWithAggregatesFilter', {})
+@TypeGraphQL.InputType("JsonWithAggregatesFilter", {})
 export class JsonWithAggregatesFilter {
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   equals?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => [String], {
-    nullable: true,
+    nullable: true
   })
   path?: string[] | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   string_contains?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   string_starts_with?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   string_ends_with?: string | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   array_contains?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   array_starts_with?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   array_ends_with?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   lt?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   lte?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   gt?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   gte?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   not?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => NestedIntFilter, {
-    nullable: true,
+    nullable: true
   })
   _count?: NestedIntFilter | undefined;
 
   @TypeGraphQL.Field(_type => NestedJsonFilter, {
-    nullable: true,
+    nullable: true
   })
   _min?: NestedJsonFilter | undefined;
 
   @TypeGraphQL.Field(_type => NestedJsonFilter, {
-    nullable: true,
+    nullable: true
   })
   _max?: NestedJsonFilter | undefined;
 }

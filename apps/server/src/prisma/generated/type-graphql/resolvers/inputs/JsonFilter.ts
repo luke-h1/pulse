@@ -1,72 +1,72 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
 
-@TypeGraphQL.InputType('JsonFilter', {})
+@TypeGraphQL.InputType("JsonFilter", {})
 export class JsonFilter {
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   equals?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => [String], {
-    nullable: true,
+    nullable: true
   })
   path?: string[] | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   string_contains?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   string_starts_with?: string | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   string_ends_with?: string | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   array_contains?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   array_starts_with?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   array_ends_with?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   lt?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   lte?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   gt?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   gte?: Prisma.InputJsonValue | undefined;
 
   @TypeGraphQL.Field(_type => GraphQLScalars.JSONResolver, {
-    nullable: true,
+    nullable: true
   })
   not?: Prisma.InputJsonValue | undefined;
 }

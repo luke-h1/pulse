@@ -137,14 +137,14 @@ export const frontendMeta: Meta = {
       },
     ],
     thirdGroup: [
-      {
-        href: '/uses',
-        label: 'Uses',
-      },
-      {
-        href: '/uses/me',
-        label: 'My Uses',
-      },
+      // {
+      //   href: '/uses',
+      //   label: 'Uses',
+      // },
+      // {
+      //   href: '/uses/me',
+      //   label: 'My Uses',
+      // },
       {
         href: '/users/me',
         label: 'My Profile',

@@ -1,98 +1,98 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { DateTimeWithAggregatesFilter } from '../inputs/DateTimeWithAggregatesFilter';
-import { EnumStatusWithAggregatesFilter } from '../inputs/EnumStatusWithAggregatesFilter';
-import { JsonWithAggregatesFilter } from '../inputs/JsonWithAggregatesFilter';
-import { StringNullableListFilter } from '../inputs/StringNullableListFilter';
-import { StringNullableWithAggregatesFilter } from '../inputs/StringNullableWithAggregatesFilter';
-import { StringWithAggregatesFilter } from '../inputs/StringWithAggregatesFilter';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { DateTimeWithAggregatesFilter } from "../inputs/DateTimeWithAggregatesFilter";
+import { EnumStatusWithAggregatesFilter } from "../inputs/EnumStatusWithAggregatesFilter";
+import { JsonWithAggregatesFilter } from "../inputs/JsonWithAggregatesFilter";
+import { StringNullableListFilter } from "../inputs/StringNullableListFilter";
+import { StringNullableWithAggregatesFilter } from "../inputs/StringNullableWithAggregatesFilter";
+import { StringWithAggregatesFilter } from "../inputs/StringWithAggregatesFilter";
 
-@TypeGraphQL.InputType('ProjectScalarWhereWithAggregatesInput', {})
+@TypeGraphQL.InputType("ProjectScalarWhereWithAggregatesInput", {})
 export class ProjectScalarWhereWithAggregatesInput {
   @TypeGraphQL.Field(_type => [ProjectScalarWhereWithAggregatesInput], {
-    nullable: true,
+    nullable: true
   })
   AND?: ProjectScalarWhereWithAggregatesInput[] | undefined;
 
   @TypeGraphQL.Field(_type => [ProjectScalarWhereWithAggregatesInput], {
-    nullable: true,
+    nullable: true
   })
   OR?: ProjectScalarWhereWithAggregatesInput[] | undefined;
 
   @TypeGraphQL.Field(_type => [ProjectScalarWhereWithAggregatesInput], {
-    nullable: true,
+    nullable: true
   })
   NOT?: ProjectScalarWhereWithAggregatesInput[] | undefined;
 
   @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   id?: StringWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   title?: StringWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   intro?: StringWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   image?: StringNullableWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => JsonWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   content?: JsonWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   githubUrl?: StringNullableWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   siteUrl?: StringNullableWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   appStoreUrl?: StringNullableWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringNullableWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   playStoreUrl?: StringNullableWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringNullableListFilter, {
-    nullable: true,
+    nullable: true
   })
   tags?: StringNullableListFilter | undefined;
 
   @TypeGraphQL.Field(_type => EnumStatusWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   status?: EnumStatusWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => StringWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   authorId?: StringWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => DateTimeWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   createdAt?: DateTimeWithAggregatesFilter | undefined;
 
   @TypeGraphQL.Field(_type => DateTimeWithAggregatesFilter, {
-    nullable: true,
+    nullable: true
   })
   updatedAt?: DateTimeWithAggregatesFilter | undefined;
 }

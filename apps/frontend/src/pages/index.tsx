@@ -9,12 +9,11 @@ import {
 } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
-import { Spinner } from '@chakra-ui/react';
+import { Heading } from '@chakra-ui/react';
 
 const Home: NextPage = () => {
-  const [{ data, fetching: postFetching }] = useRecentPostsQuery();
-  const [{ data: projectsData, fetching: projectFetching }] =
-    useRecentProjectsQuery();
+  const [{ data }] = useRecentPostsQuery();
+  const [{ data: projectsData }] = useRecentProjectsQuery();
 
   return (
     <Page
@@ -25,13 +24,14 @@ const Home: NextPage = () => {
           'Pulse is a platform for developers to share their knowledge and connect with other developers.',
       }}
     >
-      <Hero />
-      {postFetching ? <Spinner /> : <PostsSection posts={data?.recentPosts} />}
-      {projectFetching ? (
-        <Spinner />
-      ) : (
-        <ProjectsSection projects={projectsData?.recentProjects} />
-      )}
+      <>
+        <Hero />
+        <PostsSection posts={data?.recentPosts} title="Recent Posts" />
+        <ProjectsSection
+          projects={projectsData?.recentProjects}
+          title="Recent Projects"
+        />
+      </>
     </Page>
   );
 };

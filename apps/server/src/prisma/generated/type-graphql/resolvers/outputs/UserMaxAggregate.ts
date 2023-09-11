@@ -1,94 +1,94 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { AccountStatus } from '../../enums/AccountStatus';
-import { Role } from '../../enums/Role';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { AccountStatus } from "../../enums/AccountStatus";
+import { Role } from "../../enums/Role";
 
-@TypeGraphQL.ObjectType('UserMaxAggregate', {})
+@TypeGraphQL.ObjectType("UserMaxAggregate", {})
 export class UserMaxAggregate {
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   id!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   provider!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   firstName!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   lastName!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   email!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   username!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   password!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   image!: string | null;
 
   @TypeGraphQL.Field(_type => Role, {
-    nullable: true,
+    nullable: true
   })
-  role!: 'USER' | 'ADMIN' | null;
+  role!: "USER" | "ADMIN" | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   github!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   website!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   twitter!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   bio!: string | null;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   location!: string | null;
 
   @TypeGraphQL.Field(_type => AccountStatus, {
-    nullable: true,
+    nullable: true
   })
-  accountStatus!: 'BANNED' | 'ON_HOLD' | 'ACTIVE' | null;
+  accountStatus!: "BANNED" | "ON_HOLD" | "ACTIVE" | null;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   createdAt!: Date | null;
 
   @TypeGraphQL.Field(_type => Date, {
-    nullable: true,
+    nullable: true
   })
   updatedAt!: Date | null;
 }

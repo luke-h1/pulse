@@ -1,35 +1,24 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { ProjectOrderByRelevanceFieldEnum } from '../../enums/ProjectOrderByRelevanceFieldEnum';
-import { SortOrder } from '../../enums/SortOrder';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { ProjectOrderByRelevanceFieldEnum } from "../../enums/ProjectOrderByRelevanceFieldEnum";
+import { SortOrder } from "../../enums/SortOrder";
 
-@TypeGraphQL.InputType('ProjectOrderByRelevanceInput', {})
+@TypeGraphQL.InputType("ProjectOrderByRelevanceInput", {})
 export class ProjectOrderByRelevanceInput {
   @TypeGraphQL.Field(_type => [ProjectOrderByRelevanceFieldEnum], {
-    nullable: false,
+    nullable: false
   })
-  fields!: Array<
-    | 'id'
-    | 'title'
-    | 'intro'
-    | 'image'
-    | 'githubUrl'
-    | 'siteUrl'
-    | 'appStoreUrl'
-    | 'playStoreUrl'
-    | 'tags'
-    | 'authorId'
-  >;
+  fields!: Array<"id" | "title" | "intro" | "image" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "authorId">;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: false,
+    nullable: false
   })
-  sort!: 'asc' | 'desc';
+  sort!: "asc" | "desc";
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: false,
+    nullable: false
   })
   search!: string;
 }

@@ -1,23 +1,23 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { PostWhereInput } from '../inputs/PostWhereInput';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { PostWhereInput } from "../inputs/PostWhereInput";
 
-@TypeGraphQL.InputType('PostListRelationFilter', {})
+@TypeGraphQL.InputType("PostListRelationFilter", {})
 export class PostListRelationFilter {
   @TypeGraphQL.Field(_type => PostWhereInput, {
-    nullable: true,
+    nullable: true
   })
   every?: PostWhereInput | undefined;
 
   @TypeGraphQL.Field(_type => PostWhereInput, {
-    nullable: true,
+    nullable: true
   })
   some?: PostWhereInput | undefined;
 
   @TypeGraphQL.Field(_type => PostWhereInput, {
-    nullable: true,
+    nullable: true
   })
   none?: PostWhereInput | undefined;
 }

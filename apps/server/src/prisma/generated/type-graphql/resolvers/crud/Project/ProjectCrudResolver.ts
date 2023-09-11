@@ -1,39 +1,31 @@
-import * as TypeGraphQL from 'type-graphql';
-import type { GraphQLResolveInfo } from 'graphql';
-import { AggregateProjectArgs } from './args/AggregateProjectArgs';
-import { CreateManyProjectArgs } from './args/CreateManyProjectArgs';
-import { CreateOneProjectArgs } from './args/CreateOneProjectArgs';
-import { DeleteManyProjectArgs } from './args/DeleteManyProjectArgs';
-import { DeleteOneProjectArgs } from './args/DeleteOneProjectArgs';
-import { FindFirstProjectArgs } from './args/FindFirstProjectArgs';
-import { FindFirstProjectOrThrowArgs } from './args/FindFirstProjectOrThrowArgs';
-import { FindManyProjectArgs } from './args/FindManyProjectArgs';
-import { FindUniqueProjectArgs } from './args/FindUniqueProjectArgs';
-import { FindUniqueProjectOrThrowArgs } from './args/FindUniqueProjectOrThrowArgs';
-import { GroupByProjectArgs } from './args/GroupByProjectArgs';
-import { UpdateManyProjectArgs } from './args/UpdateManyProjectArgs';
-import { UpdateOneProjectArgs } from './args/UpdateOneProjectArgs';
-import { UpsertOneProjectArgs } from './args/UpsertOneProjectArgs';
-import {
-  transformInfoIntoPrismaArgs,
-  getPrismaFromContext,
-  transformCountFieldIntoSelectRelationsCount,
-} from '../../../helpers';
-import { Project } from '../../../models/Project';
-import { AffectedRowsOutput } from '../../outputs/AffectedRowsOutput';
-import { AggregateProject } from '../../outputs/AggregateProject';
-import { ProjectGroupBy } from '../../outputs/ProjectGroupBy';
+import * as TypeGraphQL from "type-graphql";
+import type { GraphQLResolveInfo } from "graphql";
+import { AggregateProjectArgs } from "./args/AggregateProjectArgs";
+import { CreateManyProjectArgs } from "./args/CreateManyProjectArgs";
+import { CreateOneProjectArgs } from "./args/CreateOneProjectArgs";
+import { DeleteManyProjectArgs } from "./args/DeleteManyProjectArgs";
+import { DeleteOneProjectArgs } from "./args/DeleteOneProjectArgs";
+import { FindFirstProjectArgs } from "./args/FindFirstProjectArgs";
+import { FindFirstProjectOrThrowArgs } from "./args/FindFirstProjectOrThrowArgs";
+import { FindManyProjectArgs } from "./args/FindManyProjectArgs";
+import { FindUniqueProjectArgs } from "./args/FindUniqueProjectArgs";
+import { FindUniqueProjectOrThrowArgs } from "./args/FindUniqueProjectOrThrowArgs";
+import { GroupByProjectArgs } from "./args/GroupByProjectArgs";
+import { UpdateManyProjectArgs } from "./args/UpdateManyProjectArgs";
+import { UpdateOneProjectArgs } from "./args/UpdateOneProjectArgs";
+import { UpsertOneProjectArgs } from "./args/UpsertOneProjectArgs";
+import { transformInfoIntoPrismaArgs, getPrismaFromContext, transformCountFieldIntoSelectRelationsCount } from "../../../helpers";
+import { Project } from "../../../models/Project";
+import { AffectedRowsOutput } from "../../outputs/AffectedRowsOutput";
+import { AggregateProject } from "../../outputs/AggregateProject";
+import { ProjectGroupBy } from "../../outputs/ProjectGroupBy";
 
 @TypeGraphQL.Resolver(_of => Project)
 export class ProjectCrudResolver {
   @TypeGraphQL.Query(_returns => AggregateProject, {
-    nullable: false,
+    nullable: false
   })
-  async aggregateProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: AggregateProjectArgs,
-  ): Promise<AggregateProject> {
+  async aggregateProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: AggregateProjectArgs): Promise<AggregateProject> {
     return getPrismaFromContext(ctx).project.aggregate({
       ...args,
       ...transformInfoIntoPrismaArgs(info),
@@ -41,13 +33,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => AffectedRowsOutput, {
-    nullable: false,
+    nullable: false
   })
-  async createManyProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: CreateManyProjectArgs,
-  ): Promise<AffectedRowsOutput> {
+  async createManyProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: CreateManyProjectArgs): Promise<AffectedRowsOutput> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.createMany({
       ...args,
@@ -56,13 +44,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Project, {
-    nullable: false,
+    nullable: false
   })
-  async createOneProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: CreateOneProjectArgs,
-  ): Promise<Project> {
+  async createOneProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: CreateOneProjectArgs): Promise<Project> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.create({
       ...args,
@@ -71,13 +55,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => AffectedRowsOutput, {
-    nullable: false,
+    nullable: false
   })
-  async deleteManyProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: DeleteManyProjectArgs,
-  ): Promise<AffectedRowsOutput> {
+  async deleteManyProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: DeleteManyProjectArgs): Promise<AffectedRowsOutput> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.deleteMany({
       ...args,
@@ -86,13 +66,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Project, {
-    nullable: true,
+    nullable: true
   })
-  async deleteOneProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: DeleteOneProjectArgs,
-  ): Promise<Project | null> {
+  async deleteOneProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: DeleteOneProjectArgs): Promise<Project | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.delete({
       ...args,
@@ -101,13 +77,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Project, {
-    nullable: true,
+    nullable: true
   })
-  async findFirstProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: FindFirstProjectArgs,
-  ): Promise<Project | null> {
+  async findFirstProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindFirstProjectArgs): Promise<Project | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.findFirst({
       ...args,
@@ -116,13 +88,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Project, {
-    nullable: true,
+    nullable: true
   })
-  async findFirstProjectOrThrow(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: FindFirstProjectOrThrowArgs,
-  ): Promise<Project | null> {
+  async findFirstProjectOrThrow(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindFirstProjectOrThrowArgs): Promise<Project | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.findFirstOrThrow({
       ...args,
@@ -131,13 +99,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => [Project], {
-    nullable: false,
+    nullable: false
   })
-  async projects(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: FindManyProjectArgs,
-  ): Promise<Project[]> {
+  async projects(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindManyProjectArgs): Promise<Project[]> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.findMany({
       ...args,
@@ -146,13 +110,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Project, {
-    nullable: true,
+    nullable: true
   })
-  async project(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: FindUniqueProjectArgs,
-  ): Promise<Project | null> {
+  async project(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindUniqueProjectArgs): Promise<Project | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.findUnique({
       ...args,
@@ -161,13 +121,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => Project, {
-    nullable: true,
+    nullable: true
   })
-  async getProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: FindUniqueProjectOrThrowArgs,
-  ): Promise<Project | null> {
+  async getProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: FindUniqueProjectOrThrowArgs): Promise<Project | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.findUniqueOrThrow({
       ...args,
@@ -176,33 +132,22 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Query(_returns => [ProjectGroupBy], {
-    nullable: false,
+    nullable: false
   })
-  async groupByProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: GroupByProjectArgs,
-  ): Promise<ProjectGroupBy[]> {
-    const { _count, _avg, _sum, _min, _max } =
-      transformInfoIntoPrismaArgs(info);
+  async groupByProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: GroupByProjectArgs): Promise<ProjectGroupBy[]> {
+    const { _count, _avg, _sum, _min, _max } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.groupBy({
       ...args,
       ...Object.fromEntries(
-        Object.entries({ _count, _avg, _sum, _min, _max }).filter(
-          ([_, v]) => v != null,
-        ),
+        Object.entries({ _count, _avg, _sum, _min, _max }).filter(([_, v]) => v != null)
       ),
     });
   }
 
   @TypeGraphQL.Mutation(_returns => AffectedRowsOutput, {
-    nullable: false,
+    nullable: false
   })
-  async updateManyProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: UpdateManyProjectArgs,
-  ): Promise<AffectedRowsOutput> {
+  async updateManyProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpdateManyProjectArgs): Promise<AffectedRowsOutput> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.updateMany({
       ...args,
@@ -211,13 +156,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Project, {
-    nullable: true,
+    nullable: true
   })
-  async updateOneProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: UpdateOneProjectArgs,
-  ): Promise<Project | null> {
+  async updateOneProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpdateOneProjectArgs): Promise<Project | null> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.update({
       ...args,
@@ -226,13 +167,9 @@ export class ProjectCrudResolver {
   }
 
   @TypeGraphQL.Mutation(_returns => Project, {
-    nullable: false,
+    nullable: false
   })
-  async upsertOneProject(
-    @TypeGraphQL.Ctx() ctx: any,
-    @TypeGraphQL.Info() info: GraphQLResolveInfo,
-    @TypeGraphQL.Args() args: UpsertOneProjectArgs,
-  ): Promise<Project> {
+  async upsertOneProject(@TypeGraphQL.Ctx() ctx: any, @TypeGraphQL.Info() info: GraphQLResolveInfo, @TypeGraphQL.Args() args: UpsertOneProjectArgs): Promise<Project> {
     const { _count } = transformInfoIntoPrismaArgs(info);
     return getPrismaFromContext(ctx).project.upsert({
       ...args,

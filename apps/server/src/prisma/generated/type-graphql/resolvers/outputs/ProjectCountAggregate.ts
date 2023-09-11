@@ -1,82 +1,82 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
 
-@TypeGraphQL.ObjectType('ProjectCountAggregate', {})
+@TypeGraphQL.ObjectType("ProjectCountAggregate", {})
 export class ProjectCountAggregate {
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   id!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   title!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   intro!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   image!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   content!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   githubUrl!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   siteUrl!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   appStoreUrl!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   playStoreUrl!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   tags!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   status!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   authorId!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   createdAt!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   updatedAt!: number;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: false,
+    nullable: false
   })
   _all!: number;
 }

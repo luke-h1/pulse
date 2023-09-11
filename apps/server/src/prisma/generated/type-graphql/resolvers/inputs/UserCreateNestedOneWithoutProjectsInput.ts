@@ -1,25 +1,25 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { UserCreateOrConnectWithoutProjectsInput } from '../inputs/UserCreateOrConnectWithoutProjectsInput';
-import { UserCreateWithoutProjectsInput } from '../inputs/UserCreateWithoutProjectsInput';
-import { UserWhereUniqueInput } from '../inputs/UserWhereUniqueInput';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { UserCreateOrConnectWithoutProjectsInput } from "../inputs/UserCreateOrConnectWithoutProjectsInput";
+import { UserCreateWithoutProjectsInput } from "../inputs/UserCreateWithoutProjectsInput";
+import { UserWhereUniqueInput } from "../inputs/UserWhereUniqueInput";
 
-@TypeGraphQL.InputType('UserCreateNestedOneWithoutProjectsInput', {})
+@TypeGraphQL.InputType("UserCreateNestedOneWithoutProjectsInput", {})
 export class UserCreateNestedOneWithoutProjectsInput {
   @TypeGraphQL.Field(_type => UserCreateWithoutProjectsInput, {
-    nullable: true,
+    nullable: true
   })
   create?: UserCreateWithoutProjectsInput | undefined;
 
   @TypeGraphQL.Field(_type => UserCreateOrConnectWithoutProjectsInput, {
-    nullable: true,
+    nullable: true
   })
   connectOrCreate?: UserCreateOrConnectWithoutProjectsInput | undefined;
 
   @TypeGraphQL.Field(_type => UserWhereUniqueInput, {
-    nullable: true,
+    nullable: true
   })
   connect?: UserWhereUniqueInput | undefined;
 }

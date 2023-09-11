@@ -1,50 +1,39 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { PostOrderByWithAggregationInput } from '../../../inputs/PostOrderByWithAggregationInput';
-import { PostScalarWhereWithAggregatesInput } from '../../../inputs/PostScalarWhereWithAggregatesInput';
-import { PostWhereInput } from '../../../inputs/PostWhereInput';
-import { PostScalarFieldEnum } from '../../../../enums/PostScalarFieldEnum';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { PostOrderByWithAggregationInput } from "../../../inputs/PostOrderByWithAggregationInput";
+import { PostScalarWhereWithAggregatesInput } from "../../../inputs/PostScalarWhereWithAggregatesInput";
+import { PostWhereInput } from "../../../inputs/PostWhereInput";
+import { PostScalarFieldEnum } from "../../../../enums/PostScalarFieldEnum";
 
 @TypeGraphQL.ArgsType()
 export class GroupByPostArgs {
   @TypeGraphQL.Field(_type => PostWhereInput, {
-    nullable: true,
+    nullable: true
   })
   where?: PostWhereInput | undefined;
 
   @TypeGraphQL.Field(_type => [PostOrderByWithAggregationInput], {
-    nullable: true,
+    nullable: true
   })
   orderBy?: PostOrderByWithAggregationInput[] | undefined;
 
   @TypeGraphQL.Field(_type => [PostScalarFieldEnum], {
-    nullable: false,
+    nullable: false
   })
-  by!: Array<
-    | 'id'
-    | 'title'
-    | 'intro'
-    | 'image'
-    | 'tags'
-    | 'content'
-    | 'status'
-    | 'authorId'
-    | 'createdAt'
-    | 'updatedAt'
-  >;
+  by!: Array<"id" | "title" | "intro" | "image" | "tags" | "content" | "status" | "authorId" | "createdAt" | "updatedAt">;
 
   @TypeGraphQL.Field(_type => PostScalarWhereWithAggregatesInput, {
-    nullable: true,
+    nullable: true
   })
   having?: PostScalarWhereWithAggregatesInput | undefined;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true,
+    nullable: true
   })
   take?: number | undefined;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true,
+    nullable: true
   })
   skip?: number | undefined;
 }

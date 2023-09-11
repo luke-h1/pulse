@@ -60,17 +60,6 @@ export type DateTimeFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
 };
 
-export type DateTimeNullableFilter = {
-  equals?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  gt?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  gte?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  in?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
-  lt?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  lte?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  not?: InputMaybe<NestedDateTimeNullableFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
-};
-
 export type EnumAccountStatusFilter = {
   equals?: InputMaybe<AccountStatus>;
   in?: InputMaybe<Array<AccountStatus>>;
@@ -223,17 +212,6 @@ export type NestedDateTimeFilter = {
   lt?: InputMaybe<Scalars['DateTimeISO']['input']>;
   lte?: InputMaybe<Scalars['DateTimeISO']['input']>;
   not?: InputMaybe<NestedDateTimeFilter>;
-  notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
-};
-
-export type NestedDateTimeNullableFilter = {
-  equals?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  gt?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  gte?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  in?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
-  lt?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  lte?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  not?: InputMaybe<NestedDateTimeNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['DateTimeISO']['input']>>;
 };
 
@@ -439,6 +417,8 @@ export type Query = {
   countProjects: CountResponse;
   health: Scalars['String']['output'];
   me?: Maybe<User>;
+  myPosts?: Maybe<Array<Post>>;
+  myProjects?: Maybe<Array<Project>>;
   post?: Maybe<Post>;
   /** Returns all post slugs */
   postIds?: Maybe<IdsResponse>;
@@ -552,7 +532,6 @@ export type User = {
   bio?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTimeISO']['output'];
   email?: Maybe<Scalars['String']['output']>;
-  emailVerified?: Maybe<Scalars['DateTimeISO']['output']>;
   firstName: Scalars['String']['output'];
   fullName: Scalars['String']['output'];
   github?: Maybe<Scalars['String']['output']>;
@@ -622,7 +601,6 @@ export type UserWhereInput = {
   bio?: InputMaybe<StringNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   email?: InputMaybe<StringNullableFilter>;
-  emailVerified?: InputMaybe<DateTimeNullableFilter>;
   firstName?: InputMaybe<StringFilter>;
   github?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
@@ -769,6 +747,13 @@ export type CreateSignatureMutation = {
     signature: string;
     timestamp: number;
   };
+};
+
+export type DeleteAccountMutationVariables = Exact<{ [key: string]: never }>;
+
+export type DeleteAccountMutation = {
+  __typename?: 'Mutation';
+  deleteAccount: boolean;
 };
 
 export type DeletePostMutationVariables = Exact<{
@@ -932,6 +917,52 @@ export type MeQuery = {
     createdAt: any;
     location?: string | null;
   } | null;
+};
+
+export type MyPostsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MyPostsQuery = {
+  __typename?: 'Query';
+  myPosts?: Array<{
+    __typename?: 'Post';
+    id: string;
+    title: string;
+    intro: string;
+    content: any;
+    tags: Array<string>;
+    image?: string | null;
+    status: Status;
+    isAuthor: boolean;
+    authorFullName: string;
+    createdAt: any;
+    updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
+  }> | null;
+};
+
+export type MyProjectsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MyProjectsQuery = {
+  __typename?: 'Query';
+  myProjects?: Array<{
+    __typename?: 'Project';
+    id: string;
+    title: string;
+    intro: string;
+    image?: string | null;
+    tags: Array<string>;
+    status: Status;
+    siteUrl?: string | null;
+    playStoreUrl?: string | null;
+    githubUrl?: string | null;
+    appStoreUrl?: string | null;
+    content: any;
+    isAuthor: boolean;
+    authorFullName: string;
+    createdAt: any;
+    updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
+  }> | null;
 };
 
 export type PostQueryVariables = Exact<{
@@ -1296,6 +1327,18 @@ export function useCreateSignatureMutation() {
     CreateSignatureMutationVariables
   >(CreateSignatureDocument);
 }
+export const DeleteAccountDocument = gql`
+  mutation DeleteAccount {
+    deleteAccount
+  }
+`;
+
+export function useDeleteAccountMutation() {
+  return Urql.useMutation<
+    DeleteAccountMutation,
+    DeleteAccountMutationVariables
+  >(DeleteAccountDocument);
+}
 export const DeletePostDocument = gql`
   mutation DeletePost($id: String!) {
     deletePost(id: $id)
@@ -1426,6 +1469,40 @@ export function useMeQuery(
 ) {
   return Urql.useQuery<MeQuery, MeQueryVariables>({
     query: MeDocument,
+    ...options,
+  });
+}
+export const MyPostsDocument = gql`
+  query MyPosts {
+    myPosts {
+      ...PostFragment
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+
+export function useMyPostsQuery(
+  options?: Omit<Urql.UseQueryArgs<MyPostsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<MyPostsQuery, MyPostsQueryVariables>({
+    query: MyPostsDocument,
+    ...options,
+  });
+}
+export const MyProjectsDocument = gql`
+  query MyProjects {
+    myProjects {
+      ...ProjectFragment
+    }
+  }
+  ${ProjectFragmentFragmentDoc}
+`;
+
+export function useMyProjectsQuery(
+  options?: Omit<Urql.UseQueryArgs<MyProjectsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<MyProjectsQuery, MyProjectsQueryVariables>({
+    query: MyProjectsDocument,
     ...options,
   });
 }

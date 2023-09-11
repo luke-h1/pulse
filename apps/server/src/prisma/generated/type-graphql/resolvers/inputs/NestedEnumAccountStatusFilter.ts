@@ -1,28 +1,28 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { AccountStatus } from '../../enums/AccountStatus';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { AccountStatus } from "../../enums/AccountStatus";
 
-@TypeGraphQL.InputType('NestedEnumAccountStatusFilter', {})
+@TypeGraphQL.InputType("NestedEnumAccountStatusFilter", {})
 export class NestedEnumAccountStatusFilter {
   @TypeGraphQL.Field(_type => AccountStatus, {
-    nullable: true,
+    nullable: true
   })
-  equals?: 'BANNED' | 'ON_HOLD' | 'ACTIVE' | undefined;
+  equals?: "BANNED" | "ON_HOLD" | "ACTIVE" | undefined;
 
   @TypeGraphQL.Field(_type => [AccountStatus], {
-    nullable: true,
+    nullable: true
   })
-  in?: Array<'BANNED' | 'ON_HOLD' | 'ACTIVE'> | undefined;
+  in?: Array<"BANNED" | "ON_HOLD" | "ACTIVE"> | undefined;
 
   @TypeGraphQL.Field(_type => [AccountStatus], {
-    nullable: true,
+    nullable: true
   })
-  notIn?: Array<'BANNED' | 'ON_HOLD' | 'ACTIVE'> | undefined;
+  notIn?: Array<"BANNED" | "ON_HOLD" | "ACTIVE"> | undefined;
 
   @TypeGraphQL.Field(_type => NestedEnumAccountStatusFilter, {
-    nullable: true,
+    nullable: true
   })
   not?: NestedEnumAccountStatusFilter | undefined;
 }

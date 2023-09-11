@@ -1,59 +1,39 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { ProjectOrderByWithRelationAndSearchRelevanceInput } from '../../../inputs/ProjectOrderByWithRelationAndSearchRelevanceInput';
-import { ProjectWhereInput } from '../../../inputs/ProjectWhereInput';
-import { ProjectWhereUniqueInput } from '../../../inputs/ProjectWhereUniqueInput';
-import { ProjectScalarFieldEnum } from '../../../../enums/ProjectScalarFieldEnum';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { ProjectOrderByWithRelationAndSearchRelevanceInput } from "../../../inputs/ProjectOrderByWithRelationAndSearchRelevanceInput";
+import { ProjectWhereInput } from "../../../inputs/ProjectWhereInput";
+import { ProjectWhereUniqueInput } from "../../../inputs/ProjectWhereUniqueInput";
+import { ProjectScalarFieldEnum } from "../../../../enums/ProjectScalarFieldEnum";
 
 @TypeGraphQL.ArgsType()
 export class FindManyProjectArgs {
   @TypeGraphQL.Field(_type => ProjectWhereInput, {
-    nullable: true,
+    nullable: true
   })
   where?: ProjectWhereInput | undefined;
 
-  @TypeGraphQL.Field(
-    _type => [ProjectOrderByWithRelationAndSearchRelevanceInput],
-    {
-      nullable: true,
-    },
-  )
+  @TypeGraphQL.Field(_type => [ProjectOrderByWithRelationAndSearchRelevanceInput], {
+    nullable: true
+  })
   orderBy?: ProjectOrderByWithRelationAndSearchRelevanceInput[] | undefined;
 
   @TypeGraphQL.Field(_type => ProjectWhereUniqueInput, {
-    nullable: true,
+    nullable: true
   })
   cursor?: ProjectWhereUniqueInput | undefined;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true,
+    nullable: true
   })
   take?: number | undefined;
 
   @TypeGraphQL.Field(_type => TypeGraphQL.Int, {
-    nullable: true,
+    nullable: true
   })
   skip?: number | undefined;
 
   @TypeGraphQL.Field(_type => [ProjectScalarFieldEnum], {
-    nullable: true,
+    nullable: true
   })
-  distinct?:
-    | Array<
-        | 'id'
-        | 'title'
-        | 'intro'
-        | 'image'
-        | 'content'
-        | 'githubUrl'
-        | 'siteUrl'
-        | 'appStoreUrl'
-        | 'playStoreUrl'
-        | 'tags'
-        | 'status'
-        | 'authorId'
-        | 'createdAt'
-        | 'updatedAt'
-      >
-    | undefined;
+  distinct?: Array<"id" | "title" | "intro" | "image" | "content" | "githubUrl" | "siteUrl" | "appStoreUrl" | "playStoreUrl" | "tags" | "status" | "authorId" | "createdAt" | "updatedAt"> | undefined;
 }

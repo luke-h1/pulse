@@ -325,6 +325,8 @@ type Query {
   countProjects: CountResponse!
   health: String!
   me: User
+  myPosts: [Post!]
+  myProjects: [Project!]
   post(id: String!): Post
 
   """Returns all post slugs"""

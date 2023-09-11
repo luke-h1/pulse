@@ -39,7 +39,7 @@ const Page = ({ children, seo, site }: Props) => {
           <VStack as="main" flex={1} w="full" spacing={16}>
             <CmdPallete
               actionLinks={pageMeta.actionLinks}
-              pageLinks={pageMeta.actionLinks}
+              pageLinks={pageMeta.pageLinks}
             />
             {children}
           </VStack>

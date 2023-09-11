@@ -1,58 +1,58 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
-import { SortOrder } from '../../enums/SortOrder';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
+import { SortOrder } from "../../enums/SortOrder";
 
-@TypeGraphQL.InputType('PostCountOrderByAggregateInput', {})
+@TypeGraphQL.InputType("PostCountOrderByAggregateInput", {})
 export class PostCountOrderByAggregateInput {
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  id?: 'asc' | 'desc' | undefined;
+  id?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  title?: 'asc' | 'desc' | undefined;
+  title?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  intro?: 'asc' | 'desc' | undefined;
+  intro?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  image?: 'asc' | 'desc' | undefined;
+  image?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  tags?: 'asc' | 'desc' | undefined;
+  tags?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  content?: 'asc' | 'desc' | undefined;
+  content?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  status?: 'asc' | 'desc' | undefined;
+  status?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  authorId?: 'asc' | 'desc' | undefined;
+  authorId?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  createdAt?: 'asc' | 'desc' | undefined;
+  createdAt?: "asc" | "desc" | undefined;
 
   @TypeGraphQL.Field(_type => SortOrder, {
-    nullable: true,
+    nullable: true
   })
-  updatedAt?: 'asc' | 'desc' | undefined;
+  updatedAt?: "asc" | "desc" | undefined;
 }

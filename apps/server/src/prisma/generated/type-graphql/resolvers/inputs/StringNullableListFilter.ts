@@ -1,32 +1,32 @@
-import * as TypeGraphQL from 'type-graphql';
-import * as GraphQLScalars from 'graphql-scalars';
-import { Prisma } from '@prisma/client';
-import { DecimalJSScalar } from '../../scalars';
+import * as TypeGraphQL from "type-graphql";
+import * as GraphQLScalars from "graphql-scalars";
+import { Prisma } from "@prisma/client";
+import { DecimalJSScalar } from "../../scalars";
 
-@TypeGraphQL.InputType('StringNullableListFilter', {})
+@TypeGraphQL.InputType("StringNullableListFilter", {})
 export class StringNullableListFilter {
   @TypeGraphQL.Field(_type => [String], {
-    nullable: true,
+    nullable: true
   })
   equals?: string[] | undefined;
 
   @TypeGraphQL.Field(_type => String, {
-    nullable: true,
+    nullable: true
   })
   has?: string | undefined;
 
   @TypeGraphQL.Field(_type => [String], {
-    nullable: true,
+    nullable: true
   })
   hasEvery?: string[] | undefined;
 
   @TypeGraphQL.Field(_type => [String], {
-    nullable: true,
+    nullable: true
   })
   hasSome?: string[] | undefined;
 
   @TypeGraphQL.Field(_type => Boolean, {
-    nullable: true,
+    nullable: true
   })
   isEmpty?: boolean | undefined;
 }

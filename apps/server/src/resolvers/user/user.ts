@@ -24,6 +24,7 @@ import { UserLoginInput } from './inputs/UserLoginInput';
 import config from '../../utils/config';
 import { UserUpdateInput } from './inputs/UserUpdateInput';
 import { IdsResponse } from '../post/post';
+import logger from '../../utils/logger';
 
 @ObjectType()
 export class UserResponse {
@@ -69,6 +70,24 @@ export class UserResolver {
     const hashedPassword = await bcrypt.hash(options.password, 10);
 
     try {
+      const userExists = await db.user.findUnique({
+        where: {
+          email: options.email,
+        },
+      });
+
+      if (userExists) {
+        return {
+          errors: [
+            {
+              field: 'email',
+              message: 'An account with this email already exists.',
+              code: '409',
+            },
+          ],
+        };
+      }
+
       const user = await db.user.create({
         data: {
           ...options,
@@ -85,18 +104,6 @@ export class UserResolver {
         errors: [],
       };
     } catch (e: unknown) {
-      if ((e as { code: string }).code === 'P2002') {
-        return {
-          errors: [
-            {
-              field: 'email',
-              message: 'An account with that email already exists.',
-              code: '409',
-            },
-          ],
-        };
-      }
-
       if (isErrorLike(e)) {
         return {
           errors: [
@@ -164,6 +171,93 @@ export class UserResolver {
             field: 'email',
             message: 'Invalid email or password.',
             code: '401',
+          },
+        ],
+      };
+    }
+
+    // eslint-disable-next-line no-param-reassign
+    req.session.userId = user.id;
+
+    return {
+      user,
+      errors: [],
+    };
+  }
+
+  @Mutation(() => UserResponse)
+  async adminLogin(
+    @Arg('options') options: UserLoginInput,
+    @Ctx() { req }: Context,
+  ): Promise<UserResponse> {
+    const user = await db.user.findUnique({
+      where: {
+        email: options.email,
+      },
+    });
+
+    if (!user) {
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'Invalid email or password.',
+            code: '401',
+          },
+        ],
+      };
+    }
+
+    if (user.accountStatus === 'BANNED' || user.accountStatus === 'ON_HOLD') {
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'Your account has been suspended.',
+            code: '403',
+          },
+        ],
+      };
+    }
+
+    const valid = await bcrypt.compare(options.password, user.password);
+
+    if (!valid) {
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'Invalid email or password.',
+            code: '401',
+          },
+        ],
+      };
+    }
+
+    if (user.role !== Role.ADMIN) {
+      const res = await db.adminReport.create({
+        data: {
+          title: `User ${user.id} attempted to login as an admin.`,
+          content: {
+            id: 'OpE2kPz9cJ',
+            data: {
+              text: `The user ${user.firstName} attempted to login to the admin app instead of using the frontend app. This exception was caugh in the \`adminLogin\` mutation.`,
+            },
+            type: 'paragraph',
+          },
+        },
+      });
+
+      logger.warn(
+        `User ${user.id} attempted to login to the admin app instead of using the frontend app. This exception was caugh in the \`adminLogin\` mutation. Created report ${res.id} `,
+      );
+
+      return {
+        errors: [
+          {
+            field: 'email',
+            message: 'You are not authorized to access this page.',
+            code: '403',
           },
         ],
       };

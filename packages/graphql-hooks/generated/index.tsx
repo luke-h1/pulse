@@ -44,6 +44,25 @@ export enum AccountStatus {
   OnHold = 'ON_HOLD',
 }
 
+export type AdminReportListRelationFilter = {
+  every?: InputMaybe<AdminReportWhereInput>;
+  none?: InputMaybe<AdminReportWhereInput>;
+  some?: InputMaybe<AdminReportWhereInput>;
+};
+
+export type AdminReportWhereInput = {
+  AND?: InputMaybe<Array<AdminReportWhereInput>>;
+  NOT?: InputMaybe<Array<AdminReportWhereInput>>;
+  OR?: InputMaybe<Array<AdminReportWhereInput>>;
+  author?: InputMaybe<UserNullableRelationFilter>;
+  authorId?: InputMaybe<StringNullableFilter>;
+  content?: InputMaybe<JsonFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+};
+
 export type CountResponse = {
   __typename?: 'CountResponse';
   count?: Maybe<Scalars['Float']['output']>;
@@ -117,6 +136,7 @@ export type JsonFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  adminLogin: UserResponse;
   createImageSignature: ImageSignature;
   createPost: PostResponse;
   createProject: ProjectResponse;
@@ -142,6 +162,10 @@ export type Mutation = {
   updateUserStatus: UserResponse;
   /** Returns all user ids */
   userSlugs?: Maybe<IdsResponse>;
+};
+
+export type MutationAdminLoginArgs = {
+  options: UserLoginInput;
 };
 
 export type MutationCreatePostArgs = {
@@ -551,6 +575,7 @@ export type UserCount = {
   __typename?: 'UserCount';
   posts: Scalars['Int']['output'];
   projects: Scalars['Int']['output'];
+  reports: Scalars['Int']['output'];
 };
 
 export type UserCountPostsArgs = {
@@ -561,9 +586,18 @@ export type UserCountProjectsArgs = {
   where?: InputMaybe<ProjectWhereInput>;
 };
 
+export type UserCountReportsArgs = {
+  where?: InputMaybe<AdminReportWhereInput>;
+};
+
 export type UserLoginInput = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+export type UserNullableRelationFilter = {
+  is?: InputMaybe<UserWhereInput>;
+  isNot?: InputMaybe<UserWhereInput>;
 };
 
 export type UserRegisterInput = {
@@ -611,6 +645,7 @@ export type UserWhereInput = {
   posts?: InputMaybe<PostListRelationFilter>;
   projects?: InputMaybe<ProjectListRelationFilter>;
   provider?: InputMaybe<StringFilter>;
+  reports?: InputMaybe<AdminReportListRelationFilter>;
   role?: InputMaybe<EnumRoleFilter>;
   twitter?: InputMaybe<StringNullableFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
@@ -618,13 +653,13 @@ export type UserWhereInput = {
   website?: InputMaybe<StringNullableFilter>;
 };
 
-export type LoginMutationVariables = Exact<{
+export type AdminLoginMutationVariables = Exact<{
   options: UserLoginInput;
 }>;
 
-export type LoginMutation = {
+export type AdminLoginMutation = {
   __typename?: 'Mutation';
-  login: {
+  adminLogin: {
     __typename?: 'UserResponse';
     errors?: Array<{
       __typename?: 'FieldError';
@@ -649,153 +684,6 @@ export type LoginMutation = {
       location?: string | null;
     } | null;
   };
-};
-
-export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
-
-export type LogoutMutation = { __typename?: 'Mutation'; logout: boolean };
-
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
-
-export type MeQuery = {
-  __typename?: 'Query';
-  me?: {
-    __typename?: 'User';
-    role: Role;
-    id: string;
-    firstName: string;
-    lastName: string;
-    image?: string | null;
-    github?: string | null;
-    email?: string | null;
-    bio?: string | null;
-    twitter?: string | null;
-    username: string;
-    website?: string | null;
-    createdAt: any;
-    location?: string | null;
-  } | null;
-};
-
-export type PostQueryVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-export type PostQuery = {
-  __typename?: 'Query';
-  post?: {
-    __typename?: 'Post';
-    id: string;
-    title: string;
-    intro: string;
-    content: any;
-    tags: Array<string>;
-    image?: string | null;
-    status: Status;
-    isAuthor: boolean;
-    authorFullName: string;
-    createdAt: any;
-    updatedAt: any;
-    creator: { __typename?: 'User'; id: string };
-  } | null;
-};
-
-export type PostsQueryVariables = Exact<{
-  status: Status;
-}>;
-
-export type PostsQuery = {
-  __typename?: 'Query';
-  posts?: Array<{
-    __typename?: 'Post';
-    id: string;
-    title: string;
-    intro: string;
-    content: any;
-    tags: Array<string>;
-    image?: string | null;
-    status: Status;
-    isAuthor: boolean;
-    authorFullName: string;
-    createdAt: any;
-    updatedAt: any;
-    creator: { __typename?: 'User'; id: string };
-  }> | null;
-};
-
-export type ProjectQueryVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-export type ProjectQuery = {
-  __typename?: 'Query';
-  project?: {
-    __typename?: 'Project';
-    id: string;
-    title: string;
-    intro: string;
-    image?: string | null;
-    tags: Array<string>;
-    status: Status;
-    siteUrl?: string | null;
-    playStoreUrl?: string | null;
-    githubUrl?: string | null;
-    appStoreUrl?: string | null;
-    content: any;
-    isAuthor: boolean;
-    authorFullName: string;
-    createdAt: any;
-    updatedAt: any;
-    creator: { __typename?: 'User'; id: string };
-  } | null;
-};
-
-export type ProjectsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type ProjectsQuery = {
-  __typename?: 'Query';
-  projects?: Array<{
-    __typename?: 'Project';
-    id: string;
-    title: string;
-    intro: string;
-    image?: string | null;
-    tags: Array<string>;
-    status: Status;
-    siteUrl?: string | null;
-    playStoreUrl?: string | null;
-    githubUrl?: string | null;
-    appStoreUrl?: string | null;
-    content: any;
-    isAuthor: boolean;
-    authorFullName: string;
-    createdAt: any;
-    updatedAt: any;
-    creator: { __typename?: 'User'; id: string };
-  }> | null;
-};
-
-export type UserQueryVariables = Exact<{
-  userId: Scalars['String']['input'];
-}>;
-
-export type UserQuery = {
-  __typename?: 'Query';
-  user?: {
-    __typename?: 'User';
-    id: string;
-    firstName: string;
-    lastName: string;
-    image?: string | null;
-    github?: string | null;
-    email?: string | null;
-    bio?: string | null;
-    twitter?: string | null;
-    username: string;
-    website?: string | null;
-    createdAt: any;
-    location?: string | null;
-  } | null;
 };
 
 export type PostFragmentFragment = {
@@ -954,6 +842,43 @@ export type DeleteProjectMutation = {
   deleteProject: boolean;
 };
 
+export type LoginMutationVariables = Exact<{
+  options: UserLoginInput;
+}>;
+
+export type LoginMutation = {
+  __typename?: 'Mutation';
+  login: {
+    __typename?: 'UserResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      message: string;
+      field: string;
+      code?: string | null;
+    }> | null;
+    user?: {
+      __typename?: 'User';
+      role: Role;
+      id: string;
+      firstName: string;
+      lastName: string;
+      image?: string | null;
+      github?: string | null;
+      email?: string | null;
+      bio?: string | null;
+      twitter?: string | null;
+      username: string;
+      website?: string | null;
+      createdAt: any;
+      location?: string | null;
+    } | null;
+  };
+};
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+
+export type LogoutMutation = { __typename?: 'Mutation'; logout: boolean };
+
 export type RegisterMutationVariables = Exact<{
   options: UserRegisterInput;
 }>;
@@ -1057,6 +982,28 @@ export type UpdateProjectMutation = {
   };
 };
 
+export type MeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MeQuery = {
+  __typename?: 'Query';
+  me?: {
+    __typename?: 'User';
+    role: Role;
+    id: string;
+    firstName: string;
+    lastName: string;
+    image?: string | null;
+    github?: string | null;
+    email?: string | null;
+    bio?: string | null;
+    twitter?: string | null;
+    username: string;
+    website?: string | null;
+    createdAt: any;
+    location?: string | null;
+  } | null;
+};
+
 export type MyPostsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MyPostsQuery = {
@@ -1103,6 +1050,29 @@ export type MyProjectsQuery = {
   }> | null;
 };
 
+export type PostQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+export type PostQuery = {
+  __typename?: 'Query';
+  post?: {
+    __typename?: 'Post';
+    id: string;
+    title: string;
+    intro: string;
+    content: any;
+    tags: Array<string>;
+    image?: string | null;
+    status: Status;
+    isAuthor: boolean;
+    authorFullName: string;
+    createdAt: any;
+    updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
+  } | null;
+};
+
 export type PostIdsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type PostIdsQuery = {
@@ -1124,6 +1094,56 @@ export type PostStatusQuery = {
   } | null;
 };
 
+export type PostsQueryVariables = Exact<{
+  status: Status;
+}>;
+
+export type PostsQuery = {
+  __typename?: 'Query';
+  posts?: Array<{
+    __typename?: 'Post';
+    id: string;
+    title: string;
+    intro: string;
+    content: any;
+    tags: Array<string>;
+    image?: string | null;
+    status: Status;
+    isAuthor: boolean;
+    authorFullName: string;
+    createdAt: any;
+    updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
+  }> | null;
+};
+
+export type ProjectQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+export type ProjectQuery = {
+  __typename?: 'Query';
+  project?: {
+    __typename?: 'Project';
+    id: string;
+    title: string;
+    intro: string;
+    image?: string | null;
+    tags: Array<string>;
+    status: Status;
+    siteUrl?: string | null;
+    playStoreUrl?: string | null;
+    githubUrl?: string | null;
+    appStoreUrl?: string | null;
+    content: any;
+    isAuthor: boolean;
+    authorFullName: string;
+    createdAt: any;
+    updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
+  } | null;
+};
+
 export type ProjectIdsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProjectIdsQuery = {
@@ -1132,6 +1152,31 @@ export type ProjectIdsQuery = {
     __typename?: 'IdsResponse';
     ids?: Array<string> | null;
   } | null;
+};
+
+export type ProjectsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ProjectsQuery = {
+  __typename?: 'Query';
+  projects?: Array<{
+    __typename?: 'Project';
+    id: string;
+    title: string;
+    intro: string;
+    image?: string | null;
+    tags: Array<string>;
+    status: Status;
+    siteUrl?: string | null;
+    playStoreUrl?: string | null;
+    githubUrl?: string | null;
+    appStoreUrl?: string | null;
+    content: any;
+    isAuthor: boolean;
+    authorFullName: string;
+    createdAt: any;
+    updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
+  }> | null;
 };
 
 export type RecentPostsQueryVariables = Exact<{ [key: string]: never }>;
@@ -1230,6 +1275,29 @@ export type SearchProjectsQuery = {
   }> | null;
 };
 
+export type UserQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+}>;
+
+export type UserQuery = {
+  __typename?: 'Query';
+  user?: {
+    __typename?: 'User';
+    id: string;
+    firstName: string;
+    lastName: string;
+    image?: string | null;
+    github?: string | null;
+    email?: string | null;
+    bio?: string | null;
+    twitter?: string | null;
+    username: string;
+    website?: string | null;
+    createdAt: any;
+    location?: string | null;
+  } | null;
+};
+
 export const PostFragmentFragmentDoc = gql`
   fragment PostFragment on Post {
     id
@@ -1286,9 +1354,9 @@ export const UserFragmentFragmentDoc = gql`
     location
   }
 `;
-export const LoginDocument = gql`
-  mutation Login($options: UserLoginInput!) {
-    login(options: $options) {
+export const AdminLoginDocument = gql`
+  mutation AdminLogin($options: UserLoginInput!) {
+    adminLogin(options: $options) {
       errors {
         message
         field
@@ -1303,122 +1371,10 @@ export const LoginDocument = gql`
   ${UserFragmentFragmentDoc}
 `;
 
-export function useLoginMutation() {
-  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-}
-export const LogoutDocument = gql`
-  mutation Logout {
-    logout
-  }
-`;
-
-export function useLogoutMutation() {
-  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
-    LogoutDocument,
+export function useAdminLoginMutation() {
+  return Urql.useMutation<AdminLoginMutation, AdminLoginMutationVariables>(
+    AdminLoginDocument,
   );
-}
-export const MeDocument = gql`
-  query Me {
-    me {
-      ...UserFragment
-      role
-    }
-  }
-  ${UserFragmentFragmentDoc}
-`;
-
-export function useMeQuery(
-  options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<MeQuery, MeQueryVariables>({
-    query: MeDocument,
-    ...options,
-  });
-}
-export const PostDocument = gql`
-  query Post($id: String!) {
-    post(id: $id) {
-      ...PostFragment
-    }
-  }
-  ${PostFragmentFragmentDoc}
-`;
-
-export function usePostQuery(
-  options: Omit<Urql.UseQueryArgs<PostQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<PostQuery, PostQueryVariables>({
-    query: PostDocument,
-    ...options,
-  });
-}
-export const PostsDocument = gql`
-  query Posts($status: Status!) {
-    posts(status: $status) {
-      ...PostFragment
-    }
-  }
-  ${PostFragmentFragmentDoc}
-`;
-
-export function usePostsQuery(
-  options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<PostsQuery, PostsQueryVariables>({
-    query: PostsDocument,
-    ...options,
-  });
-}
-export const ProjectDocument = gql`
-  query Project($id: String!) {
-    project(id: $id) {
-      ...ProjectFragment
-    }
-  }
-  ${ProjectFragmentFragmentDoc}
-`;
-
-export function useProjectQuery(
-  options: Omit<Urql.UseQueryArgs<ProjectQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ProjectQuery, ProjectQueryVariables>({
-    query: ProjectDocument,
-    ...options,
-  });
-}
-export const ProjectsDocument = gql`
-  query Projects {
-    projects {
-      ...ProjectFragment
-    }
-  }
-  ${ProjectFragmentFragmentDoc}
-`;
-
-export function useProjectsQuery(
-  options?: Omit<Urql.UseQueryArgs<ProjectsQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<ProjectsQuery, ProjectsQueryVariables>({
-    query: ProjectsDocument,
-    ...options,
-  });
-}
-export const UserDocument = gql`
-  query User($userId: String!) {
-    user(id: $userId) {
-      ...UserFragment
-    }
-  }
-  ${UserFragmentFragmentDoc}
-`;
-
-export function useUserQuery(
-  options: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>,
-) {
-  return Urql.useQuery<UserQuery, UserQueryVariables>({
-    query: UserDocument,
-    ...options,
-  });
 }
 export const CreatePostDocument = gql`
   mutation CreatePost($options: PostCreateInput!) {
@@ -1513,6 +1469,37 @@ export function useDeleteProjectMutation() {
     DeleteProjectMutationVariables
   >(DeleteProjectDocument);
 }
+export const LoginDocument = gql`
+  mutation Login($options: UserLoginInput!) {
+    login(options: $options) {
+      errors {
+        message
+        field
+        code
+      }
+      user {
+        ...UserFragment
+        role
+      }
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+
+export function useLoginMutation() {
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+}
+export const LogoutDocument = gql`
+  mutation Logout {
+    logout
+  }
+`;
+
+export function useLogoutMutation() {
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
+  );
+}
 export const RegisterDocument = gql`
   mutation Register($options: UserRegisterInput!) {
     register(options: $options) {
@@ -1578,6 +1565,24 @@ export function useUpdateProjectMutation() {
     UpdateProjectMutationVariables
   >(UpdateProjectDocument);
 }
+export const MeDocument = gql`
+  query Me {
+    me {
+      ...UserFragment
+      role
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+
+export function useMeQuery(
+  options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<MeQuery, MeQueryVariables>({
+    query: MeDocument,
+    ...options,
+  });
+}
 export const MyPostsDocument = gql`
   query MyPosts {
     myPosts {
@@ -1609,6 +1614,23 @@ export function useMyProjectsQuery(
 ) {
   return Urql.useQuery<MyProjectsQuery, MyProjectsQueryVariables>({
     query: MyProjectsDocument,
+    ...options,
+  });
+}
+export const PostDocument = gql`
+  query Post($id: String!) {
+    post(id: $id) {
+      ...PostFragment
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+
+export function usePostQuery(
+  options: Omit<Urql.UseQueryArgs<PostQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<PostQuery, PostQueryVariables>({
+    query: PostDocument,
     ...options,
   });
 }
@@ -1648,6 +1670,40 @@ export function usePostStatusQuery(
     ...options,
   });
 }
+export const PostsDocument = gql`
+  query Posts($status: Status!) {
+    posts(status: $status) {
+      ...PostFragment
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+
+export function usePostsQuery(
+  options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<PostsQuery, PostsQueryVariables>({
+    query: PostsDocument,
+    ...options,
+  });
+}
+export const ProjectDocument = gql`
+  query Project($id: String!) {
+    project(id: $id) {
+      ...ProjectFragment
+    }
+  }
+  ${ProjectFragmentFragmentDoc}
+`;
+
+export function useProjectQuery(
+  options: Omit<Urql.UseQueryArgs<ProjectQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<ProjectQuery, ProjectQueryVariables>({
+    query: ProjectDocument,
+    ...options,
+  });
+}
 export const ProjectIdsDocument = gql`
   query ProjectIds {
     projectIds {
@@ -1661,6 +1717,23 @@ export function useProjectIdsQuery(
 ) {
   return Urql.useQuery<ProjectIdsQuery, ProjectIdsQueryVariables>({
     query: ProjectIdsDocument,
+    ...options,
+  });
+}
+export const ProjectsDocument = gql`
+  query Projects {
+    projects {
+      ...ProjectFragment
+    }
+  }
+  ${ProjectFragmentFragmentDoc}
+`;
+
+export function useProjectsQuery(
+  options?: Omit<Urql.UseQueryArgs<ProjectsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<ProjectsQuery, ProjectsQueryVariables>({
+    query: ProjectsDocument,
     ...options,
   });
 }
@@ -1729,6 +1802,23 @@ export function useSearchProjectsQuery(
 ) {
   return Urql.useQuery<SearchProjectsQuery, SearchProjectsQueryVariables>({
     query: SearchProjectsDocument,
+    ...options,
+  });
+}
+export const UserDocument = gql`
+  query User($userId: String!) {
+    user(id: $userId) {
+      ...UserFragment
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+
+export function useUserQuery(
+  options: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<UserQuery, UserQueryVariables>({
+    query: UserDocument,
     ...options,
   });
 }

@@ -1,4 +1,9 @@
+export { AdminReportCountAggregate } from "./AdminReportCountAggregate";
+export { AdminReportGroupBy } from "./AdminReportGroupBy";
+export { AdminReportMaxAggregate } from "./AdminReportMaxAggregate";
+export { AdminReportMinAggregate } from "./AdminReportMinAggregate";
 export { AffectedRowsOutput } from "./AffectedRowsOutput";
+export { AggregateAdminReport } from "./AggregateAdminReport";
 export { AggregatePost } from "./AggregatePost";
 export { AggregateProject } from "./AggregateProject";
 export { AggregateUser } from "./AggregateUser";

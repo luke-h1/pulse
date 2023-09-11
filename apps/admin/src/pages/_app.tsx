@@ -8,8 +8,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { CmdPalleteContextProvider } from '@common/context/CmdPalleteContext';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
+  loadEnv();
   const canonicalUrl = `${process.env.PUBLIC_URL}${router.asPath}`;
-
   useNProgress();
 
   return (

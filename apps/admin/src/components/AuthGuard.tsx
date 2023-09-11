@@ -1,5 +1,6 @@
 import { Role, useMeQuery } from '@graphql-hooks/generated';
-import { ReactNode } from 'react';
+import { useRouter } from 'next/router';
+import { ReactNode, useEffect } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -7,12 +8,16 @@ interface Props {
 
 const AuthGuard = ({ children }: Props) => {
   const [{ data, fetching }] = useMeQuery();
+  const router = useRouter();
 
   const isAuth = !fetching && data?.me?.role === Role.Admin;
 
-  if (!isAuth) {
-    return <div>UNAUTHORIZED</div>;
-  }
+  useEffect(() => {
+    if (!isAuth) {
+      router.push('/auth/login');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <>{children}</>;
 };

@@ -6,17 +6,17 @@ import { createUrqlClient } from '@common/urql/createUrqlClient';
 
 const Home: NextPage = () => {
   return (
-    <Page
-      seo={{
-        title: 'Home',
-        description: 'Admin home page',
-      }}
-      site="admin"
-    >
-      <AuthGuard>
+    <AuthGuard>
+      <Page
+        seo={{
+          title: 'Home',
+          description: 'Admin home page',
+        }}
+        site="admin"
+      >
         <h1>admin</h1>
-      </AuthGuard>
-    </Page>
+      </Page>
+    </AuthGuard>
   );
 };
 export default withUrqlClient(createUrqlClient, { ssr: true })(Home);

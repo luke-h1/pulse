@@ -19,7 +19,7 @@ import { useIsAuth } from '@frontend/hooks/useIsAuth';
 import useIsProjectAuthor from '@frontend/hooks/useIsProjectAuthor';
 import uploadImage from '@frontend/utils/cloudinary';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
-import toErrorMap from '@frontend/utils/toErrorMap';
+import toErrorMap from '@common/utils/toErrorMap';
 import {
   projectUpdateInput,
   projectUpdateSchema,

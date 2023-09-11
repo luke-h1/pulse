@@ -1,4 +1,6 @@
 export { AccountStatus } from "./AccountStatus";
+export { AdminReportOrderByRelevanceFieldEnum } from "./AdminReportOrderByRelevanceFieldEnum";
+export { AdminReportScalarFieldEnum } from "./AdminReportScalarFieldEnum";
 export { JsonNullValueFilter } from "./JsonNullValueFilter";
 export { JsonNullValueInput } from "./JsonNullValueInput";
 export { NullsOrder } from "./NullsOrder";

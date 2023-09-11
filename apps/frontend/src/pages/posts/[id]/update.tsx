@@ -17,7 +17,7 @@ import Page from '@common/components/Page';
 import { useIsAuth } from '@frontend/hooks/useIsAuth';
 import uploadImage from '@frontend/utils/cloudinary';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
-import toErrorMap from '@frontend/utils/toErrorMap';
+import toErrorMap from '@common/utils/toErrorMap';
 import { postUpdateInput, postUpdateSchema } from '@frontend/validation/post';
 import {
   useCreateSignatureMutation,

@@ -1,3 +1,17 @@
+export { AggregateAdminReportResolver } from "./AdminReport/AggregateAdminReportResolver";
+export { CreateManyAdminReportResolver } from "./AdminReport/CreateManyAdminReportResolver";
+export { CreateOneAdminReportResolver } from "./AdminReport/CreateOneAdminReportResolver";
+export { DeleteManyAdminReportResolver } from "./AdminReport/DeleteManyAdminReportResolver";
+export { DeleteOneAdminReportResolver } from "./AdminReport/DeleteOneAdminReportResolver";
+export { FindFirstAdminReportResolver } from "./AdminReport/FindFirstAdminReportResolver";
+export { FindFirstAdminReportOrThrowResolver } from "./AdminReport/FindFirstAdminReportOrThrowResolver";
+export { FindManyAdminReportResolver } from "./AdminReport/FindManyAdminReportResolver";
+export { FindUniqueAdminReportResolver } from "./AdminReport/FindUniqueAdminReportResolver";
+export { FindUniqueAdminReportOrThrowResolver } from "./AdminReport/FindUniqueAdminReportOrThrowResolver";
+export { GroupByAdminReportResolver } from "./AdminReport/GroupByAdminReportResolver";
+export { UpdateManyAdminReportResolver } from "./AdminReport/UpdateManyAdminReportResolver";
+export { UpdateOneAdminReportResolver } from "./AdminReport/UpdateOneAdminReportResolver";
+export { UpsertOneAdminReportResolver } from "./AdminReport/UpsertOneAdminReportResolver";
 export { AggregatePostResolver } from "./Post/AggregatePostResolver";
 export { CreateManyPostResolver } from "./Post/CreateManyPostResolver";
 export { CreateOnePostResolver } from "./Post/CreateOnePostResolver";

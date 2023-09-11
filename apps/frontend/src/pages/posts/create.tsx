@@ -13,7 +13,7 @@ import Input from '@common/components/form/Input';
 import RHFForm from '@common/components/form/RHFForm';
 import Page from '@common/components/Page';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
-import toErrorMap from '@frontend/utils/toErrorMap';
+import toErrorMap from '@common/utils/toErrorMap';
 import { postCreateInput, postCreateSchema } from '@frontend/validation/post';
 import {
   useCreatePostMutation,

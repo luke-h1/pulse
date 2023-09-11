@@ -9,6 +9,25 @@ enum AccountStatus {
   ON_HOLD
 }
 
+input AdminReportListRelationFilter {
+  every: AdminReportWhereInput
+  none: AdminReportWhereInput
+  some: AdminReportWhereInput
+}
+
+input AdminReportWhereInput {
+  AND: [AdminReportWhereInput!]
+  NOT: [AdminReportWhereInput!]
+  OR: [AdminReportWhereInput!]
+  author: UserNullableRelationFilter
+  authorId: StringNullableFilter
+  content: JsonFilter
+  createdAt: DateTimeFilter
+  id: StringFilter
+  title: StringFilter
+  updatedAt: DateTimeFilter
+}
+
 type CountResponse {
   count: Float
 }
@@ -87,6 +106,7 @@ input JsonFilter {
 }
 
 type Mutation {
+  adminLogin(options: UserLoginInput!): UserResponse!
   createImageSignature: ImageSignature!
   createPost(options: PostCreateInput!): PostResponse!
   createProject(options: ProjectCreateInput!): ProjectResponse!
@@ -437,11 +457,17 @@ type User {
 type UserCount {
   posts(where: PostWhereInput): Int!
   projects(where: ProjectWhereInput): Int!
+  reports(where: AdminReportWhereInput): Int!
 }
 
 input UserLoginInput {
   email: String!
   password: String!
+}
+
+input UserNullableRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
 }
 
 input UserRegisterInput {
@@ -488,6 +514,7 @@ input UserWhereInput {
   posts: PostListRelationFilter
   projects: ProjectListRelationFilter
   provider: StringFilter
+  reports: AdminReportListRelationFilter
   role: EnumRoleFilter
   twitter: StringNullableFilter
   updatedAt: DateTimeFilter

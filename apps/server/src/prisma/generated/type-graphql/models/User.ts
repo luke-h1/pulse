@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../scalars";
+import { AdminReport } from "../models/AdminReport";
 import { Post } from "../models/Post";
 import { Project } from "../models/Project";
 import { AccountStatus } from "../enums/AccountStatus";
@@ -85,6 +86,8 @@ export class User {
   projects?: Project[];
 
   posts?: Post[];
+
+  reports?: AdminReport[];
 
   @TypeGraphQL.Field(_type => Date, {
     nullable: false

@@ -13,7 +13,8 @@ export type MethodDecoratorOverrideFn = (decorators: MethodDecorator[]) => Metho
 const crudResolversMap = {
   User: crudResolvers.UserCrudResolver,
   Project: crudResolvers.ProjectCrudResolver,
-  Post: crudResolvers.PostCrudResolver
+  Post: crudResolvers.PostCrudResolver,
+  AdminReport: crudResolvers.AdminReportCrudResolver
 };
 const actionResolversMap = {
   User: {
@@ -63,12 +64,29 @@ const actionResolversMap = {
     updateManyPost: actionResolvers.UpdateManyPostResolver,
     updateOnePost: actionResolvers.UpdateOnePostResolver,
     upsertOnePost: actionResolvers.UpsertOnePostResolver
+  },
+  AdminReport: {
+    aggregateAdminReport: actionResolvers.AggregateAdminReportResolver,
+    createManyAdminReport: actionResolvers.CreateManyAdminReportResolver,
+    createOneAdminReport: actionResolvers.CreateOneAdminReportResolver,
+    deleteManyAdminReport: actionResolvers.DeleteManyAdminReportResolver,
+    deleteOneAdminReport: actionResolvers.DeleteOneAdminReportResolver,
+    findFirstAdminReport: actionResolvers.FindFirstAdminReportResolver,
+    findFirstAdminReportOrThrow: actionResolvers.FindFirstAdminReportOrThrowResolver,
+    adminReports: actionResolvers.FindManyAdminReportResolver,
+    adminReport: actionResolvers.FindUniqueAdminReportResolver,
+    getAdminReport: actionResolvers.FindUniqueAdminReportOrThrowResolver,
+    groupByAdminReport: actionResolvers.GroupByAdminReportResolver,
+    updateManyAdminReport: actionResolvers.UpdateManyAdminReportResolver,
+    updateOneAdminReport: actionResolvers.UpdateOneAdminReportResolver,
+    upsertOneAdminReport: actionResolvers.UpsertOneAdminReportResolver
   }
 };
 const crudResolversInfo = {
   User: ["aggregateUser", "createManyUser", "createOneUser", "deleteManyUser", "deleteOneUser", "findFirstUser", "findFirstUserOrThrow", "users", "user", "getUser", "groupByUser", "updateManyUser", "updateOneUser", "upsertOneUser"],
   Project: ["aggregateProject", "createManyProject", "createOneProject", "deleteManyProject", "deleteOneProject", "findFirstProject", "findFirstProjectOrThrow", "projects", "project", "getProject", "groupByProject", "updateManyProject", "updateOneProject", "upsertOneProject"],
-  Post: ["aggregatePost", "createManyPost", "createOnePost", "deleteManyPost", "deleteOnePost", "findFirstPost", "findFirstPostOrThrow", "posts", "post", "getPost", "groupByPost", "updateManyPost", "updateOnePost", "upsertOnePost"]
+  Post: ["aggregatePost", "createManyPost", "createOnePost", "deleteManyPost", "deleteOnePost", "findFirstPost", "findFirstPostOrThrow", "posts", "post", "getPost", "groupByPost", "updateManyPost", "updateOnePost", "upsertOnePost"],
+  AdminReport: ["aggregateAdminReport", "createManyAdminReport", "createOneAdminReport", "deleteManyAdminReport", "deleteOneAdminReport", "findFirstAdminReport", "findFirstAdminReportOrThrow", "adminReports", "adminReport", "getAdminReport", "groupByAdminReport", "updateManyAdminReport", "updateOneAdminReport", "upsertOneAdminReport"]
 };
 const argsInfo = {
   AggregateUserArgs: ["where", "orderBy", "cursor", "take", "skip"],
@@ -112,7 +130,21 @@ const argsInfo = {
   GroupByPostArgs: ["where", "orderBy", "by", "having", "take", "skip"],
   UpdateManyPostArgs: ["data", "where"],
   UpdateOnePostArgs: ["data", "where"],
-  UpsertOnePostArgs: ["where", "create", "update"]
+  UpsertOnePostArgs: ["where", "create", "update"],
+  AggregateAdminReportArgs: ["where", "orderBy", "cursor", "take", "skip"],
+  CreateManyAdminReportArgs: ["data", "skipDuplicates"],
+  CreateOneAdminReportArgs: ["data"],
+  DeleteManyAdminReportArgs: ["where"],
+  DeleteOneAdminReportArgs: ["where"],
+  FindFirstAdminReportArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindFirstAdminReportOrThrowArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindManyAdminReportArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
+  FindUniqueAdminReportArgs: ["where"],
+  FindUniqueAdminReportOrThrowArgs: ["where"],
+  GroupByAdminReportArgs: ["where", "orderBy", "by", "having", "take", "skip"],
+  UpdateManyAdminReportArgs: ["data", "where"],
+  UpdateOneAdminReportArgs: ["data", "where"],
+  UpsertOneAdminReportArgs: ["where", "create", "update"]
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
@@ -212,12 +244,14 @@ export function applyArgsTypesEnhanceMap(
 const relationResolversMap = {
   User: relationResolvers.UserRelationsResolver,
   Project: relationResolvers.ProjectRelationsResolver,
-  Post: relationResolvers.PostRelationsResolver
+  Post: relationResolvers.PostRelationsResolver,
+  AdminReport: relationResolvers.AdminReportRelationsResolver
 };
 const relationResolversInfo = {
-  User: ["projects", "posts"],
+  User: ["projects", "posts", "reports"],
   Project: ["author"],
-  Post: ["author"]
+  Post: ["author"],
+  AdminReport: ["author"]
 };
 
 type RelationResolverModelNames = keyof typeof relationResolversMap;
@@ -301,7 +335,8 @@ function applyTypeClassEnhanceConfig<
 const modelsInfo = {
   User: ["id", "provider", "firstName", "lastName", "email", "username", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   Project: ["id", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "authorId", "createdAt", "updatedAt"],
-  Post: ["id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt"]
+  Post: ["id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt"],
+  AdminReport: ["id", "title", "content", "authorId", "createdAt", "updatedAt"]
 };
 
 type ModelNames = keyof typeof models;
@@ -346,8 +381,10 @@ const outputsInfo = {
   ProjectGroupBy: ["id", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "authorId", "createdAt", "updatedAt", "_count", "_min", "_max"],
   AggregatePost: ["_count", "_min", "_max"],
   PostGroupBy: ["id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt", "_count", "_min", "_max"],
+  AggregateAdminReport: ["_count", "_min", "_max"],
+  AdminReportGroupBy: ["id", "title", "content", "authorId", "createdAt", "updatedAt", "_count", "_min", "_max"],
   AffectedRowsOutput: ["count"],
-  UserCount: ["projects", "posts"],
+  UserCount: ["projects", "posts", "reports"],
   UserCountAggregate: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "_all"],
   UserMinAggregate: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   UserMaxAggregate: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
@@ -356,7 +393,10 @@ const outputsInfo = {
   ProjectMaxAggregate: ["id", "title", "intro", "image", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "status", "authorId", "createdAt", "updatedAt"],
   PostCountAggregate: ["id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt", "_all"],
   PostMinAggregate: ["id", "title", "intro", "image", "status", "authorId", "createdAt", "updatedAt"],
-  PostMaxAggregate: ["id", "title", "intro", "image", "status", "authorId", "createdAt", "updatedAt"]
+  PostMaxAggregate: ["id", "title", "intro", "image", "status", "authorId", "createdAt", "updatedAt"],
+  AdminReportCountAggregate: ["id", "title", "content", "authorId", "createdAt", "updatedAt", "_all"],
+  AdminReportMinAggregate: ["id", "title", "authorId", "createdAt", "updatedAt"],
+  AdminReportMaxAggregate: ["id", "title", "authorId", "createdAt", "updatedAt"]
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
@@ -397,9 +437,9 @@ export function applyOutputTypesEnhanceMap(
 }
 
 const inputsInfo = {
-  UserWhereInput: ["AND", "OR", "NOT", "id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
-  UserOrderByWithRelationAndSearchRelevanceInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts", "_relevance"],
-  UserWhereUniqueInput: ["id", "email", "username", "AND", "OR", "NOT", "provider", "firstName", "lastName", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
+  UserWhereInput: ["AND", "OR", "NOT", "id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts", "reports"],
+  UserOrderByWithRelationAndSearchRelevanceInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts", "reports", "_relevance"],
+  UserWhereUniqueInput: ["id", "email", "username", "AND", "OR", "NOT", "provider", "firstName", "lastName", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts", "reports"],
   UserOrderByWithAggregationInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "_count", "_max", "_min"],
   UserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   ProjectWhereInput: ["AND", "OR", "NOT", "id", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "authorId", "createdAt", "updatedAt", "author"],
@@ -412,8 +452,13 @@ const inputsInfo = {
   PostWhereUniqueInput: ["id", "AND", "OR", "NOT", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt", "author"],
   PostOrderByWithAggregationInput: ["id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt", "_count", "_max", "_min"],
   PostScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt"],
-  UserCreateInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
-  UserUpdateInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
+  AdminReportWhereInput: ["AND", "OR", "NOT", "id", "title", "content", "authorId", "createdAt", "updatedAt", "author"],
+  AdminReportOrderByWithRelationAndSearchRelevanceInput: ["id", "title", "content", "authorId", "createdAt", "updatedAt", "author", "_relevance"],
+  AdminReportWhereUniqueInput: ["id", "AND", "OR", "NOT", "title", "content", "authorId", "createdAt", "updatedAt", "author"],
+  AdminReportOrderByWithAggregationInput: ["id", "title", "content", "authorId", "createdAt", "updatedAt", "_count", "_max", "_min"],
+  AdminReportScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "title", "content", "authorId", "createdAt", "updatedAt"],
+  UserCreateInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts", "reports"],
+  UserUpdateInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts", "reports"],
   UserCreateManyInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   UserUpdateManyMutationInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   ProjectCreateInput: ["id", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "createdAt", "updatedAt", "author"],
@@ -424,6 +469,10 @@ const inputsInfo = {
   PostUpdateInput: ["id", "title", "intro", "image", "tags", "content", "status", "createdAt", "updatedAt", "author"],
   PostCreateManyInput: ["id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt"],
   PostUpdateManyMutationInput: ["id", "title", "intro", "image", "tags", "content", "status", "createdAt", "updatedAt"],
+  AdminReportCreateInput: ["id", "title", "content", "createdAt", "updatedAt", "author"],
+  AdminReportUpdateInput: ["id", "title", "content", "createdAt", "updatedAt", "author"],
+  AdminReportCreateManyInput: ["id", "title", "content", "authorId", "createdAt", "updatedAt"],
+  AdminReportUpdateManyMutationInput: ["id", "title", "content", "createdAt", "updatedAt"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "mode", "not"],
   StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "mode", "not"],
   EnumRoleFilter: ["equals", "in", "notIn", "not"],
@@ -431,9 +480,11 @@ const inputsInfo = {
   DateTimeFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
   ProjectListRelationFilter: ["every", "some", "none"],
   PostListRelationFilter: ["every", "some", "none"],
+  AdminReportListRelationFilter: ["every", "some", "none"],
   SortOrderInput: ["sort", "nulls"],
   ProjectOrderByRelationAggregateInput: ["_count"],
   PostOrderByRelationAggregateInput: ["_count"],
+  AdminReportOrderByRelationAggregateInput: ["_count"],
   UserOrderByRelevanceInput: ["fields", "sort", "search"],
   UserCountOrderByAggregateInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
   UserMaxOrderByAggregateInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt"],
@@ -457,8 +508,14 @@ const inputsInfo = {
   PostCountOrderByAggregateInput: ["id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt"],
   PostMaxOrderByAggregateInput: ["id", "title", "intro", "image", "status", "authorId", "createdAt", "updatedAt"],
   PostMinOrderByAggregateInput: ["id", "title", "intro", "image", "status", "authorId", "createdAt", "updatedAt"],
+  UserNullableRelationFilter: ["is", "isNot"],
+  AdminReportOrderByRelevanceInput: ["fields", "sort", "search"],
+  AdminReportCountOrderByAggregateInput: ["id", "title", "content", "authorId", "createdAt", "updatedAt"],
+  AdminReportMaxOrderByAggregateInput: ["id", "title", "authorId", "createdAt", "updatedAt"],
+  AdminReportMinOrderByAggregateInput: ["id", "title", "authorId", "createdAt", "updatedAt"],
   ProjectCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
   PostCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
+  AdminReportCreateNestedManyWithoutAuthorInput: ["create", "connectOrCreate", "createMany", "connect"],
   StringFieldUpdateOperationsInput: ["set"],
   NullableStringFieldUpdateOperationsInput: ["set"],
   EnumRoleFieldUpdateOperationsInput: ["set"],
@@ -466,6 +523,7 @@ const inputsInfo = {
   DateTimeFieldUpdateOperationsInput: ["set"],
   ProjectUpdateManyWithoutAuthorNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   PostUpdateManyWithoutAuthorNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
+  AdminReportUpdateManyWithoutAuthorNestedInput: ["create", "connectOrCreate", "upsert", "createMany", "set", "disconnect", "delete", "connect", "update", "updateMany", "deleteMany"],
   ProjectCreatetagsInput: ["set"],
   UserCreateNestedOneWithoutProjectsInput: ["create", "connectOrCreate", "connect"],
   ProjectUpdatetagsInput: ["set", "push"],
@@ -475,6 +533,8 @@ const inputsInfo = {
   UserCreateNestedOneWithoutPostsInput: ["create", "connectOrCreate", "connect"],
   PostUpdatetagsInput: ["set", "push"],
   UserUpdateOneRequiredWithoutPostsNestedInput: ["create", "connectOrCreate", "upsert", "connect", "update"],
+  UserCreateNestedOneWithoutReportsInput: ["create", "connectOrCreate", "connect"],
+  UserUpdateOneWithoutReportsNestedInput: ["create", "connectOrCreate", "upsert", "disconnect", "delete", "connect", "update"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "not"],
   NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "search", "not"],
   NestedEnumRoleFilter: ["equals", "in", "notIn", "not"],
@@ -496,6 +556,9 @@ const inputsInfo = {
   PostCreateWithoutAuthorInput: ["id", "title", "intro", "image", "tags", "content", "status", "createdAt", "updatedAt"],
   PostCreateOrConnectWithoutAuthorInput: ["where", "create"],
   PostCreateManyAuthorInputEnvelope: ["data", "skipDuplicates"],
+  AdminReportCreateWithoutAuthorInput: ["id", "title", "content", "createdAt", "updatedAt"],
+  AdminReportCreateOrConnectWithoutAuthorInput: ["where", "create"],
+  AdminReportCreateManyAuthorInputEnvelope: ["data", "skipDuplicates"],
   ProjectUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
   ProjectUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
   ProjectUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
@@ -504,20 +567,31 @@ const inputsInfo = {
   PostUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
   PostUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
   PostScalarWhereInput: ["AND", "OR", "NOT", "id", "title", "intro", "image", "tags", "content", "status", "authorId", "createdAt", "updatedAt"],
-  UserCreateWithoutProjectsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "posts"],
+  AdminReportUpsertWithWhereUniqueWithoutAuthorInput: ["where", "update", "create"],
+  AdminReportUpdateWithWhereUniqueWithoutAuthorInput: ["where", "data"],
+  AdminReportUpdateManyWithWhereWithoutAuthorInput: ["where", "data"],
+  AdminReportScalarWhereInput: ["AND", "OR", "NOT", "id", "title", "content", "authorId", "createdAt", "updatedAt"],
+  UserCreateWithoutProjectsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "posts", "reports"],
   UserCreateOrConnectWithoutProjectsInput: ["where", "create"],
   UserUpsertWithoutProjectsInput: ["update", "create", "where"],
   UserUpdateToOneWithWhereWithoutProjectsInput: ["where", "data"],
-  UserUpdateWithoutProjectsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "posts"],
-  UserCreateWithoutPostsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects"],
+  UserUpdateWithoutProjectsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "posts", "reports"],
+  UserCreateWithoutPostsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "reports"],
   UserCreateOrConnectWithoutPostsInput: ["where", "create"],
   UserUpsertWithoutPostsInput: ["update", "create", "where"],
   UserUpdateToOneWithWhereWithoutPostsInput: ["where", "data"],
-  UserUpdateWithoutPostsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects"],
+  UserUpdateWithoutPostsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "reports"],
+  UserCreateWithoutReportsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
+  UserCreateOrConnectWithoutReportsInput: ["where", "create"],
+  UserUpsertWithoutReportsInput: ["update", "create", "where"],
+  UserUpdateToOneWithWhereWithoutReportsInput: ["where", "data"],
+  UserUpdateWithoutReportsInput: ["id", "provider", "firstName", "lastName", "email", "username", "password", "image", "role", "github", "website", "twitter", "bio", "location", "accountStatus", "createdAt", "updatedAt", "projects", "posts"],
   ProjectCreateManyAuthorInput: ["id", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "createdAt", "updatedAt"],
   PostCreateManyAuthorInput: ["id", "title", "intro", "image", "tags", "content", "status", "createdAt", "updatedAt"],
+  AdminReportCreateManyAuthorInput: ["id", "title", "content", "createdAt", "updatedAt"],
   ProjectUpdateWithoutAuthorInput: ["id", "title", "intro", "image", "content", "githubUrl", "siteUrl", "appStoreUrl", "playStoreUrl", "tags", "status", "createdAt", "updatedAt"],
-  PostUpdateWithoutAuthorInput: ["id", "title", "intro", "image", "tags", "content", "status", "createdAt", "updatedAt"]
+  PostUpdateWithoutAuthorInput: ["id", "title", "intro", "image", "tags", "content", "status", "createdAt", "updatedAt"],
+  AdminReportUpdateWithoutAuthorInput: ["id", "title", "content", "createdAt", "updatedAt"]
 };
 
 type InputTypesNames = keyof typeof inputTypes;

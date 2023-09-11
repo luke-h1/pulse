@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { AdminReportListRelationFilter } from "../inputs/AdminReportListRelationFilter";
 import { DateTimeFilter } from "../inputs/DateTimeFilter";
 import { EnumAccountStatusFilter } from "../inputs/EnumAccountStatusFilter";
 import { EnumRoleFilter } from "../inputs/EnumRoleFilter";
@@ -122,4 +123,9 @@ export class UserWhereUniqueInput {
     nullable: true
   })
   posts?: PostListRelationFilter | undefined;
+
+  @TypeGraphQL.Field(_type => AdminReportListRelationFilter, {
+    nullable: true
+  })
+  reports?: AdminReportListRelationFilter | undefined;
 }

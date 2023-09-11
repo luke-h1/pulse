@@ -1,0 +1,13 @@
+mutation AdminLogin($options: UserLoginInput!) {
+  adminLogin(options: $options){
+    errors {
+      message
+      field
+      code
+    }
+    user {
+      ...UserFragment
+      role
+    }
+  }
+}

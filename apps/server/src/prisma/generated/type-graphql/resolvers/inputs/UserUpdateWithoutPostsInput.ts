@@ -2,6 +2,7 @@ import * as TypeGraphQL from "type-graphql";
 import * as GraphQLScalars from "graphql-scalars";
 import { Prisma } from "@prisma/client";
 import { DecimalJSScalar } from "../../scalars";
+import { AdminReportUpdateManyWithoutAuthorNestedInput } from "../inputs/AdminReportUpdateManyWithoutAuthorNestedInput";
 import { DateTimeFieldUpdateOperationsInput } from "../inputs/DateTimeFieldUpdateOperationsInput";
 import { EnumAccountStatusFieldUpdateOperationsInput } from "../inputs/EnumAccountStatusFieldUpdateOperationsInput";
 import { EnumRoleFieldUpdateOperationsInput } from "../inputs/EnumRoleFieldUpdateOperationsInput";
@@ -100,4 +101,9 @@ export class UserUpdateWithoutPostsInput {
     nullable: true
   })
   projects?: ProjectUpdateManyWithoutAuthorNestedInput | undefined;
+
+  @TypeGraphQL.Field(_type => AdminReportUpdateManyWithoutAuthorNestedInput, {
+    nullable: true
+  })
+  reports?: AdminReportUpdateManyWithoutAuthorNestedInput | undefined;
 }

@@ -16,7 +16,7 @@ import {
   UpdatePostMutationVariables,
   UpdateProjectMutationVariables,
 } from '@graphql-hooks/generated';
-import CustomUpdateQuery from './customUpdateQuery';
+import CustomUpdateQuery from '@common/urql/customUpdateQuery';
 
 const errorExchange: Exchange =
   ({ forward }) =>

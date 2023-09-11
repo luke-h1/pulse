@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import FormattedDate from '@common/components/FormattedDate';
 import { ScrollToTop } from '@ui/components';
-import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
 import { Status, useProjectQuery } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';

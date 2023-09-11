@@ -2,7 +2,7 @@ import { Spinner } from '@chakra-ui/react';
 import Page from '@common/components/Page';
 import PostsSection from '@frontend/components/PostsSection';
 import ProjectsSection from '@frontend/components/ProjectsSection';
-import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
 import {
   useRecentPostsQuery,
   useRecentProjectsQuery,

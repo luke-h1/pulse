@@ -12,6 +12,7 @@ import {
   LogoutMutation,
   MeDocument,
   MeQuery,
+  RegisterMutation,
   UpdatePostMutationVariables,
   UpdateProjectMutationVariables,
 } from '@graphql-hooks/generated';
@@ -69,7 +70,7 @@ export const createUrqlClient = (
   }
 
   return {
-    url: process.env.PUBLIC_PULSE_API_URL,
+    url: process.env.PUBLIC_PULSE_API_URL as string,
     fetchOptions: {
       credentials: 'include',
       headers: cookie ? { cookie } : undefined,
@@ -79,6 +80,22 @@ export const createUrqlClient = (
       cacheExchange({
         updates: {
           Mutation: {
+            register: (result, _args, cache) => {
+              CustomUpdateQuery<RegisterMutation, MeQuery>(
+                cache,
+                { query: MeDocument },
+                result,
+                // eslint-disable-next-line @typescript-eslint/no-shadow
+                (result, query) => {
+                  if (result.register.errors) {
+                    return query;
+                  }
+                  return {
+                    me: result.register.user,
+                  };
+                },
+              );
+            },
             login: (result, _args, cache) => {
               CustomUpdateQuery<LoginMutation, MeQuery>(
                 cache,

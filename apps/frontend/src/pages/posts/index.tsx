@@ -1,4 +1,4 @@
-import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
 import {
   PostsQuery,
   SearchPostsDocument,

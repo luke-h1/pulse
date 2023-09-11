@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import useNProgress from '@common/hooks/useNProgress';
 import loadEnv from '@common/lib/loadEnv';
+import { ChakraProvider } from '@chakra-ui/react';
+import { CmdPalleteContextProvider } from '@common/context/CmdPalleteContext';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
   const canonicalUrl = `${process.env.PUBLIC_URL}${router.asPath}`;
@@ -36,10 +38,12 @@ const App = ({ Component, pageProps, router }: AppProps) => {
           name="viewport"
           content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
         />
-        <main id="main">
-          <Component {...pageProps} />
-        </main>
       </Head>
+      <ChakraProvider>
+        <CmdPalleteContextProvider>
+          <Component {...pageProps} />
+        </CmdPalleteContextProvider>
+      </ChakraProvider>
     </>
   );
 };

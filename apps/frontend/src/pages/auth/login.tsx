@@ -4,7 +4,7 @@ import FormProvider from '@common/components/form/FormProvider';
 import Input from '@common/components/form/Input';
 import RHFForm from '@common/components/form/RHFForm';
 import SubmitButton from '@common/components/form/SubmitButton';
-import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
 import toErrorMap from '@frontend/utils/toErrorMap';
 import { loginInput, loginSchema } from '@frontend/validation/auth';
 import { useLoginMutation } from '@graphql-hooks/generated';

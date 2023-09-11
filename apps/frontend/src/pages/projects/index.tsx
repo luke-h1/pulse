@@ -7,7 +7,7 @@ import {
 } from '@graphql-hooks/generated';
 import { withUrqlClient } from 'next-urql';
 import { NextPage } from 'next';
-import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
 import { ChangeEvent, useState } from 'react';
 import useDebouncedCallback from '@common/hooks/useDebouncedCallback';
 import searchClient from '@frontend/utils/searchClient';

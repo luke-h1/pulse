@@ -6,7 +6,6 @@ const config: CodegenConfig = {
   documents: [
     '../../apps/frontend/**/graphql/**/*.graphql',
     '../../apps/admin/**/graphql/**/*.graphql',
-    '../../apps/common/**/graphql/**/*.graphql',
   ],
   hooks: {
     afterAllFileWrite: ['prettier --write'],

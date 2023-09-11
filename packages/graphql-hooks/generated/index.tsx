@@ -634,6 +634,7 @@ export type LoginMutation = {
     }> | null;
     user?: {
       __typename?: 'User';
+      role: Role;
       id: string;
       firstName: string;
       lastName: string;
@@ -660,6 +661,7 @@ export type MeQuery = {
   __typename?: 'Query';
   me?: {
     __typename?: 'User';
+    role: Role;
     id: string;
     firstName: string;
     lastName: string;
@@ -966,7 +968,22 @@ export type RegisterMutation = {
       field: string;
       code?: string | null;
     }> | null;
-    user?: { __typename?: 'User'; id: string } | null;
+    user?: {
+      __typename?: 'User';
+      role: Role;
+      id: string;
+      firstName: string;
+      lastName: string;
+      image?: string | null;
+      github?: string | null;
+      email?: string | null;
+      bio?: string | null;
+      twitter?: string | null;
+      username: string;
+      website?: string | null;
+      createdAt: any;
+      location?: string | null;
+    } | null;
   };
 };
 
@@ -1279,6 +1296,7 @@ export const LoginDocument = gql`
       }
       user {
         ...UserFragment
+        role
       }
     }
   }
@@ -1303,6 +1321,7 @@ export const MeDocument = gql`
   query Me {
     me {
       ...UserFragment
+      role
     }
   }
   ${UserFragmentFragmentDoc}
@@ -1503,10 +1522,12 @@ export const RegisterDocument = gql`
         code
       }
       user {
-        id
+        ...UserFragment
+        role
       }
     }
   }
+  ${UserFragmentFragmentDoc}
 `;
 
 export function useRegisterMutation() {

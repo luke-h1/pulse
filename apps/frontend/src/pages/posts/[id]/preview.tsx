@@ -9,7 +9,7 @@ import useMounted from '@common/hooks/useMounted';
 
 import Page from '@common/components/Page';
 import PostPage from '@frontend/components/PostPage';
-import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
 import { useMeQuery, usePostQuery } from '@graphql-hooks/generated';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';

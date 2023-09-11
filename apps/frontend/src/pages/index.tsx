@@ -2,14 +2,13 @@ import Hero from '@frontend/components/Hero';
 import Page from '@common/components/Page';
 import PostsSection from '@frontend/components/PostsSection';
 import ProjectsSection from '@frontend/components/ProjectsSection';
-import { createUrqlClient } from '@frontend/utils/createUrqlClient';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
 import {
   useRecentPostsQuery,
   useRecentProjectsQuery,
 } from '@graphql-hooks/generated';
 import { NextPage } from 'next';
 import { withUrqlClient } from 'next-urql';
-import { Heading } from '@chakra-ui/react';
 
 const Home: NextPage = () => {
   const [{ data }] = useRecentPostsQuery();

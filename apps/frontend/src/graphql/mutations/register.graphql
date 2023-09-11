@@ -6,7 +6,8 @@ mutation Register($options: UserRegisterInput!) {
       code
     }
     user {
-      id
+      ...UserFragment
+      role
     }
   }
 }

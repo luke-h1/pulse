@@ -22,11 +22,11 @@
       }
     ],
     "paths": {
-      "@api/*": ["../apps/api/src/*"],
-      "@admin/*": ["../admin/src/*"],
-      "@frontend/*": ["../apps/frontend/src/*"],
-      "@common/*": ["../apps/common/src/*"],
-      // "@ui/*": ["../packages/ui/src/*"]
+      "@frontend/*": ["./src/*"],
+      "@common/*": ["../common/src/*"],
+      "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
+      "@editor/*": ["../../packages/editor/src/*"],
+      "@ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

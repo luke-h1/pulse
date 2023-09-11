@@ -1,29 +1,14 @@
 import NextApp, { AppContext, AppProps } from 'next/app';
 import 'nprogress/nprogress.css';
-import NProgress from 'nprogress';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
-import { useEffect } from 'react';
-import getConfig from 'next/config';
+import useNProgress from '@common/hooks/useNProgress';
+import loadEnv from '@common/lib/loadEnv';
 
 const App = ({ Component, pageProps, router }: AppProps) => {
-  const { publicRuntimeConfig } = getConfig();
   const canonicalUrl = `${process.env.PUBLIC_URL}${router.asPath}`;
 
-  useEffect(() => {
-    const handleRouteStart = () => NProgress.start();
-    const handleRouteDone = () => NProgress.done();
-
-    router.events.on('routeChangeStart', handleRouteStart);
-    router.events.on('routeChangeComplete', handleRouteDone);
-    router.events.on('routeChangeError', handleRouteDone);
-
-    return () => {
-      router.events.off('routeChangeStart', handleRouteStart);
-      router.events.off('routeChangeComplete', handleRouteDone);
-      router.events.off('routeChangeError', handleRouteDone);
-    };
-  }, [router.events]);
+  useNProgress();
 
   return (
     <>
@@ -59,3 +44,13 @@ const App = ({ Component, pageProps, router }: AppProps) => {
   );
 };
 export default App;
+
+App.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+
+  loadEnv();
+
+  return {
+    ...appProps,
+  };
+};

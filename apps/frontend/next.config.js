@@ -11,7 +11,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  transpilePackages: ['common', 'graphql-hooks', 'editor'],
+  transpilePackages: ['common', 'graphql-hooks', 'editor', 'ui'],
   images: {
     domains: ['res.cloudinary.com'],
   },

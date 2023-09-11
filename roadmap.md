@@ -82,3 +82,5 @@ Infra:
 
 General:
 * fix path aliases for @editor/index, @ui/index etc.
+* Sort out changelogs + versioning (use Lerna + changesets?)
+

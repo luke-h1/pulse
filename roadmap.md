@@ -30,7 +30,7 @@ API:
   * sort prisma mock ✅
   * sort logging for server - need to log execution time, request logging etc.
   * sort out pagination for posts and projects
-
+  * sort unit/integration tests for server - have had to run jest sequentially for now because of interferance between tests when data is inserted into DB. ✅
 
 FE:
   * Custom package for GQL type generation ✅

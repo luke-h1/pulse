@@ -105,7 +105,6 @@ export class ProjectResolver {
 
   @Query(() => IdsResponse, {
     description: 'Returns all project slugs',
-    nullable: true,
   })
   async projectIds(): Promise<IdsResponse> {
     const projects = await db.project.findMany({

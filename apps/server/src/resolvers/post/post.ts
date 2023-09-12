@@ -43,7 +43,7 @@ export class CountResponse {
 @ObjectType()
 export class IdsResponse {
   @Field(() => [String], { nullable: true })
-  ids?: string[];
+  ids: string[];
 }
 
 @Resolver(Post)

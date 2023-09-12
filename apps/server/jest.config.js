@@ -1,4 +1,3 @@
-const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { defaults } = require('jest-config');
 
@@ -13,12 +12,6 @@ module.exports = {
   resetMocks: true,
   restoreMocks: true,
   setupFilesAfterEnv: ['<rootDir>/src/test/setupTests.js'],
-  testEnvironment: path.join(
-    __dirname,
-    'src',
-    'prisma',
-    'prisma-test-environment.mjs',
-  ),
   moduleFileExtensions: [...defaults.moduleFileExtensions, 'mjs'],
   moduleNameMapper: {
     '^@graphql-hooks/(.*)$': '<rootDir>/../../../packages/graphql-hooks/src/$1',

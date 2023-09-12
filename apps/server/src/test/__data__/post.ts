@@ -23,7 +23,7 @@ import { Status } from '../../prisma/enums';
 }
 */
 
-const testContentBlock = {
+export const testContentBlock = {
   time: 1694337540631,
   blocks: [
     { id: 'OpE2kPz9cJ', data: { text: '123123123' }, type: 'paragraph' },

@@ -688,6 +688,15 @@ export type AdminLoginMutation = {
   };
 };
 
+export type DeleteProjectAdminMutationVariables = Exact<{
+  deleteProjectAdminId: Scalars['String']['input'];
+}>;
+
+export type DeleteProjectAdminMutation = {
+  __typename?: 'Mutation';
+  deleteProjectAdmin: boolean;
+};
+
 export type DeleteUserMutationVariables = Exact<{
   deleteUserId: Scalars['String']['input'];
 }>;
@@ -1463,6 +1472,18 @@ export function useAdminLoginMutation() {
   return Urql.useMutation<AdminLoginMutation, AdminLoginMutationVariables>(
     AdminLoginDocument,
   );
+}
+export const DeleteProjectAdminDocument = gql`
+  mutation DeleteProjectAdmin($deleteProjectAdminId: String!) {
+    deleteProjectAdmin(id: $deleteProjectAdminId)
+  }
+`;
+
+export function useDeleteProjectAdminMutation() {
+  return Urql.useMutation<
+    DeleteProjectAdminMutation,
+    DeleteProjectAdminMutationVariables
+  >(DeleteProjectAdminDocument);
 }
 export const DeleteUserDocument = gql`
   mutation DeleteUser($deleteUserId: String!) {

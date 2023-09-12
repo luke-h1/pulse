@@ -18,8 +18,8 @@ import createSchema from './utils/createSchema';
 import logger from './utils/logger';
 import config from './utils/config';
 import createUserDataLoader from './dataloader/createUserLoader';
-import createPostLoader from './dataloader/createPostLoader';
-import createProjectLoader from './dataloader/createProjectLoader';
+import createPostDataLoader from './dataloader/createPostDataLoader';
+import createProjectDataLoader from './dataloader/createProjectDataLoader';
 
 const DEV_ORIGINS = [
   'http://localhost:3000', // frontend
@@ -90,8 +90,8 @@ const main = async () => {
         res,
         redis,
         userLoader: createUserDataLoader(),
-        postLoader: createPostLoader(),
-        projectLoader: createProjectLoader(),
+        postLoader: createPostDataLoader(),
+        projectLoader: createProjectDataLoader(),
       }),
     }),
   );

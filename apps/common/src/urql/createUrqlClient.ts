@@ -167,6 +167,13 @@ export const createUrqlClient = (
                 args.id as DeleteUserMutationVariables['deleteUserId'],
               );
             },
+            deleteProjectAdmin: (_result, args, cache) => {
+              invalidateCacheItem(
+                cache,
+                'Project',
+                args.id as DeleteProjectMutationVariables['id'],
+              );
+            },
           },
         },
       }),

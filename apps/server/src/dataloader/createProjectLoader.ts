@@ -2,7 +2,7 @@ import DataLoader from 'dataloader';
 import { Project } from '../prisma/generated/type-graphql';
 import { db } from '../db/prisma';
 
-const createProjectLoader = (): DataLoader<number, Project> => {
+const createProjectDataLoader = (): DataLoader<number, Project> => {
   return new DataLoader<number, Project>(async projectIds => {
     const projects = await db.project.findMany();
 
@@ -16,4 +16,4 @@ const createProjectLoader = (): DataLoader<number, Project> => {
     return projectIds.map(projectId => projectIdsToProject[projectId]);
   });
 };
-export default createProjectLoader;
+export default createProjectDataLoader;

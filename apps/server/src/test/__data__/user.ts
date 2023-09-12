@@ -93,5 +93,6 @@ export const generateTestUsers = (amount: number) => {
       website: null,
     });
   }
+
   return users;
 };

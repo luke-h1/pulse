@@ -280,6 +280,7 @@ export class ProjectResolver {
   }
 
   @Mutation(() => Boolean)
+  @Authorized(isAdmin)
   async publishAllProjects(): Promise<boolean> {
     await db.project.updateMany({
       data: {

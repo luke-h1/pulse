@@ -1,323 +1,325 @@
-// import 'reflect-metadata';
-// import bcrypt from 'bcrypt';
-// import { UserRegisterInput } from '../user/inputs/UserRegisterInput';
-// import { UserLoginInput } from '../user/inputs/UserLoginInput';
-// import { db } from '../../db/prisma';
-// import { UserResolver } from '../user/user';
-// import { createApiMocks, createMockRedis } from '../../test/__mocks__/express';
-// import resetDb from '../../test/resetDb';
-// import createUserDataLoader from '../../dataloader/createUserLoader';
+import 'reflect-metadata';
+import bcrypt from 'bcrypt';
+import { db } from '../../db/prisma';
+import { generateTestUsers, testUsers } from '../../test/__data__/user';
+import {
+  createApiMocks,
+  createDataLoaderMocks,
+  createMockRedis,
+} from '../../test/__mocks__/server';
+import resetDb from '../../test/resetDb';
+import { UserLoginInput } from '../user/inputs/UserLoginInput';
+import { UserRegisterInput } from '../user/inputs/UserRegisterInput';
+import { UserResolver } from '../user/user';
 
-test.skip('', async () => {});
+beforeEach(async () => {
+  await resetDb();
+});
 
-// jest.mock('../../dataloader/createUserLoader', () => ({
-//   __esModule: true,
-//   createUserDataLoader: jest.fn(),
-// }));
+afterAll(async () => {
+  await db.$disconnect();
+});
 
-// const mockedCreateUserDataLoader = createUserDataLoader as jest.Mock;
+describe('user', () => {
+  test('registers a user when provided details are correct', async () => {
+    const resolver = new UserResolver();
 
-// beforeEach(async () => {
-//   await resetDb();
-// });
+    const user: UserRegisterInput = {
+      firstName: 'Bob',
+      lastName: 'Smith',
+      username: 'bob123',
+      email: 'bob@test.com',
+      password: 'password',
+    };
 
-// afterAll(async () => {
-//   await db.$disconnect();
-// });
+    const { req, res } = createApiMocks({
+      session: {
+        destroy: jest.fn(cb => cb()),
+      },
+      clearCookie: jest.fn(),
+    });
 
-// describe.skip('user', () => {
-//   test('registers a user when provided details are correct', async () => {
-//     const resolver = new UserResolver();
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
 
-//     const user: UserRegisterInput = {
-//       firstName: 'Bob',
-//       lastName: 'Smith',
-//       username: 'bob123',
-//       email: 'bob@test.com',
-//       password: 'password',
-//     };
+    const response = await resolver.register(
+      {
+        ...user,
+      },
+      {
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      },
+    );
 
-//     const { req, res } = createApiMocks({
-//       session: {
-//         destroy: jest.fn(cb => cb()),
-//       },
-//       clearCookie: jest.fn(),
-//     });
+    expect(req.session.userId).toEqual(response.user?.id);
 
-//     const redis = createMockRedis();
+    expect(response).toEqual({
+      errors: [],
+      user: {
+        accountStatus: 'ACTIVE',
+        bio: null,
+        createdAt: expect.any(Date),
+        email: 'bob@test.com',
+        firstName: 'Bob',
+        github: null,
+        id: expect.any(String),
+        image: null,
+        lastName: 'Smith',
+        location: null,
+        password: expect.any(String),
+        provider: 'session',
+        role: 'USER',
+        twitter: null,
+        updatedAt: expect.any(Date),
+        username: 'bob123',
+        website: null,
+      },
+    });
+  });
 
-//     const response = await resolver.register(
-//       {
-//         ...user,
-//       },
-//       {
-//         req,
-//         res,
-//         redis,
-//         userLoader: mockedCreateUserDataLoader(),
-//       },
-//     );
+  test('authenticates a user when provided details are correct', async () => {
+    const resolver = new UserResolver();
 
-//     expect(req.session.userId).toEqual(response.user?.id);
+    const user = testUsers[0];
 
-//     expect(response).toEqual({
-//       errors: [],
-//       user: {
-//         accountStatus: 'ACTIVE',
-//         bio: null,
-//         createdAt: expect.any(Date),
-//         email: 'bob@test.com',
-//         emailVerified: null,
-//         firstName: 'Bob',
-//         github: null,
-//         id: expect.any(String),
-//         image: null,
-//         lastName: 'Smith',
-//         location: null,
-//         password: expect.any(String),
-//         provider: 'session',
-//         role: 'USER',
-//         twitter: null,
-//         updatedAt: expect.any(Date),
-//         username: 'bob123',
-//         website: null,
-//       },
-//     });
-//   });
+    await db.user.create({
+      data: {
+        ...user,
+        provider: 'email',
+      },
+    });
 
-//   test('authenticates a user when provided details are correct', async () => {
-//     const resolver = new UserResolver();
+    const { req, res } = createApiMocks({
+      session: {
+        destroy: jest.fn(cb => cb()),
+      },
+      clearCookie: jest.fn(),
+    });
 
-//     const user: UserRegisterInput = {
-//       firstName: 'Bob',
-//       lastName: 'Smith',
-//       username: 'bob123',
-//       email: 'bob@bob.com',
-//       password: await bcrypt.hash('password', 10),
-//     };
+    const dataLoaderMocks = createDataLoaderMocks();
+    const redis = createMockRedis();
 
-//     const loginInput: UserLoginInput = {
-//       email: user.email,
-//       password: 'password',
-//     };
+    const loginInput: UserLoginInput = {
+      email: user.email as string,
+      password: 'test',
+    };
 
-//     await db.user.create({
-//       data: {
-//         ...user,
-//         provider: 'email',
-//       },
-//     });
+    const response = await resolver.login(loginInput, {
+      req,
+      res,
+      redis,
+      ...dataLoaderMocks,
+    });
 
-//     const { req, res } = createApiMocks({
-//       session: {
-//         destroy: jest.fn(cb => cb()),
-//       },
-//       clearCookie: jest.fn(),
-//     });
+    expect(req.session.userId).toEqual(response.user?.id);
 
-//     const redis = createMockRedis();
+    expect(response).toEqual({
+      errors: [],
+      user: {
+        accountStatus: 'ACTIVE',
+        bio: expect.any(String),
+        createdAt: expect.any(Date),
+        email: user.email,
+        firstName: user.firstName,
+        github: null,
+        id: expect.any(String),
+        image: null,
+        lastName: user.lastName,
+        location: null,
+        password: expect.any(String),
+        provider: 'email',
+        role: 'USER',
+        twitter: null,
+        updatedAt: expect.any(Date),
+        username: expect.any(String),
+        website: null,
+      },
+    });
+  });
 
-//     const response = await resolver.login(loginInput, {
-//       req,
-//       res,
-//       redis,
-//       userLoader: mockedCreateUserDataLoader(),
-//     });
+  test('throws error when provided details are incorrect', async () => {
+    const resolver = new UserResolver();
 
-//     expect(req.session.userId).toEqual(response.user?.id);
+    const user = testUsers[1];
 
-//     expect(response).toEqual({
-//       errors: [],
-//       user: {
-//         accountStatus: 'ACTIVE',
-//         bio: null,
-//         createdAt: expect.any(Date),
-//         email: 'bob@bob.com',
-//         emailVerified: null,
-//         firstName: 'Bob',
-//         github: null,
-//         id: expect.any(String),
-//         image: null,
-//         lastName: 'Smith',
-//         location: null,
-//         password: expect.any(String),
-//         provider: 'email',
-//         role: 'USER',
-//         twitter: null,
-//         updatedAt: expect.any(Date),
-//         username: 'bob123',
-//         website: null,
-//       },
-//     });
-//   });
+    await db.user.create({
+      data: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email as string,
+        password: user.password,
+        provider: 'session',
+      },
+    });
 
-//   test('throws error when provided details are incorrect', async () => {
-//     const resolver = new UserResolver();
+    const { req, res } = createApiMocks({
+      session: {
+        destroy: jest.fn(cb => cb()),
+      },
+      clearCookie: jest.fn(),
+    });
 
-//     const user: UserRegisterInput = {
-//       firstName: 'test',
-//       lastName: 'test',
-//       username: 'test123456',
-//       email: 'testing123@test.com',
-//       password: 'blah',
-//     };
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
 
-//     await db.user.create({
-//       data: {
-//         ...user,
-//         provider: 'session',
-//         password: await bcrypt.hash('password', 10),
-//       },
-//     });
+    const response = await resolver.register(
+      {
+        email: user.email as string,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        password: `${user.password}123`,
+      },
+      {
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      },
+    );
 
-//     const { req, res } = createApiMocks({
-//       session: {
-//         destroy: jest.fn(cb => cb()),
-//       },
-//       clearCookie: jest.fn(),
-//     });
+    expect(response).toEqual({
+      errors: [
+        {
+          code: '409',
+          field: 'email',
+          message: 'An account with this email already exists.',
+        },
+      ],
+    });
+  });
 
-//     const redis = createMockRedis();
+  test('logs user out and destroys cookie', async () => {
+    const resolver = new UserResolver();
 
-//     const response = await resolver.register(
-//       {
-//         ...user,
-//       },
-//       {
-//         req,
-//         res,
-//         redis,
-//         userLoader: mockedCreateUserDataLoader(),
-//       },
-//     );
+    const { req, res } = createApiMocks({
+      session: {
+        destroy: jest.fn(),
+      },
+      cookies: {
+        qid: '123',
+      },
+      res: {
+        clearCookie: jest.fn(),
+      },
+    });
 
-//     expect(response).toEqual({
-//       errors: [
-//         {
-//           code: '409',
-//           field: 'email',
-//           message: 'An account with that email already exists.',
-//         },
-//       ],
-//     });
-//   });
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
 
-//   test('logs user out and destroys cookie', async () => {
-//     const resolver = new UserResolver();
+    resolver.logout({
+      req,
+      res,
+      redis,
+      ...dataLoaderMocks,
+    });
 
-//     const { req, res } = createApiMocks({
-//       session: {
-//         destroy: jest.fn(),
-//       },
-//       clearCookie: jest.fn(cb => cb()),
-//     });
+    expect(req.session.destroy).toHaveBeenCalled();
+  });
 
-//     const redis = createMockRedis();
+  test('me query returns null when no user is logged in', async () => {
+    const resolver = new UserResolver();
 
-//     resolver.logout({
-//       req,
-//       res,
-//       redis,
-//       userLoader: mockedCreateUserDataLoader(),
-//     });
+    const { req, res } = createApiMocks({
+      session: {
+        userId: '',
+      },
+      clearCookie: jest.fn(),
+    });
 
-//     // expect(res.clearCookie).toHaveBeenCalledWith('pulse.sid');
-//   });
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
 
-//   test('me query returns null when no user is logged in', async () => {
-//     const resolver = new UserResolver();
+    const response = await resolver.me({
+      req,
+      res,
+      redis,
+      ...dataLoaderMocks,
+    });
 
-//     const { req, res } = createApiMocks({
-//       session: {
-//         userId: '',
-//       },
-//       clearCookie: jest.fn(),
-//     });
+    expect(response).toEqual(null);
+  });
 
-//     const redis = createMockRedis();
+  test('deleteAccount mutation deletes user account', async () => {
+    const resolver = new UserResolver();
 
-//     const response = await resolver.me({
-//       req,
-//       res,
-//       redis,
-//       userLoader: mockedCreateUserDataLoader(),
-//     });
+    const tu = generateTestUsers(1);
 
-//     expect(response).toEqual(null);
-//   });
+    const u = await db.user.create({
+      data: {
+        firstName: tu[0].firstName,
+        lastName: tu[0].lastName,
+        username: tu[0].username,
+        email: tu[0].email as string,
+        password: tu[0].password,
+        provider: 'session',
+      },
+    });
 
-//   test('deleteAccount mutation deletes user account', async () => {
-//     const resolver = new UserResolver();
+    const { req, res } = createApiMocks({
+      session: {
+        userId: u.id,
+      },
+      clearCookie: jest.fn(),
+    });
 
-//     const u = await db.user.create({
-//       data: {
-//         firstName: 'test',
-//         lastName: 'test',
-//         username: 'test12345',
-//         email: 'test@test.com',
-//         provider: 'session',
-//         password: await bcrypt.hash('password', 10),
-//       },
-//     });
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
 
-//     const { req, res } = createApiMocks({
-//       session: {
-//         userId: u.id,
-//       },
-//       clearCookie: jest.fn(),
-//     });
+    const response = await resolver.deleteAccount({
+      req,
+      res,
+      redis,
+      ...dataLoaderMocks,
+    });
 
-//     const redis = createMockRedis();
+    expect(response).toEqual(true);
+  });
 
-//     const response = await resolver.deleteAccount({
-//       req,
-//       res,
-//       redis,
-//       userLoader: mockedCreateUserDataLoader(),
-//     });
+  test('deleteUser mutation only runs when user is admin', async () => {
+    const resolver = new UserResolver();
 
-//     expect(response).toEqual(true);
-//   });
+    const adminUser = await db.user.create({
+      data: {
+        firstName: 'test',
+        lastName: 'test',
+        username: 'test12345',
+        email: 'test@test.com',
+        role: 'ADMIN',
+        password: await bcrypt.hash('password', 10),
+        provider: 'session',
+      },
+    });
 
-//   test('deleteUser mutation only runs when user is admin', async () => {
-//     const resolver = new UserResolver();
+    const { req, res } = createApiMocks({
+      session: {
+        userId: adminUser.id,
+      },
+    });
 
-//     const adminUser = await db.user.create({
-//       data: {
-//         firstName: 'test',
-//         lastName: 'test',
-//         username: 'test12345',
-//         email: 'test@test.com',
-//         role: 'ADMIN',
-//         password: await bcrypt.hash('password', 10),
-//         provider: 'session',
-//       },
-//     });
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
 
-//     const { req, res } = createApiMocks({
-//       session: {
-//         userId: adminUser.id,
-//       },
-//     });
+    const user = await db.user.create({
+      data: {
+        firstName: 'test',
+        lastName: 'test',
+        username: 'test123456',
+        email: 'admin@test.com',
+        password: await bcrypt.hash('password', 10),
+        provider: 'session',
+      },
+    });
 
-//     const redis = createMockRedis();
+    const response = await resolver.deleteUser(
+      { req, res, redis, ...dataLoaderMocks },
+      user.id,
+    );
 
-//     const user = await db.user.create({
-//       data: {
-//         firstName: 'test',
-//         lastName: 'test',
-//         username: 'test123456',
-//         email: 'admin@test.com',
-//         password: await bcrypt.hash('password', 10),
-//         provider: 'session',
-//       },
-//     });
-
-//     const response = await resolver.deleteUser(
-//       { req, res, redis, userLoader: mockedCreateUserDataLoader() },
-//       user.id,
-//     );
-
-//     expect(response).toEqual(true);
-//   });
-// });
+    expect(response).toEqual(true);
+  });
+});

@@ -2,7 +2,7 @@ import DataLoader from 'dataloader';
 import { Post } from '../prisma/generated/type-graphql';
 import { db } from '../db/prisma';
 
-const createPostLoader = (): DataLoader<number, Post> => {
+const createPostDataLoader = (): DataLoader<number, Post> => {
   return new DataLoader<number, Post>(async postIds => {
     const posts = await db.post.findMany();
 
@@ -16,4 +16,4 @@ const createPostLoader = (): DataLoader<number, Post> => {
     return postIds.map(postId => postIdsToPost[postId]);
   });
 };
-export default createPostLoader;
+export default createPostDataLoader;

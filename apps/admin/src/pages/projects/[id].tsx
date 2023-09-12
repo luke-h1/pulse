@@ -1,7 +1,13 @@
 import { Alert, AlertIcon, AlertTitle, Button } from '@chakra-ui/react';
 import Page from '@common/components/Page';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
-import { Status, useProjectQuery } from '@graphql-hooks/generated';
+import {
+  Status,
+  useDeleteProjectAdminMutation,
+  useProjectQuery,
+  useUpdateUserStatusMutation,
+  AccountStatus,
+} from '@graphql-hooks/generated';
 import { withUrqlClient } from 'next-urql';
 import { useRouter } from 'next/router';
 import ProjectPage from '@common/components/ProjectPage';
@@ -15,6 +21,9 @@ const ManageProject = () => {
       id: id as string,
     },
   });
+
+  const [, deleteProjectAdmin] = useDeleteProjectAdminMutation();
+  const [, updateUserStatus] = useUpdateUserStatusMutation();
 
   return (
     <Page
@@ -33,8 +42,25 @@ const ManageProject = () => {
         <Button>
           {data?.project?.status === Status.Draft ? 'Publish' : 'Unpublish'}
         </Button>
-        <Button>Delete Project</Button>
-        <Button>Ban Project Creator</Button>
+        <Button
+          onClick={() =>
+            deleteProjectAdmin({
+              deleteProjectAdminId: id as string,
+            })
+          }
+        >
+          Delete Project
+        </Button>
+        <Button
+          onClick={() =>
+            updateUserStatus({
+              status: AccountStatus.Banned,
+              updateUserStatusId: data?.project?.creator.id as string,
+            })
+          }
+        >
+          Ban Project Creator
+        </Button>
       </Alert>
       <ProjectPage project={data?.project} />
     </Page>

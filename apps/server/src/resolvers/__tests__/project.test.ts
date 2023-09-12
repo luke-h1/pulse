@@ -1,5 +1,6 @@
 import { db } from '../../db/prisma';
 import resetDb from '../../test/resetDb';
+import { ProjectResolver } from '../project/project';
 
 beforeEach(async () => {
   await resetDb();
@@ -29,6 +30,10 @@ describe('project', () => {
 
   test('deleteProject', async () => {});
 
-  test('deleteProjectAsAdmin', async () => {});
+  describe('deleteProjectAsAdmin', async () => {
+    test('deletes project if user is admin', async () => {
+      const resolver = new ProjectResolver();
+    });
+  });
   test('deleteAllProjects', async () => {});
 });

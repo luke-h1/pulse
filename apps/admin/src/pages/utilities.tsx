@@ -1,6 +1,7 @@
 import AuthGuard from '@admin/components/AuthGuard';
-import { ButtonGroup } from '@chakra-ui/react';
 import Page from '@common/components/Page';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
+import { withUrqlClient } from 'next-urql';
 
 const UtilityPage = () => {
   return (
@@ -17,4 +18,4 @@ const UtilityPage = () => {
     </AuthGuard>
   );
 };
-export default UtilityPage;
+export default withUrqlClient(createUrqlClient, { ssr: true })(UtilityPage);

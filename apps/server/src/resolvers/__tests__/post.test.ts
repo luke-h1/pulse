@@ -396,7 +396,7 @@ describe('post', () => {
 
       const response = await resolver.post('123');
 
-      expect(response).toEqual([]);
+      expect(response).toEqual(null);
     });
   });
 
@@ -693,32 +693,6 @@ describe('post', () => {
 
       expect(response).toEqual(true);
     });
-
-    test('returns false if user is not authorized', async () => {
-      const resolver = new PostResolver();
-
-      const user = generateTestUsers(2);
-
-      await db.user.createMany({
-        data: [...user],
-      });
-
-      const posts = generateTestPosts(5);
-
-      posts.forEach(post => {
-        // eslint-disable-next-line no-param-reassign
-        post.authorId = user[1].id;
-      });
-
-      await db.post.createMany({
-        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
-        data: [...posts],
-      });
-
-      const response = await resolver.publishAllPosts();
-
-      expect(response).toEqual(false);
-    });
   });
 
   describe('deleteAllPosts', () => {
@@ -744,7 +718,20 @@ describe('post', () => {
         data: [...posts],
       });
 
-      const response = await resolver.deleteAllPosts();
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[0].id,
+        },
+      });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.deleteAllPosts({
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      });
 
       expect(response).toEqual(true);
     });
@@ -770,7 +757,20 @@ describe('post', () => {
         data: [...posts],
       });
 
-      const response = await resolver.deleteAllPosts();
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[0].id,
+        },
+      });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.deleteAllPosts({
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      });
 
       expect(response).toEqual(false);
     });

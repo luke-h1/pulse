@@ -323,13 +323,20 @@ export class PostResolver {
 
   @Mutation(() => Boolean)
   @Authorized(isAdmin)
-  async deleteAllPosts(): Promise<boolean> {
-    try {
-      await db.post.deleteMany();
-      return true;
-    } catch (e) {
+  async deleteAllPosts(@Ctx() { req }: Context): Promise<boolean> {
+    const u = await db.user.findUnique({
+      where: {
+        id: req.session.userId,
+      },
+    });
+
+    if (u?.role !== 'ADMIN') {
       return false;
     }
+
+    await db.post.deleteMany();
+
+    return true;
   }
 
   @Mutation(() => Boolean)

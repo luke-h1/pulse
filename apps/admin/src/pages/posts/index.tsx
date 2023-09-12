@@ -3,11 +3,7 @@ import Page from '@common/components/Page';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
 import { withUrqlClient } from 'next-urql';
 import PostsSection from '@common/components/PostsSection';
-import {
-  Status,
-  usePostsQuery,
-  useProjectsQuery,
-} from '@graphql-hooks/generated';
+import { useAdminPostsQuery } from '@graphql-hooks/generated';
 
 const ManagePosts = () => {
   const [{ data: postsData }] = useAdminPostsQuery();
@@ -20,7 +16,7 @@ const ManagePosts = () => {
       }}
     >
       <Heading>Manage Posts</Heading>
-      <PostsSection projects={postsData?.posts} title="Recent Projects" />
+      <PostsSection posts={postsData?.adminPosts} title="Recent Projects" />
     </Page>
   );
 };

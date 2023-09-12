@@ -8,7 +8,7 @@ import isServer from '@common/hooks/isServer';
 import useMounted from '@common/hooks/useMounted';
 
 import Page from '@common/components/Page';
-import PostPage from '@frontend/components/PostPage';
+import PostPage from '@common/components/PostPage';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
 import { useMeQuery, usePostQuery } from '@graphql-hooks/generated';
 import { withUrqlClient } from 'next-urql';

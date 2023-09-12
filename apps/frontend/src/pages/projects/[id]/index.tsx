@@ -18,7 +18,7 @@ import Page from '@common/components/Page';
 import useMounted from '@common/hooks/useMounted';
 import EditorOutput from '@editor/renderers/EditorOutput';
 import isServer from '@common/hooks/isServer';
-import ProjectPage from '@frontend/components/ProjectPage';
+import ProjectPage from '@common/components/ProjectPage';
 
 const ProjectSlugPage: NextPage = () => {
   const { isMounted } = useMounted();

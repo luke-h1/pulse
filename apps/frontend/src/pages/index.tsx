@@ -1,7 +1,7 @@
 import Hero from '@frontend/components/Hero';
 import Page from '@common/components/Page';
-import PostsSection from '@frontend/components/PostsSection';
-import ProjectsSection from '@frontend/components/ProjectsSection';
+import PostsSection from '@common/components/PostsSection';
+import ProjectsSection from '@common/components/ProjectsSection';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
 import {
   useRecentPostsQuery,

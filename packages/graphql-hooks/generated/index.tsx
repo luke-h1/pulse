@@ -436,6 +436,7 @@ export type ProjectWhereInput = {
 
 export type Query = {
   __typename?: 'Query';
+  adminPosts?: Maybe<Array<Post>>;
   /** Returns the total number of posts */
   countPosts?: Maybe<CountResponse>;
   countProjects: CountResponse;
@@ -727,6 +728,27 @@ export type UpdateUserStatusMutation = {
       location?: string | null;
     } | null;
   };
+};
+
+export type AdminPostsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AdminPostsQuery = {
+  __typename?: 'Query';
+  adminPosts?: Array<{
+    __typename?: 'Post';
+    id: string;
+    title: string;
+    intro: string;
+    content: any;
+    tags: Array<string>;
+    image?: string | null;
+    status: Status;
+    isAuthor: boolean;
+    authorFullName: string;
+    createdAt: any;
+    updatedAt: any;
+    creator: { __typename?: 'User'; id: string };
+  }> | null;
 };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never }>;
@@ -1477,6 +1499,23 @@ export function useUpdateUserStatusMutation() {
     UpdateUserStatusMutation,
     UpdateUserStatusMutationVariables
   >(UpdateUserStatusDocument);
+}
+export const AdminPostsDocument = gql`
+  query AdminPosts {
+    adminPosts {
+      ...PostFragment
+    }
+  }
+  ${PostFragmentFragmentDoc}
+`;
+
+export function useAdminPostsQuery(
+  options?: Omit<Urql.UseQueryArgs<AdminPostsQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<AdminPostsQuery, AdminPostsQueryVariables>({
+    query: AdminPostsDocument,
+    ...options,
+  });
 }
 export const UsersDocument = gql`
   query Users {

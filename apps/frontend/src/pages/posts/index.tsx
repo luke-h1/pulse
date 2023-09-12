@@ -25,7 +25,7 @@ import {
 import { ChangeEvent, useState } from 'react';
 import Page from '@common/components/Page';
 import { HiOutlineSearch } from 'react-icons/hi';
-import PostCard from '@frontend/components/PostCard';
+import PostCard from '@common/components/PostCard';
 import Tag from '@frontend/components/Tag';
 import useDebouncedCallback from '@common/hooks/useDebouncedCallback';
 import searchClient from '@frontend/utils/searchClient';

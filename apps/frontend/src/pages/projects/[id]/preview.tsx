@@ -7,7 +7,7 @@ import {
 import isServer from '@common/hooks/isServer';
 import useMounted from '@common/hooks/useMounted';
 import Page from '@common/components/Page';
-import ProjectPage from '@frontend/components/ProjectPage';
+import ProjectPage from '@common/components/ProjectPage';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
 import { useMeQuery, useProjectQuery } from '@graphql-hooks/generated';
 import { withUrqlClient } from 'next-urql';

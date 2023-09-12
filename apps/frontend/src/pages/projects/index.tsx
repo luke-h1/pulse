@@ -28,7 +28,7 @@ import {
 } from '@chakra-ui/react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import Tag from '@frontend/components/Tag';
-import ProjectCard from '@frontend/components/ProjectCard';
+import ProjectCard from '@common/components/ProjectCard';
 
 const ProjectPage: NextPage = () => {
   const [{ data, fetching }] = useProjectsQuery();

@@ -12,7 +12,7 @@ import Redis from 'ioredis-mock';
 import { Context } from '../../types/Context';
 import createUserDataLoader from '../../dataloader/createUserLoader';
 import createPostDataLoader from '../../dataloader/createPostDataLoader';
-import createProjectDataLoader from '../../dataloader/createProjectLoader';
+import createProjectDataLoader from '../../dataloader/createProjectDataLoader';
 
 type ApiRequest = Context['req'] & ReturnType<typeof createRequest>;
 type ApiResponse = Context['res'] & ReturnType<typeof createResponse>;

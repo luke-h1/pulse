@@ -17,6 +17,7 @@
     "format:check": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,html}\"",
     "db:generate": "pnpm prisma generate",
     "db:migrate": "pnpm prisma migrate dev",
+    "db:push": "pnpm prisma db push",
     "db:format": "pnpm prisma format",
     "db:studio": "pnpm prisma studio",
     "postinstall": "pnpm db:generate"

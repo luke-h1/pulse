@@ -15,7 +15,7 @@ import {
   RecentPostsQuery,
   useDeletePostMutation,
 } from '@graphql-hooks/generated';
-import { ArrayElementType } from '@frontend/types/util';
+import { ArrayElementType } from '@common/types/util';
 
 interface Props {
   post: ArrayElementType<RecentPostsQuery['recentPosts']>;

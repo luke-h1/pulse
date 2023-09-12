@@ -1,6 +1,6 @@
 import { NextPage } from 'next/types';
 import Page from '@common/components/Page';
-import AuthGuard from '@frontend/components/AuthGuard';
+import AuthGuard from '@admin/components/AuthGuard';
 import { withUrqlClient } from 'next-urql';
 import { createUrqlClient } from '@common/urql/createUrqlClient';
 

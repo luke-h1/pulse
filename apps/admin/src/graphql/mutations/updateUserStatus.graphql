@@ -1,0 +1,12 @@
+mutation UpdateUserStatus($status: AccountStatus!, $updateUserStatusId: String!) {
+  updateUserStatus(status: $status, id: $updateUserStatusId) {
+    errors {
+      code
+      field
+      message
+    }
+    user {
+      ...UserFragment
+    }
+  }
+}

@@ -5,7 +5,9 @@
     "paths": {
       "@common/*": ["./src/*"],
       "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
-      "@ui/*": ["../../packages/ui/src/*"]
+      "@ui/*": ["../../packages/ui/src/*"],
+      "@editor/*": ["../../packages/editor/src/*"],
+
      }
   },
   "include": ["src", "test", "../frontend/src/hooks/useIsAuth.ts"],

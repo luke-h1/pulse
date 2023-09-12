@@ -71,7 +71,6 @@ export class ProjectResolver {
   async projects(): Promise<Project[]> {
     // will need to add pagination args in the future here
     return db.project.findMany({
-      take: 50,
       where: {
         status: 'PUBLISHED',
       },

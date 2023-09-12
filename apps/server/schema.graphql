@@ -340,6 +340,8 @@ input ProjectWhereInput {
 }
 
 type Query {
+  adminPosts: [Post!]
+
   """Returns the total number of posts"""
   countPosts: CountResponse
   countProjects: CountResponse!
@@ -375,6 +377,7 @@ type Query {
   """Search projects (full text search on title / intro)"""
   searchProjects(query: String!): [Project!]
   user(id: String!): User
+  users: [User!]!
 }
 
 enum QueryMode {

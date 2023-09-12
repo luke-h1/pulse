@@ -1,4 +1,6 @@
 import Page from '@common/components/Page';
+import { createUrqlClient } from '@common/urql/createUrqlClient';
+import { withUrqlClient } from 'next-urql';
 
 const ManagePost = () => {
   return (
@@ -9,8 +11,8 @@ const ManagePost = () => {
         description: 'Manage Post',
       }}
     >
-      <h1>Manage Posts</h1>
+      <h1>Manage post</h1>
     </Page>
   );
 };
-export default ManagePost;
+export default withUrqlClient(createUrqlClient, { ssr: true })(ManagePost);

@@ -22,7 +22,7 @@
       }
     ],
     "paths": {
-      "@frontend/*": ["./src/*"],
+      "@admin/*": ["./src/*"],
       "@common/*": ["../common/src/*"],
       "@graphql-hooks/*": ["../../packages/graphql-hooks/*"],
       "@editor/*": ["../../packages/editor/src/*"],

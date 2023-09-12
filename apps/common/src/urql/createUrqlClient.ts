@@ -8,6 +8,7 @@ import isServer from '@common/hooks/isServer';
 import {
   DeletePostMutationVariables,
   DeleteProjectMutationVariables,
+  DeleteUserMutationVariables,
   LoginMutation,
   LogoutMutation,
   MeDocument,
@@ -26,11 +27,6 @@ const errorExchange: Exchange =
       tap(({ error }) => {
         if (error?.graphQLErrors[0]?.extensions?.code === 'UNAUTHENTICATED') {
           Router.push('/auth/login');
-        }
-
-        if (error) {
-          // eslint-disable-next-line no-console
-          console.error('Error: ', error);
         }
       }),
     );
@@ -154,6 +150,21 @@ export const createUrqlClient = (
                 cache,
                 'Project',
                 args.id as DeleteProjectMutationVariables['id'],
+              );
+            },
+            // ADMIN ONLY
+            updateUserStatus: (_result, args, cache) => {
+              invalidateCacheItem(
+                cache,
+                'User',
+                args.id as UpdateProjectMutationVariables['id'],
+              );
+            },
+            deleteUser: (_result, args, cache) => {
+              invalidateCacheItem(
+                cache,
+                'User',
+                args.id as DeleteUserMutationVariables['deleteUserId'],
               );
             },
           },

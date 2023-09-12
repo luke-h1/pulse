@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { ArrayElementType } from '@frontend/types/util';
+import { ArrayElementType } from '@common/types/util';
 import {
   ProjectsQuery,
   useDeleteProjectMutation,

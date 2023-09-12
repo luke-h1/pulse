@@ -272,6 +272,18 @@ export class UserResolver {
     };
   }
 
+  @Query(() => [User])
+  @Authorized(isAdmin)
+  async users(): Promise<User[]> {
+    return db.user.findMany({
+      include: {
+        posts: true,
+        projects: true,
+        reports: true,
+      },
+    });
+  }
+
   @Mutation(() => Boolean)
   logout(@Ctx() { req, res }: Context) {
     return new Promise(resolve =>

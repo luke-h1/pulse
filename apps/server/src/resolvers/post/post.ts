@@ -97,6 +97,16 @@ export class PostResolver {
     });
   }
 
+  @Authorized(isAdmin)
+  @Query(() => [Post], { nullable: true })
+  async adminPosts(): Promise<Post[]> {
+    return db.post.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
   @Query(() => [Post], {
     description: 'Returns all posts',
     nullable: true,

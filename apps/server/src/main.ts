@@ -24,6 +24,7 @@ import createProjectLoader from './dataloader/createProjectLoader';
 const DEV_ORIGINS = [
   'http://localhost:3000', // frontend
   'http://localhost:4000', // admin
+  'http://localhost:4002', // frontend2
   'https://studio.apollographql.com',
 ];
 

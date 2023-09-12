@@ -1,0 +1,5 @@
+query AdminPosts {
+  adminPosts {
+    ...PostsFragment
+  }
+}

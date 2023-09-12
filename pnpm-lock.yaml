@@ -304,6 +304,9 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
+      editor:
+        specifier: workspace:*
+        version: link:../../packages/editor
       graphql-hooks:
         specifier: workspace:*
         version: link:../../packages/graphql-hooks

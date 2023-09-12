@@ -1,11 +1,4 @@
-import {
-  Divider,
-  HStack,
-  Heading,
-  Image,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { HStack, Heading, Image, Text, VStack } from '@chakra-ui/react';
 import FormattedDate from '@common/components/FormattedDate';
 import EditorOutput from '@editor/renderers/EditorOutput';
 import { ProjectQuery } from '@graphql-hooks/generated';

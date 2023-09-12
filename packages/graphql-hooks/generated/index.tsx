@@ -463,6 +463,7 @@ export type Query = {
   /** Search projects (full text search on title / intro) */
   searchProjects?: Maybe<Array<Project>>;
   user?: Maybe<User>;
+  users: Array<User>;
 };
 
 export type QueryPostArgs = {
@@ -684,6 +685,71 @@ export type AdminLoginMutation = {
       location?: string | null;
     } | null;
   };
+};
+
+export type DeleteUserMutationVariables = Exact<{
+  deleteUserId: Scalars['String']['input'];
+}>;
+
+export type DeleteUserMutation = {
+  __typename?: 'Mutation';
+  deleteUser: boolean;
+};
+
+export type UpdateUserStatusMutationVariables = Exact<{
+  status: AccountStatus;
+  updateUserStatusId: Scalars['String']['input'];
+}>;
+
+export type UpdateUserStatusMutation = {
+  __typename?: 'Mutation';
+  updateUserStatus: {
+    __typename?: 'UserResponse';
+    errors?: Array<{
+      __typename?: 'FieldError';
+      code?: string | null;
+      field: string;
+      message: string;
+    }> | null;
+    user?: {
+      __typename?: 'User';
+      id: string;
+      firstName: string;
+      lastName: string;
+      image?: string | null;
+      github?: string | null;
+      email?: string | null;
+      bio?: string | null;
+      twitter?: string | null;
+      username: string;
+      website?: string | null;
+      createdAt: any;
+      location?: string | null;
+    } | null;
+  };
+};
+
+export type UsersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UsersQuery = {
+  __typename?: 'Query';
+  users: Array<{
+    __typename?: 'User';
+    role: Role;
+    accountStatus: AccountStatus;
+    id: string;
+    firstName: string;
+    lastName: string;
+    image?: string | null;
+    github?: string | null;
+    email?: string | null;
+    bio?: string | null;
+    twitter?: string | null;
+    username: string;
+    website?: string | null;
+    createdAt: any;
+    location?: string | null;
+  }>;
 };
 
 export type PostFragmentFragment = {
@@ -1375,6 +1441,61 @@ export function useAdminLoginMutation() {
   return Urql.useMutation<AdminLoginMutation, AdminLoginMutationVariables>(
     AdminLoginDocument,
   );
+}
+export const DeleteUserDocument = gql`
+  mutation DeleteUser($deleteUserId: String!) {
+    deleteUser(id: $deleteUserId)
+  }
+`;
+
+export function useDeleteUserMutation() {
+  return Urql.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(
+    DeleteUserDocument,
+  );
+}
+export const UpdateUserStatusDocument = gql`
+  mutation UpdateUserStatus(
+    $status: AccountStatus!
+    $updateUserStatusId: String!
+  ) {
+    updateUserStatus(status: $status, id: $updateUserStatusId) {
+      errors {
+        code
+        field
+        message
+      }
+      user {
+        ...UserFragment
+      }
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+
+export function useUpdateUserStatusMutation() {
+  return Urql.useMutation<
+    UpdateUserStatusMutation,
+    UpdateUserStatusMutationVariables
+  >(UpdateUserStatusDocument);
+}
+export const UsersDocument = gql`
+  query Users {
+    users {
+      ...UserFragment
+      role
+      accountStatus
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+
+export function useUsersQuery(
+  options?: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'>,
+) {
+  return Urql.useQuery<UsersQuery, UsersQueryVariables>({
+    query: UsersDocument,
+    ...options,
+  });
 }
 export const CreatePostDocument = gql`
   mutation CreatePost($options: PostCreateInput!) {

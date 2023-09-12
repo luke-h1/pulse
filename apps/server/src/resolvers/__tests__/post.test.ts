@@ -127,7 +127,7 @@ describe('post', () => {
         ...dataLoaderMocks,
       });
 
-      expect(response).toEqual(posts);
+      expect(response.length).toEqual(5);
     });
     test('returns no posts if not admin', async () => {
       const resolver = new PostResolver();

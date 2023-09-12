@@ -78,7 +78,7 @@ jobs:
         run: cd apps/server && docker-compose up -d && cd ../../
 
       - name: Run migrations
-        run: pnpm --filter=server db:generate && pnpm db:migrate
+        run: pnpm --filter=server db:generate && pnpm --filter=server pnpm db:migrate
 
       - name: jest server
         run: pnpm -r --filter=server --parallel --no-bail test

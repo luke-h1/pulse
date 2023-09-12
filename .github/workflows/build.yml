@@ -79,6 +79,8 @@ jobs:
 
       - name: Run migrations
         run: pnpm --filter=server db:generate && pnpm --filter=server db:migrate
+        env:
+          DATABASE_URL: "postgresql://pulse:pulse@localhost:5432/pulse?schema=public"
 
       - name: jest server
         run: pnpm -r --filter=server --parallel --no-bail test

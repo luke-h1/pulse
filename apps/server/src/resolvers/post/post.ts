@@ -99,7 +99,17 @@ export class PostResolver {
 
   @Authorized(isAdmin)
   @Query(() => [Post], { nullable: true })
-  async adminPosts(): Promise<Post[]> {
+  async adminPosts(@Ctx() { req }: Context): Promise<Post[]> {
+    const u = await db.user.findUnique({
+      where: {
+        id: req.session.userId,
+      },
+    });
+
+    if (u?.role !== 'ADMIN') {
+      return [];
+    }
+
     return db.post.findMany({
       orderBy: {
         createdAt: 'desc',
@@ -150,7 +160,7 @@ export class PostResolver {
   }
 
   @Query(() => [Post], {
-    description: 'Search posts (full text search on title)',
+    description: 'Search posts (text search on title)',
     nullable: true,
   })
   async searchPosts(
@@ -159,15 +169,8 @@ export class PostResolver {
     return db.post.findMany({
       where: {
         title: {
-          search: query,
+          contains: query,
         },
-        OR: [
-          {
-            intro: {
-              search: query,
-            },
-          },
-        ],
         AND: {
           status: {
             equals: 'PUBLISHED',
@@ -218,6 +221,18 @@ export class PostResolver {
         id,
       },
     });
+
+    if (!post) {
+      return {
+        errors: [
+          {
+            field: 'title',
+            message: 'Post not found',
+            code: '404',
+          },
+        ],
+      };
+    }
 
     if (post?.authorId !== req.session.userId) {
       logger.info('User in un-authorized to view this post');
@@ -274,7 +289,7 @@ export class PostResolver {
     return true;
   }
 
-  // @Authorized(isAdmin)
+  @Authorized(isAdmin)
   @Mutation(() => Boolean)
   async publishAllPosts(): Promise<boolean> {
     await db.post.updateMany({
@@ -309,24 +324,35 @@ export class PostResolver {
   @Mutation(() => Boolean)
   @Authorized(isAdmin)
   async deleteAllPosts(): Promise<boolean> {
-    await db.post.deleteMany();
-    return true;
+    try {
+      await db.post.deleteMany();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   @Mutation(() => Boolean)
   @Authorized(isAdmin)
   async deletePostAsAdmin(
+    @Ctx() { req }: Context,
     @Arg('id', () => String) id: string,
   ): Promise<boolean> {
-    try {
-      await db.post.delete({
-        where: {
-          id,
-        },
-      });
-      return true;
-    } catch (e) {
+    const u = await db.user.findUnique({
+      where: {
+        id: req.session.userId,
+      },
+    });
+
+    if (u?.role !== 'ADMIN') {
       return false;
     }
+
+    await db.post.delete({
+      where: {
+        id,
+      },
+    });
+    return true;
   }
 }

@@ -9,7 +9,7 @@ export const isAdmin: AuthChecker<Context> = async ({ context }) => {
     },
   });
 
-  if (user && user.role !== 'ADMIN') {
+  if (user?.role !== 'ADMIN') {
     return false;
   }
 

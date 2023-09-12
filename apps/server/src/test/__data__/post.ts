@@ -34,7 +34,7 @@ export const testContentBlock = {
 export const testPosts: Post[] = [
   {
     id: nanoid(),
-    title: randMovie(),
+    title: randText(),
     content: testContentBlock,
     intro: randText(),
     image: '',
@@ -46,7 +46,7 @@ export const testPosts: Post[] = [
   },
   {
     id: nanoid(),
-    title: randMovie(),
+    title: randText(),
     content: testContentBlock,
     intro: randText(),
     image: '',
@@ -58,7 +58,7 @@ export const testPosts: Post[] = [
   },
   {
     id: nanoid(),
-    title: randMovie(),
+    title: randText(),
     content: testContentBlock,
     intro: randText(),
     image: '',
@@ -70,13 +70,13 @@ export const testPosts: Post[] = [
   },
 ];
 
-export const generatePosts = (count: number): Post[] => {
+export const generateTestPosts = (count: number): Post[] => {
   const posts: Post[] = [];
 
   for (let i = 0; i < count; i += 1) {
     posts.push({
       id: nanoid(),
-      title: randMovie(),
+      title: randText(),
       content: testContentBlock,
       intro: randText(),
       image: '',

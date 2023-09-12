@@ -1,273 +1,885 @@
-// import 'reflect-metadata';
-// import { Status } from '@prisma/client';
-// import { db } from '../../db/prisma';
-// import { PostResolver } from '../post/post';
-// import resetDb from '../../test/resetDb';
-// import { Status as TypeGraphQLStatus } from '../../prisma/generated/type-graphql';
+import 'reflect-metadata';
+import { Role, Status } from '@prisma/client';
+import { db } from '../../db/prisma';
+import { PostResolver } from '../post/post';
+import resetDb from '../../test/resetDb';
+import { Status as TypeGraphQLStatus } from '../../prisma/generated/type-graphql';
+import { generateTestUsers } from '../../test/__data__/user';
+import { generateTestPosts } from '../../test/__data__/post';
+import {
+  createApiMocks,
+  createDataLoaderMocks,
+  createMockRedis,
+} from '../../test/__mocks__/server';
 
-test.skip('', async () => {});
+beforeEach(async () => {
+  await resetDb();
+});
 
-// beforeEach(async () => {
-//   await resetDb();
-// });
+afterEach(async () => {
+  await resetDb();
+});
 
-// afterAll(async () => {
-//   await db.$disconnect();
-// });
+afterAll(async () => {
+  await db.$disconnect();
+});
 
-// describe.skip('post', () => {
-//   test('countPosts returns count of posts', async () => {
-//     const resolver = new PostResolver();
+describe('post', () => {
+  test('countResponse', async () => {
+    const resolver = new PostResolver();
 
-//     await db.user.createMany({
-//       data: [
-//         {
-//           email: 'test1@test.com',
-//           firstName: 'test',
-//           lastName: 'test',
-//           password: 'test',
-//           role: 'USER',
-//           username: 'test1',
-//         },
-//         {
-//           email: 'test2@test.com',
-//           firstName: 'test',
-//           lastName: 'test',
-//           password: 'test',
-//           role: 'USER',
-//           username: 'test2',
-//         },
-//         {
-//           email: 'test3@test.com',
-//           firstName: 'test',
-//           lastName: 'test',
-//           password: 'test',
-//           role: 'USER',
-//           username: 'test3',
-//         },
-//       ],
-//     });
+    const count = await resolver.countPosts();
 
-//     const users = await db.user.findMany();
+    expect(count).toEqual({ count: 0 });
 
-//     await db.post.createMany({
-//       data: [
-//         {
-//           title: 'test',
-//           intro: 'test',
-//           content: { test: 'test' },
-//           authorId: users[0].id,
-//           readingTime: '10m',
-//           status: 'PUBLISHED',
-//         },
-//         {
-//           title: 'test 2',
-//           intro: 'test 2',
-//           content: { test: 'test 2' },
-//           authorId: users[1].id,
-//           readingTime: '10m',
-//           status: 'PUBLISHED',
-//         },
-//         {
-//           title: 'test 3',
-//           intro: 'test 3',
-//           content: { test: 'test 3' },
-//           authorId: users[2].id,
-//           readingTime: '10m',
-//           status: 'PUBLISHED',
-//         },
-//       ],
-//     });
+    const users = generateTestUsers(5);
+    const posts = generateTestPosts(5);
 
-//     const response = await resolver.countPosts();
+    await db.user.createMany({
+      data: [...users],
+    });
 
-//     expect(response).toEqual({
-//       count: 3,
-//     });
-//   });
+    posts.forEach((post, i) => {
+      // eslint-disable-next-line no-param-reassign
+      post.authorId = users[i].id;
+    });
 
-//   test('returns allPosts', async () => {
-//     const resolver = new PostResolver();
+    await db.post.createMany({
+      // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+      data: [...posts],
+    });
 
-//     const user = await db.user.create({
-//       data: {
-//         email: 'bob@bob.com',
-//         firstName: 'bob',
-//         lastName: 'bob',
-//         password: 'bob',
-//         role: 'USER',
-//         username: 'bob',
-//       },
-//     });
+    const count2 = await resolver.countPosts();
 
-//     const testPost = {
-//       title: 'test',
-//       intro: 'test',
-//       content: { test: 'test' },
-//       authorId: user.id,
-//       readingTime: '10m',
-//       image: '',
-//       status: Status.PUBLISHED,
-//       tags: [],
-//       createdAt: new Date(),
-//       updatedAt: new Date(),
-//     };
+    expect(count2).toEqual({ count: 5 });
+  });
 
-//     await db.post.create({
-//       data: testPost,
-//     });
+  test('postStatus', async () => {
+    const resolver = new PostResolver();
 
-//     const response = await resolver.posts(TypeGraphQLStatus.PUBLISHED);
+    const count = await resolver.countPosts();
 
-//     expect(response).toEqual([
-//       {
-//         authorId: expect.any(String),
-//         content: {
-//           test: 'test',
-//         },
-//         createdAt: expect.any(Date),
-//         id: expect.any(String),
-//         image: '',
-//         intro: 'test',
-//         readingTime: '10m',
-//         status: 'PUBLISHED',
-//         tags: expect.any(Array),
-//         title: 'test',
-//         updatedAt: expect.any(Date),
-//       },
-//     ]);
-//   });
+    expect(count).toEqual({ count: 0 });
 
-//   test('returns recentPosts', async () => {
-//     const resolver = new PostResolver();
+    const users = generateTestUsers(5);
+    const posts = generateTestPosts(5);
 
-//     const user = await db.user.create({
-//       data: {
-//         email: 'test@test.com',
-//         firstName: 'test',
-//         lastName: 'test',
-//         password: 'test',
-//         role: 'USER',
-//         username: 'test',
-//       },
-//     });
+    await db.user.createMany({
+      data: [...users],
+    });
 
-//     for (let i = 0; i < 10; i += 1) {
-//       // eslint-disable-next-line no-await-in-loop
-//       await db.post.create({
-//         data: {
-//           title: `test ${i}`,
-//           intro: `test ${i}`,
-//           content: { test: `test ${i}` },
-//           authorId: user.id,
-//           readingTime: '10m',
-//           status: 'PUBLISHED',
-//         },
-//       });
-//     }
+    posts.forEach((post, i) => {
+      // eslint-disable-next-line no-param-reassign
+      post.authorId = users[i].id;
+    });
 
-//     const response = await resolver.recentPosts();
+    await db.post.createMany({
+      // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+      data: [...posts],
+    });
 
-//     expect(response.length).toEqual(5);
-//   });
+    const postStatus = await resolver.postStatus(posts[0].id);
 
-//   test.skip('searchPosts performs full text search on title/intro', async () => {
-//     const resolver = new PostResolver();
+    expect(postStatus).toEqual({ status: 'PUBLISHED' });
+  });
+  describe('adminPosts', () => {
+    test('returns all posts if admin', async () => {
+      const resolver = new PostResolver();
 
-//     const user = await db.user.create({
-//       data: {
-//         email: 'test@test.com',
-//         firstName: 'test',
-//         lastName: 'test',
-//         password: 'test',
-//         role: 'USER',
-//         username: 'test',
-//       },
-//     });
+      const user = generateTestUsers(2);
+      user[0].role = Role.ADMIN;
 
-//     for (let i = 0; i < 10; i += 1) {
-//       // eslint-disable-next-line no-await-in-loop
-//       await db.post.create({
-//         data: {
-//           title: `test ${i}`,
-//           intro: `test ${i}`,
-//           content: { test: `test ${i}` },
-//           authorId: user.id,
-//           readingTime: '10m',
-//           status: 'PUBLISHED',
-//         },
-//       });
-//     }
+      await db.user.createMany({
+        data: [...user],
+      });
 
-//     const response = await resolver.searchPosts('test 1');
+      const posts = generateTestPosts(5);
 
-//     expect(response.length).toEqual(1);
-//   });
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
 
-//   test('post returns post by id', async () => {
-//     const resolver = new PostResolver();
+      createApiMocks({
+        session: {
+          userId: user[0].id,
+        },
+      });
 
-//     const user = await db.user.create({
-//       data: {
-//         email: 'test@test.com',
-//         firstName: 'test',
-//         lastName: 'test',
-//         password: 'test',
-//         role: 'USER',
-//         username: 'test',
-//       },
-//     });
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
 
-//     const testPost = {
-//       title: 'test',
-//       intro: 'test',
-//       content: { test: 'test' },
-//       authorId: user.id,
-//       readingTime: '10m',
-//       status: Status.PUBLISHED,
-//       tags: [],
-//       createdAt: new Date(),
-//       updatedAt: new Date(),
-//     };
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[0].id,
+        },
+      });
 
-//     const post = await db.post.create({
-//       data: testPost,
-//     });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
 
-//     const response = await resolver.post(post.id, TypeGraphQLStatus.PUBLISHED);
+      const response = await resolver.adminPosts({
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      });
 
-//     expect(response).toEqual({
-//       authorId: expect.any(String),
-//       content: {
-//         test: 'test',
-//       },
-//       createdAt: expect.any(Date),
-//       id: expect.any(String),
-//       image: null,
-//       intro: 'test',
-//       readingTime: '10m',
-//       status: 'PUBLISHED',
-//       tags: expect.any(Array),
-//       title: 'test',
-//       updatedAt: expect.any(Date),
-//     });
-//   });
+      expect(response).toEqual(posts);
+    });
+    test('returns no posts if not admin', async () => {
+      const resolver = new PostResolver();
 
-//   test('createPost creates post', async () => {});
+      const user = generateTestUsers(2);
 
-//   test('updatePost updates post if exists', async () => {});
+      await db.user.createMany({
+        data: [...user],
+      });
 
-//   test("updatePost returns validation error if post doesn't exist", async () => {});
+      const posts = generateTestPosts(5);
 
-//   test("updatePost returns validation error if user isn't authorized", async () => {});
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
 
-//   test('deletePost deletes post if user is authorized', async () => {});
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[0].id,
+        },
+      });
 
-//   test("deletePost doesn't deletes post if user is not authorized", async () => {});
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
 
-//   test('postSlugs returns list of post slugs', async () => {});
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
 
-//   test('deleteAllPosts deletes all post if admin', async () => {});
+      const response = await resolver.adminPosts({
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      });
 
-//   test('deletePost deletes post if admin', async () => {});
-// });
+      expect(response).toEqual([]);
+    });
+  });
+  describe('posts', () => {
+    test('returns all posts', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.posts(TypeGraphQLStatus.PUBLISHED);
+
+      expect(response.length).toEqual(5);
+    });
+
+    test('returns posts by status', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      posts[0].status = Status.DRAFT;
+      posts[1].status = Status.DRAFT;
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.posts(TypeGraphQLStatus.PUBLISHED);
+      expect(response.length).toEqual(3);
+
+      const response2 = await resolver.posts(TypeGraphQLStatus.DRAFT);
+      expect(response2.length).toEqual(2);
+    });
+  });
+
+  test('recentPosts returns 5 most recent posts', async () => {
+    const resolver = new PostResolver();
+
+    const user = generateTestUsers(2);
+
+    await db.user.createMany({
+      data: [...user],
+    });
+
+    const posts = generateTestPosts(5);
+
+    posts.forEach(post => {
+      // eslint-disable-next-line no-param-reassign
+      post.authorId = user[1].id;
+    });
+
+    await db.post.createMany({
+      // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+      data: [...posts],
+    });
+
+    const response = await resolver.recentPosts();
+
+    expect(response.length).toEqual(5);
+  });
+
+  test('myPosts', async () => {
+    const resolver = new PostResolver();
+
+    const user = generateTestUsers(2);
+
+    await db.user.createMany({
+      data: [...user],
+    });
+
+    const posts = generateTestPosts(5);
+
+    posts.forEach(post => {
+      // eslint-disable-next-line no-param-reassign
+      post.authorId = user[1].id;
+    });
+
+    await db.post.createMany({
+      // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+      data: [...posts],
+    });
+
+    const { req, res } = createApiMocks({
+      session: {
+        userId: user[0].id,
+      },
+    });
+
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
+
+    const response = await resolver.myPosts({
+      req,
+      res,
+      redis,
+      ...dataLoaderMocks,
+    });
+
+    expect(response.length).toEqual(0);
+
+    // change to user who owns the posts
+    req.session.userId = user[1].id;
+
+    const response2 = await resolver.myPosts({
+      req,
+      res,
+      redis,
+      ...dataLoaderMocks,
+    });
+
+    expect(response2.length).toEqual(5);
+  });
+
+  test('searchPosts', async () => {
+    const resolver = new PostResolver();
+
+    const user = generateTestUsers(2);
+
+    await db.user.createMany({
+      data: [...user],
+    });
+
+    const posts = generateTestPosts(5);
+
+    posts.forEach((post, i) => {
+      // eslint-disable-next-line no-param-reassign
+      post.authorId = user[1].id;
+      // eslint-disable-next-line no-param-reassign
+      post.title = `test ${i}`;
+    });
+
+    await db.post.createMany({
+      // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+      data: [...posts],
+    });
+
+    const response = await resolver.searchPosts('test');
+
+    expect(response.length).toEqual(5);
+
+    // refine search
+    const response2 = await resolver.searchPosts('test 1');
+
+    expect(response2.length).toEqual(1);
+
+    // refine search
+    const response3 = await resolver.searchPosts(
+      'yo yo yo this is luke from the past hey future luke 😁',
+    );
+
+    expect(response3.length).toEqual(0);
+  });
+
+  describe('post', () => {
+    test('returns post by id', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.post(posts[0].id);
+
+      expect(response).toEqual(posts[0]);
+    });
+
+    test('returns null if post does not exist', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.post('123');
+
+      expect(response).toEqual([]);
+    });
+  });
+
+  test('createPost', async () => {
+    const resolver = new PostResolver();
+
+    const user = generateTestUsers(2);
+
+    await db.user.createMany({
+      data: [...user],
+    });
+
+    const posts = generateTestPosts(1);
+
+    const { req, res } = createApiMocks({
+      session: {
+        userId: user[0].id,
+      },
+    });
+
+    const redis = createMockRedis();
+    const dataLoaderMocks = createDataLoaderMocks();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore - fake lib returns null instead of undefined
+    const response = await resolver.createPost(posts[0], {
+      req,
+      res,
+      redis,
+      ...dataLoaderMocks,
+    });
+
+    expect(response?.errors?.length).toEqual(undefined);
+
+    expect(response?.post?.title).toEqual(posts[0].title);
+  });
+
+  describe('updatePost', () => {
+    test('updates post if exists and user is owner', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[1].id,
+        },
+      });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.updatePost(
+        {
+          req,
+          res,
+          redis,
+          ...dataLoaderMocks,
+        },
+        posts[0].id,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - fake lib returns null instead of undefined
+        {
+          ...posts[0],
+        },
+      );
+
+      expect(response?.errors?.length).toEqual(undefined);
+
+      expect(response?.post?.title).toEqual(posts[0].title);
+    });
+
+    test('returns validation error if post does not exist', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[1].id,
+        },
+      });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.updatePost(
+        {
+          req,
+          res,
+          redis,
+          ...dataLoaderMocks,
+        },
+        '123',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - fake lib returns null instead of undefined
+        {
+          ...posts[0],
+        },
+      );
+
+      expect(response?.errors?.length).toEqual(1);
+
+      expect(response?.errors?.[0].field).toEqual('title');
+      expect(response?.errors?.[0].message).toEqual('Post not found');
+    });
+
+    test('returns validation error if user is not authorized', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const { req, res } = createApiMocks({
+        session: {
+          userId: '1234',
+        },
+      });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.updatePost(
+        {
+          req,
+          res,
+          redis,
+          ...dataLoaderMocks,
+        },
+        '123',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore - fake lib returns null instead of undefined
+        {
+          ...posts[0],
+        },
+      );
+
+      expect(response?.errors?.length).toEqual(1);
+
+      // return 404 instead of 403 for security reasons
+      expect(response?.errors?.[0].field).toEqual('title');
+      expect(response?.errors?.[0].message).toEqual('Post not found');
+    });
+  });
+
+  describe('deletePost', () => {
+    test('deletes post if user is authorized', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[1].id,
+        },
+      });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.deletePost(posts[0].id, {
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      });
+
+      expect(response).toEqual(true);
+    });
+
+    test('returns false if user is not authorized', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[0].id,
+        },
+      });
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.deletePost(posts[0].id, {
+        req,
+        res,
+        redis,
+        ...dataLoaderMocks,
+      });
+
+      expect(response).toEqual(false);
+    });
+  });
+
+  describe('publishAllPosts', () => {
+    test('publishes all posts', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+      user[0].role = Role.ADMIN;
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.publishAllPosts();
+
+      expect(response).toEqual(true);
+    });
+
+    test('returns false if user is not authorized', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.publishAllPosts();
+
+      expect(response).toEqual(false);
+    });
+  });
+
+  describe('deleteAllPosts', () => {
+    test('deletes all posts if admin', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+      user[0].role = Role.ADMIN;
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.deleteAllPosts();
+
+      expect(response).toEqual(true);
+    });
+
+    test('returns false if not admin', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const response = await resolver.deleteAllPosts();
+
+      expect(response).toEqual(false);
+    });
+  });
+
+  test('postIds returns all post ids', async () => {
+    const resolver = new PostResolver();
+
+    const user = generateTestUsers(2);
+
+    await db.user.createMany({
+      data: [...user],
+    });
+
+    const posts = generateTestPosts(5);
+
+    posts.forEach(post => {
+      // eslint-disable-next-line no-param-reassign
+      post.authorId = user[1].id;
+    });
+
+    await db.post.createMany({
+      // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+      data: [...posts],
+    });
+
+    const response = await resolver.postIds();
+
+    expect(response).toEqual({
+      ids: posts.map(post => post.id),
+    });
+  });
+
+  describe('deletePostAsAdmin', () => {
+    test('deletes post if admin', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+      user[0].role = Role.ADMIN;
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const { req, res } = createApiMocks({
+        session: {
+          userId: user[0].id,
+        },
+      });
+
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.deletePostAsAdmin(
+        { req, res, redis, ...dataLoaderMocks },
+        posts[0].id,
+      );
+
+      expect(response).toEqual(true);
+    });
+
+    test('returns false if not admin', async () => {
+      const resolver = new PostResolver();
+
+      const user = generateTestUsers(2);
+
+      await db.user.createMany({
+        data: [...user],
+      });
+
+      const posts = generateTestPosts(5);
+
+      posts.forEach(post => {
+        // eslint-disable-next-line no-param-reassign
+        post.authorId = user[1].id;
+      });
+
+      await db.post.createMany({
+        // @ts-expect-error - prisma thinks @editorjs blocks are not valid
+        data: [...posts],
+      });
+
+      const { req, res } = createApiMocks({
+        session: {
+          userId: '1234',
+        },
+      });
+
+      const redis = createMockRedis();
+      const dataLoaderMocks = createDataLoaderMocks();
+
+      const response = await resolver.deletePostAsAdmin(
+        { req, res, redis, ...dataLoaderMocks },
+        posts[0].id,
+      );
+
+      expect(response).toEqual(false);
+    });
+  });
+});

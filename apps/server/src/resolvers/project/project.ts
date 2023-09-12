@@ -120,7 +120,7 @@ export class ProjectResolver {
   }
 
   @Query(() => [Project], {
-    description: 'Search projects (full text search on title / intro)',
+    description: 'Search projects (text search on title)',
     nullable: true,
   })
   async searchProjects(
@@ -130,15 +130,8 @@ export class ProjectResolver {
       where: {
         status: 'PUBLISHED',
         title: {
-          search: query,
+          contains: query,
         },
-        OR: [
-          {
-            intro: {
-              search: query,
-            },
-          },
-        ],
       },
     });
   }

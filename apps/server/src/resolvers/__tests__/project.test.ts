@@ -145,7 +145,7 @@ describe('project', () => {
     }
   });
 
-  test.skip('searchProjects does full text search on title/intro', async () => {
+  test('searchProjects does text search on title/intro', async () => {
     const resolver = new ProjectResolver();
 
     const users = generateTestUsers(5);
@@ -171,7 +171,6 @@ describe('project', () => {
     const project = await resolver.searchProjects('test');
 
     expect(project.length).toEqual(5);
-
     // refine search
     const project2 = await resolver.searchProjects('test 1');
 

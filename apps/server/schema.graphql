@@ -360,7 +360,7 @@ type Query {
   project(id: String!): Project
 
   """Returns all project slugs"""
-  projectIds: IdsResponse
+  projectIds: IdsResponse!
 
   """Returns all projects"""
   projects: [Project!]
@@ -371,10 +371,10 @@ type Query {
   """Returns the 5 most recent projects"""
   recentProjects: [Project!]
 
-  """Search posts (full text search on title)"""
+  """Search posts (text search on title)"""
   searchPosts(query: String!): [Post!]
 
-  """Search projects (full text search on title / intro)"""
+  """Search projects (text search on title)"""
   searchProjects(query: String!): [Project!]
   user(id: String!): User
   users: [User!]!

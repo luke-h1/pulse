@@ -88,7 +88,7 @@ jobs:
           DATABASE_URL: "postgresql://pulse:pulse@localhost:5432/pulse?schema=public"
 
       - name: jest
-        run: pnpm test --filter=!server 
+        run: pnpm test --filter=!server
         env:
           DATABASE_URL: "postgresql://pulse:pulse@localhost:5432/pulse?schema=public"
 

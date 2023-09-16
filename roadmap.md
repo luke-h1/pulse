@@ -21,15 +21,16 @@ API:
   * Migrate away from express-apollo to @apollo/server ✅
   * Image uploads - s3 maybe? - maybe with custom model ✅
   * Add filtering by post status for preview purposes - published or draft etc. ✅
-  * Add queues for scheduling posts
   * review how images are going to be embedded into content - potentially its own image mutation where things like the key/id isn't tracked or maybe a custom model for this i.e. ImageBlock or ContentBlockImage ✅
   * split unit tests up into individual describe blocks for a given resolver function ✅
   * use ids instead of slugs ✅
   * sort prisma mock ✅
-  * sort logging for server - need to log execution time, request logging etc.
   * sort out pagination for posts and projects
-  * sort unit/integration tests for server - have had to run jest sequentially for now because of interferance between tests when data is inserted into DB. ✅
+  * sort unit/integration tests for server - have had to run jest sequentially for now because of interferance between tests when data is inserted into DB.✅
+  
   * Cache resolver functions with redis
+  * Add queues for scheduling posts
+  * sort logging for server - need to log execution time, request logging etc.
 
 FE:
   * Custom package for GQL type generation ✅
@@ -40,8 +41,6 @@ FE:
     * auth/register ✅
     * auth/login ✅
     * Blank home page for now - will just be an intro of the project if not logged in else summary for user ✅
-    * /posts/me - my posts
-    * /projects/me - my projects
     * /feed - all projects and posts of all users ✅
     * /posts - all posts of all users ✅
     * /posts/[id]/preview ✅
@@ -54,7 +53,10 @@ FE:
     * /user/me - my profile ✅
     * Footer ✅
     * Look into boilerplate-graphql for styling✅
-  * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project ✅
+    * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project ✅
+
+    * /posts/me - my posts
+    * /projects/me - my projects
 
 ADMIN:
  * Auth ✅
@@ -75,7 +77,8 @@ Infra:
  * AWS for hosting
  * Dockerize frontend, admin + server
  * ECS for frontend + server - kuberentes if have time 
- * serverless DB potentially if can get postgres in order to save on costs - athena if cold starts aren't too bad
+ * RDS for postgres
+ * elasticcache for redis
  * Sort CI caching
  * Employ NX for faster builds
 

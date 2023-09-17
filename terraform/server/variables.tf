@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "port" {
   description = "Port for server to listen on"
   type        = number
-  default     = 8080
+  default     = 8000
 }
 
 variable "environment" {

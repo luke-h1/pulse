@@ -22,7 +22,7 @@ This repository is managed as a monorepo. It uses PNPM & PNPM workspaces to do t
 | [UI](packages/ui/README.md) <br /> UI                                   | Yes      
 
 ### Infrastructure
-Infrastructure is managed by terraform. The terraform code is located in the `terraform` directory. The infrastructure is deployed to AWS using Github Actions. The infrastructure is deployed to a staging environment on every push to the `dev` branch if files in `terraform` has changed
+TBA
 
 ## Documentation 
 

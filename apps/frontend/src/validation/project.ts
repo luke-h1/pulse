@@ -20,7 +20,7 @@ const projectPayload = {
       }
 
       const APP_STORE_URL_REGEX =
-        /^https:\/\/apps.apple.com\/[a-z]{2}\/app\/[a-z0-9-]+\/[0-9]{9}$/;
+        /^https:\/\/apps\.apple\.com\/[a-z]{2}\/app\/[a-z0-9-]+\/[0-9]{9}$/;
 
       return APP_STORE_URL_REGEX.test(val);
     }),
@@ -33,7 +33,7 @@ const projectPayload = {
       }
 
       const PLAY_STORE_URL_REGEX =
-        /^https:\/\/play.google.com\/store\/apps\/details\?id=[a-z0-9.]+$/;
+        /^https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-z0-9.]+$/;
 
       return PLAY_STORE_URL_REGEX.test(val);
     }),

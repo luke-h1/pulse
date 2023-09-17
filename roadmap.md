@@ -48,11 +48,11 @@ FE:
     * /posts/[id]/update ✅
     * /projects - all projects of all users ✅
     * /projects/[id] ✅
-    * /projects/[id]/preview
+    * /projects/[id]/preview ✅
     * /projects/[id]/update  ✅
     * /user/me - my profile ✅
     * Footer ✅
-    * Look into boilerplate-graphql for styling✅
+    * Look into boilerplate-graphql for styling ✅
     * WYSWIG editor with @editorjs - potentially a custom package for this to distribute it to admin project ✅
 
     * /posts/me - my posts
@@ -76,11 +76,9 @@ Infra:
  * Terraform for Infra - automate it in CI
  * AWS for hosting
  * Dockerize frontend, admin + server
- * ECS for frontend + server - kuberentes if have time 
+ * ECS for frontend + server
  * RDS for postgres
  * elasticcache for redis
- * Sort CI caching
- * Employ NX for faster builds
 
 General:
 * fix path aliases for @editor/index, @ui/index etc.

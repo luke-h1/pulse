@@ -22,14 +22,14 @@
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^4.0.1",
     "@graphql-codegen/typescript-urql": "^3.7.3",
-    "@types/jest": "^29.5.3",
-    "@types/react": "^18.2.20",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
-    "eslint": "^8.46.0",
-    "jest": "^29.6.2",
+    "eslint": "^8.49.0",
+    "jest": "^29.7.0",
     "react": "^18.2.0",
     "tsup": "^7.2.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "graphql-tag": "^2.12.6",

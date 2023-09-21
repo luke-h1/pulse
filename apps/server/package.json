@@ -51,7 +51,7 @@
     "express-session": "^1.17.3",
     "fast-safe-stringify": "^2.1.1",
     "form-data": "^4.0.0",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-fields": "^2.0.3",
     "graphql-hooks": "workspace:*",
     "graphql-scalars": "^1.22.2",

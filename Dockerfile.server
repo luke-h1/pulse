@@ -1,0 +1,41 @@
+FROM node:18-alpine AS base
+
+WORKDIR /app
+
+FROM base as builder
+
+COPY .npmrc .
+COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
+COPY package.json .
+COPY tsconfig.json ./tsconfig.json
+COPY apps/server/ ./apps/server/
+COPY packages/graphql-hooks ./packages/graphql-hooks
+
+RUN npm i -g pnpm
+
+RUN pnpm --filter=server... install
+
+RUN pnpm --filter=server build
+
+FROM base AS runner
+
+COPY --from=builder /app/.npmrc .
+COPY --from=builder /app/pnpm-lock.yaml .
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/pnpm-workspace.yaml .
+
+COPY --from=builder /app/tsconfig.json .
+COPY --from=builder /app/apps/server ./apps/server
+COPY --from=builder /app/packages/graphql-hooks ./packages/graphql-hooks
+RUN npm i -g pnpm
+
+RUN pnpm --filter=server... install --prod
+
+WORKDIR /app/apps/server
+
+ENV NODE_ENV=production
+EXPOSE 8000
+
+USER node
+CMD ["pnpm", "start"]

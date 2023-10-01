@@ -5,19 +5,52 @@ variable "aws_region" {
 }
 
 variable "port" {
-  description = "Port for frontend to listen on"
+  description = "Port for admin to listen on"
   type        = number
-  default     = 4000
+  default     = 8000
 }
 
 variable "environment" {
   description = "Environment to deploy to"
-  enum        = ["staging", "production"]
   default     = "staging"
 }
 
-variable "environment_variables" {
-  description = "Environment variables to set on the admin"
-  type        = map(string)
-  default     = {}
+variable "image_location" {
+  type        = string
+  description = "location of docker image"
+  default     = "" # TODO: set this
+}
+
+variable "memory" {
+  description = "memory for ecs task"
+  type        = number
+  default     = 512
+}
+
+variable "cpu" {
+  description = "value for cpu for ecs task"
+  type        = number
+  default     = 512
+}
+
+variable "prefix" {
+  default = "pulse"
+}
+
+variable "public_url" {
+  type        = string
+  description = "public url of admin"
+}
+
+variable "public_pulse_api_url" {
+  type        = string
+  description = "url for pulse api"
+}
+
+
+locals {
+  tags = {
+    "Terraform" = "true",
+    "ManagedBy" = "Terraform"
+  }
 }

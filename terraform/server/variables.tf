@@ -26,14 +26,6 @@ variable "db_url" {
   description = "db URL"
 }
 
-variable "db_username" {
-  type = string
-}
-
-variable "db_password" {
-  type = string
-}
-
 variable "image_location" {
   type        = string
   description = "location of docker image"

@@ -18,7 +18,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.2.0",
-    "@types/node": "20.6.2",
+    "@types/node": "20.8.2",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.8",
     "@urql/exchange-graphcache": "^6.3.1",

@@ -39,7 +39,8 @@ jobs:
 
       - name: Terraform server
         run: |
-          cd terraform/server && terraform init
+          cd terraform/server 
+          terraform init
           make fmt-server
           make validate-server
           make plan-server

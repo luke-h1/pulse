@@ -1,6 +1,5 @@
 SHELL := /bin/bash
 
-
 .PHONY: help
 help:
 	@echo "Available targets:"
@@ -48,7 +47,6 @@ validate-frontend:
 plan-frontend:
 	@echo "Planning frontend tf..."
 	cd terraform/frontend && terraform plan
-
 
 .PHONY: plan-server
 plan-server:

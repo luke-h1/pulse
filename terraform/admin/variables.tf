@@ -18,7 +18,7 @@ variable "environment" {
 variable "image_location" {
   type        = string
   description = "location of docker image"
-  default     = "" # TODO: set this
+  default     = ""
 }
 
 variable "memory" {

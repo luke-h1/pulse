@@ -11,7 +11,7 @@
       },
       {
         "name": "PORT",
-        "value": "8000"
+        "value": 8000
       },
       {
         "name": "DATABASE_URl",

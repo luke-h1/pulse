@@ -8,7 +8,7 @@ env:
 
 jobs:
   test:
-    name: Build
+    name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -39,6 +39,7 @@ jobs:
 
       - name: Terraform server
         run: |
+          cd terraform/server && terraform init
           make fmt-server
           make validate-server
           make plan-server
@@ -52,6 +53,7 @@ jobs:
 
       - name: Terraform frontend
         run: |
+          cd terraform/frontend && terraform init
           make fmt-frontend
           make validate-frontend
           make plan-frontend
@@ -64,6 +66,7 @@ jobs:
 
       - name: Terraform admin
         run: |
+          cd terraform/admin && terraform init
           make fmt-admin
           make validate-admin
           make plan-admin

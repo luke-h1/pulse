@@ -50,6 +50,8 @@ jobs:
             TF_VAR_session_secret: ${{ secrets.SESSION_SECRET }}
             TF_VAR_cloudinary_secret: ${{ secrets.CLOUDINARY_SECRET }}
             TF_VAR_image_location: ${{ secrets.ECR_REPO }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Terraform frontend
         run: |
@@ -63,6 +65,8 @@ jobs:
             TF_VAR_public_cloudinary_cloud_name: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
             TF_VAR_public_pulse_api_url: ${{ secrets.PUBLIC_PULSE_API_URL }}
             TF_VAR_public_url: ${{ secrets.FRONTEND_PUBLIC_URL }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Terraform admin
         run: |
@@ -75,6 +79,8 @@ jobs:
             TF_VAR_image_location: ${{ secrets.ECR_REPO }}
             TF_VAR_public_pulse_api_url: ${{ secrets.PUBLIC_PULSE_API_URL }}
             TF_VAR_public_url: ${{ secrets.ADMIN_PUBLIC_URL }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Build and push server image
         run: | 

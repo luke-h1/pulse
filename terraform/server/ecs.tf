@@ -55,15 +55,11 @@ resource "aws_ecs_task_definition" "server" {
       name              = "server"
       image             = var.image_location
       essential         = true
-      memoryReservation = 256
+      memoryReservation = "256"
       environment = [
         {
           name  = "PORT"
-          value = "${var.port}"
-        },
-        {
-          name  = "ENVIRONMENT"
-          value = "${var.environment}"
+          value = "8000"
         },
         {
           name  = "DB_URL"

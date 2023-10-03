@@ -32,7 +32,7 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
 data "template_file" "server_container_defs" {
   template = file("./container-defs.json.tpl")
   vars = {
-    image_location    = "${var.image_location}/server"
+    image_location    = "${var.image_location}"
     environment       = var.environment
     db_url            = var.db_url
     db_user           = aws_db_instance.db.username

@@ -94,12 +94,11 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f ./server/Dockerfile .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:ltest" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/${{ secrets.ECR_REPO }}:latest -f ./server/Dockerfile .
+          docker push $ECR_REGISTRY/${{ secrets.ECR_REPO }}:latest
+          echo "image=$ECR_REGISTRY/${{ secrets.ECR_REPO }}:latest" >> $GITHUB_OUTPUT
 
       # - name: Build and push server image
       #   run: | 

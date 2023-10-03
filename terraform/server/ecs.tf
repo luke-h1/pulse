@@ -29,6 +29,19 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
 }
 
 
+data "template_file" "server_container_defs" {
+  template = file("./container-defs.json.tpl")
+  vars = {
+    image_location    = var.image_location
+    environment       = var.environment
+    db_url            = var.db_url
+    session_secret    = var.session_secret
+    redis_url         = var.redis_url
+    cloudinary_secret = var.cloudinary_secret
+    aws_log_group     = aws_cloudwatch_log_group.ecs_task_logs.name
+    aws_region        = var.aws_region
+  }
+}
 resource "aws_ecs_task_definition" "server" {
   family                   = "${var.prefix}-server"
   requires_compatibilities = ["FARGATE"]
@@ -37,66 +50,7 @@ resource "aws_ecs_task_definition" "server" {
   memory                   = var.memory
   execution_role_arn       = aws_iam_role.server_iam_role.arn
   task_role_arn            = aws_iam_role.server_iam_role.arn
-  # container_definitions = templatefile("./container-defs.json.tpl", {
-  #   image_location    = var.image_location
-  #   environment       = var.environment
-  #   db_url            = var.db_url
-  #   session_secret    = var.session_secret
-  #   redis_url         = var.redis_url
-  #   cloudinary_secret = var.cloudinary_secret
-  #   aws_log_group     = aws_cloudwatch_log_group.ecs_task_logs.name
-  #   aws_region        = var.aws_region
-  # })
-  container_definitions = <<DEFINITION
-  [
-    {
-      "name": "server",
-      "image": "${var.image_location}",
-      "essential": true,
-      "memoryReservation": 256,
-      "environment": [
-        {
-          "name": "ENVIRONMENT",
-          "value": "${var.environment}"
-        },
-        {
-          "name": "PORT",
-          "value": 8000
-        },
-        {
-          "name": "DATABASE_URl",
-          "value": "${var.db_url}"
-        },
-        {
-          "name": "SESSION_SECRET",
-          "value": "${var.session_secret}"
-        },
-        {
-          "name": "REDIS_URL",
-          "value": "${var.redis_url}"
-        },
-        {
-          "name": "CLOUDINARY_SECRET",
-          "value": "${var.cloudinary_secret}"
-        }
-      ],
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${aws_cloudwatch_log_group.ecs_task_logs.name}",
-          "awslogs-region": "${var.aws_region}",
-          "awslogs-stream-prefix": "server"
-        }
-      },
-      "porttomappings": [
-        {
-          "containerPort": 8000,
-          "hostPort": 8000
-        }
-      ]
-    }
-  ]
-  DEFINITION
+  container_definitions    = data.template_file.server_container_defs.rendered
 }
 
 resource "aws_security_group" "ecs_service" {

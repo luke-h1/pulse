@@ -1,0 +1,75 @@
+name: Destroy
+on:
+  workflow_dispatch:
+env:
+  NODE_VERSION: 18.16.0
+  PNPM_VERSION: 8.6.0
+
+jobs:
+  test:
+    name: Destryo
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Install moreutils
+        run: sudo apt install moreutils
+        
+      # https://github.com/actions/virtual-environments/issues/1187
+      - name: tune linux network
+        run: sudo ethtool -K eth0 tx off rx off            
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Terraform server destroy
+        run: |
+          cd terraform/server
+          terraform destroy -auto-approve
+        env:
+            TF_VAR_redis_url: ${{ secrets.REDIS_URL }}
+            TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
+            TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+            TF_VAR_db_url: ${{ secrets.DATABASE_URL }}
+            TF_VAR_session_secret: ${{ secrets.SESSION_SECRET }}
+            TF_VAR_cloudinary_secret: ${{ secrets.CLOUDINARY_SECRET }}
+            TF_VAR_image_location: ${{ secrets.ECR_REPO }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform frontend destroy
+        run: |
+          cd terraform/frontend 
+            terraform destroy -auto-approve
+        env:
+            TF_VAR_image_location: ${{ secrets.ECR_REPO }}
+            TF_VAR_public_cloudinary_cloud_name: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
+            TF_VAR_public_pulse_api_url: ${{ secrets.PUBLIC_PULSE_API_URL }}
+            TF_VAR_public_url: ${{ secrets.FRONTEND_PUBLIC_URL }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform admin destroy
+        run: |
+          cd terraform/admin 
+            terraform destroy -auto-approve
+        env:
+            TF_VAR_image_location: ${{ secrets.ECR_REPO }}
+            TF_VAR_public_pulse_api_url: ${{ secrets.PUBLIC_PULSE_API_URL }}
+            TF_VAR_public_url: ${{ secrets.ADMIN_PUBLIC_URL }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

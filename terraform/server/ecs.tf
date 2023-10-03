@@ -50,7 +50,55 @@ resource "aws_ecs_task_definition" "server" {
   memory                   = var.memory
   execution_role_arn       = aws_iam_role.server_iam_role.arn
   task_role_arn            = aws_iam_role.server_iam_role.arn
-  container_definitions    = data.template_file.server_container_defs.rendered
+  container_definitions = jsonencode([
+    {
+      name              = "server"
+      image             = var.image_location
+      essential         = true
+      memoryReservation = 256
+      environment = [
+        {
+          name  = "PORT"
+          value = "${var.port}"
+        },
+        {
+          name  = "ENVIRONMENT"
+          value = "${var.environment}"
+        },
+        {
+          name  = "DB_URL"
+          value = "postgres://${aws_db_instance.db.username}:${aws_db_instance.db.password}@${var.db_url}:5432/pulse"
+        },
+        {
+          name  = "SESSION_SECRET"
+          value = "${var.session_secret}"
+        },
+        {
+          name  = "REDIS_URL"
+          value = "${var.redis_url}"
+        },
+        {
+          name  = "CLOUDINARY_SECRET"
+          value = "${var.cloudinary_secret}"
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.ecs_task_logs.name
+          awslogs-region        = "eu-west-2"
+          awslogs-stream-prefix = "server"
+        }
+      }
+      portMappings = [
+        {
+          containerPort = "8000"
+          hostPort      = "8000"
+          protocol      = "tcp"
+        }
+      ]
+    }
+  ])
 }
 
 resource "aws_security_group" "ecs_service" {

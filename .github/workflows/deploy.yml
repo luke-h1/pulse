@@ -81,13 +81,13 @@ jobs:
 
       - name: Build and push server image
         run: | 
-           - apk add --no-cache python3
-           - pip3 install awscli
-           - docker build -t ${{ secrets.ECR_REPO }}:latest -f ./server/Dockerfile .
-           - $(aws ecr get-login-password --region us-east-1 --no-include-email)
-           - docker push ${{ secrets.ECR_REPO }}:latest
-           - docker tag ${{ secrets.ECR_REPO }}:latest ${{ secrets.ECR_REPO }}:latest
-           - docker push ${{ secrets.ECR_REPO }}:latest
+            apk add --no-cache python3
+            pip3 install awscli
+            docker build -t ${{ secrets.ECR_REPO }}:latest -f ./server/Dockerfile .
+            $(aws ecr get-login-password --region us-east-1 --no-include-email)
+            docker push ${{ secrets.ECR_REPO }}:latest
+            docker tag ${{ secrets.ECR_REPO }}:latest ${{ secrets.ECR_REPO }}:latest
+            docker push ${{ secrets.ECR_REPO }}:latest
 
       # - name: Build and push frontend image
       #   run: | 

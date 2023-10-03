@@ -28,8 +28,6 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
   name = "${var.prefix}-server"
 }
 
-
-
 resource "aws_ecs_task_definition" "server" {
   family                   = "${var.prefix}-server"
   requires_compatibilities = ["FARGATE"]
@@ -114,7 +112,7 @@ resource "aws_security_group" "ecs_service" {
 resource "aws_ecs_service" "server" {
   name             = "${var.prefix}-server"
   cluster          = aws_ecs_cluster.server.name
-  task_definition  = aws_ecs_task_definition.server.arn
+  task_definition  = aws_ecs_task_definition.server.family
   desired_count    = 1
   launch_type      = "FARGATE"
   platform_version = "LATEST"

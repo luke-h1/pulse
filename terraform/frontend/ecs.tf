@@ -28,6 +28,19 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
   name = "${var.prefix}-frontend"
 }
 
+data "template_file" "frontend_container_defs" {
+  template = file("./container-defs.json.tpl")
+  vars = {
+    image_location               = var.image_location
+    public_pulse_api_url         = var.public_pulse_api_url
+    public_cloudinary_cloud_name = var.public_cloudinary_cloud_name
+    public_cloudinary_key        = var.public_cloudinary_key
+    public_url                   = var.public_url
+    aws_log_group                = aws_cloudwatch_log_group.ecs_task_logs.name
+    aws_region                   = var.aws_region
+  }
+}
+
 resource "aws_ecs_task_definition" "frontend" {
   family                   = "${var.prefix}-frontend"
   requires_compatibilities = ["FARGATE"]
@@ -36,15 +49,6 @@ resource "aws_ecs_task_definition" "frontend" {
   memory                   = var.memory
   execution_role_arn       = aws_iam_role.frontend_iam_role.arn
   task_role_arn            = aws_iam_role.frontend_iam_role.arn
-  container_definitions = templatefile("./container-defs.json.tpl", {
-    image_location               = var.image_location
-    public_pulse_api_url         = var.public_pulse_api_url
-    public_cloudinary_cloud_name = var.public_cloudinary_cloud_name
-    public_cloudinary_key        = var.public_cloudinary_key
-    public_url                   = var.public_url
-    aws_log_group                = aws_cloudwatch_log_group.ecs_task_logs.name
-    aws_region                   = var.aws_region
-  })
 }
 
 resource "aws_security_group" "ecs_service" {

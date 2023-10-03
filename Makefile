@@ -13,6 +13,9 @@ init:
 	cd terraform/admin && terraform init
 	cd terraform/frontend && terraform init
 
+.PHONY: fmt
+fmt: fmt-server fmt-admin fmt-frontend
+
 .PHONY: fmt-server
 fmt-server:
 	@echo "Formatting server tf..."

@@ -28,6 +28,17 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
   name = "${var.prefix}-admin"
 }
 
+data "template_file" "admin_container_defs" {
+  template = file("./container-definitions.json.tpl")
+  vars = {
+    image_location       = var.image_location
+    public_url           = var.public_url
+    public_pulse_api_url = var.public_pulse_api_url
+    aws_log_group        = aws_cloudwatch_log_group.ecs_task_logs.name
+    aws_region           = var.aws_region
+  }
+}
+
 resource "aws_ecs_task_definition" "admin" {
   family                   = "${var.prefix}-admin"
   requires_compatibilities = ["FARGATE"]
@@ -36,13 +47,7 @@ resource "aws_ecs_task_definition" "admin" {
   memory                   = var.memory
   execution_role_arn       = aws_iam_role.admin_iam_role.arn
   task_role_arn            = aws_iam_role.admin_iam_role.arn
-  container_definitions = templatefile("./container-definitions.json.tpl", {
-    image_location       = var.image_location
-    public_url           = var.public_url
-    public_pulse_api_url = var.public_pulse_api_url
-    aws_log_group        = aws_cloudwatch_log_group.ecs_task_logs.name
-    aws_region           = var.aws_region
-  })
+  container_definitions    = data.template_file.admin_container_defs.rendered
 }
 
 resource "aws_security_group" "ecs_service" {
@@ -72,41 +77,9 @@ resource "aws_security_group" "ecs_service" {
 }
 
 resource "aws_ecs_service" "admin" {
-  name            = "${var.prefix}-admin"
-  cluster         = aws_ecs_cluster.admin.name
-  task_definition = aws_ecs_task_definition.admin.arn
-  #   container_definitions = <<DEFINITION
-  #  {
-  #       "name": "admin",
-  #       "image": "${var.image_location}",
-  #       "essential": true,
-  #       "memoryReservation": 256,
-  #       "environment": [
-  #         {
-  #           "name": "PUBLIC_URL",
-  #           "value": "${var.public_url}"
-  #         },
-  #         {
-  #           "name": "PUBLIC_PULSE_API_URL",
-  #           "value": "${var.public_pulse_api_url}"
-  #         }
-  #       ],
-  #       "logConfiguration": {
-  #         "logDriver": "awslogs",
-  #         "options": {
-  #           "awslogs-group": "${aws_cloudwatch_log_group.ecs_task_logs.name}",
-  #           "awslogs-region": "${var.aws_region}",
-  #           "awslogs-stream-prefix": "admin"
-  #         }
-  #       },
-  #       "porttomappings": [
-  #         {
-  #           "containerPort": 4000,
-  #           "hostPort": 4000
-  #         }
-  #       ]
-  #     }
-  #   DEFINITION
+  name             = "${var.prefix}-admin"
+  cluster          = aws_ecs_cluster.admin.name
+  task_definition  = aws_ecs_task_definition.admin.arn
   desired_count    = 1
   launch_type      = "FARGATE"
   platform_version = "LATEST"

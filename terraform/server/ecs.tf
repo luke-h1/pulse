@@ -43,7 +43,7 @@ resource "aws_ecs_task_definition" "server" {
       name              = "server"
       image             = var.image_location
       essential         = true
-      memoryReservation = "256"
+      memoryReservation = 256
       environment = [
         {
           name  = "PORT"
@@ -76,8 +76,8 @@ resource "aws_ecs_task_definition" "server" {
       }
       portMappings = [
         {
-          containerPort = "8000"
-          hostPort      = "8000"
+          containerPort = 8000
+          hostPort      = 8000
           protocol      = "tcp"
         }
       ]

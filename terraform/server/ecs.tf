@@ -34,8 +34,8 @@ resource "aws_ecs_task_definition" "server" {
   family                   = "${var.prefix}-server"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = var.cpu
-  memory                   = var.memory
+  cpu                      = "256"
+  memory                   = "512"
   execution_role_arn       = aws_iam_role.server_iam_role.arn
   task_role_arn            = aws_iam_role.server_iam_role.arn
   container_definitions = jsonencode([
@@ -43,7 +43,7 @@ resource "aws_ecs_task_definition" "server" {
       name              = "server"
       image             = var.image_location
       essential         = true
-      memoryReservation = 256
+      memoryReservation = 512
       environment = [
         {
           name  = "PORT"

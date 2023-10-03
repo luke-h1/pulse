@@ -14,7 +14,7 @@
         "value": 8000
       },
       {
-        "name": "DATABASE_URl",
+        "name": "DATABASE_URL",
         "value": "${db_url}"
       },
       {

@@ -39,6 +39,7 @@ jobs:
       - name: Terraform server destroy
         run: |
           cd terraform/server
+          terraform init
           terraform destroy -auto-approve
         env:
             TF_VAR_redis_url: ${{ secrets.REDIS_URL }}

@@ -93,6 +93,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
+        timeout-minutes: 20
         env:
           IMAGE_TAG: latest
         run: |

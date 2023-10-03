@@ -96,7 +96,7 @@ jobs:
         env:
           IMAGE_TAG: latest
         run: |
-          docker build -t 753493924839.dkr.ecr.eu-west-2.amazonaws.com/pulse:latest -f ./server/Dockerfile .
+          docker build -t 753493924839.dkr.ecr.eu-west-2.amazonaws.com/pulse:latest -f Dockerfile.server .
           docker push 753493924839.dkr.ecr.eu-west-2.amazonaws.com/pulse:latest
 
       # - name: Build and push server image

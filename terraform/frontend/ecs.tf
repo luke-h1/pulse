@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "frontend" {
   memory                   = var.memory
   execution_role_arn       = aws_iam_role.frontend_iam_role.arn
   task_role_arn            = aws_iam_role.frontend_iam_role.arn
-  container_definitions = templatefile("./container-defs.json", {
+  container_definitions = templatefile("./container-defs.json.tpl", {
     image_location               = var.image_location
     public_pulse_api_url         = var.public_pulse_api_url
     public_cloudinary_cloud_name = var.public_cloudinary_cloud_name

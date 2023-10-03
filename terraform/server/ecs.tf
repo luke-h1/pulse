@@ -36,7 +36,7 @@ resource "aws_ecs_task_definition" "server" {
   memory                   = var.memory
   execution_role_arn       = aws_iam_role.server_iam_role.arn
   task_role_arn            = aws_iam_role.server_iam_role.arn
-  container_definitions = templatefile("./container-defs.json", {
+  container_definitions = templatefile("./container-defs.json.tpl", {
     image_location    = var.image_location
     environment       = var.environment
     db_url            = var.db_url

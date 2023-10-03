@@ -29,19 +29,7 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
 }
 
 
-data "template_file" "server_container_defs" {
-  template = file("./container-defs.json.tpl")
-  vars = {
-    image_location    = var.image_location
-    environment       = var.environment
-    db_url            = "postgres://${aws_db_instance.db.username}:${aws_db_instance.db.password}@${var.db_url}:5432/pulse"
-    session_secret    = var.session_secret
-    redis_url         = var.redis_url
-    cloudinary_secret = var.cloudinary_secret
-    aws_log_group     = aws_cloudwatch_log_group.ecs_task_logs.name
-    aws_region        = "eu-west-2"
-  }
-}
+
 resource "aws_ecs_task_definition" "server" {
   family                   = "${var.prefix}-server"
   requires_compatibilities = ["FARGATE"]

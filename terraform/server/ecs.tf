@@ -32,11 +32,9 @@ resource "aws_cloudwatch_log_group" "ecs_task_logs" {
 data "template_file" "server_container_defs" {
   template = file("./container-defs.json.tpl")
   vars = {
-    image_location    = "${var.image_location}"
+    image_location    = var.image_location
     environment       = var.environment
-    db_url            = "postgres://${var.db_username}:${var.db_password}@${var.db_url}:5432/pulse"
-    db_user           = aws_db_instance.db.username
-    db_pass           = aws_db_instance.db.password
+    db_url            = "postgres://${aws_db_instance.db.username}:${aws_db_instance.db.password}@${var.db_url}:5432/pulse"
     session_secret    = var.session_secret
     redis_url         = var.redis_url
     cloudinary_secret = var.cloudinary_secret

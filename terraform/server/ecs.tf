@@ -34,14 +34,14 @@ data "template_file" "server_container_defs" {
   vars = {
     image_location    = "${var.image_location}"
     environment       = var.environment
-    db_url            = var.db_url
+    db_url            = "postgres://${var.db_username}:${var.db_password}@${var.db_url}:5432/pulse"
     db_user           = aws_db_instance.db.username
     db_pass           = aws_db_instance.db.password
     session_secret    = var.session_secret
     redis_url         = var.redis_url
     cloudinary_secret = var.cloudinary_secret
     aws_log_group     = aws_cloudwatch_log_group.ecs_task_logs.name
-    aws_region        = var.aws_region
+    aws_region        = "eu-west-2"
   }
 }
 resource "aws_ecs_task_definition" "server" {

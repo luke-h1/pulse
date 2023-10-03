@@ -35,6 +35,8 @@ data "template_file" "server_container_defs" {
     image_location    = var.image_location
     environment       = var.environment
     db_url            = var.db_url
+    db_user           = aws_db_instance.db.username
+    db_pass           = aws_db_instance.db.password
     session_secret    = var.session_secret
     redis_url         = var.redis_url
     cloudinary_secret = var.cloudinary_secret

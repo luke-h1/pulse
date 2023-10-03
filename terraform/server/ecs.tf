@@ -49,7 +49,7 @@ resource "aws_ecs_task_definition" "server" {
         },
         {
           name  = "DB_URL"
-          value = "postgres://${aws_db_instance.db.username}:${aws_db_instance.db.password}@${var.db_url}:5432/pulse"
+          value = aws_db_instance.db.address
         },
         {
           name  = "SESSION_SECRET"

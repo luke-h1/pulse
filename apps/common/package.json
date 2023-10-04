@@ -31,7 +31,7 @@
     "ui": "workspace:*",
     "urql": "^4.0.5",
     "wonka": "^6.3.4",
-    "zod": "^3.22.1"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.4.1",

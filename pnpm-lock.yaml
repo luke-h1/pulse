@@ -202,8 +202,8 @@ importers:
         specifier: ^6.3.4
         version: 6.3.4
       zod:
-        specifier: ^3.22.1
-        version: 3.22.1
+        specifier: ^3.22.3
+        version: 3.22.3
     devDependencies:
       '@chakra-ui/cli':
         specifier: ^2.4.1
@@ -344,8 +344,8 @@ importers:
         specifier: ^6.3.4
         version: 6.3.4
       zod:
-        specifier: ^3.22.1
-        version: 3.22.1
+        specifier: ^3.22.3
+        version: 3.22.3
     devDependencies:
       '@chakra-ui/cli':
         specifier: ^2.4.1
@@ -549,8 +549,8 @@ importers:
         specifier: ^6.3.4
         version: 6.3.4
       zod:
-        specifier: ^3.22.1
-        version: 3.22.1
+        specifier: ^3.22.3
+        version: 3.22.3
     devDependencies:
       '@chakra-ui/cli':
         specifier: ^2.4.1
@@ -785,7 +785,7 @@ importers:
         version: 9.0.1
       zod-prisma:
         specifier: ^0.5.4
-        version: 0.5.4(prisma@5.3.1)(zod@3.22.2)
+        version: 0.5.4(prisma@5.3.1)(zod@3.22.3)
     devDependencies:
       '@ngneat/falso':
         specifier: ^7.1.0
@@ -971,8 +971,8 @@ importers:
         specifier: ^8.5.2
         version: 8.5.2(@types/react@18.2.22)(react@18.2.0)
       zod:
-        specifier: ^3.21.4
-        version: 3.21.4
+        specifier: ^3.22.3
+        version: 3.22.3
     devDependencies:
       '@types/editorjs__header':
         specifier: ^2.6.0
@@ -19552,7 +19552,7 @@ packages:
       readable-stream: 3.6.2
     dev: true
 
-  /zod-prisma@0.5.4(prisma@5.3.1)(zod@3.22.2):
+  /zod-prisma@0.5.4(prisma@5.3.1)(zod@3.22.3):
     resolution: {integrity: sha512-5Ca4Qd1a1jy1T/NqCEpbr0c+EsbjJfJ/7euEHob3zDvtUK2rTuD1Rc/vfzH8q8PtaR2TZbysD88NHmrLwpv3Xg==}
     engines: {node: '>=14'}
     hasBin: true
@@ -19568,17 +19568,13 @@ packages:
       parenthesis: 3.1.8
       prisma: 5.3.1
       ts-morph: 13.0.3
-      zod: 3.22.2
+      zod: 3.22.3
     dev: false
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  /zod@3.22.1:
-    resolution: {integrity: sha512-+qUhAMl414+Elh+fRNtpU+byrwjDFOS1N7NioLY+tSlcADTx4TkCUua/hxJvxwDXcV4397/nZ420jy4n4+3WUg==}
-    dev: false
-
-  /zod@3.22.2:
-    resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
+  /zod@3.22.3:
+    resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
     dev: false

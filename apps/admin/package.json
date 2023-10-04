@@ -54,7 +54,7 @@
     "use-roving-index": "^2.0.0",
     "webpack-bundle-analyzer": "^4.9.0",
     "wonka": "^6.3.4",
-    "zod": "^3.22.1"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.4.1",

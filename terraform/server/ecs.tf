@@ -32,20 +32,55 @@ resource "aws_ecs_task_definition" "server" {
   family                   = "${var.prefix}-server"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = var.cpu
-  memory                   = var.memory
+  cpu                      = "256"
+  memory                   = "512"
   execution_role_arn       = aws_iam_role.server_iam_role.arn
   task_role_arn            = aws_iam_role.server_iam_role.arn
-  container_definitions = templatefile("./container-defs.json", {
-    image_location    = var.image_location
-    environment       = var.environment
-    db_url            = var.db_url
-    session_secret    = var.session_secret
-    redis_url         = var.redis_url
-    cloudinary_secret = var.cloudinary_secret
-    aws_log_group     = aws_cloudwatch_log_group.ecs_task_logs.name
-    aws_region        = var.aws_region
-  })
+  container_definitions = jsonencode([
+    {
+      name              = "server"
+      image             = var.image_location
+      essential         = true
+      memoryReservation = 512
+      environment = [
+        {
+          name  = "PORT"
+          value = "8000"
+        },
+        {
+          name  = "DB_URL"
+          value = aws_db_instance.db.address
+        },
+        {
+          name  = "SESSION_SECRET"
+          value = "${var.session_secret}"
+        },
+        {
+          name  = "REDIS_URL"
+          value = "${var.redis_url}"
+        },
+        {
+          name  = "CLOUDINARY_SECRET"
+          value = "${var.cloudinary_secret}"
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.ecs_task_logs.name
+          awslogs-region        = "eu-west-2"
+          awslogs-stream-prefix = "server"
+        }
+      }
+      portMappings = [
+        {
+          containerPort = 8000
+          hostPort      = 8000
+          protocol      = "tcp"
+        }
+      ]
+    }
+  ])
 }
 
 resource "aws_security_group" "ecs_service" {
@@ -77,7 +112,7 @@ resource "aws_security_group" "ecs_service" {
 resource "aws_ecs_service" "server" {
   name             = "${var.prefix}-server"
   cluster          = aws_ecs_cluster.server.name
-  task_definition  = aws_ecs_task_definition.server.arn
+  task_definition  = aws_ecs_task_definition.server.family
   desired_count    = 1
   launch_type      = "FARGATE"
   platform_version = "LATEST"

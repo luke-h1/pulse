@@ -14,7 +14,7 @@
         "value": "8000"
       },
       {
-        "name": "DATABASE_URl",
+        "name": "DATABASE_URL",
         "value": "${db_url}"
       },
       {
@@ -38,7 +38,7 @@
         "awslogs-stream-prefix": "server"
       }
     },
-    "porttomappings": [
+    "portMappings": [
       {
         "containerPort": 8000,
         "hostPort": 8000

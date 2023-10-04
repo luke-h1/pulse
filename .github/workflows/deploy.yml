@@ -1,0 +1,131 @@
+name: Deploy
+on:
+  push:
+    branches: [dev]
+env:
+  NODE_VERSION: 18.16.0
+  PNPM_VERSION: 8.6.0
+
+jobs:
+  test:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Install moreutils
+        run: sudo apt install moreutils
+        
+      # https://github.com/actions/virtual-environments/issues/1187
+      - name: tune linux network
+        run: sudo ethtool -K eth0 tx off rx off            
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Terraform server
+        run: |
+          cd terraform/server
+          terraform init
+          terraform fmt
+          terraform validate
+          terraform plan
+          terraform apply -auto-approve
+        env:
+            TF_VAR_redis_url: ${{ secrets.REDIS_URL }}
+            TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
+            TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+            TF_VAR_db_url: ${{ secrets.DATABASE_URL }}
+            TF_VAR_session_secret: ${{ secrets.SESSION_SECRET }}
+            TF_VAR_cloudinary_secret: ${{ secrets.CLOUDINARY_SECRET }}
+            TF_VAR_image_location: ${{ secrets.ECR_REPO }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # - name: Terraform frontend
+      #   run: |
+      #     cd terraform/frontend 
+      #     terraform init
+      #     terraform init
+      #     terraform fmt
+      #     terraform validate
+      #     terraform plan
+      #     terraform apply -auto-approve
+      #   env:
+      #       TF_VAR_image_location: ${{ secrets.ECR_REPO }}
+      #       TF_VAR_public_cloudinary_cloud_name: ${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
+      #       TF_VAR_public_pulse_api_url: ${{ secrets.PUBLIC_PULSE_API_URL }}
+      #       TF_VAR_public_url: ${{ secrets.FRONTEND_PUBLIC_URL }}
+      #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # - name: Terraform admin
+      #   run: |
+      #     cd terraform/admin 
+      #     terraform init
+      #     terraform init
+      #     terraform fmt
+      #     terraform validate
+      #     terraform plan
+      #     terraform apply -auto-approve
+      #   env:
+      #       TF_VAR_image_location: ${{ secrets.ECR_REPO }}
+      #       TF_VAR_public_pulse_api_url: ${{ secrets.PUBLIC_PULSE_API_URL }}
+      #       TF_VAR_public_url: ${{ secrets.ADMIN_PUBLIC_URL }}
+      #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@010d0da01d0b5a38af31e9c3470dbfdabdecca3a
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        timeout-minutes: 20
+        env:
+          IMAGE_TAG: latest
+        run: |
+          docker build -t 753493924839.dkr.ecr.eu-west-2.amazonaws.com/pulse:latest -f Dockerfile.server .
+          docker push 753493924839.dkr.ecr.eu-west-2.amazonaws.com/pulse:latest
+
+      # - name: Build and push server image
+      #   run: | 
+      #       apk add --no-cache python3
+      #       pip3 install awscli
+      #       docker build -t ${{ secrets.ECR_REPO }}:latest -f ./server/Dockerfile .
+      #       $(aws ecr get-login-password --region us-east-1 --no-include-email)
+      #       docker push ${{ secrets.ECR_REPO }}:latest
+      #       docker tag ${{ secrets.ECR_REPO }}:latest ${{ secrets.ECR_REPO }}:latest
+      #       docker push ${{ secrets.ECR_REPO }}:latest
+
+      # - name: Build and push frontend image
+      #   run: | 
+      #      - apk add --no-cache python3
+      #      - pip3 install awscli
+      #      - docker build -t ${{ secrets.ECR_REPO }}:latest -f ./frontend/Dockerfile .
+      #      - $(aws ecr get-login-password --region us-east-1 --no-include-email)
+      #      - docker push ${{ secrets.ECR_REPO }}:latest
+      #      - docker tag ${{ secrets.ECR_REPO }}:latest ${{ secrets.ECR_REPO }}:latest
+      #      - docker push ${{ secrets.ECR_REPO }}:latest
+
+      # - name: Build and push admin image
+      #   run: | 
+      #      - apk add --no-cache python3
+      #      - pip3 install awscli
+      #      - docker build -t ${{ secrets.ECR_REPO }}:latest -f ./admin/Dockerfile .
+      #      - $(aws ecr get-login-password --region us-east-1 --no-include-email)
+      #      - docker push ${{ secrets.ECR_REPO }}:latest
+      #      - docker tag ${{ secrets.ECR_REPO }}:latest ${{ secrets.ECR_REPO }}:latest
+      #      - docker push ${{ secrets.ECR_REPO }}:latest

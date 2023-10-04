@@ -37,7 +37,7 @@ variable "db_password" {
 variable "image_location" {
   type        = string
   description = "location of docker image"
-  default     = "" # TODO: set this
+  default     = "753493924839.dkr.ecr.us-east-1.amazonaws.com/pulse-server"
 }
 
 variable "memory" {

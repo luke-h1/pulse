@@ -1,0 +1,47 @@
+FROM node:18-alpine AS base
+
+WORKDIR /app
+
+FROM base as builder
+
+COPY .npmrc .
+COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
+COPY package.json .
+COPY tsconfig.json ./tsconfig.json
+
+COPY apps/frontend/ ./apps/frontend/
+COPY apps/common ./apps/common
+COPY packages/graphql-hooks ./packages/graphql-hooks
+COPY packages/ui ./packages/ui
+COPY packages/editor ./packages/editor
+
+RUN npm i -g pnpm
+
+RUN pnpm --filter=frontend... install
+
+RUN pnpm --filter=frontend build
+
+FROM base AS runner
+
+COPY --from=builder /app/.npmrc .
+COPY --from=builder /app/pnpm-lock.yaml .
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/pnpm-workspace.yaml .
+COPY --from=builder /app/tsconfig.json .
+
+COPY --from=builder /app/apps/frontend ./apps/frontend
+COPY --from=builder /app/apps/common ./apps/common
+COPY --from=builder /app/packages/graphql-hooks ./packages/graphql-hooks
+COPY --from=builder /app/packages/ui ./packages/ui
+COPY --from=builder /app/packages/editor ./packages/editor
+
+RUN npm i -g pnpm
+RUN pnpm --filter=frontend... install --prod
+
+WORKDIR /app/apps/frontend
+
+ENV NODE_ENV=production
+EXPOSE 3000
+USER node
+CMD ["pnpm", "start"]

@@ -49,11 +49,11 @@ resource "aws_ecs_task_definition" "server" {
         },
         {
           name  = "DATABASE_URL"
-          value = "${var.db_url}"
+          value = "${aws_db_instance.db.db_default_instance_address}"
         },
         {
           name  = "SESSION_SECRET"
-          value = "${aws_db_instance.db.db_default_instance_address}"
+          value = "${var.session_secret}"
         },
         {
           name  = "REDIS_URL"

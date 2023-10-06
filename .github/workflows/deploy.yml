@@ -45,7 +45,7 @@ jobs:
             TF_VAR_db_url: ${{ secrets.DATABASE_URL }}
             TF_VAR_session_secret: ${{ secrets.SESSION_SECRET }}
             TF_VAR_cloudinary_secret: ${{ secrets.CLOUDINARY_SECRET }}
-            TF_VAR_image_location: ${{ secrets.ECR_REPO }}/server
+            TF_VAR_image_location: ${{ secrets.ECR_REPO }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 

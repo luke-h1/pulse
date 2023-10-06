@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "server" {
-  name = "${var.prefix}-server-cluster"
+  name = "${var.prefix}-server"
 }
 
 resource "aws_iam_policy" "task_execution_role_policy" {

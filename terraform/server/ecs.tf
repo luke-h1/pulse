@@ -48,8 +48,8 @@ resource "aws_ecs_task_definition" "server" {
           value = "8000"
         },
         {
-          name  = "DB_URL"
-          value = "${var.db_url}"
+          name  = "DATABASE_URL"
+          value = "${aws_db_instance.db.address}"
         },
         {
           name  = "SESSION_SECRET"

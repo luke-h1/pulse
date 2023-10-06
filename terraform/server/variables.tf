@@ -24,13 +24,17 @@ variable "environment_variables" {
 variable "db_url" {
   type        = string
   description = "db URL"
+  sensitive = true
+  default     = outputs.db_url
 }
 
 variable "db_username" {
+  sensitive = true
   type = string
 }
 
 variable "db_password" {
+  sensitive = true
   type = string
 }
 

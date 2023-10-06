@@ -25,7 +25,6 @@ variable "db_url" {
   type        = string
   description = "db URL"
   sensitive = true
-  default     = outputs.db_url
 }
 
 variable "db_username" {

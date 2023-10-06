@@ -38,6 +38,12 @@ const main = async () => {
 
   app.use(compression());
 
+  app.get('/api/health', (_, res) => {
+    return res.json({
+      status: 'ok',
+    });
+  });
+
   const RedisStore = connectRedis(session);
 
   app.use(

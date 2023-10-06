@@ -15,7 +15,7 @@ resource "aws_lb_target_group" "server" {
   vpc_id      = aws_vpc.server.id
   target_type = "ip"
   health_check {
-    path = "/api/graphql"
+    path = "/api/health"
   }
 }
 

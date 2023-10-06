@@ -38,4 +38,4 @@ ENV NODE_ENV=production
 EXPOSE 8000
 
 USER node
-CMD ["pnpm", "start"]
+CMD ["pnpm", "startProd"]

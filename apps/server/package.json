@@ -9,6 +9,7 @@
     "test:snapshot": "jest --updateSnapshot",
     "build": "tsc",
     "dev": "cross-env NODE_ENV=development nodemon --legacy-watch src/main.ts",
+    "startProd": "pnpm db:migrate && pnpm start",
     "start": "node ./dist/main.js",
     "gen-env": "gen-env-types .env -o src/types/env.d.ts -e .",
     "tsc": "tsc --noEmit",

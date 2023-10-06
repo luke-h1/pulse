@@ -89,26 +89,17 @@ jobs:
   
       - name: build server image
         run: | 
-          docker build -f Dockerfile.server --tag server:latest .
+          docker build -f Dockerfile.server --tag pulse:latest .
 
-
-      - name: Push to ECR
-        id: ecr
-        uses: jwalton/gh-ecr-push@v1
-        with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: eu-west-2
-          local-image: server:latest
-          image: server:latest
-              
-      # - name: Build, tag, and push image to Amazon ECR
-      #   id: build-image
-      #   env:
-      #     IMAGE_TAG: latest
-      #   run: |
-      #     docker build -t 753493924839.dkr.ecr.eu-west-2.amazonaws.com/server:latest -f Dockerfile.server .
-      #     docker push 753493924839.dkr.ecr.eu-west-2.amazonaws.com/server:latest
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          IMAGE_TAG: latest
+        run: |
+          aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 753493924839.dkr.ecr.eu-west-2.amazonaws.com
+          docker build -f Dockerfile.server -t pulse .
+          docker tag pulse:latest 753493924839.dkr.ecr.eu-west-2.amazonaws.com/pulse:latest
+          docker push 753493924839.dkr.ecr.eu-west-2.amazonaws.com/pulse:latest
 
       # - name: Build and push server image
       #   run: | 

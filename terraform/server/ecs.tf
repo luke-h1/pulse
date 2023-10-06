@@ -49,7 +49,7 @@ resource "aws_ecs_task_definition" "server" {
         },
         {
           name  = "DB_URL"
-          value = aws_db_instance.db.address
+          value = "${var.db_url}"
         },
         {
           name  = "SESSION_SECRET"

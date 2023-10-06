@@ -6,8 +6,8 @@ env:
   PNPM_VERSION: 8.6.0
 
 jobs:
-  test:
-    name: Destryo
+  Destroy:
+    name: Destroy
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

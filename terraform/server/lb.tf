@@ -15,13 +15,13 @@ resource "aws_lb_target_group" "server" {
   vpc_id      = aws_vpc.server.id
   target_type = "ip"
   health_check {
-    path = "/api/graphql"
+    path = "/api/health"
   }
 }
 
 resource "aws_lb_listener" "server" {
   load_balancer_arn = aws_lb.server.arn
-  port              = 80
+  port              = 8000
   protocol          = "HTTP"
   default_action {
     type             = "forward"
@@ -33,20 +33,13 @@ resource "aws_security_group" "lb" {
   description = "Allow access to ALB"
   name        = "${var.prefix}-lb"
   vpc_id      = aws_vpc.server.id
+
   ingress {
     protocol    = "tcp"
     from_port   = 80
     to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  ingress {
-    protocol    = "tcp"
-    from_port   = 443
-    to_port     = 443
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     protocol    = "tcp"
     from_port   = var.port

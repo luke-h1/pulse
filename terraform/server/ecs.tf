@@ -34,8 +34,11 @@ resource "aws_ecs_task_definition" "server" {
   network_mode             = "awsvpc"
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn       = aws_iam_role.server_iam_role.arn
+  execution_role_arn       = aws_iam_role.task-execution_role.arn
   task_role_arn            = aws_iam_role.server_iam_role.arn
+  volume {
+    name = "pulse"
+  }
   container_definitions = jsonencode([
     {
       name              = "server"
@@ -48,8 +51,8 @@ resource "aws_ecs_task_definition" "server" {
           value = "8000"
         },
         {
-          name  = "DB_URL"
-          value = aws_db_instance.db.address
+          name  = "DATABASE_URL",
+          value = "${var.db_url}"
         },
         {
           name  = "SESSION_SECRET"
@@ -98,8 +101,18 @@ resource "aws_security_group" "ecs_service" {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = [aws_subnet.private_a.cidr_block, aws_subnet.private_b.cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
+  #######################################
+  # allow server to migrate DB
+  #######################################
+  egress {
+    from_port   = 25060
+    to_port     = 25060
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  #######################################
 
   ingress {
     from_port       = 8000
@@ -116,7 +129,6 @@ resource "aws_ecs_service" "server" {
   desired_count    = 1
   launch_type      = "FARGATE"
   platform_version = "LATEST"
-
   network_configuration {
     subnets = [
       aws_subnet.private_a.id,

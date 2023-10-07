@@ -21,17 +21,17 @@ variable "environment_variables" {
   default     = {}
 }
 
-variable "db_url" {
-  type        = string
-  description = "db URL"
-}
-
 variable "db_username" {
-  type = string
+  sensitive = false
+  type      = string
 }
 
-variable "db_password" {
+variable "db_url" {
   type = string
+}
+variable "db_password" {
+  sensitive = false
+  type      = string
 }
 
 variable "image_location" {

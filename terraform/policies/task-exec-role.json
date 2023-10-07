@@ -8,7 +8,6 @@
         "ecr:BatchCheckLayerAvailability",
         "ecr:GetDownloadUrlForLayer",
         "ecr:BatchGetImage",
-        "ecr:*",
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],

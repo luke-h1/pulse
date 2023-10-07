@@ -22,15 +22,12 @@ This repository is managed as a monorepo. It uses PNPM & PNPM workspaces to do t
 | [UI](packages/ui/README.md) <br /> UI                                   | Yes      
 
 ### Infrastructure
-TBA
+Infrastructure is managed by terraform and deployed to AWS 
 
 ## Documentation 
 
 View the individual README files in `/apps/*` and `packages/*` for further developer information
 
-
-## Environments
-TBA
 
 ## Contributing
 

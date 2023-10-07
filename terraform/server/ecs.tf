@@ -104,11 +104,17 @@ resource "aws_security_group" "ecs_service" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   #######################################
-  # allow server to migrate DB
+  # allow server to access DB and redis
   #######################################
   egress {
-    from_port   = 25060
-    to_port     = 25060
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 6739
+    to_port     = 6739
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

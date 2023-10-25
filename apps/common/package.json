@@ -20,7 +20,7 @@
     "date-fns": "^2.30.0",
     "editor": "workspace:*",
     "graphql-hooks": "workspace:*",
-    "next": "^13.4.19",
+    "next": "^13.5.0",
     "next-seo": "^6.1.0",
     "next-urql": "^5.0.2",
     "nprogress": "^0.2.0",

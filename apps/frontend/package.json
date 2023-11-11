@@ -22,7 +22,7 @@
     "@hookform/resolvers": "^3.2.0",
     "@urql/exchange-graphcache": "^6.3.1",
     "@urql/exchange-multipart-fetch": "^1.1.0",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "clsx": "^2.0.0",
     "common": "workspace:*",
     "deepmerge": "^4.2.2",
